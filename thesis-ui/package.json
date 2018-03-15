@@ -1,26 +1,28 @@
 {
-  "name": "thesis-ui",
+  "name": "codesling.io-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "/client/src/index.jsx",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "webpack": "webpack -w"
+    "setup:server": "cd server && npm install",
+    "setup:client": "cd client && npm install",
+    "start:server": "cd server && yarn start",
+    "build": "cd client && npm run build",
+    "buildEnv": "node bin/buildEnv.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codesling/codesling.io-ui.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "webpack": "3.11.0"
+  "bugs": {
+    "url": "https://github.com/codesling/codesling.io-ui/issues"
   },
+  "homepage": "https://github.com/codesling/codesling.io-ui#readme",
   "dependencies": {
-    "babel-preset-env": "^1.6.1"
+    "lodash": "^4.17.4"
   }
 }
