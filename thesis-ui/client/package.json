@@ -1,5 +1,5 @@
 {
-  "name": "codesling.io-ui",
+  "name": "barder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codesling/codesling.io-ui.git"
+    "url": "git+https://github.com/thesis-20/barter.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/codesling/codesling.io-ui/issues"
-  },
-  "homepage": "https://github.com/codesling/codesling.io-ui#readme",
   "dependencies": {
     "autoprefixer": "^7.2.4",
     "axios": "^0.17.1",
