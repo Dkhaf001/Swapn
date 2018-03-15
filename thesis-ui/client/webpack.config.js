@@ -65,6 +65,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+    }    
   // plugins: [
   //   new ExtractTextPlugin('./client/styles/main.css', {
   //     allChunks: true
