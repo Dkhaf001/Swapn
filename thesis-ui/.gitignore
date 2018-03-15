@@ -61,3 +61,5 @@ bundle.js
 bundle.js.map
 
 graveyard.js
+
+.DS_Store
