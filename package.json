@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/thesis-20/barter/issues"
   },
-  "homepage": "https://github.com/thesis-20/barter#readme"
+  "homepage": "https://github.com/thesis-20/barter#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
