@@ -1,5 +1,5 @@
 {
-  "name": "codesling.io-ui",
+  "name": "barder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,21 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup:server": "cd server && npm install",
     "setup:client": "cd client && npm install",
-    "start:server": "cd server && yarn start",
+    "start:server": "cd server && npm run start",
     "build": "cd client && npm run build",
     "buildEnv": "node bin/buildEnv.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codesling/codesling.io-ui.git"
+    "url": "git+https://github.com/thesis-20/barter.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/codesling/codesling.io-ui/issues"
-  },
-  "homepage": "https://github.com/codesling/codesling.io-ui#readme",
   "dependencies": {
     "lodash": "^4.17.4"
   }
