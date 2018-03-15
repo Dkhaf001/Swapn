@@ -63,3 +63,7 @@ bundle.js.map
 graveyard.js
 
 .DS_Store
+
+client/public/bundle.js
+
+bundle.js
