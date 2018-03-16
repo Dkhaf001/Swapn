@@ -2,13 +2,13 @@ require('dotenv').config();
 
 import db from '../../config/database';
 
-const database = process.env; //file
+const database = process.env || 'barter' ;
 
 //create databases export
 export const createDatabase = async () => {
   try {
    await db.queryAsync(
-     `CREATE DATABASE ${database}`)
+     `CREATE DATABASE ${database}`
     );
     console.log('successfully created database', database);
   } catch (err) {
@@ -45,7 +45,7 @@ export const createUserTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS users
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       email VARCHAR NULL DEFAULT NULL,
       username VARCHAR(18) NULL DEFAULT NULL,
       password VARCHAR NULL DEFAULT NULL,
@@ -80,7 +80,7 @@ export const createPostTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS posts
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       title VARCHAR NULL DEFAULT NULL,
       description VARCHAR NULL DEFAULT NULL,
       condition VARCHAR NULL DEFAULT NULL,
@@ -120,7 +120,7 @@ export const createWatchTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS watchs
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       user_id INTEGER NULL DEFAULT NULL,
       post_id INTEGER NULL DEFAULT NULL,
       PRIMARY KEY (id),
@@ -154,7 +154,7 @@ export const createRatingTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS ratings
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       user_id INTEGER NULL DEFAULT NULL,
       rating INTEGER NULL DEFAULT NULL,
       PRIMARY KEY (id),
@@ -186,7 +186,7 @@ export const createPhotoTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS photos
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       post_id INTEGER NULL DEFAULT NULL,
       url VARCHAR NULL DEFAULT NULL,
       PRIMARY KEY (id),
@@ -218,7 +218,7 @@ export const createFollowingTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS followings
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       user_id INTEGER NULL DEFAULT NULL,
       follower_id INTEGER NULL DEFAULT NULL,
       PRIMARY KEY (id),
@@ -250,7 +250,7 @@ export const createCategoryTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS categorys
       (
-      id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+      id SERIAL,
       type VARCHAR NULL DEFAULT NULL,
       post_id INTEGER NULL DEFAULT NULL,
       PRIMARY KEY (id),
@@ -283,7 +283,7 @@ export const createOfferTable = async () => {
       `
       CREATE TABLE IF NOT EXISTS offers
       (
-        id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+        id SERIAL,
         buyer_username VARCHAR NULL DEFAULT NULL,
         post_id INTEGER NULL DEFAULT NULL,
         PRIMARY KEY (id),

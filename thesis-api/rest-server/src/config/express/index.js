@@ -22,8 +22,8 @@ const midWare = [
   class App {
     constructor() {
       this.express = express();
-      this.mountMiddleWare();
-      this.mountRoutes();
+      // this.mountMiddleWare();
+      // this.mountRoutes();
     }
     mountRoutes() {
         this.express.use('/api', router);
