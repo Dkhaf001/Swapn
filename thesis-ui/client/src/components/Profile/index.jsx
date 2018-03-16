@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Bio from './bio.jsx';
+import Edit from './edit.jsx';
 
 class Profile extends Component {
   constructor() {
@@ -8,6 +10,8 @@ class Profile extends Component {
     return (
       <div>
         Hello from Profile
+        <Edit />
+        <Bio />
       </div>
     )
   }

@@ -1,14 +1,7 @@
 import React, { Component }from 'react';
-import {
-  Login,
-  Signup,
-  Search,
-  Chat,
-  Feed,
-  Navbar,
-  Post,
-  Profile
-} from './components'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from "react-router-dom";
+import View from './components/View/view.jsx';
+import Navbar from './components/Navbar/index.jsx';
 // const App = () => <div>hello from App</div>;
 class App extends Component {
   constructor(props){
@@ -17,12 +10,12 @@ class App extends Component {
   }
   render() {
     return (
+      <Router>
       <div>
-        <Login />
-        <Signup />
-        <Search />
-        <Chat />
+        <Navbar />
+        <View />
       </div>
+      </Router>
     )
   }
 }
