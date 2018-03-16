@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildEnv": "node bin/buildEnv.js",
+    "start:rest-server": "cd rest-server && npm install",
+    "start": "npm-run-all -p start:rest-server"
   },
   "author": "",
   "license": "ISC",
