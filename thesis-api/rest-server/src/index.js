@@ -1,8 +1,4 @@
-require('babel-register');
-require('babel-polyfill');
-
 import http from 'http';
-
 import App from './config/express';
 //when we complete our schema tables
 import './config/database/index';
