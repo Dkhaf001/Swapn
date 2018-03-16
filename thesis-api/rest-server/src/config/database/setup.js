@@ -34,7 +34,7 @@ const setup = async () => {
   await createFollowingTable();
   await createCategoryTable();
   await createOfferTable();
-  // process.exit();
+  process.exit();
 };
 
 setup();
