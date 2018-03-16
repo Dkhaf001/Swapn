@@ -16,7 +16,8 @@ export const createUserTable = async () => {
       password VARCHAR(255) NOT NULL,
       location VARCHAR(255) NOT NULL,
       photo_url VARCHAR(255) NOT NULL,
-      reputation INT,
+      rep INT,
+      rep_count INT,
       follower_count INT,
       following_count INT
       )
