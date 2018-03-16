@@ -1,20 +1,18 @@
 import React, { Component } from 'react'
 import Post from './post.jsx';
-import PostList from './postlist.jsx';
 
-class Feed extends Component {
+class PostList extends Component {
   constructor() {
     super()
   }
   render() {
     return (
       <div>
-        Hello from Feed
-        <PostList />
+        Hello from Postlist
         <Post />
       </div>
     )
   }
 }
 
-export default Feed
+export default PostList
