@@ -46,7 +46,13 @@ bower install
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 
-
+TO START
+cd thesis-ui
+  npm run buildEnv
+  npm run setup:server
+  npm run setup:client
+  npm run build
+  npm run start:server
 ## Contributing
 
 See [CONTRIBUTING.md](_CONTRIBUTING.md) for contribution guidelines.
