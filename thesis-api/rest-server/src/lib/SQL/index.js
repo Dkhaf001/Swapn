@@ -15,6 +15,7 @@ export const createUserTable = async () => {
       username VARCHAR(18) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       location VARCHAR(255) NOT NULL,
+      photo_url VARCHAR(255) NOT NULL,
       reputation INT,
       follower_count INT,
       following_count INT
@@ -160,7 +161,7 @@ export const createFollowingTable = async () => {
       (
       id SERIAL PRIMARY KEY,
       user_id INT REFERENCES users(id),
-      follower_id INT NOT NULL
+      following_id INT NOT NULL
       )
       `
     );
