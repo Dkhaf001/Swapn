@@ -1,4 +1,4 @@
-import { fetchCategorysHelper } from "./categoriesSQLHelpers";
+import { categorysQueryHelper } from "./categoriesQueries";
 
 export const fetchCategorysController = async (req, res) => {
   let payload;
