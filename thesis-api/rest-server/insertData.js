@@ -8,16 +8,14 @@ const StudentsQuizzes = require("./db/models/studentsQuizzes.js");
 const StudentsTeachers = require("./db/models/studentsTeachers.js");
 const Teachers = require("./db/models/teachers.js");
 const Topics = require("./db/models/topics.js");
-const classesData = require("./db/data/classes.json");
-const lecturesData = require("./db/data/lectures.json");
-const quizzesData = require("./db/data/quizzes.json");
-const schoolsData = require("./db/data/schools.json");
-const studentsData = require("./db/data/students.json");
-const studentsClassesData = require("./db/data/studentsClasses.json");
-const studentsQuizzesData = require("./db/data/studentsQuizzes.json");
-const studentsTeachersData = require("./db/data/studentsTeachers.json");
-const teachersData = require("./db/data/teachers.json");
-const topicsData = require("./db/data/topics.json");
+
+const categoriesData = require("./db/data/classes.json");
+const followingData = require("./db/data/lectures.json");
+const offerData = require("./db/data/quizzes.json");
+const postsData = require("./db/data/schools.json");
+const usersData = require("./db/data/students.json");
+const watchersClassesData = require("./db/data/studentsClasses.json");
+
 
 const create = async () => {
   try {
