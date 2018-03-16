@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 //headers setting
 import cors from 'cors';
-
 import router from '../../routes/index';
 
 const midWare = [
@@ -13,17 +12,17 @@ const midWare = [
     bodyParser.json(),
     bodyParser.urlencoded({ extended: true }),
     morgan('dev'),
-    // cors({
-    //   allowedHeaders: 'Content-Type, authorization',
-    //   methods: ['GET, POST, PUT, DELETE', 'OPTIONS'],
-    // }),
+    cors({
+      allowedHeaders: 'Content-Type, authorization',
+      methods: ['GET, POST, PUT, DELETE', 'OPTIONS'],
+    }),
   ];
   
   class App {
     constructor() {
       this.express = express();
-      // this.mountMiddleWare();
-      // this.mountRoutes();
+      this.mountMiddleWare();
+      this.mountRoutes();
     }
     mountRoutes() {
         this.express.use('/api', router);
