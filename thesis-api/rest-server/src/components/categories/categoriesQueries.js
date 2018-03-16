@@ -1,5 +1,5 @@
 import db from '../../config/database';
-import { fetchCategorysController } from "./categoriesControllers";
+import { fetchCategorysHelper } from "./categoriesSQLHelpers";
 
 
 export const categorysQueryHelper = async (payload) => {
