@@ -5,7 +5,8 @@ import http from 'http';
 
 import App from './config/express';
 //when we complete our schema tables
-//import './config/database';
+import './config/database';
+// import './config/database/setup';
 
 const app = App.express;
 
