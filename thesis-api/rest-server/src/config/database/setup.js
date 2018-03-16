@@ -1,5 +1,4 @@
 import {
-  createDatabase,
   createUserTable,
   createPostTable,
   createWatchTable,
@@ -8,7 +7,6 @@ import {
   createFollowingTable,
   createCategoryTable,
   createOfferTable,
-  dropDatabase,
   dropUserTable,
   dropPostTable,
   dropWatchTable,
@@ -16,12 +14,10 @@ import {
   dropPhotoTable,
   dropFollowingTable,
   dropCategoryTable,
-  dropOfferTable,
-  useDatabase
+  dropOfferTable
 } from '../../lib/SQL';
 
 const setup = async () => {
-  await dropDatabase();
   await dropCategoryTable();
   await dropFollowingTable();
   await dropPhotoTable();
@@ -30,7 +26,6 @@ const setup = async () => {
   await dropWatchTable();
   await dropPostTable();
   await dropUserTable();
-  await createDatabase();
   await createUserTable();
   await createPostTable();
   await createWatchTable();
@@ -39,7 +34,7 @@ const setup = async () => {
   await createFollowingTable();
   await createCategoryTable();
   await createOfferTable();
-  process.exit();
+  // process.exit();
 };
 
 setup();

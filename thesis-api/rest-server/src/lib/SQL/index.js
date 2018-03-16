@@ -4,34 +4,6 @@ import db from '../../config/database/index';
 
 const database = process.env || 'barter';
 
-//create databases export
-export const createDatabase = async () => {
-  try {
-    await db.queryAsync(`CREATE DATABASE ${database}`);
-    console.log('successfully created database', database);
-  } catch (err) {
-    console.log('error creating database', err);
-  }
-};
-
-export const dropDatabase = async () => {
-  try {
-    await db.queryAsync(`DROP DATABASE IF EXISTS ${database}`);
-    console.log('successfully dropped database ', database);
-  } catch (err) {
-    console.log('error dropping database ', err);
-  }
-};
-
-export const useDatabase = async () => {
-  try {
-    await db.queryAsync(`USE IF EXISTS ${database}`);
-    console.log('successfully using database ', database);
-  } catch (err) {
-    console.log('error using database ', err);
-  }
-};
-
 export const createUserTable = async () => {
   try {
     await db.queryAsync(
@@ -146,7 +118,7 @@ export const createRatingTable = async () => {
 
 export const dropRatingTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS watchs`);
+    await db.queryAsync(`DROP TABLE IF EXISTS ratings`);
     console.log('successfully dropped ratings table');
   } catch (err) {
     console.log('error dropping ratings table ', err);
