@@ -42,10 +42,10 @@ function mapStateToProps(state) {
     dataFromReduxStorage: state.dataReducers
   }
 }
-function matchDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     addDataToStore
   }, dispatch)
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
