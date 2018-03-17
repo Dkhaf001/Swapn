@@ -1,11 +1,14 @@
-export const Helper = ({ }) => {
+export const signUpHelper = ({ email, username, password }) => {
   return `
-   
+    INSERT INTO users (email, username, password, clout, kills, deaths)
+    VALUES ('${email}', '${username}', '${password}', 0, 0, 0)
+    RETURNING id, email
   `;
 };
 
-export const Helper = ({ }) => {
+export const loginHelper = ({ username }) => {
   return `
- 
+    SELECT * users
+    WHERE users.username='${username}'
   `;
 };

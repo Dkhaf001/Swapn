@@ -6,6 +6,7 @@ import helmet from 'helmet';
 //headers setting
 import cors from 'cors';
 import router from '../../routes/index';
+import passport from '../../middleware/validation/passport'
 
 const midWare = [
   helmet(),
