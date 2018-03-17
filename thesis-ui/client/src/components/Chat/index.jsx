@@ -1,16 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class Chat extends Component {
   constructor() {
-    super()
+    super();
   }
   render() {
-    return (
-      <div>
-        Hello from Chat
-      </div>
-    )
+    return <div>Hello from Chat</div>;
   }
 }
 
-export default Chat
+export default Chat;
