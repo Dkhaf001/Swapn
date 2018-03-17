@@ -1,14 +1,41 @@
-export const Query = async (req, res) => {
+import db from '../../config/database';
+import {
+  addWatchesHelper,
+  removeWatchesHelper,
+  fetchAllWatchesHelper
+} from './watchersSQLHelpers';
+
+export const addWatchesQuery = async (req, res) => {
   try {
-    
+    const queryString = addWatchesHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('addWatchesQuery - successfully retrieved data', data);
+    return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
-export const Query = async (req, res) => {
+export const removeWatchesQuery = async (req, res) => {
   try {
+    const queryString = removeWatchesHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('removeWatchesController - successfully retrieved data', data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
+export const fetchAllWatchesQuery = async (req, res) => {
+  try {
+    const queryString = fetchAllWatchesHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log(
+      'fetchAllWatchesController - successfully retrieved data',
+      data
+    );
+    return data;
   } catch (err) {
     console.log(err);
   }
