@@ -2,7 +2,7 @@ require('dotenv').config();
 
 import db from '../../config/database/index';
 
-const database = process.env || 'barter';
+// const database = process.env || 'barter';
 
 export const createUserTable = async () => {
   try {
