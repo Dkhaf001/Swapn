@@ -46,7 +46,14 @@ bower install
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 
-TO START
+TO START BACKEND
+cd thesis-api
+  npm run buildEnv
+  npm run setup:rest-server
+  npm run start
+ 
+
+TO START FRONT
 cd thesis-ui
   npm run buildEnv
   npm run setup:server
