@@ -3,10 +3,6 @@ import {
   verify,
 } from 'jsonwebtoken'
 
-import {
-  success,
-  error
-} from '../../lib/log';
 
 export const generateToken = (id, email) => {
 
@@ -24,10 +20,10 @@ export const generateToken = (id, email) => {
 export const verifyUserWithJWT = (req, res, next) => {
   try {
     verify(req.headers.authorization.slice(7), process.env.TOKEN_SECRET);
-    success('token verified');
+    console.log('token verified');
     next();
   } catch (e) {
-    error('token not verified');
+    console.log('token not verified');
     next(e);
   }
 };
