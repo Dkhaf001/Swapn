@@ -1,19 +1,15 @@
 import express from 'express';
 import {
-  fetchAllFollowing,
-  addFollowing,
-  removeFollowing
-} from './followingsControllers'
+  fetchAllFollowingController,
+  addFollowingController,
+  removeFollowingController
+} from './followingsControllers';
 const router = express.Router();
 
-router.route('/')
-  .post(addFollowing)
-  
-router.route('/:user_id')
-  .get(fetchAllFollowing)
+router.route('/').post(addFollowingController);
 
+router.route('/:user_id').get(fetchAllFollowingController);
 
-router.route('/:user_id/:following_id')
-  .delete(removeFollowing)
+router.route('/:user_id/:following_id').delete(removeFollowingController);
 
 export default router;
