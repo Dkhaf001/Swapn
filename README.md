@@ -52,6 +52,12 @@ cd thesis-api
   npm run setup:rest-server
   npm run start
  
+TO SETUP DATABASE
+cd thesis-api
+  cd rest-server
+    cd index.js
+      uncomment line 5
+      comment line 5
 
 TO START FRONT
 cd thesis-ui
