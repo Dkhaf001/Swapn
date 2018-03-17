@@ -1,51 +1,62 @@
 import db from '../../config/database';
+
 import {
-  fetchPostsHelper,
+  fetchUserPostsHelper,
   fetchAllPostsHelper,
-  fetchSinglePostHelper,
+  fetchSinglePostsHelper,
+  updatePostsHelper,
   addPostsHelper
 } from './postsSQLHelpers';
 
-export const fetchPostsQueryHelper = async (req, res) => {
-  try {
-    const queryString = fetchPostsHelper(payload);
-    const data = await db.queryAsync(queryString);
-    console.log('fetchPostsQueryHelper - successfully retrieved data', data);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const fetchAllPostsQueryHelper = async (req, res) => {
+export const fetchAllPostsQuery = async payload => {
   try {
     const queryString = fetchAllPostsHelper(payload);
     const data = await db.queryAsync(queryString);
-    console.log('fetchAllPostsQueryHelper - successfully retrieved data', data);
-    return data;
+    console.log('fetchAllPostsQuery - successfully retrieved data');
+    return data.rows;
   } catch (err) {
     console.log(err);
   }
 };
-export const fetchSinglePostsQueryHelper = async (req, res) => {
+
+export const fetchUserPostsQuery = async payload => {
+  try {
+    const queryString = fetchUserPostsHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('fetchUserPostsQuery - successfully retrieved data');
+    return data.rows;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchSinglePostsQuery = async payload => {
   try {
     const queryString = fetchSinglePostsHelper(payload);
     const data = await db.queryAsync(queryString);
-    console.log(
-      'fetchSinglePostsQueryHelper - successfully retrieved data',
-      data
-    );
+    console.log('fetchSinglePostsQuery - successfully retrieved data');
+    return data.rows;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addPostsQuery = async (user, payload) => {
+  try {
+    const queryString = addPostsHelper(user, payload);
+    const data = await db.queryAsync(queryString);
+    console.log('addPostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
     console.log(err);
   }
 };
 
-export const addPostsQueryHelper = async (req, res) => {
+export const updatePostsQuery = async (user, payload) => {
   try {
-    const queryString = addPostsHelper(payload);
+    const queryString = updatePostsHelper(user, payload);
     const data = await db.queryAsync(queryString);
-    console.log('addPostsQueryHelper - successfully retrieved data', data);
+    console.log('addPostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
     console.log(err);

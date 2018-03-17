@@ -17,9 +17,9 @@ export const createUserTable = async () => {
       location VARCHAR(255) NOT NULL,
       photo_url VARCHAR(255) NOT NULL,
       rep INT,
-      rep_count INT,
-      follower_count INT,
-      following_count INT
+      rep_count INT NOT NULL DEFAULT 0,
+      follower_count INT NOT NULL DEFAULT 0,
+      following_count INT NOT NULL DEFAULT 0
       )
       `
     );
@@ -51,9 +51,9 @@ export const createPostTable = async () => {
       location VARCHAR(255) NOT NULL,
       demand VARCHAR(255) NOT NULL,
       user_id INT REFERENCES users(id),
-      watch_count INT NOT NULL,
-      view_count INT NOT NULL,
-      offer_count INT NOT NULL,
+      watch_count INT NOT NULL DEFAULT 0,
+      view_count INT NOT NULL DEFAULT 0,
+      offer_count INT NOT NULL DEFAULT 0,
       status VARCHAR(255) NOT NULL
       )
       `
