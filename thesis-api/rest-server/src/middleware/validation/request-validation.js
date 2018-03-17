@@ -2,14 +2,14 @@ import Joi from 'joi'
 export default {
   login: {
     body: {
-      username: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
+      username: Joi.string().regex(/^[a-zA-Z0-9]{6,18}$/),
       password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
     }
   },
-  sighup: {
+  signup: {
     body: {
       email: Joi.string().email(),
-      username: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
+      username: Joi.string().regex(/^[a-zA-Z0-9]{6,18}$/),
       password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
     }
   }

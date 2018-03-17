@@ -10,10 +10,10 @@ export const userQuery = async (body) => {
     const queryString = loginHelper(body);
     const data = await db.queryAsync(queryString);
     // db.release();
-    console.log('userQuery - successfully retrieved data ', JSON.stringify(data));
+    // console.log('userQuery - successfully retrieved data ', JSON.stringify(data));
     return data;
   } catch (err) {
-    console.log('signUpQuery - error= ', err);
+    console.log('userQuery - error= ', err);
   }
 };
 
@@ -24,6 +24,7 @@ export const signupQuery = async (body) => {
     return data;
   } catch(err) {
     console.log('signupQuery - error= ', err)
+    return err
   }
 }
 

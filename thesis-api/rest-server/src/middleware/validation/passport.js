@@ -4,7 +4,7 @@ import jwt from 'passport-jwt';
 
 
 import {
-  loginQuery
+  userQuery
 } from '../../components/auth/authQueries';
 import {
   comparePasswords
@@ -14,7 +14,7 @@ const JwtStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
 
 const localOptions = {
-  usernameField: 'email',
+  usernameField: 'username',
 };
 
 const jwtOptions = {
@@ -23,9 +23,10 @@ const jwtOptions = {
 };
 
 
-passport.use(new LocalStrategy(localOptions, async (email, password, done) => {
+passport.use(new LocalStrategy(localOptions, async (username, password, done) => {
   try {
-    const { rows } = await loginQuery({ email });
+    const { rows } = await userQuery({ username });
+    console.log('inside of localstrategy this is the rows', rows)
     if (!rows.length) {
       return done(null, false, { message: 'Incorrect email.' });
     }
