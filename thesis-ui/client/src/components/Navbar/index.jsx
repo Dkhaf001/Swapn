@@ -9,7 +9,6 @@ class Navbar extends Component {
     return (
       <div className="rowbanner">
           <div className="leftbanner">{this.props.user ? `Current User: ${this.props.user}` : ''}</div>
-          {console.log(this.props.user)}
           <div className="middlebanner">
           <Search />
           <Link to="/auth" className="linkbutton"> Login </Link>

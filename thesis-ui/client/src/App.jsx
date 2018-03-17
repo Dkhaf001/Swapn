@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   BrowserRouter as Router,
   Route,
@@ -8,12 +10,18 @@ import {
 } from "react-router-dom";
 import View from "./components/View/view.jsx";
 import Navbar from "./components/Navbar/index.jsx";
+import { addDataToStore } from './actions'
 
-// const App = () => <div>hello from App</div>;
+
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log("App", this.props);
+    this.state = {
+      inputValue: ''
+    }
+  }
+  handleSubmit() {
+    this.props.addDataToStore(this.state.inputValue)
   }
   render() {
     return (
@@ -21,9 +29,23 @@ class App extends Component {
         <div>
           <Navbar />
           <View />
+          <input type='text' onChange={(e) => this.setState({inputValue: e.target.value})} />
+          <input type='submit' onClick={()=>this.props.addDataToStore(this.state.inputValue)}/>
+          {this.props.dataFromReduxStorage}
         </div>
       </Router>
     );
   }
 }
-export default App;
+function mapStateToProps(state) {
+  return {
+    dataFromReduxStorage: state.dataReducers
+  }
+}
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({
+    addDataToStore
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(App);
