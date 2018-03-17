@@ -16,7 +16,7 @@ export const addWatchesQuery = async (req, res) => {
   }
 };
 
-export const removeWatchesController = async (req, res) => {
+export const removeWatchesQuery = async (req, res) => {
   try {
     const queryString = removeWatchesHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -27,7 +27,7 @@ export const removeWatchesController = async (req, res) => {
   }
 };
 
-export const fetchAllWatchesController = async (req, res) => {
+export const fetchAllWatchesQuery = async (req, res) => {
   try {
     const queryString = fetchAllWatchesHelper(payload);
     const data = await db.queryAsync(queryString);
