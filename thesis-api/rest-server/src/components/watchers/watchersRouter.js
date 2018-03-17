@@ -1,4 +1,9 @@
 import express from 'express';
+import {
+  addWatchesController,
+  removeWatchesController,
+  fetchAllWatchesController
+} from './watchersControllers';
 
 const router = express.Router();
 //user id is current logged in user
