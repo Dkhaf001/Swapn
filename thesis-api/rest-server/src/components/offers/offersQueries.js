@@ -1,12 +1,20 @@
 import db from '../../config/database';
-import { fetchOffersHelper } from "./offersSQLHelpers";
+import { fetchAllOffersHelper } from './offersSQLHelpers';
 
-export const offersQueryHelper = async (req, res) => {
+export const fetchAllOffersQuery = async (req, res) => {
   try {
-    const queryString = fetchOffersHelper(payload)
-    console.log('offersQueryHelper - successfully retrieved data', data)
+    const queryString = fetchAllOffersHelper(payload);
+    console.log('fetchAllOffersQuery - successfully retrieved data', data);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
+export const removeOffersQuery = async (req, res) => {
+  try {
+    const queryString = removeOffersHelper(payload);
+    console.log('removeOffersQuery - successfully retrieved data', data);
+  } catch (err) {
+    console.log(err);
+  }
+};

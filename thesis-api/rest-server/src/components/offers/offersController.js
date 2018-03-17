@@ -1,26 +1,21 @@
-import { offersQueryHelper } from "./offersQueries";
+import { fetchAllOffersQuery, removeOffersQuery } from './offersQueries';
 
-export const fetchOffersController = async (req, res) => {
-  let payload;
-  payload = req.params;
+export const fetchAllOffersController = async (req, res) => {
+  let payload = req.params;
   try {
-    const data = await offersQueryHelper(payload)
-    return res.status(200).send(data)
-    
+    const data = await fetchAllOffersQuery(payload);
+    return res.status(200).send(data);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
 export const removeOffersController = async (req, res) => {
-  let payload;
-  payload = req.params;
+  let payload = req.params;
   try {
-    const data = await offersQueryHelper(payload)
-    return res.status(200).send(data)
-    
+    const data = await removeOffersQuery(payload);
+    return res.status(200).send(data);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
-

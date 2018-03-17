@@ -1,4 +1,4 @@
-export const fetchCategorysHelper = ({ type }) => {
+export const fetchAllCategorysHelper = ({ type }) => {
   return `
    SELECT * 
    FROM posts 
