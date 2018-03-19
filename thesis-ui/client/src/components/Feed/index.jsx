@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Post from './post.jsx';
-import PostList from './postlist.jsx';
+import HomePostList from './homePostList.jsx';
+import OtherPostList from './otherPostList.jsx';
+import SellersPostList from './sellersPostList.jsx';
 //feed will render feed list for logged in or logged out
 //feed layout will be determined by classes
 class Feed extends Component {
@@ -11,8 +13,11 @@ class Feed extends Component {
     return (
       <div>
         Hello from Feed
-        <PostList />
+        <HomePostList />
         <Post />
+        <OtherPostList />
+        <SellersPostList />
+
       </div>
     );
   }

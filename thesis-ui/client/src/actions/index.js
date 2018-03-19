@@ -7,3 +7,8 @@ export const addActiveUserToStore = user => ({
   type: 'ACTIVE_USER',
   payload: user
 })
+
+export const addCurrentList = lists => ({
+  type: "CURRENT_LIST",
+  payload: lists
+})
