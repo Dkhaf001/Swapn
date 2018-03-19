@@ -1,16 +1,12 @@
-import React, { Component } from 'react'
-
+import React, { Component } from 'react';
+//this should be a popup that allows the user to update his profile details and profile pic
 class Edit extends Component {
   constructor() {
-    super()
+    super();
   }
   render() {
-    return (
-      <div>
-        Hello from Edit
-      </div>
-    )
+    return <div>Hello from Edit</div>;
   }
 }
 
-export default Edit
+export default Edit;
