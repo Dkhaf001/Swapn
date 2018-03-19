@@ -13,7 +13,6 @@ class Navbar extends Component {
         </div>
         <div className="middlebanner">
           <Search />
-          <LocationSearch />
           <Link to="/auth" className="linkbutton">
             {' '}
             Login{' '}

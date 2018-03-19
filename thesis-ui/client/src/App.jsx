@@ -39,7 +39,7 @@ class App extends Component {
 }
 function mapStateToProps(state) {
   return {
-    dataFromReduxStorage: state.dataReducers
+    dataFromReduxStorage: state.dataReducers,
   }
 }
 function mapDispatchToProps(dispatch) {
