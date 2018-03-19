@@ -1,4 +1,4 @@
-export const addDataToStore = data => ({
+export default const addDataToStore = data => ({
   type: 'WORD',
-  payload: data
-})
+  payload: data,
+});
