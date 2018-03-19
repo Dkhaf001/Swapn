@@ -31,7 +31,13 @@ class App extends React.Component {
                 if (prop.redirect) {
                   return <Redirect from={prop.path} to={prop.to} key={key} />;
                 }
-                return <Route path={prop.path} component={prop.component} key={key} />;
+                return (
+                  <Route
+                    path={prop.path}
+                    component={prop.component}
+                    key={key}
+                  />
+                );
               })}
             </Switch>
           </div>
@@ -42,15 +48,15 @@ class App extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    dataFromReduxStorage: state.dataReducers,
+    dataFromReduxStorage: state.dataReducers
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addDataToStore,
+      addDataToStore
     },
-    dispatch,
+    dispatch
   );
 }
 
