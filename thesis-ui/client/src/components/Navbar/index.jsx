@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from './Search.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 class Navbar extends Component {
   constructor() {
     super();
@@ -14,16 +15,16 @@ class Navbar extends Component {
         <div className="middlebanner">
           <Search />
           <Link to="/auth" className="linkbutton">
-            {' '}
-            Login{' '}
+            Login
           </Link>
           <Link to="/post" className="linkbutton">
-            {' '}
-            List{' '}
+            List
           </Link>
-          <Link to="/messages" className="linkbutton">
-            {' '}
-            Messages{' '}
+          <Link to="/selling" className="linkbutton">
+            Selling
+          </Link>
+          <Link to="/profile" className="linkbutton">
+            Profile
           </Link>
           {/* <LoginLogout onClick={this.props.onClick} authed={this.props.auth} user={this.props.user} type={this.props.type} /> */}
           {/* <Link to="/login" className="linkbutton"> Login </Link>
@@ -32,7 +33,7 @@ class Navbar extends Component {
       </div>
     );
   }
-  //fill out functions to render what you want depending if user is logged in or not.
+  // fill out functions to render what you want depending if user is logged in or not.
   // loggedInView = () => {};
   // loggedOutView = () => {};
 
