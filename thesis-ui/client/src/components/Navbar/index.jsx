@@ -14,7 +14,7 @@ class Navbar extends Component {
         </div>
         <div className="middlebanner">
           <Search />
-          <Link to="/auth" className="linkbutton">
+          <Link to="/login" className="linkbutton">
             Login
           </Link>
           <Link to="/post" className="linkbutton">
@@ -26,6 +26,10 @@ class Navbar extends Component {
           <Link to="/profile" className="linkbutton">
             Profile
           </Link>
+          <Link to="/signup" className="linkbutton">
+            SignUp
+          </Link>
+
           {/* <LoginLogout onClick={this.props.onClick} authed={this.props.auth} user={this.props.user} type={this.props.type} /> */}
           {/* <Link to="/login" className="linkbutton"> Login </Link>
           <button className="linkbutton" name="logout" onClick={this.props.onClick}> Logout </button> */}

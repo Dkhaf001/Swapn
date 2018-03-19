@@ -1,6 +1,8 @@
 // import used components
 import Edit from '../components/Profile/edit.jsx';
 import Profile from '../components/Profile/index.jsx';
+import SignUp from '../components/Auth/Signup.jsx';
+import Login from '../components/Auth/Login.jsx';
 
 const appRoutes = [
   {
@@ -55,13 +57,13 @@ const appRoutes = [
     path: '/signup',
     sidebarName: 'Login',
     navbarName: 'Login',
-    component: Edit,
+    component: SignUp,
   },
   {
     path: '/login',
     sidebarName: 'Login',
     navbarName: 'Login',
-    component: Edit,
+    component: Login,
   },
   {
     redirect: true,

@@ -1,27 +1,13 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-// import { BrowserRouter as Router } from 'react-router-dom';
-
 // import App from './App.jsx';
 import store from './store';
-
 // import './index.css';
-
-// ReactDOM.render(
-//   <Provider store ={store}>
-//     <Router>
-//       <App />
-//     </Router>
-//   </Provider>
-//   ,document.getElementById('app'),
-// );
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+// import { BrowserRouter as Router } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { createBrowserHistory } from 'history';
+import { Router, Route, Switch } from 'react-router-dom';
 
 import indexRoutes from './routes/index.jsx';
 

@@ -88,18 +88,18 @@ class App extends React.Component {
     );
   }
 }
-<<<<<<< HEAD
 function mapStateToProps(state) {
   return {
     dataFromReduxStorage: state.dataReducers,
-  }
+  };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    addDataToStore
-  }, dispatch)
+  return bindActionCreators(
+    {
+      addDataToStore,
+    },
+    dispatch,
+  );
 }
-=======
->>>>>>> router implementation
 
 export default App;
