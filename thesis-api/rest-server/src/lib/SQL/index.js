@@ -54,7 +54,8 @@ export const createPostTable = async () => {
       watch_count INT NOT NULL DEFAULT 0,
       view_count INT NOT NULL DEFAULT 0,
       offer_count INT NOT NULL DEFAULT 0,
-      status VARCHAR(255) NOT NULL
+      status VARCHAR(255) NOT NULL,
+      main_photo VARCHAR(255) NULL
       )
       `
     );
@@ -108,7 +109,7 @@ export const createRatingTable = async () => {
       (
       id SERIAL PRIMARY KEY,
       user_id INT REFERENCES users(id),
-      rating INT NOT NULL
+      rating INT NULL
       )
       `
     );
