@@ -10,13 +10,28 @@ class SellersPostList extends Component {
   constructor() {
     super();
   }
+  async componentWillMount () {
+    //grab data from db, update store
+    try {
+      let id = this.props.activeUser.userid;
+      const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`)
+      this.props.addCurrentList(data);
+    } catch(err) {
+      console.log('err fetching posts', err)
+    }
+  };
+
   render() {
     return (
-      //what current user has sold/bidded, and can make new 
-      <div>SellersPostlist</div>
+      <div>
+      {this.props.current_list && this.props.current_list.map(item => {
+        return <li key={item.id}>{JSON.stringify(item)}</li>
+      })}
+     </div>
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     activeUser: state.active_User,

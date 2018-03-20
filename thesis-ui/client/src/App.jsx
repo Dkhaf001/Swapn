@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar/index.jsx';
+import HomePostList from './components/Feed/homePostList.jsx';
+import OtherPostList from './components/Feed/otherPostList.jsx';
 import { addDataToStore } from './actions';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -21,6 +23,7 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
+        <OtherPostList />
         <div ref="mainPanel">
           <div>
             <Switch>
