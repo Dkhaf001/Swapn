@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import FollowingsListEntry from './FollowingListEntry'
+import FollowingsListEntry from './FollowingListEntry.jsx'
+import axios from 'axios'
 //this component will be used in the profile feed renders all users from following table
 class Following extends Component {
   constructor() {
@@ -12,9 +13,9 @@ class Following extends Component {
   }
   async componentDidMount() {
     try{
-      const user_id = this.props.active_user.id
-      // const user_id = JSON.parse(window.localStorage.getItem('user')).id 
+      const user_id = this.props.active_user.id || JSON.parse(window.localStorage.getItem('user')).id 
       const { data } = await axios.get(`http://localhost:3396/api/followings/${user_id}`) 
+      console.log('this is the data', data)
       this.setState({
         followings: data
       })
@@ -23,14 +24,15 @@ class Following extends Component {
     }
   }
   render() {
-    return 
+    return (
     <div>
       Hello from Following
+      {JSON.stringify(this.state.followings)}
       {this.state.followings && this.state.followings.map(following => {
-        return 
-          <FollowingsListEntry key={following.id} following={following} />
+        return <FollowingsListEntry key={following.id} following={following} />
       })}
     </div>
+    )
   }
 }
 function mapStateToProps(state) {
