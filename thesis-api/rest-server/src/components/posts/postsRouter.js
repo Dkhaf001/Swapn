@@ -4,6 +4,7 @@ import {
   fetchUserPostsController,
   fetchSinglePostsController,
   updatePostsController,
+  deletePostsController,
   addPostsController
 } from './postsControllers';
 const router = express.Router();
@@ -15,6 +16,8 @@ router.route('/:user_id').get(fetchUserPostsController);
 router.route('/:post_id').get(fetchSinglePostsController);
 //update post
 router.route('/:user_id/:post_id').put(updatePostsController);
+//delete post
+router.route('/:user_id/:post_id').delete(deletePostsController);
 //add a post
 router.route('/:user_id').post(addPostsController);
 

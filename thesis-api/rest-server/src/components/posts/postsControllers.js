@@ -3,6 +3,7 @@ import {
   fetchUserPostsQuery,
   fetchSinglePostsQuery,
   updatePostsQuery,
+  deletePostsQuery,
   addPostsQuery
 } from './postsQueries';
 
@@ -41,6 +42,17 @@ export const updatePostsController = async (req, res) => {
   let user = req.params;
   try {
     const data = await updatePostsQuery(user, payload);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deletePostsController = async (req, res) => {
+  let payload = req.body;
+  let user = req.params;
+  try {
+    const data = await deletePostsQuery(user, payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

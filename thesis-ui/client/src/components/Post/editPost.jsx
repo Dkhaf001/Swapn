@@ -2,41 +2,31 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { connect } from 'react-redux';
 
-// COMMENTS FROM ELBERT
-//this is the component that will render when you want to add a post to the feed
-// pop up?  or view change?
-// photo upload to S3 is here and sends to
-//iteration check
-// this componet is rendered in when clickin add listing from profile page and listing button from nav bar
-//
-
-// COMMENTS FROM EDDIE
-// Need to implement S3 when creating a post
-
-class AddPost extends Component {
+class EditPost extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      description: '',
-      condition: '',
-      location: '',
-      demand: '',
-      status: '',
-      main_photo: ''
+      title: this.props.post.title,
+      description: this.props.post.description,
+      condition: this.props.post.condition,
+      location: this.props.post.location,
+      demand: this.props.post.demand,
+      main_photo: this.props.post.main_photo
     };
   }
 
-  async submitNewPost() {
+  async submitEditPost() {
     // try {
-    //   const data = await axios.post(
-    //     'http://localhost:3396/api/posts/',
+    //   let postId = this.props.post.id;
+    //   const data = await axios.put(
+    //     `http://localhost:3396/api/posts/${postId}`,
     //     this.state
     //   );
-    //   console.log('Successfully submitted new post!');
+    //   console.log('Successfully edited post!');
     // } catch (err) {
-    //   console.log('Error submitting new post', err);
+    //   console.log('Error editing post');
     // }
     try {
       console.log(this.state);
@@ -48,50 +38,50 @@ class AddPost extends Component {
   render() {
     return (
       <div>
-        Hello from Post
+        Hello from Edit Post
         <TextField
-          hintText="What are you selling?"
           floatingLabelText="Title"
           name="title"
+          defaultValue={`${this.props.post.title}`}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <br />
         <TextField
           floatingLabelText="Description"
-          hintText="Add a brief description here!"
           multiLine={true}
           rows={2}
           rowsMax={4}
           name="description"
+          defaultValue={`${this.props.post.description}`}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <br />
         <TextField
-          hintText="What is the condition of the item?"
           floatingLabelText="Condition"
           name="condition"
+          defaultValue={`${this.props.post.condition}`}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <br />
         <TextField
-          hintText="Add Location Here"
           floatingLabelText="Location"
           name="location"
+          defaultValue={`${this.props.post.location}`}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <br />
         <TextField
-          hintText="What do you want for your item?"
           floatingLabelText="Demand"
           name="demand"
+          defaultValue={`${this.props.post.demand}`}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <br />
         {/* THIS MIGHT NEED TO BE CHANGED TO OUR FILEUPLOAD SYSTEM */}
         <TextField
-          hintText="Enter photo URL"
           floatingLabelText="Photo URL"
           name="main_photo"
+          defaultValue={`${this.props.post.main_photo}`}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <br />
@@ -99,7 +89,7 @@ class AddPost extends Component {
           label="Submit"
           primary={true}
           style={{ margin: 12 }}
-          onClick={() => this.submitNewPost()}
+          onClick={() => this.submitEditPost()}
         />
         <br />
       </div>
@@ -107,4 +97,10 @@ class AddPost extends Component {
   }
 }
 
-export default AddPost;
+function mapStateToProps(state) {
+  return {
+    current_post: state.current_post
+  };
+}
+
+export default connect(mapStateToProps)(EditPost);
