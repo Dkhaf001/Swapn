@@ -19,3 +19,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Bio);
+// might not need this page just do rendering on profile page
