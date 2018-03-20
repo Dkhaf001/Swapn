@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 //needto check if current user matches posing listing user
 //chats are rendered in the post component
 class Chat extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   render() {
     return <div>Hello from Chat</div>;
