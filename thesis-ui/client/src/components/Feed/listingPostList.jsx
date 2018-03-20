@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-// post list will need to render all post for all feeds by rendering stuff from store
-// best to have three way conditional rendered views due to styling
-// main feed,
-//watching feed, barttering feed
-// selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
 
-class OtherPostList extends Component {
+
+class ListingPostList extends Component {
   constructor() {
     super();
   }
@@ -14,9 +10,9 @@ class OtherPostList extends Component {
   async componentWillMount () {
     //grab data from db, update store
     try {
-      let username = this.props.activeUser.username;
+      let id = this.props.activeUser.userid;
       console.log('the id is', this.props.activeUser);
-      const { data } = await axios.get(`http://localhost:3396/api/offers/${username}`)
+      const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`)
       this.props.addCurrentList(data);
     } catch(err) {
       console.log('err fetching posts', err)
@@ -40,5 +36,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(OtherPostList);
-
+export default connect(mapStateToProps)(ListingPostList);
