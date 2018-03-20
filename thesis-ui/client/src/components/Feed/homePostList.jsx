@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Post from './post.jsx';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { addCurrentList } from '../../actions'
+import { bindActionCreators } from 'redux'
 // post list will need to render all post for all feeds by rendering stuff from store
 // best to have three way conditional rendered views due to styling
 // main feed,
@@ -17,24 +18,33 @@ class HomePostList extends Component {
     //grab data from db, update store
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts')
-      
-    } catch() {
-
+      this.props.addCurrentList(data);
+    } catch(err) {
+      console.log('err fetching posts', err)
     }
   };
 
   render() {
     return (
-      <div>Postlist</div>
+      <div>
+      {this.props.current_list && this.props.current_list.map(item => {
+        return <li key={item.id}>{JSON.stringify(item)}</li>
+      })}
+     </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    postList: state.postList,
-    activeUser: state.active_User
+    activeUser: state.active_User,
+    current_list: state.current_list
   }
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    addCurrentList:  addCurrentList 
+  }, dispatch)
+}
 
-export default connect(mapStateToProps)(HomePostList);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePostList);
 

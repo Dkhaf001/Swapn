@@ -12,15 +12,15 @@ class SellersPostList extends Component {
   }
   render() {
     return (
-      //what current user has sold/bidded, and can make new
+      //what current user has sold/bidded, and can make new 
       <div>SellersPostlist</div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    postList: state.postList,
-    activeUser: state.active_User
+    activeUser: state.active_User,
+    current_list: state.current_list
   }
 }
 

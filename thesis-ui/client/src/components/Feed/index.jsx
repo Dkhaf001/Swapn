@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Post from './post.jsx';
 import HomePostList from './homePostList.jsx';
 import OtherPostList from './otherPostList.jsx';
 import SellersPostList from './sellersPostList.jsx';
