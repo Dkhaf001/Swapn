@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
+import { connect } from 'react-redux'
 class FollowingsListEntry extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      following: this.props.following
+    }
   }
   async handleUnfollowButtonClick() {
     try{
-      const { data } = await axios.delete(`http://localhost:3396/api/followings/${this.props.active_user.id}/${this.props.following.id}`)
-      this.props.following = null;
+      const user_id = JSON.parse(window.localStorage.getItem('user')).id || this.props.active_user.id
+      const { data } = await axios.delete(`http://localhost:3396/api/followings/${user_id}/${this.props.following.id}`)
+      this.setState({
+        following: null
+      })
     } catch(err) {
       console.log('err unfollwing user',err)
     }
@@ -15,11 +22,11 @@ class FollowingsListEntry extends Component {
   render() {
     return(
       <div>
-        {this.props.following &&         
+        {this.state.following &&         
         <div>
-        username: {this.props.following.username}
+        username: {this.state.following.username}
         <br />
-        photo: {this.props.following.photo_url && <img src={this.props.following.photo_url}/>}
+        photo: {this.state.following.photo_url && <img src={this.state.following.photo_url}/>}
         <br />
         <button onClick={()=>this.handleUnfollowButtonClick()}>Unfollow</button>
        </div>}
@@ -28,4 +35,10 @@ class FollowingsListEntry extends Component {
   }
 }
 
-export default FollowingsListEntry;
+function mapStateToProps(state) {
+  return {
+    active_user: state.active_user
+  }
+}
+
+export default connect(mapStateToProps)(FollowingsListEntry)
