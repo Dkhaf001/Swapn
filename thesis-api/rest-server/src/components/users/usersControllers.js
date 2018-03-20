@@ -1,7 +1,7 @@
 import { fetchUserQuery, updateUserQuery } from './usersQueries';
 
 export const fetchUserController = async (req, res) => {
-  let payload = req.params;
+  const payload = req.params;
   try {
     const data = await fetchUserQuery(payload);
     return res.status(200).send(data.rows);
@@ -11,7 +11,7 @@ export const fetchUserController = async (req, res) => {
 };
 
 export const updateUserController = async (req, res) => {
-  let payload = req.body;
+  const payload = req.body;
   try {
     const data = await updateUserQuery(payload);
     return res.status(200).send(data.rows);
