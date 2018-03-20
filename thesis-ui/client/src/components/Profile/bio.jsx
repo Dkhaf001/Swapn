@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-//this is what people see  need a view for logged in matches current profile user
-//render edit view only if the user clicks the button to edit profile
+import { connect } from 'react-redux';
+import axios from 'axios';
+// import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
+// this is what people see  need a view for logged in matches current profile user
+// render edit view only if the user clicks the button to edit profile
 
 class Bio extends Component {
   constructor() {
@@ -10,5 +14,8 @@ class Bio extends Component {
     return <div>Hello from Bio</div>;
   }
 }
+function mapStateToProps(state) {
+  return {};
+}
 
-export default Bio;
+export default connect(mapStateToProps)(Bio);
