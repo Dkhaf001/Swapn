@@ -1,7 +1,7 @@
 export const fetchAllPostsHelper = () => {
   return `
   SELECT * 
-  FROM posts 
+  FROM posts
   `;
 };
 
@@ -13,28 +13,28 @@ export const fetchUserPostsHelper = ({ user_id }) => {
   `;
 };
 
-export const fetchSinglePostsHelper = ({ user_id, post_id }) => {
+export const fetchSinglePostsHelper = ({ post_id }) => {
   return `
   SELECT * 
   FROM posts 
-  WHERE user_id = ${user_id} AND id = ${post_id}
+  WHERE id = ${post_id}
   `;
 };
 
 export const addPostsHelper = (
   { user_id },
-  { title, description, condition, location, demand, status }
+  { title, description, condition, location, demand, status, main_photo }
 ) => {
   return `
-   INSERT INTO posts (title, description, condition, location, demand, user_id, status)
-   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}')
+   INSERT INTO posts (title, description, condition, location, demand, user_id, status, main_photo)
+   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '${main_photo})
    RETURNING *
   `;
 };
 
 export const updatePostsHelper = (
   { user_id, post_id },
-  { title, description, condition, location, demand, status }
+  { title, description, condition, location, demand, status, main_photo }
 ) => {
   return `
    UPDATE posts 
@@ -44,7 +44,8 @@ export const updatePostsHelper = (
         location='${location}', 
         demand='${demand}', 
         status='${status}',
-        user_id=${user_id} 
+        user_id=${user_id},
+        main_photo=${main_photo}
    WHERE id=${post_id}
    RETURNING *
   `;

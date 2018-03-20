@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-//this is the single post view
-//check if logged in user match listing user
-//import chat
-//4 render views
-// with chats Buyer and seller --> each have there own component
-// conditinal render buyerPost or sellerPost component
+import axios from 'axios';
+
 class Post extends Component {
   constructor() {
     super();
+    this.state = {};
+  }
+  async componentWillMount() {
+    // axios.get('http://localhost:3396/api/posts/login');
   }
   render() {
     return <div>Hello from Post</div>;

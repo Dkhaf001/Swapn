@@ -33,7 +33,7 @@ class Signup extends Component {
         <TextField
           type='email'
           hintText="Enter Email"
-          floatingLabelText="example@gmail.com"
+          floatingLabelText="Email"
           name='email'
           onChange={(e)=>this.setState({[e.target.name]: e.target.value})}
         /><br />   
@@ -55,11 +55,7 @@ class Signup extends Component {
           primary={true} 
           style={{'margin':12}} 
           onClick={()=>this.handleSubmit()}
-        /><br />        
-        {/* <input type='email' name='email' placeholder='example@email.com' onChange={(e)=>this.setState({[e.target.name]: e.target.value})} />
-        <input type="text" name='username' placeholder='Username' onChange={(e)=>this.setState({[e.target.name]: e.target.value})}/>
-        <input type='password' name='password' placeholder='password' onChange={(e)=>this.setState({[e.target.name]: e.target.value})}/>
-        <input type='submit' name='submit' onClick={()=>this.handleSubmit()}/> */}
+        /><br />
       </div>
     )
   }
