@@ -16,7 +16,6 @@ class Feed extends Component {
         <Post />
         <OtherPostList />
         <SellersPostList />
-
       </div>
     );
   }
