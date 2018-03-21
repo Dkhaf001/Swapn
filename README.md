@@ -49,11 +49,13 @@ View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 TO START BACKEND
 cd thesis-api
   npm run buildEnv
+  npm run setup:socket-server
   npm run setup:rest-server
   npm run start
  
 TO SETUP DATABASE
 cd thesis-api
+
   cd rest-server
     cd index.js
       uncomment line 5
