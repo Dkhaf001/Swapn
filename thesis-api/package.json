@@ -8,7 +8,9 @@
     "buildEnv": "node bin/buildEnv.js",
     "setup:rest-server": "cd rest-server && npm install",
     "start:rest-server": "cd rest-server && npm run start",
-    "start": "npm-run-all -p start:rest-server"
+    "setup:socket-server": "cd socket-server && npm install",
+    "start:socket-server": "cd socket-server && npm run start",
+    "start": "npm-run-all -p start:rest-server start:socket-server"
   },
   "author": "",
   "license": "ISC",

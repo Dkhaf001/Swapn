@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/index.jsx';
 import HomePostList from './components/Feed/homePostList.jsx';
 import OtherPostList from './components/Feed/otherPostList.jsx';
 import { addDataToStore } from './actions';
+import Chat from './components/Chat/Chat.jsx';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -23,7 +24,8 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
-        <OtherPostList />
+        <Chat />
+        <hr />
         <div ref="mainPanel">
           <div>
             <Switch>

@@ -18,15 +18,15 @@ const envBuild = {
     'SALT_ROUNDS=10',
     'TOKEN_SECRET=barterThesisApi'
   ],
-  // 'socket-server': [
-  //   'NODE_ENV=DEVELOPMENT',
-  //   'DEBUG=TRUE',
-  //   'HOST=http://localhost',
-  //   'PORT=4155',
-  //   'REST_SERVER_URL=http://localhost:4990',
-  //   'CODERUNNER_SERVICE_URL=http://localhost:4000',
-  //   'TOKEN_SECRET=codeslinger'
-  // ],
+  'socket-server': [
+    'NODE_ENV=DEVELOPMENT',
+    'DEBUG=TRUE',
+    'HOST=http://localhost',
+    'PORT=4155',
+    'REST_SERVER_URL=http://localhost:4990',
+    'CODERUNNER_SERVICE_URL=http://localhost:4000',
+    'TOKEN_SECRET=codeslinger'
+  ],
   // 'services/coderunner-service': [
   //   'NODE_ENV=DEVELOPMENT',
   //   'DEBUG=TRUE',
