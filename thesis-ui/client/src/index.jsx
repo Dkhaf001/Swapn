@@ -4,18 +4,19 @@ import store from './store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-// import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { createBrowserHistory } from 'history';
-import { Router, Route, Switch } from 'react-router-dom';
-
 import indexRoutes from './routes/index.jsx';
 
-const hist = createBrowserHistory();
+// For Custume History
+// import { createBrowserHistory } from 'history';
+// import { Router, Route, Switch } from 'react-router-dom';
+// const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hist}>
+    <Router>
+      {/* history={hist}  for custom history */}
       <MuiThemeProvider>
         <Switch>
           {indexRoutes.map((prop, key) => (

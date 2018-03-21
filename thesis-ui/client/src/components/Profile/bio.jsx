@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Bio from './edit.jsx';
+import Edit from './edit.jsx';
 // import { bindActionCreators } from 'redux'
 // import { bindActionCreators } from 'redux'
 // this is what people see  need a view for logged in matches current profile user
@@ -17,13 +17,14 @@ class Bio extends Component {
   }
   async componentWillMount() {
     try {
-      const data = await axios.get(`http://localhost:3369/users/${this.props.current_profile.user_id}`);
-      this.setState({ user: data });
+      console.log('Hi');
+      // const data = await axios.get(`http://localhost:3369/users/${this.props.current_profile.user_id}`);
+      // this.setState({ user: data });
       // create rout in backend
-      const following = await axios.get(`http://localhost:3369/followings/${this.props.active_user.id}/${this.state.user.id}`);
-      if (following.row.length > 1) {
-        this.setState({ following: true });
-      }
+      // const following = await axios.get(`http://localhost:3369/followings/${this.props.active_user.id}/${this.state.user.id}`);
+      // if (following.row.length > 1) {
+      //   this.setState({ following: true });
+      // }
     } catch (err) {
       console.log('Bio Component Error');
     }
@@ -69,7 +70,8 @@ class Bio extends Component {
     </div>
   );
   render() {
-    if (this.props.active_user.id === this.current_profile.id) {
+    if (this.props.active_user.id === 1) {
+      // this.current_profile.id;
       return this.sellerView();
     }
     return this.buyerView();

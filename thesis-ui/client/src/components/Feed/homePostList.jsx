@@ -10,20 +10,20 @@ import { bindActionCreators } from 'redux';
 // post list will need to render all post for all feeds by rendering stuff from store
 // best to have three way conditional rendered views due to styling
 // main feed,
-//watching feed, barttering feed
+// watching feed, barttering feed
 // selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
 
 const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class HomePostList extends Component {
@@ -32,7 +32,7 @@ class HomePostList extends Component {
   }
 
   async componentWillMount() {
-    //grab data from db, update store
+    // grab data from db, update store
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       this.props.addCurrentList(data);
@@ -68,16 +68,16 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList: addCurrentList
+      addCurrentList,
     },
-    dispatch
+    dispatch,
   );
 }
 

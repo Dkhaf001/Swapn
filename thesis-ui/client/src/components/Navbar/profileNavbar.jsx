@@ -11,16 +11,16 @@ class ProfileNavbar extends Component {
       <div>
         {/* <div>{this.props.user ? `Current User: ${this.props.user}` : ''}</div> */}
         <div>
-          <Link to="/selling" className="linkbutton">
+          <Link to="/profile/selling" className="linkbutton">
             Selling
           </Link>
-          <Link to="/bartering" className="linkbutton">
+          <Link to="/profile/bartering" className="linkbutton">
             Bartering
           </Link>
-          <Link to="/watchlist" className="linkbutton">
+          <Link to="/profile/watchlist" className="linkbutton">
             Watchlist
           </Link>
-          <Link to="/following" className="linkbutton">
+          <Link to="/profile/following" className="linkbutton">
             Following
           </Link>
         </div>

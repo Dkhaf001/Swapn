@@ -3,6 +3,7 @@ import Bio from './bio.jsx'; // might not need
 import ListingPostList from '../Feed/listingPostList.jsx';
 import ProfileNavbar from '../Navbar/profileNavbar.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import Rt from '../../routes/app.jsx';
 
 class SellerProfile extends Component {
   constructor() {
@@ -14,13 +15,15 @@ class SellerProfile extends Component {
         <Bio />
         <div>
           <ProfileNavbar />
+          <ListingPostList />
+          {console.log(this.props.match)
+          // console.log(match.path)
+          // console.log(match.url)
+          }
           <Switch>
-            {appRoutes.map((prop, key) => {
-              if (prop.redirect) {
-                return <Redirect from={prop.path} to={prop.to} key={key} />;
-              }
-              return <Route path={prop.path} component={prop.component} key={key} />;
-            })}
+            {Rt.profileRoutes.map((prop, key) => (
+              <Route path={prop.path} component={prop.component} key={key} />
+            ))}
           </Switch>
         </div>
       </div>

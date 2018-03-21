@@ -6,11 +6,16 @@ class Edit extends Component {
   constructor() {
     super();
     this.state = {
-      location: this.props.active_user.location,
-      main_photo: this.props.active_user.photo_url,
+      location: '',
+      main_photo: '',
     };
   }
-
+  componentWillMount() {
+    this.setState({
+      location: this.props.active_user.location,
+      main_photo: this.props.active_user.photo_url,
+    });
+  }
   // need two imput feild set gut request with axios when submit// needs photo upload
   handleSubmit = async () => {
     try {
@@ -48,7 +53,7 @@ class Edit extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.active_user,
+    active_user: state.active_user,
   };
 }
 
