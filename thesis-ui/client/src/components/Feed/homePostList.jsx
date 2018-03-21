@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import { GridList, GridTile } from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { addCurrentList } from '../../actions';
 import { bindActionCreators } from 'redux';
+
+// ELBERT'S COMMENTS
 // post list will need to render all post for all feeds by rendering stuff from store
 // best to have three way conditional rendered views due to styling
 // main feed,
 //watching feed, barttering feed
 // selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
-
-// eddie's edits
-import { GridList, GridTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
 
 const styles = {
   root: {
@@ -25,7 +25,6 @@ const styles = {
     overflowY: 'auto'
   }
 };
-//
 
 class HomePostList extends Component {
   constructor() {
@@ -42,50 +41,43 @@ class HomePostList extends Component {
     }
   }
 
-  plsWork() {
-     <div style={styles.root}>
-        <GridList cellHeight={180} style={styles.gridList}>
-          <Subheader>Here is your feed!</Subheader>
+  render() {
+    return (
+      <div style={styles.root}>
+        <GridList cellHeight={200} style={styles.gridList}>
           {this.props.current_list &&
             this.props.current_list.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
+                subtitle={
+                  <span>
+                    <b>{post.username}</b>
+                  </span>
+                }
+                onClick={e => console.log('Clicked post.id:', post.id)}
               >
                 <img src={post.main_photo} />
               </GridTile>
             ))}
         </GridList>
       </div>
-  }
 
-  render() {
-    return (
- 
-      <div>{this.plsWork()}</div>
-      // <div>
-      //   {this.props.current_list &&
-      //     this.props.current_list.map(post => (
-      //       <li>
-      //         key={post.id}
-      //         title={post.title}
-      //         img={post.main_photo}
-      //       </li>
-      //     ))}
+      // <div style={styles.root}>
+      //   <GridList cellHeight={180} style={styles.gridList}>
+      //     {this.props.current_list &&
+      //       this.props.current_list.map(post => (
+      //         <span>
+      //           <img src={post.main_photo} />
+      //           <br />
+      //           Title: {post.title}
+      //           <br />
+      //           Sold by: {post.username}
+      //           <br />
+      //         </span>
+      //       ))}
+      //   </GridList>
       // </div>
-
-      // <div>
-      //   {this.props.current_list &&
-      //     this.props.current_list.map(item => {
-      //       return (
-      //         <div>
-      //           id:{item.id}
-      //           title:{item.title}
-      //           img:{item.main_photo}
-      //         </div>)
-      //     })}
-      // </div>
-
     );
   }
 }

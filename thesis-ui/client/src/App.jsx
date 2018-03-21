@@ -25,7 +25,6 @@ class App extends React.Component {
       <div>
         <Navbar />
         <HomePostList />
-        <OtherPostList />
         <div ref="mainPanel">
           <div>
             <Switch>
