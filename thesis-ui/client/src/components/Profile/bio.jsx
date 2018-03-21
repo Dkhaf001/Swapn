@@ -28,17 +28,23 @@ class Bio extends Component {
     }
   }
   buttonCheck = () => {
-    if (following) {
-      return <button>Unfollow</button>;
+    if (this.state.following) {
+      return <button onClick={this.unfollowButton}>Unfollow</button>;
     }
-    return <button>Follow</button>;
+    return <button onClick={this.followButton}>Follow</button>;
   };
-  sellerView = () => {
-    // profile pic
-    // location
-    // user rating
-    // # of Followers
-
+  followButton = async () => {
+    await axios.post('http://localhost:3369/followings/', {
+      user_id: this.props.active_user.id,
+      following_id: this.state.user.id,
+    });
+    this.setState({ following: true });
+  };
+  unfollowButton = async () => {
+    await axios.delete(`http://localhost:3369/followings/${this.props.active_user.id}/${this.state.user.id}`);
+    this.setState({ following: true });
+  };
+  sellerView = () => (
     <div>
       <img src={this.state.user.phot_url} />
       <h3>{this.state.user.username}</h3>
@@ -46,13 +52,9 @@ class Bio extends Component {
       <p>User:{this.state.user.rep}</p>
       <p>{this.state.user.rep_count}</p>
       <p>#followers: {this.state.user.follower_count}</p>
-    </div>;
-  };
-  buyerView = () => {
-    // profile pic
-    // location
-    // user rating
-    // follow or unfollow button
+    </div>
+  );
+  buyerView = () => (
     <div>
       <img src={this.state.user.phot_url} />
       <h3>{this.state.user.username}</h3>
@@ -60,8 +62,8 @@ class Bio extends Component {
       <p>User:{this.state.user.rep}</p>
       <p>{this.state.user.rep_count}</p>
       {buttonCheck()}
-    </div>;
-  };
+    </div>
+  );
   render() {
     if (this.props.active_user.id === this.current_profile.id) {
       return this.sellerView();
