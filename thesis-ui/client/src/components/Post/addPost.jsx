@@ -29,19 +29,14 @@ class AddPost extends Component {
   }
 
   async submitNewPost() {
-    // try {
-    //   const data = await axios.post(
-    //     'http://localhost:3396/api/posts/',
-    //     this.state
-    //   );
-    //   console.log('Successfully submitted new post!');
-    // } catch (err) {
-    //   console.log('Error submitting new post', err);
-    // }
     try {
-      console.log(this.state);
+      const data = await axios.post(
+        'http://localhost:3396/api/posts/',
+        this.state
+      );
+      console.log('successfully submitted new post!');
     } catch (err) {
-      console.log(err);
+      console.log('error submitting new post!');
     }
   }
 

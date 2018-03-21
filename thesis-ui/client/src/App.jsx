@@ -24,8 +24,8 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
-        <Chat />
-        <hr />
+        <HomePostList />
+        <OtherPostList />
         <div ref="mainPanel">
           <div>
             <Switch>

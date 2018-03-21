@@ -18,20 +18,15 @@ class EditPost extends Component {
   }
 
   async submitEditPost() {
-    // try {
-    //   let postId = this.props.post.id;
-    //   const data = await axios.put(
-    //     `http://localhost:3396/api/posts/${postId}`,
-    //     this.state
-    //   );
-    //   console.log('Successfully edited post!');
-    // } catch (err) {
-    //   console.log('Error editing post');
-    // }
     try {
-      console.log(this.state);
+      let postId = this.props.post.id;
+      const data = await axios.put(
+        `http://localhost:3396/api/posts/${postId}`,
+        this.state
+      );
+      console.log('successfully edited post!');
     } catch (err) {
-      console.log(err);
+      console.log('error editing post');
     }
   }
 

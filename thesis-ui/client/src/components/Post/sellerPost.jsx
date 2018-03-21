@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { connect } from 'react-redux';
 //edit post should reopen addPost but with the info already filled out including photos
 //should render chats if there are ongoing offers
 
@@ -30,6 +30,7 @@ class SellerPost extends Component {
     const { data } = await axios.get(
       `http://localhost:3396/api/posts/${postId}`
     );
+    console.log('successfully received post!');
     this.setState({
       post: data
     });
@@ -40,16 +41,20 @@ class SellerPost extends Component {
     const { data } = await axios.get(
       `http://localhost:3396/api/photos/${postId}`
     );
+    console.log('successfully received photos!');
     this.setState({
       photos: data
     });
   }
 
   async removePost() {
+    let userId = this.props.post.user_id;
     let postId = this.props.post.id;
     const { data } = await axios.delete(
-      `http://localhost:3396/api/photos/${postId}`
+      `http://localhost:3396/api/photos/${userId}/${postId}`
     );
+    console.log('successfully deleted post!');
+    // refresh page after successfully deleting?
   }
 
   render() {

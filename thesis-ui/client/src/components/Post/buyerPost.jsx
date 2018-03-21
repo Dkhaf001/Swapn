@@ -22,6 +22,7 @@ class BuyerPost extends Component {
     const { data } = await axios.get(
       `http://localhost:3396/api/posts/${postId}`
     );
+    console.log('successfully received post');
     this.setState({
       post: data
     });
@@ -32,6 +33,7 @@ class BuyerPost extends Component {
     const { data } = await axios.get(
       `http://localhost:3396/api/photos/${postId}`
     );
+    console.log('successfully received photos');
     this.setState({
       photos: data
     });
