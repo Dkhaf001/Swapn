@@ -12,19 +12,17 @@ class Edit extends Component {
   }
 
   // need two imput feild set gut request with axios when submit// needs photo upload
-  handleSubmit = () => {
-    axios
-      .put('http://localhost:3396/users/', {
+  handleSubmit = async () => {
+    try {
+      await axios.put('http://localhost:3396/users/', {
         user_id: this.props.currentUser.id,
         location: this.state.location,
         photo_url: this.state.main_photo,
-      })
-      .then(() => {
-        console.log('Succes Updated User Profile');
-      })
-      .catch((err) => {
-        console.log('Update User Profile Error:', err);
       });
+      console.log('Succes Updated User Profile');
+    } catch (err) {
+      console.log('Update User Profile Error:', err);
+    }
   };
 
   render() {
