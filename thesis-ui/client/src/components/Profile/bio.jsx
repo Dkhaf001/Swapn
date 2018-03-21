@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Bio from './edit.jsx';
 // import { bindActionCreators } from 'redux'
 // import { bindActionCreators } from 'redux'
 // this is what people see  need a view for logged in matches current profile user
@@ -46,7 +47,10 @@ class Bio extends Component {
   };
   sellerView = () => (
     <div>
-      <img src={this.state.user.phot_url} />
+      <div>
+        <img src={this.state.user.phot_url} />
+        <Edit />
+      </div>
       <h3>{this.state.user.username}</h3>
       <p>Location:{this.state.user.location}</p>
       <p>User:{this.state.user.rep}</p>
