@@ -62,22 +62,6 @@ class HomePostList extends Component {
             ))}
         </GridList>
       </div>
-
-      // <div style={styles.root}>
-      //   <GridList cellHeight={180} style={styles.gridList}>
-      //     {this.props.current_list &&
-      //       this.props.current_list.map(post => (
-      //         <span>
-      //           <img src={post.main_photo} />
-      //           <br />
-      //           Title: {post.title}
-      //           <br />
-      //           Sold by: {post.username}
-      //           <br />
-      //         </span>
-      //       ))}
-      //   </GridList>
-      // </div>
     );
   }
 }
