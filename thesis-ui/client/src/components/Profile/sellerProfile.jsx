@@ -9,7 +9,7 @@ class SellerProfile extends Component {
   render() {
     return (
       <div>
-        <div />
+        <Bio />
         <ListingPostList />
       </div>
     );
