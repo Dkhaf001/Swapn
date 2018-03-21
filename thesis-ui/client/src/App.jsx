@@ -6,7 +6,8 @@ import Navbar from './components/Navbar/index.jsx';
 import { addDataToStore } from './actions';
 import Chat from './components/Chat/Chat.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import appRoutes from './routes/app.jsx';
+
+import Rt from './routes/app.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -23,18 +24,9 @@ class App extends React.Component {
         <div ref="mainPanel">
           <div>
             <Switch>
-              {appRoutes.map((prop, key) => {
-                if (prop.redirect) {
-                  return <Redirect from={prop.path} to={prop.to} key={key} />;
-                }
-                return (
-                  <Route
-                    path={prop.path}
-                    component={prop.component}
-                    key={key}
-                  />
-                );
-              })}
+              {Rt.appRoutes.map((prop, key) => (
+                <Route path={prop.path} component={prop.component} key={key} />
+              ))}
             </Switch>
           </div>
         </div>
@@ -44,15 +36,15 @@ class App extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    dataFromReduxStorage: state.dataReducers
+    dataFromReduxStorage: state.dataReducers,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addDataToStore
+      addDataToStore,
     },
-    dispatch
+    dispatch,
   );
 }
 

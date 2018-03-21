@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Search from './Search.jsx';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   constructor() {
@@ -8,11 +8,9 @@ class Navbar extends Component {
   }
   render() {
     return (
-      <div className="rowbanner">
-        <div className="leftbanner">
-          {this.props.user ? `Current User: ${this.props.user}` : ''}
-        </div>
-        <div className="middlebanner">
+      <div>
+        <div>{this.props.user ? `Current User: ${this.props.user}` : ''}</div>
+        <div>
           <Search />
           <Link to="/login" className="linkbutton">
             Login

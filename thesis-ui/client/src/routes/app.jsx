@@ -1,16 +1,24 @@
 // import used components
 import Edit from '../components/Profile/edit.jsx';
-import Profile from '../components/Profile/index.jsx';
+import Profile from '../components/Profile/sellerProfile.jsx';
 import SignUp from '../components/Auth/Signup.jsx';
 import Login from '../components/Auth/Login.jsx';
+import Home from '../components/Feed/homePostList.jsx';
+import SellingList from '../components/Feed/sellersPostList.jsx';
+import WatchingList from '../components/Feed/watchingPostList.jsx';
+import BarteringList from '../components/Feed/barteringsPostList.jsx';
+import ListingList from '../components/Feed/listingPostList.jsx';
+import FollowingList from '../components/Following/index.jsx';
 
-const appRoutes = [
+const Rt = {};
+Rt.appRoutes = [
   {
     path: '/home',
     sidebarName: 'Home',
     navbarName: 'Home',
-    component: Edit,
+    component: Home,
   },
+
   {
     path: '/profile',
     sidebarName: 'Profile',
@@ -18,34 +26,10 @@ const appRoutes = [
     component: Profile,
   },
   {
-    path: '/selling',
-    sidebarName: 'Selling',
-    navbarName: 'Selling',
-    component: Edit,
-  },
-  {
-    path: '/bartering',
-    sidebarName: 'Bartering',
-    navbarName: 'Bartering',
-    component: Edit,
-  },
-  {
-    path: '/watchlist',
-    sidebarName: 'Watchlist',
-    navbarName: 'Watchlist',
-    component: Edit,
-  },
-  {
-    path: '/following',
-    sidebarName: 'Following',
-    navbarName: 'Following',
-    component: Edit,
-  },
-  {
-    path: '/list',
+    path: '/post',
     sidebarName: 'List',
     navbarName: 'List',
-    component: Edit,
+    component: Home,
   },
   {
     path: '/edit',
@@ -60,17 +44,38 @@ const appRoutes = [
     component: SignUp,
   },
   {
-    path: '/login',
+    path: '/*',
     sidebarName: 'Login',
     navbarName: 'Login',
     component: Login,
   },
+];
+
+Rt.profileRoutes = [
   {
-    redirect: true,
-    path: '/',
-    to: '/home',
-    navbarName: 'Redirect',
+    path: '/profile/following',
+    sidebarName: 'Following',
+    navbarName: 'Following',
+    component: FollowingList,
+  },
+  {
+    path: '/profile/watchlist',
+    sidebarName: 'Watchlist',
+    navbarName: 'Watchlist',
+    component: WatchingList,
+  },
+  {
+    path: '/profile/bartering',
+    sidebarName: 'Bartering',
+    navbarName: 'Bartering',
+    component: BarteringList,
+  },
+  {
+    path: '/profile/selling',
+    sidebarName: 'Selling',
+    navbarName: 'Selling',
+    component: SellingList,
   },
 ];
 
-export default appRoutes;
+export default Rt;

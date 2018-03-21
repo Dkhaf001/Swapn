@@ -3,10 +3,10 @@ import db from '../../config/database/index';
 import {
   fetchAllFollowingHelper,
   addFollowingHelper,
-  removeFollowingHelper
+  removeFollowingHelper,
 } from './followingsSQLHelpers';
 
-export const fetchAllFollowingQuery = async payload => {
+export const fetchAllFollowingQuery = async (payload) => {
   try {
     const queryString = fetchAllFollowingHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -17,7 +17,18 @@ export const fetchAllFollowingQuery = async payload => {
   }
 };
 
-export const addFollowingQuery = async payload => {
+export const fetchFollowingQuery = async (payload) => {
+  try {
+    const queryString = fetchAllFollowingHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('fetchFollowingQuery - success fetching all followings');
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addFollowingQuery = async (payload) => {
   try {
     const queryString = addFollowingHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -28,7 +39,7 @@ export const addFollowingQuery = async payload => {
   }
 };
 
-export const removeFollowingQuery = async payload => {
+export const removeFollowingQuery = async (payload) => {
   try {
     const queryString = removeFollowingHelper(payload);
     const data = await db.queryAsync(queryString);

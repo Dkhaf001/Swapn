@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 
 import dataReducers from './dataReducers';
-import active_userReducers from './active_userReducers';
-import current_listReducers from './current_listReducers';
-import current_postReducers from './current_postReducers';
+import activeUserReducers from './active_userReducers';
+import currentListReducers from './current_listReducers';
+import currentPostReducers from './current_postReducers';
+import currentProfileReducers from './current_profileReducers';
 
 export default combineReducers({
   dataReducers,
-  active_user: active_userReducers,
-  current_list: current_listReducers,
-  current_post: current_postReducers
+  active_user: activeUserReducers,
+  current_list: currentListReducers,
+  current_post: currentPostReducers,
+  current_profile: currentProfileReducers,
 });
