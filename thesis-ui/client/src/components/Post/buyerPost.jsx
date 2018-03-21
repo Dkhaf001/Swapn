@@ -13,18 +13,41 @@ class BuyerPost extends Component {
   }
 
   async componentWillMount() {
+    this.getPost();
+    this.getPhotos();
+  }
+
+  async getPost() {
     let postId = this.props.post.id;
     const { data } = await axios.get(
       `http://localhost:3396/api/posts/${postId}`
     );
-    // get photos
+    console.log('successfully received post');
     this.setState({
       post: data
     });
   }
 
+  async getPhotos() {
+    let postId = this.props.post.id;
+    const { data } = await axios.get(
+      `http://localhost:3396/api/photos/${postId}`
+    );
+    console.log('successfully received photos');
+    this.setState({
+      photos: data
+    });
+  }
+
   render() {
-    return <div>{this.state.post}</div>;
+    return (
+      <div>
+        <p>Post info</p>
+        {this.state.post}
+        <p>Photos</p>
+        {this.state.photos}
+      </div>
+    );
   }
 }
 

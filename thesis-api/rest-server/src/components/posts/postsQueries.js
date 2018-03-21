@@ -5,6 +5,7 @@ import {
   fetchAllPostsHelper,
   fetchSinglePostsHelper,
   updatePostsHelper,
+  deletePostsHelper,
   addPostsHelper
 } from './postsSQLHelpers';
 
@@ -52,11 +53,22 @@ export const addPostsQuery = async (user, payload) => {
   }
 };
 
+export const deletePostsQuery = async (user, payload) => {
+  try {
+    const queryString = deletePostsHelper(user, payload);
+    const data = await db.queryAsync(queryString);
+    console.log('deletePostsQuery - successfully retrieved data');
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const updatePostsQuery = async (user, payload) => {
   try {
     const queryString = updatePostsHelper(user, payload);
     const data = await db.queryAsync(queryString);
-    console.log('addPostsQuery - successfully retrieved data');
+    console.log('updatePostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
     console.log(err);

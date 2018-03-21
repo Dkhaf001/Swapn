@@ -1,7 +1,7 @@
 export const fetchAllPostsHelper = () => {
   return `
-  SELECT * 
-  FROM posts
+  SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, users.username FROM posts
+  INNER JOIN users on (posts.user_id=users.id)
   `;
 };
 
@@ -29,6 +29,13 @@ export const addPostsHelper = (
    INSERT INTO posts (title, description, condition, location, demand, user_id, status, main_photo)
    VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '${main_photo})
    RETURNING *
+  `;
+};
+
+export const deletePostsHelper = ({ user_id }, { post_id }) => {
+  return `
+    DELETE FROM posts
+    WHERE id=${post_id} AND user_id=${user_id}
   `;
 };
 
