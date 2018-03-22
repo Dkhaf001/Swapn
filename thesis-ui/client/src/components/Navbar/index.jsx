@@ -3,21 +3,24 @@ import Search from './Search.jsx';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addActiveUserToStore } from '../../actions';
+import { addActiveUserToStore, addCurrentPost } from '../../actions';
 
 class Navbar extends Component {
   constructor() {
     super();
   }
-
+  clearStorePost = () => {
+    this.props.addCurrentPost('');
+  };
   logout = () => {
     window.localStorage.clear();
     this.props.addActiveUserToStore('');
+    this.props.addCurrentPost('');
   };
   loggedInView = () => (
     <div>
       <Search />
-      <Link to="/home" className="linkbutton">
+      <Link to="/home" onClick={this.clearStorePost} className="linkbutton">
         Home
       </Link>
       <Link to="/post" className="linkbutton">

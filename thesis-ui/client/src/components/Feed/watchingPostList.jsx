@@ -75,7 +75,6 @@ class WatchingPostList extends Component {
                   </span>
                 }
                 onClick={(e) => {
-                  e.preventDefault();
                   this.switchToSinglePost(post);
                 }}
                 actionIcon={
