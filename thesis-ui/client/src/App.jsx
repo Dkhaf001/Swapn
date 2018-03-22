@@ -5,11 +5,7 @@ import { bindActionCreators } from 'redux';
 import Navbar from './components/Navbar/index.jsx';
 import { addDataToStore } from './actions';
 import Chat from './components/Chat/Chat.jsx';
-<<<<<<< HEAD
-=======
 import Chattest from './components/Chat/Chattest.jsx';
-
->>>>>>> chat tests
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Rt from './routes/app.jsx';
@@ -28,6 +24,7 @@ class App extends React.Component {
         <Navbar />
         <div ref="mainPanel">
           <div>
+            <Chattest />
             <Switch>
               {Rt.appRoutes.map((prop, key) => (
                 <Route path={prop.path} component={prop.component} key={key} />
