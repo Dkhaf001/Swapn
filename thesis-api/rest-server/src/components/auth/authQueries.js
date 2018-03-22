@@ -7,7 +7,7 @@ import {
 
 export const userQuery = async (body) => {
   try {
-    const queryString = loginHelper(body);
+    const queryString = await loginHelper(body);
     const data = await db.queryAsync(queryString);
     // db.release();
     // console.log('userQuery - successfully retrieved data ', JSON.stringify(data));
@@ -19,7 +19,7 @@ export const userQuery = async (body) => {
 
 export const signupQuery = async (body) => {
   try {
-    const queryString = signUpHelper(body);
+    const queryString = await signUpHelper(body);
     const data = await db.queryAsync(queryString);
     return data;
   } catch(err) {

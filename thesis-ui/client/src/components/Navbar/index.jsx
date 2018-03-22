@@ -8,6 +8,9 @@ class Navbar extends Component {
     super();
   }
 
+  logout = () => {
+    window.localStorage.clear()
+  }
   loggedInView = () => (
     <div>
       <Search />
@@ -17,7 +20,7 @@ class Navbar extends Component {
       <Link to="/profile" className="linkbutton">
         Profile
       </Link>
-      <Link to="/" className="linkbutton">
+      <Link to="/" onClick={this.logout} className="linkbutton">
         Logout
       </Link>
     </div>

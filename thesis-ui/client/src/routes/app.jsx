@@ -1,4 +1,5 @@
 // import used components
+import React, { Component } from 'react';
 import Edit from '../components/Profile/edit.jsx';
 import Profile from '../components/Profile/sellerProfile.jsx';
 import SignUp from '../components/Auth/Signup.jsx';
@@ -10,6 +11,7 @@ import BarteringList from '../components/Feed/barteringsPostList.jsx';
 import ListingList from '../components/Feed/listingPostList.jsx';
 import FollowingList from '../components/Following/index.jsx';
 import jwtDecode from 'jwt-decode';
+import Protected from '../routes/protect.jsx'
 
 const Rt = {};
 Rt.appRoutes = [
@@ -46,8 +48,10 @@ Rt.appRoutes = [
     path: '/signup',
     sidebarName: 'Login',
     navbarName: 'Login',
+    // component: (props) => (<Protected component={SignUp} {...props} />),
     component: SignUp,
-    protected: false,
+    // component: <SignUp />,
+    protected: false
   },
   {
     path: '/login',
@@ -61,6 +65,12 @@ Rt.appRoutes = [
     component: Home,
     protected: false,
   },
+  // {
+  //   redirect: true,
+  //   path: '/',
+  //   to: '/home',
+  //   navbarName: 'Redirect',
+  // },
 ];
 
 Rt.profileRoutes = [

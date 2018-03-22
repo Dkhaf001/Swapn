@@ -19,7 +19,7 @@ class Signup extends Component {
     try {
       const response = await axios.post('http://localhost:3396/api/auth/signup', this.state)
       console.log('this is the dat', response.data, response)
-      window.localStorage.setItem('user', JSON.stringify(response.data))
+      // window.localStorage.setItem('user', JSON.stringify(response.data))
       response.data.token = null;
       this.props.addActiveUserToStore(response.data)
       

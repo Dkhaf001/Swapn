@@ -20,3 +20,5 @@ class Protected extends Component {
     return <Component {...this.props} />;
   }
 }
+
+export default Protected;

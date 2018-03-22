@@ -66,7 +66,7 @@ class Bio extends Component {
       <p>Location:{this.state.user.location}</p>
       <p>User:{this.state.user.rep}</p>
       <p>{this.state.user.rep_count}</p>
-      {buttonCheck()}
+      {this.buttonCheck()}
     </div>
   );
   render() {

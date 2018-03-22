@@ -26,13 +26,16 @@ class App extends React.Component {
           <div>
             <Chattest />
             <Switch>
-              {Rt.appRoutes.map((route, key) => {
+              { Rt.appRoutes.map((route, key) => {
+                // if (prop.redirect) {
+                //   return <Redirect from={prop.path} to={prop.to} key={key} />;
+                // }
                 if (route.protected) {
                   return (
                     <Route
                       path={route.path}
                       key={key}
-                      component={props => <Protected component={route.component} {...props} />}
+                      component={(props) => (<Protected component={route.component} {...props} />)}
                     />
                   );
                 }
