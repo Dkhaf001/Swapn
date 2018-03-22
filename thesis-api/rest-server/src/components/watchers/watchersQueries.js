@@ -10,7 +10,7 @@ export const addWatchesQuery = async payload => {
     const queryString = addWatchesHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('addWatchesQuery - successfully added data');
-    return data;
+    return data.rows;
   } catch (err) {
     console.log(err);
   }
@@ -21,7 +21,8 @@ export const removeWatchesQuery = async payload => {
     const queryString = removeWatchesHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('removeWatchesQuery - successfully deleted data');
-    return data;
+    console.log(data);
+    return data.rows;
   } catch (err) {
     console.log(err);
   }

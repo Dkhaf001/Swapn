@@ -24,6 +24,9 @@ const styles = {
 class WatchingPostList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      watching: this.props.current_list
+    };
   }
 
   async componentWillMount() {
@@ -42,10 +45,12 @@ class WatchingPostList extends Component {
 
   async removeFromWatchList(userId, postId) {
     try {
-      const { data } = await axios.delete(
+      await axios.delete(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
-      this.props.addCurrentList(data);
+      this.setState({
+        watching: this.props.current_list
+      });
       console.log('successfully deleted post from watch list!');
     } catch (err) {
       console.log('err deleting a post from your watch list');
@@ -56,8 +61,8 @@ class WatchingPostList extends Component {
     return (
       <div style={styles.root}>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
+          {this.state.watching &&
+            this.state.watching.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
