@@ -5,6 +5,7 @@ import activeUserReducers from './active_userReducers';
 import currentListReducers from './current_listReducers';
 import currentPostReducers from './current_postReducers';
 import currentProfileReducers from './current_profileReducers';
+import currentFollowingReducers from './current_followingReducers';
 
 export default combineReducers({
   dataReducers,
@@ -12,4 +13,5 @@ export default combineReducers({
   current_list: currentListReducers,
   current_post: currentPostReducers,
   current_profile: currentProfileReducers,
+  current_following: currentFollowingReducers
 });
