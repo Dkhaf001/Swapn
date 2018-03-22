@@ -9,8 +9,9 @@ class Navbar extends Component {
   }
 
   logout = () => {
-    window.localStorage.clear()
-  }
+    window.localStorage.clear();
+    this.props.addActiveUserToStore('');
+  };
   loggedInView = () => (
     <div>
       <Search />
@@ -56,5 +57,13 @@ function mapStateToProps(state) {
     active_user: state.active_user,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addActiveUserToStore,
+    },
+    dispatch,
+  );
+}
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
