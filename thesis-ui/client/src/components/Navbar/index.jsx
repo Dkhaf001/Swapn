@@ -38,9 +38,6 @@ class Navbar extends Component {
       <Link to="/home" className="linkbutton">
         Home
       </Link>
-      <Link to="/post" className="linkbutton">
-        List
-      </Link>
       <Link to="/signup" className="linkbutton">
         SignUp
       </Link>
