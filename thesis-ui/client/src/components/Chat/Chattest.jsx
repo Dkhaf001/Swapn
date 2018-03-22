@@ -1,5 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
+import { connect } from 'react-redux';
+
 
 class Chattest extends React.Component{
     constructor(props){
@@ -66,4 +68,12 @@ class Chattest extends React.Component{
     }
 }
 
-export default Chattest;
+function mapStateToProps(state) {
+    return {
+      active_user: state.active_user,
+    //   current_post: current_post,
+      dataFromReduxStorage: state.dataReducers,
+    };
+  }
+
+export default connect(mapStateToProps)(Chattest);
