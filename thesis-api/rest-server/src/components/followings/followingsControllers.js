@@ -27,7 +27,6 @@ export const fetchFollowingController = async (req, res) => {
 
 export const addFollowingController = async (req, res) => {
   const payload = req.params;
-  console.log('THIS IS THE PAYLOADDDD!!!', payload);
   try {
     const data = await addFollowingQuery(payload);
     return res.status(200).send(data);

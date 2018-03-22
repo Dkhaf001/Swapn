@@ -42,9 +42,9 @@ class BuyerPost extends Component {
 
   async addToWatchList() {
     if (this.props.active_user) {
-      const userId = this.props.current_post.user_id;
+      const userId = this.props.active_user.id;
       const postId = this.props.current_post.id;
-      const { rows } = await axios.post(
+      await axios.post(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
       console.log('successfully added to watch list');
@@ -53,12 +53,13 @@ class BuyerPost extends Component {
     }
   }
 
+  // gonna need logic to know if user is already following
   async addToFollowList() {
     if (this.props.active_user) {
       const userId = this.props.current_post.user_id;
       const followerId = this.props.active_user.id;
       await axios.post(
-        `http://localhost:3396/api/followings/${userId}/${followerId}`
+        `http://localhost:3396/api/followings/${followerId}/${userId}`
       );
       console.log('you clicked add to follow!');
     } else {
@@ -85,9 +86,8 @@ class BuyerPost extends Component {
           </h4>
           <h4>Status: {this.props.current_post.status}</h4>
         </div>
-        <button onClick={() => this.addToFollowList()}>
-          hi this is a follow button
-        </button>
+        <button onClick={() => this.addToFollowList()}>Follow</button>
+        <button onClick={() => this.addToWatchList()}>Add to Watch List</button>
       </div>
     );
   }
