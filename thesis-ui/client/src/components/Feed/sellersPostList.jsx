@@ -35,8 +35,6 @@ class SellersPostList extends Component {
       let id = this.props.active_user.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
       this.props.addCurrentList(data);
-      console.log('this is the data!', data);
-      console.log('this is the current list guys!', this.props.current_list);
     } catch (err) {
       console.log('err fetching posts', err);
     }
