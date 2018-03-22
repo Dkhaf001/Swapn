@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Search from './Search.jsx';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addActiveUserToStore } from '../../actions';
 
 class Navbar extends Component {
   constructor() {
