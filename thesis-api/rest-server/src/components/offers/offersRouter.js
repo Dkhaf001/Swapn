@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 // Search for all post Current User is trying to purchase
-router.route('/:user_id').get(fetchAllOffersController);
+router.route('/:username').get(fetchAllOffersController);
 //Add offer -opens chat
 router.route('/:post_id/:user_id').post(addOffersController);
 //Delete cancel offer Current User

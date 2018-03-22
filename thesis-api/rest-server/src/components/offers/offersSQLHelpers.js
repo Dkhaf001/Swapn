@@ -1,10 +1,10 @@
-export const fetchAllOffersHelper = ({ user_id }) => {
+export const fetchAllOffersHelper = ({ username }) => {
   return `
   SELECT * 
   FROM posts 
   INNER JOIN offers
   ON posts.id = offers.post_id 
-  WHERE offers.buyer_username='${user_id}'
+  WHERE offers.buyer_username='${username}'
   `;
 };
 
