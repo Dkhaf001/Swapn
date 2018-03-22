@@ -1,6 +1,7 @@
 import express from 'express';
 import validate from 'express-validation';
-import passport from '../../middleware/validation/passport';
+import passport from 'passport'
+import '../../middleware/validation/passport';
 
 import {
   signUpController,

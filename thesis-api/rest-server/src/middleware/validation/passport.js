@@ -28,7 +28,7 @@ passport.use(new LocalStrategy(localOptions, async (username, password, done) =>
     const { rows } = await userQuery({ username });
     console.log('inside of localstrategy this is the rows', rows)
     if (!rows.length) {
-      return done(null, false, { message: 'Incorrect email.' });
+      return done(null, false, { message: 'Incorrect username.' });
     }
     const passwordsMatch = await comparePasswords(password, rows[0].password);
     if (!passwordsMatch) {

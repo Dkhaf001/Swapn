@@ -7,7 +7,7 @@ import { addDataToStore } from './actions';
 import Chat from './components/Chat/Chat.jsx';
 import Chattest from './components/Chat/Chattest.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
-
+import Protected from './routes/protect.jsx';
 import Rt from './routes/app.jsx';
 
 class App extends React.Component {
@@ -26,9 +26,21 @@ class App extends React.Component {
           <div>
             <Chattest />
             <Switch>
-              {Rt.appRoutes.map((prop, key) => (
-                <Route path={prop.path} component={prop.component} key={key} />
-              ))}
+              { Rt.appRoutes.map((route, key) => {
+                // if (prop.redirect) {
+                //   return <Redirect from={prop.path} to={prop.to} key={key} />;
+                // }
+                if (route.protected) {
+                  return (
+                    <Route
+                      path={route.path}
+                      key={key}
+                      component={(props) => (<Protected component={route.component} {...props} />)}
+                    />
+                  );
+                }
+                return <Route path={route.path} component={route.component} key={key} />;
+              })}
             </Switch>
           </div>
         </div>

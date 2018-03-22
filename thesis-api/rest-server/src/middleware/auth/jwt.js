@@ -4,13 +4,13 @@ import {
 } from 'jsonwebtoken'
 
 
-export const generateToken = (id, email) => {
+export const generateToken = (id, username) => {
 
   const token = {};
 
   token.accessToken = sign({
     exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    email,
+    username,
     id,
   }, process.env.TOKEN_SECRET);
 
