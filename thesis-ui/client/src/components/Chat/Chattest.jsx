@@ -1,5 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
+import { connect } from 'react-redux';
+
 
 class Chattest extends React.Component{
     constructor(props){
@@ -10,14 +12,15 @@ class Chattest extends React.Component{
             message: '',
             messages: []
         };
-
+        
         this.socket = io('localhost:4155');
-
+        
         this.socket.on('RECEIVE_MESSAGE', function(data){
             addMessage(data);
         });
-
+        
         const addMessage = data => {
+            console.log('Username is', this.state.username);
             console.log(data);
             this.setState({messages: [...this.state.messages, data]});
             console.log(this.state.messages);
@@ -30,8 +33,12 @@ class Chattest extends React.Component{
                 message: this.state.message
             })
             this.setState({message: ''});
-
         }
+    }
+    async componentDidMount () {    
+        await this.setState({
+            username: this.props.active_user.username
+        })
     }
     render(){
         return (
@@ -52,7 +59,8 @@ class Chattest extends React.Component{
 
                             </div>
                             <div className="card-footer">
-                                <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})} className="form-control"/>
+                                {/* <input type="text" placeholder="Username" value={this.state.username}
+                                 onChange={ev => this.setState({username: ev.target.value})} className="form-control"/> */}
                                 <br/>
                                 <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
                                 <br/>
@@ -66,4 +74,12 @@ class Chattest extends React.Component{
     }
 }
 
-export default Chattest;
+function mapStateToProps(state) {
+    return {
+      active_user: state.active_user,
+    //   current_post: current_post,
+      dataFromReduxStorage: state.dataReducers,
+    };
+  }
+
+export default connect(mapStateToProps)(Chattest);
