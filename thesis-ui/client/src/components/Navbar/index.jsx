@@ -17,8 +17,11 @@ class Navbar extends Component {
   loggedInView = () => (
     <div>
       <Search />
+      <Link to="/home" className="linkbutton">
+        Home
+      </Link>
       <Link to="/post" className="linkbutton">
-        List
+        Listing
       </Link>
       <Link to="/profile" className="linkbutton">
         Profile
