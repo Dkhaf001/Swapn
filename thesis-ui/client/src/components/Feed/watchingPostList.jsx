@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 const styles = {
   root: {
@@ -38,6 +40,18 @@ class WatchingPostList extends Component {
     }
   }
 
+  async removeFromWatchList(userId, postId) {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3396/api/watchers/${userId}/${postId}`
+      );
+      this.props.addCurrentList(data);
+      console.log('successfully deleted post from watch list!');
+    } catch (err) {
+      console.log('err deleting a post from your watch list');
+    }
+  }
+
   render() {
     return (
       <div style={styles.root}>
@@ -52,7 +66,23 @@ class WatchingPostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={e => console.log('Clicked post.id:', post.id)}
+                onClick={e => {
+                  e.preventDefault();
+                  console.log('Clicked post id:', post.id);
+                }}
+                actionIcon={
+                  <IconButton
+                    onClick={e => {
+                      e.stopPropagation();
+                      this.removeFromWatchList(
+                        this.props.active_user.id,
+                        post.id
+                      );
+                    }}
+                  >
+                    <Delete color="white" />
+                  </IconButton>
+                }
               >
                 <img src={post.main_photo} />
               </GridTile>
