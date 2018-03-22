@@ -31,9 +31,9 @@ export const fetchUserPostsQuery = async payload => {
   }
 };
 
-export const fetchSinglePostsQuery = async payload => {
+export const fetchSinglePostsQuery = async (user, payload) => {
   try {
-    const queryString = fetchSinglePostsHelper(payload);
+    const queryString = fetchSinglePostsHelper(user, payload);
     const data = await db.queryAsync(queryString);
     console.log('fetchSinglePostsQuery - successfully retrieved data');
     return data.rows;

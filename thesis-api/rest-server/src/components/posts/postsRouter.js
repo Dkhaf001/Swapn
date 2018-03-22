@@ -13,7 +13,7 @@ router.route('/').get(fetchAllPostsController);
 //get user specific (user or buyer)
 router.route('/:user_id').get(fetchUserPostsController);
 //get single post
-router.route('/:post_id').get(fetchSinglePostsController);
+router.route('/:user_id/:post_id').get(fetchSinglePostsController);
 //update post
 router.route('/:user_id/:post_id').put(updatePostsController);
 //delete post

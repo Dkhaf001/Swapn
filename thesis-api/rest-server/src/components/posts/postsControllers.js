@@ -28,9 +28,10 @@ export const fetchUserPostsController = async (req, res) => {
 };
 
 export const fetchSinglePostsController = async (req, res) => {
-  let payload = req.params;
+  let payload = req.body;
+  let user = req.params;
   try {
-    const data = await fetchSinglePostsQuery(payload);
+    const data = await fetchSinglePostsQuery(user, payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
