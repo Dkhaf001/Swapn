@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList } from '../../actions';
+import { addCurrentList, addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
@@ -10,19 +10,19 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 // post list will need to render all post for all feeds by rendering stuff from store
 // best to have three way conditional rendered views due to styling
 // main feed,
-//watching feed, barttering feed
+// watching feed, barttering feed
 // selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
 
 class SellersPostList extends Component {
@@ -30,15 +30,21 @@ class SellersPostList extends Component {
     super(props);
   }
   async componentWillMount() {
-    //grab data from db, update store
+    // grab data from db, update store
     try {
-      let id = this.props.active_user.id;
+      const id = this.props.active_user.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
+
+  switchToSinglePost = (post) => {
+    console.log('Clicked post.id:', post.id);
+    this.props.addCurrentPost(post);
+    this.props.history.push(`/post/${post.id}`);
+  };
 
   render() {
     return (
@@ -54,7 +60,7 @@ class SellersPostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={e => console.log('Clicked post.id:', post.id)}
+                onClick={() => this.switchToSinglePost(post)}
               >
                 <img src={post.main_photo} />
               </GridTile>
@@ -68,16 +74,17 @@ class SellersPostList extends Component {
 function mapStateToProps(state) {
   return {
     active_user: state.active_user,
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList
+      addCurrentList,
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 

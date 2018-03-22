@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList } from '../../actions';
+import { addCurrentList, addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -10,13 +10,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class ListingPostList extends Component {
@@ -25,9 +25,9 @@ class ListingPostList extends Component {
   }
 
   async componentWillMount() {
-    //grab data from db, update store
+    // grab data from db, update store
     try {
-      let id = this.props.active_user.userid;
+      const id = this.props.active_user.userid;
       console.log('the id is', this.props.active_user);
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
       this.props.addCurrentList(data);
@@ -35,6 +35,12 @@ class ListingPostList extends Component {
       console.log('err fetching posts', err);
     }
   }
+
+  switchToSinglePost = (post) => {
+    console.log('Clicked post.id:', post.id);
+    this.props.addCurrentPost(post);
+    this.props.history.push(`/post/${post.id}`);
+  };
 
   render() {
     return (
@@ -50,7 +56,7 @@ class ListingPostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={e => console.log('Clicked post.id:', post.id)}
+                onClick={() => this.switchToSinglePost(post)}
               >
                 <img src={post.main_photo} />
               </GridTile>
@@ -63,16 +69,17 @@ class ListingPostList extends Component {
 function mapStateToProps(state) {
   return {
     current_list: state.current_list,
-    active_user: state.active_user
+    active_user: state.active_user,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList
+      addCurrentList,
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 
