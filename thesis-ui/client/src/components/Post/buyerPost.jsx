@@ -8,7 +8,7 @@ class BuyerPost extends Component {
     super(props);
     this.state = {
       post: '',
-      photos: []
+      photos: [],
     };
   }
 
@@ -18,24 +18,22 @@ class BuyerPost extends Component {
   }
 
   async getPost() {
-    let postId = this.props.post.id;
-    const { data } = await axios.get(
-      `http://localhost:3396/api/posts/${postId}`
-    );
+    console.log(this.props.current_post);
+    const userId = this.props.current_post.user_id;
+    const postId = this.props.current_post.id;
+    const { data } = await axios.get(`http://localhost:3396/api/posts/${userId}/${postId}`);
     console.log('successfully received post');
     this.setState({
-      post: data
+      post: data.rows,
     });
   }
 
   async getPhotos() {
-    let postId = this.props.post.id;
-    const { data } = await axios.get(
-      `http://localhost:3396/api/photos/${postId}`
-    );
+    const postId = this.props.current_post.id;
+    const { data } = await axios.get(`http://localhost:3396/api/photos/${postId}`);
     console.log('successfully received photos');
     this.setState({
-      photos: data
+      photos: data.rows,
     });
   }
 
@@ -53,7 +51,7 @@ class BuyerPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    post: state.current_post
+    current_post: state.current_post,
   };
 }
 

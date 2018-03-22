@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
-//edit post should reopen addPost but with the info already filled out including photos
-//should render chats if there are ongoing offers
+// edit post should reopen addPost but with the info already filled out including photos
+// should render chats if there are ongoing offers
 
 // COMMENTS FROM EDDIE
 // maybe we could create a EDIT button that will render the editPost.jsx
@@ -16,7 +16,7 @@ class SellerPost extends Component {
     super(props);
     this.state = {
       post: '',
-      photos: []
+      photos: [],
     };
   }
 
@@ -26,33 +26,28 @@ class SellerPost extends Component {
   }
 
   async getPost() {
-    let postId = this.props.post.id;
-    const { data } = await axios.get(
-      `http://localhost:3396/api/posts/${postId}`
-    );
+    const userId = this.props.current_post.user_id;
+    const postId = this.props.current_post.id;
+    const { data } = await axios.get(`http://localhost:3396/api/posts/${userId}/${postId}`);
     console.log('successfully received post!');
     this.setState({
-      post: data
+      post: data.rows,
     });
   }
 
   async getPhotos() {
-    let postId = this.props.post.id;
-    const { data } = await axios.get(
-      `http://localhost:3396/api/photos/${postId}`
-    );
+    const postId = this.props.current_posts.id;
+    const { data } = await axios.get(`http://localhost:3396/api/photos/${postId}`);
     console.log('successfully received photos!');
     this.setState({
-      photos: data
+      photos: data.rows,
     });
   }
 
   async removePost() {
-    let userId = this.props.post.user_id;
-    let postId = this.props.post.id;
-    const { data } = await axios.delete(
-      `http://localhost:3396/api/photos/${userId}/${postId}`
-    );
+    const userId = this.props.post.user_id;
+    const postId = this.props.post.id;
+    const { data } = await axios.delete(`http://localhost:3396/api/photos/${userId}/${postId}`);
     console.log('successfully deleted post!');
     // refresh page after successfully deleting?
   }
@@ -77,7 +72,7 @@ class SellerPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    post: state.current_post
+    current_post: state.current_post,
   };
 }
 

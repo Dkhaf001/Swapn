@@ -11,6 +11,7 @@ import BarteringList from '../components/Feed/barteringsPostList.jsx';
 import ListingList from '../components/Feed/listingPostList.jsx';
 import FollowingList from '../components/Following/index.jsx';
 import AddPost from '../components/Post/addPost.jsx';
+import SinglePost from '../components/Post/index.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 
@@ -23,13 +24,19 @@ Rt.appRoutes = [
     component: Home,
     protected: false,
   },
-  // {(props) => <Protected component={Home} {...props} />}
   {
     path: '/profile',
     sidebarName: 'Profile',
     navbarName: 'Profile',
     component: Profile,
     protected: true,
+  },
+  {
+    path: '/post/:id',
+    sidebarName: 'Login',
+    navbarName: 'Login',
+    component: SinglePost,
+    protected: false,
   },
   {
     path: '/post',
@@ -49,9 +56,7 @@ Rt.appRoutes = [
     path: '/signup',
     sidebarName: 'Login',
     navbarName: 'Login',
-    // component: (props) => (<Protected component={SignUp} {...props} />),
     component: SignUp,
-    // component: <SignUp />,
     protected: false,
   },
   {
@@ -66,12 +71,6 @@ Rt.appRoutes = [
     component: Home,
     protected: false,
   },
-  // {
-  //   redirect: true,
-  //   path: '/',
-  //   to: '/home',
-  //   navbarName: 'Redirect',
-  // },
 ];
 
 Rt.profileRoutes = [
