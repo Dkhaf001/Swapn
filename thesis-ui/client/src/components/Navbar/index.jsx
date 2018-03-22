@@ -20,7 +20,7 @@ class Navbar extends Component {
   loggedInView = () => (
     <div>
       <Search />
-      <Link to="/home" onClick={this.clearStorePost} className="linkbutton">
+      <Link to="/home" className="linkbutton">
         Home
       </Link>
       <Link to="/post" className="linkbutton">
@@ -59,15 +59,15 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 

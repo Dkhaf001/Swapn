@@ -55,7 +55,11 @@ class BuyerPost extends Component {
 
   async addToFollowList() {
     if (this.props.active_user) {
-      await axios.post(`http://localhost:3396/api/followings`);
+      const userId = this.props.current_post.user_id;
+      const followerId = this.props.active_user.id;
+      await axios.post(
+        `http://localhost:3396/api/followings/${userId}/${followerId}`
+      );
       console.log('you clicked add to follow!');
     } else {
       console.log('you must be logged in to follow');
