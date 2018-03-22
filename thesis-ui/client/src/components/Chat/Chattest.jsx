@@ -12,14 +12,15 @@ class Chattest extends React.Component{
             message: '',
             messages: []
         };
-
+        
         this.socket = io('localhost:4155');
-
+        
         this.socket.on('RECEIVE_MESSAGE', function(data){
             addMessage(data);
         });
-
+        
         const addMessage = data => {
+            console.log('Username is', this.state.username);
             console.log(data);
             this.setState({messages: [...this.state.messages, data]});
             console.log(this.state.messages);
@@ -54,7 +55,8 @@ class Chattest extends React.Component{
 
                             </div>
                             <div className="card-footer">
-                                <input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})} className="form-control"/>
+                                <input type="text" placeholder="Username" value={this.state.username}
+                                 onChange={ev => this.setState({username: ev.target.value})} className="form-control"/>
                                 <br/>
                                 <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
                                 <br/>
