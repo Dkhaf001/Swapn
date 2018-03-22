@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Bio from './bio.jsx';
-import Following from '../Following/index.jsx';
+import ListingList from '../Feed/listingPostList.jsx';
 // Profile view will need feed view in here too.
 // two views one as a Buyer & Seller
 // Seller View
@@ -20,8 +20,8 @@ class Profile extends Component {
           <Bio />
         </div>
         <div>
-          <Following />
-        </div>
+        <ListingList />
+        <div />
       </div>
     );
   }

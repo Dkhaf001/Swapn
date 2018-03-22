@@ -15,10 +15,14 @@ class SellerProfile extends Component {
         <Bio />
         <div>
           <ProfileNavbar />
+<<<<<<< HEAD
           {console.log(this.props.match)
           // console.log(match.path)
           // console.log(match.url)
           }
+=======
+          <ListingPostList />
+>>>>>>> attempting to protect rebase
           <Switch>
             {Rt.profileRoutes.map((prop, key) => (
               <Route path={prop.path} component={prop.component} key={key} />
