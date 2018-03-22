@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
 // COMMENTS FROM ELBERT
 //this is the component that will render when you want to add a post to the feed
 // pop up?  or view change?
