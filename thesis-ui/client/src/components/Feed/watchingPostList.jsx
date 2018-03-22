@@ -25,11 +25,11 @@ class WatchingPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      watching: this.props.current_list
+      watching: []
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     //grab data from db, update store
     try {
       let id = this.props.active_user.id;
@@ -38,6 +38,9 @@ class WatchingPostList extends Component {
         `http://localhost:3396/api/watchers/${id}`
       );
       this.props.addCurrentList(data);
+      this.setState({
+        watching: data
+      });
     } catch (err) {
       console.log('err fetching posts', err);
     }
@@ -48,10 +51,10 @@ class WatchingPostList extends Component {
       await axios.delete(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
-      this.setState({
-        watching: this.props.current_list
-      });
-      console.log('successfully deleted post from watch list!');
+      const records = this.state.watching.filter(
+        data => data.post_id !== postId
+      );
+      this.setState({ watching: records });
     } catch (err) {
       console.log('err deleting a post from your watch list');
     }
@@ -73,7 +76,7 @@ class WatchingPostList extends Component {
                 }
                 onClick={e => {
                   e.preventDefault();
-                  console.log('Clicked post id:', post.id);
+                  console.log('Clicked post id:', post.post_id);
                 }}
                 actionIcon={
                   <IconButton
@@ -81,7 +84,7 @@ class WatchingPostList extends Component {
                       e.stopPropagation();
                       this.removeFromWatchList(
                         this.props.active_user.id,
-                        post.id
+                        post.post_id
                       );
                     }}
                   >
