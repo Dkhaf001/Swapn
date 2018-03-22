@@ -2,7 +2,7 @@ import {
   fetchAllFollowingQuery,
   addFollowingQuery,
   removeFollowingQuery,
-  fetchFollowingQuery,
+  fetchFollowingQuery
 } from './followingsQueries';
 
 export const fetchAllFollowingController = async (req, res) => {

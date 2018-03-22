@@ -8,7 +8,7 @@ class BuyerPost extends Component {
     super(props);
     this.state = {
       post: '',
-      photos: [],
+      photos: []
     };
   }
 
@@ -18,32 +18,72 @@ class BuyerPost extends Component {
   }
 
   async getPost() {
-    console.log(this.props.current_post);
     const userId = this.props.current_post.user_id;
     const postId = this.props.current_post.id;
-    const { data } = await axios.get(`http://localhost:3396/api/posts/${userId}/${postId}`);
+    const { rows } = await axios.get(
+      `http://localhost:3396/api/posts/${userId}/${postId}`
+    );
     console.log('successfully received post');
     this.setState({
-      post: data.rows,
+      post: rows
     });
   }
 
   async getPhotos() {
     const postId = this.props.current_post.id;
-    const { data } = await axios.get(`http://localhost:3396/api/photos/${postId}`);
+    const { data } = await axios.get(
+      `http://localhost:3396/api/photos/${postId}`
+    );
     console.log('successfully received photos');
     this.setState({
-      photos: data.rows,
+      photos: data.rows
     });
+  }
+
+  async addToWatchList() {
+    if (this.props.active_user) {
+      const userId = this.props.current_post.user_id;
+      const postId = this.props.current_post.id;
+      const { rows } = await axios.post(
+        `http://localhost:3396/api/watchers/${userId}/${postId}`
+      );
+      console.log('successfully added to watch list');
+    } else {
+      console.log('you must be logged in to add to watch list');
+    }
+  }
+
+  async addToFollowList() {
+    if (this.props.active_user) {
+      await axios.post(`http://localhost:3396/api/followings`);
+      console.log('you clicked add to follow!');
+    } else {
+      console.log('you must be logged in to follow');
+    }
   }
 
   render() {
     return (
       <div>
-        <p>Post info</p>
-        {this.state.post}
-        <p>Photos</p>
-        {this.state.photos}
+        <div>
+          <img src={this.props.current_post.main_photo} />
+        </div>
+        <div>
+          <h1>
+            <strong>{this.props.current_post.title}</strong>
+          </h1>
+          <h3>{this.props.current_post.description}</h3>
+          <h3>{this.props.current_post.condition}</h3>
+          <h3>{this.props.current_post.location}</h3>
+          <h4>
+            <strong>{this.props.current_post.username}</strong> wants to trade
+            this item for: {this.props.current_post.demand}
+          </h4>
+          <h4>Status: {this.props.current_post.status}</h4>
+        </div>
+        <button onClick={() => this.addToFollowList()}>
+          hi this is a follow button
+        </button>
       </div>
     );
   }
@@ -52,6 +92,7 @@ class BuyerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
+    active_user: state.active_user
   };
 }
 
