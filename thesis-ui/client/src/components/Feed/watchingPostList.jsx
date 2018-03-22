@@ -24,9 +24,12 @@ const styles = {
 class WatchingPostList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      watching: []
+    };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     //grab data from db, update store
     try {
       let id = this.props.active_user.id;
@@ -35,6 +38,9 @@ class WatchingPostList extends Component {
         `http://localhost:3396/api/watchers/${id}`
       );
       this.props.addCurrentList(data);
+      this.setState({
+        watching: data
+      });
     } catch (err) {
       console.log('err fetching posts', err);
     }
@@ -42,11 +48,13 @@ class WatchingPostList extends Component {
 
   async removeFromWatchList(userId, postId) {
     try {
-      const { data } = await axios.delete(
+      await axios.delete(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
-      this.props.addCurrentList(data);
-      console.log('successfully deleted post from watch list!');
+      const records = this.state.watching.filter(
+        data => data.post_id !== postId
+      );
+      this.setState({ watching: records });
     } catch (err) {
       console.log('err deleting a post from your watch list');
     }
@@ -56,8 +64,8 @@ class WatchingPostList extends Component {
     return (
       <div style={styles.root}>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
+          {this.state.watching &&
+            this.state.watching.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
@@ -68,7 +76,7 @@ class WatchingPostList extends Component {
                 }
                 onClick={e => {
                   e.preventDefault();
-                  console.log('Clicked post id:', post.id);
+                  console.log('Clicked post id:', post.post_id);
                 }}
                 actionIcon={
                   <IconButton
@@ -76,7 +84,7 @@ class WatchingPostList extends Component {
                       e.stopPropagation();
                       this.removeFromWatchList(
                         this.props.active_user.id,
-                        post.id
+                        post.post_id
                       );
                     }}
                   >
