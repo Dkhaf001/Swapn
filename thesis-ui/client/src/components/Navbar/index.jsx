@@ -35,6 +35,9 @@ class Navbar extends Component {
   loggedOutView = () => (
     <div>
       <Search />
+      <Link to="/home" className="linkbutton">
+        Home
+      </Link>
       <Link to="/post" className="linkbutton">
         List
       </Link>
