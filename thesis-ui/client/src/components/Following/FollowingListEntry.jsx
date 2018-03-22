@@ -18,7 +18,7 @@ class FollowingsListEntry extends Component {
       const user_id =
         JSON.parse(window.localStorage.getItem('user')).id ||
         this.props.active_user.id;
-      const { data } = await axios.delete(
+      await axios.delete(
         `http://localhost:3396/api/followings/${user_id}/${
           this.props.following.id
         }`
