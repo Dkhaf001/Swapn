@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList } from '../../actions';
+import { addCurrentList, addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -17,13 +17,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class HomePostList extends Component {
@@ -40,7 +40,10 @@ class HomePostList extends Component {
       console.log('err fetching posts');
     }
   }
-
+  switchToSinglePost = (post) => {
+    console.log('Clicked post.id:', post.id);
+    this.props.addCurrentPost(post);
+  };
   render() {
     return (
       <div style={styles.root}>
@@ -55,7 +58,7 @@ class HomePostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={e => console.log('Clicked post.id:', post.id)}
+                onClick={this.switchToSinglePost}
               >
                 <img src={post.main_photo} />
               </GridTile>
@@ -68,16 +71,17 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList
+      addCurrentList,
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 
