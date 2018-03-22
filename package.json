@@ -11,11 +11,15 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "npm": "^5.7.1",
-    "prettier-eslint": "^8.8.1"
+    "prettier-eslint": "^8.8.1",
+    "npm-run-all": "^4.1.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup:api":
+      "cd thesis-api && npm run buildEnv && npm run setup:rest-server && npm run setup:socket-server",
+    "setup:ui": "cd thesis-ui && npm run buildEnv && npm run setup:server && npm run setup:client"
   },
   "repository": {
     "type": "git",
