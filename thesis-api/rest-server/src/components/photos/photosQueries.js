@@ -1,11 +1,7 @@
 import db from '../../config/database';
-import {
-  fetchAllPhotosHelper,
-  addPhotosHelper,
-  removePhotosHelper
-} from './photosSQLHelpers';
+import { fetchAllPhotosHelper, addPhotosHelper, removePhotosHelper } from './photosSQLHelpers';
 
-export const fetchAllPhotosQuery = async payload => {
+export const fetchAllPhotosQuery = async (payload) => {
   try {
     const queryString = fetchAllPhotosHelper(payload, url);
     const data = await db.queryAsync(queryString);
@@ -27,7 +23,7 @@ export const addPhotosQuery = async (payload, url) => {
   }
 };
 
-export const removePhotosQuery = async payload => {
+export const removePhotosQuery = async (payload) => {
   try {
     const queryString = removePhotosHelper(payload);
     const data = await db.queryAsync(queryString);

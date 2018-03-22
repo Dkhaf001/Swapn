@@ -43,6 +43,7 @@ class HomePostList extends Component {
   switchToSinglePost = (post) => {
     console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
+    this.props.history.push(`/post/${post.id}`);
   };
   render() {
     return (
@@ -58,7 +59,7 @@ class HomePostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={this.switchToSinglePost}
+                onClick={() => this.switchToSinglePost(post)}
               >
                 <img src={post.main_photo} />
               </GridTile>
