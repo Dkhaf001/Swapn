@@ -52,9 +52,6 @@ class Navbar extends Component {
     }
     return this.loggedOutView();
   }
-  //  <LoginLogout onClick={this.props.onClick} authed={this.props.auth} user={this.props.user} type={this.props.type} />
-  //         <Link to="/login" className="linkbutton"> Login </Link>
-  //         <button className="linkbutton" name="logout" onClick={this.props.onClick}> Logout </button>
 }
 
 function mapStateToProps(state) {
