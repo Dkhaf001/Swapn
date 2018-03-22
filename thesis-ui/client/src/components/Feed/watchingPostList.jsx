@@ -40,27 +40,22 @@ class WatchingPostList extends Component {
     }
   }
 
-  async removeFromWatchList() {
-    let userId = this.props.active_user.id;
-    let postId = this.props.current_list.id;
-    // console.log('this is the user id', userId);
-    // console.log('this is the post id', postId);
-    console.log('clicked delete button!');
-
-    // router.route('/:user_id/:post_id').delete(removeWatchesController);
+  async removeFromWatchList(userId, postId) {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3396/api/watchers/${userId}/${postId}`
+      );
+      this.props.addCurrentList(data);
+      console.log('successfully deleted post from watch list!');
+    } catch (err) {
+      console.log('err deleting a post from your watch list');
+    }
   }
 
   render() {
     return (
       <div style={styles.root}>
-        <GridList
-          cellHeight={200}
-          style={styles.gridList}
-          onClick={e => {
-            e.preventDefault();
-            console.log('Clicked grid');
-          }}
-        >
+        <GridList cellHeight={200} style={styles.gridList}>
           {this.props.current_list &&
             this.props.current_list.map(post => (
               <GridTile
@@ -71,11 +66,18 @@ class WatchingPostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
+                onClick={e => {
+                  e.preventDefault();
+                  console.log('Clicked post id:', post.id);
+                }}
                 actionIcon={
                   <IconButton
                     onClick={e => {
                       e.stopPropagation();
-                      this.removeFromWatchList();
+                      this.removeFromWatchList(
+                        this.props.active_user.id,
+                        post.id
+                      );
                     }}
                   >
                     <Delete color="white" />
