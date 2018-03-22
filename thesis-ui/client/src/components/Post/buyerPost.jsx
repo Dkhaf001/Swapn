@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 
 // should render chat view if the buyer has an active offer with seller
 class BuyerPost extends Component {
@@ -41,31 +42,46 @@ class BuyerPost extends Component {
   }
 
   async addToWatchList() {
-    if (this.props.active_user) {
+    if (
+      this.props.active_user &&
+      this.props.active_user.id !== this.props.current_post.user_id
+    ) {
       const userId = this.props.active_user.id;
       const postId = this.props.current_post.id;
       await axios.post(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
       console.log('successfully added to watch list');
-    } else {
+    } else if (!this.props.active_user) {
       console.log('you must be logged in to add to watch list');
+    } else if (this.props.active_user.id === this.props.current_post.user_id) {
+      console.log('you cant watch your own post');
     }
   }
 
   // gonna need logic to know if user is already following
   async addToFollowList() {
-    if (this.props.active_user) {
+    if (
+      this.props.active_user &&
+      this.props.active_user.id !== this.props.current_post.user_id
+    ) {
       const userId = this.props.current_post.user_id;
       const followerId = this.props.active_user.id;
       await axios.post(
         `http://localhost:3396/api/followings/${followerId}/${userId}`
       );
       console.log('you clicked add to follow!');
-    } else {
+    } else if (!this.props.active_user) {
       console.log('you must be logged in to follow');
+    } else if (this.props.active_user.id === this.props.current_post.user_id) {
+      console.log('you cant follow yourself!');
     }
   }
+
+  // when you want to make an offer -> which will open sockets dm
+  // async makeOffer() {
+
+  // }
 
   render() {
     return (
@@ -86,8 +102,17 @@ class BuyerPost extends Component {
           </h4>
           <h4>Status: {this.props.current_post.status}</h4>
         </div>
-        <button onClick={() => this.addToFollowList()}>Follow</button>
-        <button onClick={() => this.addToWatchList()}>Add to Watch List</button>
+        <RaisedButton
+          label="Add to Watch List"
+          style={{ margin: 12 }}
+          onClick={() => this.addToWatchList()}
+        />
+        <RaisedButton
+          label="Follow"
+          primary={true}
+          style={{ margin: 12 }}
+          onClick={() => this.addToFollowList()}
+        />
       </div>
     );
   }
