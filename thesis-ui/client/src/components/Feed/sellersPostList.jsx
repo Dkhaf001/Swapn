@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addCurrentList } from '../../actions';
+import { bindActionCreators } from 'redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import axios from 'axios';
 
 const styles = {
   root: {
@@ -23,15 +26,17 @@ const styles = {
 // selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
 
 class SellersPostList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   async componentWillMount() {
     //grab data from db, update store
     try {
-      let id = this.props.active_user.userid;
+      let id = this.props.active_user.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
       this.props.addCurrentList(data);
+      console.log('this is the data!', data);
+      console.log('this is the current list guys!', this.props.current_list);
     } catch (err) {
       console.log('err fetching posts', err);
     }
@@ -69,4 +74,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SellersPostList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentList
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SellersPostList);

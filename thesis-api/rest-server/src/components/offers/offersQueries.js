@@ -10,7 +10,7 @@ export const fetchAllOffersQuery = async payload => {
     const queryString = fetchAllOffersHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('fetchAllOffersQuery - successfully retrieved data');
-    return data;
+    return data.rows;
   } catch (err) {
     console.log(err);
   }

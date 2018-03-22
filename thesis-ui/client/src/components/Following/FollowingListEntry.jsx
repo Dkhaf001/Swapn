@@ -27,7 +27,7 @@ class FollowingsListEntry extends Component {
         following: null
       });
     } catch (err) {
-      console.log('err unfollwing user', err);
+      console.log('err unfollwing user');
     }
   }
   render() {

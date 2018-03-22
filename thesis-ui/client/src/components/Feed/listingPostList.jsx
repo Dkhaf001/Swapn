@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addCurrentList } from '../../actions';
+import { bindActionCreators } from 'redux';
+import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 
@@ -17,8 +20,8 @@ const styles = {
 };
 
 class ListingPostList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   async componentWillMount() {
@@ -64,4 +67,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ListingPostList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentList
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListingPostList);

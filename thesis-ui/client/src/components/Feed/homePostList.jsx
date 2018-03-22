@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { GridList, GridTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { addCurrentList } from '../../actions';
 import { bindActionCreators } from 'redux';
+import axios from 'axios';
+import { GridList, GridTile } from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
 
 // ELBERT'S COMMENTS
 // post list will need to render all post for all feeds by rendering stuff from store
@@ -17,18 +17,18 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   async componentWillMount() {
@@ -68,16 +68,16 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
+      addCurrentList
     },
-    dispatch,
+    dispatch
   );
 }
 

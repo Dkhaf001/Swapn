@@ -32,7 +32,7 @@ export const fetchAllWatchesQuery = async payload => {
     const queryString = fetchAllWatchesHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('fetchAllWatchesQuery - successfully retrieved all data');
-    return data;
+    return data.rows;
   } catch (err) {
     console.log(err);
   }

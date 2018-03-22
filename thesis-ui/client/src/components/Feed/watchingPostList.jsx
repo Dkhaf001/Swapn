@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addCurrentList } from '../../actions';
+import { bindActionCreators } from 'redux';
+import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 
@@ -17,15 +20,15 @@ const styles = {
 };
 
 class WatchingPostList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   async componentWillMount() {
     //grab data from db, update store
     try {
-      let id = this.props.active_user.useuid;
-      console.log('the id is', this.props.active_usur);
+      let id = this.props.active_user.id;
+      console.log('the id is', this.props.active_user);
       const { data } = await axios.get(
         `http://localhost:3396/api/watchers/${id}`
       );
@@ -66,4 +69,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(WatchingPostList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentList
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WatchingPostList);
