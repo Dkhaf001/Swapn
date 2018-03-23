@@ -22,3 +22,13 @@ export const fetchAllWatchesHelper = ({ user_id }) => {
   WHERE watchs.user_id=${user_id}
   `;
 };
+
+export const fetchSingleWatchesHelper = ({ user_id, post_id }) => {
+  return `
+  SELECT * 
+  FROM posts 
+  INNER JOIN watchs
+  ON posts.id = watchs.post_id 
+  WHERE watchs.user_id=${user_id} AND watchs.post_id=${post_id}
+  `;
+};
