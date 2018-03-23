@@ -32,8 +32,8 @@ class WatchingPostList extends Component {
   async componentDidMount() {
     // grab data from db, update store
     try {
-      const id = this.props.active_user.id;
-      console.log('the id is', this.props.active_user);
+      const id = localStorage.id;
+      console.log('the id is', localStorage.id);
       const { data } = await axios.get(
         `http://localhost:3396/api/watchers/${id}`
       );
@@ -87,10 +87,7 @@ class WatchingPostList extends Component {
                   <IconButton
                     onClick={e => {
                       e.stopPropagation();
-                      this.removeFromWatchList(
-                        this.props.active_user.id,
-                        post.post_id
-                      );
+                      this.removeFromWatchList(localStorage.id, post.post_id);
                     }}
                   >
                     <Delete color="white" />
@@ -107,8 +104,7 @@ class WatchingPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
-    active_user: state.active_user
+    current_list: state.current_list
   };
 }
 

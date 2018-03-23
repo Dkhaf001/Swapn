@@ -7,13 +7,13 @@ class Edit extends Component {
     super();
     this.state = {
       location: '',
-      main_photo: '',
+      main_photo: ''
     };
   }
   componentWillMount() {
     this.setState({
       location: this.props.active_user.location,
-      main_photo: this.props.active_user.photo_url,
+      main_photo: this.props.active_user.photo_url
     });
   }
   // need two imput feild set gut request with axios when submit// needs photo upload
@@ -22,7 +22,7 @@ class Edit extends Component {
       await axios.put('http://localhost:3396/users/', {
         user_id: this.props.currentUser.id,
         location: this.state.location,
-        photo_url: this.state.main_photo,
+        photo_url: this.state.main_photo
       });
       console.log('Succes Updated User Profile');
     } catch (err) {
@@ -53,7 +53,7 @@ class Edit extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 
