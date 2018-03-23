@@ -6,8 +6,17 @@ class Search extends Component {
     super();
   }
   render() {
-    return <div>Hello from Search</div>;
-  }
+    return (
+      <div>
+        <form className="navbar-form navbar-left" role="search">
+          <div className="form-group">
+            <input type="text" placeholder="Search" />
+            <input type="text" placeholder="Location" />
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    );
 }
-
+}
 export default Search;

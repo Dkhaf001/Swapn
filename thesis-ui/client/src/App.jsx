@@ -9,6 +9,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Protected from './routes/protect.jsx';
 import Rt from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
+import './styles.css';
 
 class App extends React.Component {
   constructor() {

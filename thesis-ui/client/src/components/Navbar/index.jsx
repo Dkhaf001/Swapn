@@ -24,29 +24,39 @@ class Navbar extends Component {
     this.props.addCurrentPost('');
   };
   loggedInView = () => (
-    <div>
-      <StatusBar />
-      <Search />
-      Currently Signed in as : {localStorage.username} 
-      <br />
+    <div className="rowbanner">
+      <div className="leftbanner">
       <Link to="/home" className="linkbutton">
-        Home
+        Home 
       </Link>
       <Link to="/post" className="linkbutton">
-        Listing
+        Listing 
       </Link>
       <Link to="/profile" className="linkbutton">
-        Profile
+        Profile 
       </Link>
       <Link to="/" onClick={this.logout} className="linkbutton">
         Logout
       </Link>
+      </div>
+      <div className="leftbanner">
+      Currently Signed in as : {localStorage.username} 
+      </div>
+      <div className="rightbanner">
+      <StatusBar />
+      </div>
+      <div className="middlebanner">
+      <Search />
+      </div>
     </div>
   );
   // need to add logout functinoality and protection
   loggedOutView = () => (
-    <div>
+    <div className="rowbanner">
+    <div className="middlebanner">
       <Search />
+    </div>
+    <div className="leftbanner">
       <Link to="/home" className="linkbutton">
         Home
       </Link>
@@ -56,6 +66,7 @@ class Navbar extends Component {
       <Link to="/login" className="linkbutton">
         Login
       </Link>
+    </div>
     </div>
   );
   render() {
