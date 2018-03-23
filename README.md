@@ -4,19 +4,19 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+* **Product Owner**: teamMember
+* **Scrum Master**: teamMember
+* **Development Team Members**: teamMember, teamMember
 
 ## Table of Contents
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
+1.  [Usage](#Usage)
+1.  [Requirements](#requirements)
+1.  [Development](#development)
+    1.  [Installing Dependencies](#installing-dependencies)
+    1.  [Tasks](#tasks)
+1.  [Team](#team)
+1.  [Contributing](#contributing)
 
 ## Usage
 
@@ -24,11 +24,11 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+* Node 0.10.x
+* Redis 2.6.x
+* Postgresql 9.1.x
+* etc
+* etc
 
 ## Development
 
@@ -48,26 +48,28 @@ View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 
 TO START BACKEND
 cd thesis-api
-  npm run buildEnv
-  npm run setup:socket-server
-  npm run setup:rest-server
-  npm run start
- 
+npm run buildEnv
+npm run setup:socket-server
+npm run setup:rest-server
+npm run setup:s3-server
+npm run start
+
 TO SETUP DATABASE
 cd thesis-api
 
-  cd rest-server
-    cd index.js
-      uncomment line 5
-      comment line 5
+cd rest-server
+cd index.js
+uncomment line 5
+comment line 5
 
 TO START FRONT
 cd thesis-ui
-  npm run buildEnv
-  npm run setup:server
-  npm run setup:client
-  npm run build
-  npm run start:server
+npm run buildEnv
+npm run setup:server
+npm run setup:client
+npm run build
+npm run start:server
+
 ## Contributing
 
 See [CONTRIBUTING.md](_CONTRIBUTING.md) for contribution guidelines.
