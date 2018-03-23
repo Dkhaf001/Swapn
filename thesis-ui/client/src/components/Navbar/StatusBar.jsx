@@ -9,7 +9,6 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import Chattest from '../Chat/Chattest';
 import { Link } from 'react-router-dom';
 class StatusBar extends Component {
   state = {
@@ -110,7 +109,7 @@ class StatusBar extends Component {
               </IconButton>
             </div>
           )}
-          <Chattest />
+          
         </div>}
       
 
