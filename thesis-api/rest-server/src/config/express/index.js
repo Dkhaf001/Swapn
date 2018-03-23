@@ -1,12 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-//Helmet helps you secure your Express apps by setting various HTTP headers.
 import helmet from 'helmet';
-//headers setting
 import cors from 'cors';
 import router from '../../routes/index';
-import passport from '../../middleware/validation/passport'
+import passport from '../../middleware/validation/passport';
 
 const midWare = [
   helmet(),
@@ -15,8 +13,8 @@ const midWare = [
   morgan('dev'),
   cors({
     allowedHeaders: 'Content-Type, authorization',
-    methods: ['GET, POST, PUT, DELETE', 'OPTIONS']
-  })
+    methods: ['GET, POST, PUT, DELETE', 'OPTIONS'],
+  }),
 ];
 
 class App {
