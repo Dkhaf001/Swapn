@@ -12,8 +12,8 @@ export const fetchAllFollowingHelper = ({ user_id }) => `
 
 export const fetchFollowingHelper = ({ user_id, following_id }) => `
    SELECT * 
-   FROM following
-   WHERE user_id=${user_id} & following_id=${following_id}
+   FROM followings
+   WHERE user_id=${user_id} AND following_id=${following_id}
   `;
 
 export const removeFollowingHelper = ({ user_id, following_id }) => `

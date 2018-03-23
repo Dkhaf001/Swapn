@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { addCurrentFollowing, addCurrentWatching } from '../../actions';
+import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 
 // should render chat view if the buyer has an active offer with seller
@@ -9,13 +11,30 @@ class BuyerPost extends Component {
     super(props);
     this.state = {
       post: '',
-      photos: []
+      photos: [],
+      currentlyFollowing: ''
     };
   }
 
-  async componentWillMount() {
+  componentDidMount() {
     this.getPost();
     this.getPhotos();
+
+    const userId = this.props.current_post.user_id;
+    const followerId = this.props.active_user.id;
+    const { rows } = axios.get(
+      `http://localhost:3396/api/followings/${followerId}/${userId}`
+    );
+    console.log('ELBERT!!!data.rows!!!!!!', rows);
+    if (rows) {
+      this.setState({
+        currentlyFollowing: true
+      });
+    } else {
+      this.setState({
+        currentlyFollowing: false
+      });
+    }
   }
 
   async getPost() {
@@ -59,29 +78,29 @@ class BuyerPost extends Component {
     }
   }
 
-  // gonna need logic to know if user is already following
-  async addToFollowList() {
-    if (
-      this.props.active_user &&
-      this.props.active_user.id !== this.props.current_post.user_id
-    ) {
+  async toggleFollowList() {
+    if (this.state.currentlyFollowing === true) {
+      const userId = this.props.current_post.user_id;
+      const followerId = this.props.active_user.id;
+      await axios.delete(
+        `http://localhost:3396/api/followings/${followerId}/${userId}`
+      );
+      this.setState({
+        currentlyFollowing: false
+      });
+      console.log('you are no longer following this user!');
+    } else {
       const userId = this.props.current_post.user_id;
       const followerId = this.props.active_user.id;
       await axios.post(
         `http://localhost:3396/api/followings/${followerId}/${userId}`
       );
-      console.log('you clicked add to follow!');
-    } else if (!this.props.active_user) {
-      console.log('you must be logged in to follow');
-    } else if (this.props.active_user.id === this.props.current_post.user_id) {
-      console.log('you cant follow yourself!');
+      this.setState({
+        currentlyFollowing: true
+      });
+      console.log('you now following this user');
     }
   }
-
-  // when you want to make an offer -> which will open sockets dm
-  // async makeOffer() {
-
-  // }
 
   render() {
     return (
@@ -102,16 +121,25 @@ class BuyerPost extends Component {
           </h4>
           <h4>Status: {this.props.current_post.status}</h4>
         </div>
+        {this.state.currentlyFollowing === true ? (
+          <RaisedButton
+            label="Unfollow"
+            primary={true}
+            style={{ margin: 12 }}
+            onClick={() => this.toggleFollowList()}
+          />
+        ) : (
+          <RaisedButton
+            label="Follow"
+            primary={true}
+            style={{ margin: 12 }}
+            onClick={() => this.toggleFollowList()}
+          />
+        )}
         <RaisedButton
           label="Add to Watch List"
           style={{ margin: 12 }}
           onClick={() => this.addToWatchList()}
-        />
-        <RaisedButton
-          label="Follow"
-          primary={true}
-          style={{ margin: 12 }}
-          onClick={() => this.addToFollowList()}
         />
       </div>
     );
@@ -121,8 +149,20 @@ class BuyerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
-    active_user: state.active_user
+    active_user: state.active_user,
+    current_following: state.current_following,
+    current_watching: state.current_watching
   };
 }
 
-export default connect(mapStateToProps)(BuyerPost);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentFollowing,
+      addCurrentWatching
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyerPost);

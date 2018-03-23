@@ -23,7 +23,12 @@ export const addCurrentProfile = profile => ({
   payload: profile
 });
 
-export const addCurrentFollowing = profile => ({
+export const addCurrentFollowing = following => ({
   type: 'CURRENT_FOLLOWING',
   payload: following
+});
+
+export const addCurrentWatching = watching => ({
+  type: 'CURRENT_WATCHING',
+  payload: watching
 });
