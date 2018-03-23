@@ -27,6 +27,8 @@ class Navbar extends Component {
     <div>
       <StatusBar />
       <Search />
+      Currently Signed in as : {localStorage.username} 
+      <br />
       <Link to="/home" className="linkbutton">
         Home
       </Link>
