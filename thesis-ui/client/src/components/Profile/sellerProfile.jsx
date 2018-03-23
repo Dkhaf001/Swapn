@@ -4,6 +4,7 @@ import ListingPostList from '../Feed/listingPostList.jsx';
 import ProfileNavbar from '../Navbar/profileNavbar.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Rt from '../../routes/app.jsx';
+import Chattest from '../Chat/Chattest.jsx';
 
 class SellerProfile extends Component {
   constructor() {
@@ -11,6 +12,8 @@ class SellerProfile extends Component {
   }
   render() {
     return (
+      <div>
+        <Chattest/>
       <div>
         <Bio />
         <div>
@@ -21,6 +24,7 @@ class SellerProfile extends Component {
             ))}
           </Switch>
         </div>
+      </div>
       </div>
     );
   }
