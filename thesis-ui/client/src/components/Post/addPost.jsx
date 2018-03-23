@@ -29,10 +29,8 @@ class AddPost extends Component {
 
   async submitNewPost() {
     try {
-      const data = await axios.post(
-        'http://localhost:3396/api/posts/',
-        this.state
-      );
+      const userId = localStorage.id;
+      await axios.post(`http://localhost:3396/api/posts/${userId}`, this.state);
       console.log('successfully submitted new post!');
     } catch (err) {
       console.log('error submitting new post!');
