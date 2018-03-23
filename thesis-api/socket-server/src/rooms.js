@@ -4,12 +4,11 @@ export default class Rooms {
     this.store = new Map();
   }
 
-  findOrCreate(roomId, title) {
+  findOrCreate(roomId) {
     let room = this.store.get(roomId);
     if (!room) {
       room = new Map();
       room.set('id', roomId);
-      room.set('text', startingText(title));
       this.store.set(roomId, room);
     }
     return room;

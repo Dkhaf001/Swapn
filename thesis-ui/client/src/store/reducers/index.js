@@ -7,6 +7,8 @@ import currentPostReducers from './current_postReducers';
 import currentProfileReducers from './current_profileReducers';
 import currentFollowingReducers from './current_followingReducers';
 import currentWatchingReducers from './current_watchingReducers';
+import socketReducers from './socketReducers'
+import current_roomId from './roomIdReducers'
 
 export default combineReducers({
   dataReducers,
@@ -15,5 +17,7 @@ export default combineReducers({
   current_post: currentPostReducers,
   current_profile: currentProfileReducers,
   current_following: currentFollowingReducers,
-  current_watching: currentWatchingReducers
+  current_watching: currentWatchingReducers,
+  socket: socketReducers,
+  current_roomId: current_roomId
 });

@@ -15,12 +15,12 @@ export const signUpController = async (req, res) => {
     }else{
       req.body.password = await hashPassword(req.body.password)
       const { rows, detail } = await signupQuery(req.body)
-      console.log('this is the rows and detail', rows, detail)
+      // console.log('this is the rows and detail', rows, detail)
       if(detail) {
         res.status(409).send(detail)
       }else{
         const { id, email } = rows[0];
-        console.log('signUpController - successfully retrieved data ', JSON.stringify(rows[0]));
+        // console.log('signUpController - successfully retrieved data ', JSON.stringify(rows[0]));
         const token = await generateToken(id, email);
         rows[0].token = token;
         res.status(200).append('authorization', JSON.stringify(token)).send(rows[0]);
@@ -37,7 +37,7 @@ export const loginController = async (req, res) => {
     const { rows } = await userQuery(req.body);
     delete rows[0].password;
     const { id, email } = rows[0];
-    console.log('loginController - successfully retrieved data ', rows[0]);
+    // console.log('loginController - successfully retrieved data ', rows[0]);
     const token = await generateToken(id, email);
     rows[0].token = token;
     res.status(200).append('authorization', JSON.stringify(token)).send(rows[0]);

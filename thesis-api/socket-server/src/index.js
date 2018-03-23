@@ -23,21 +23,22 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       }
     })
     client.on('disconnect', data => {
+      console.log(' a user disconneted')
       if(!users[client.nickname]) return;
       delete users[client.nickname];
       currentUsersNumber--;
       console.log ('total user connect', currentUsersNumber)
     })
     client.on('joinRoom', data => {
-      console.log('join room socket server', data)
-      const room = rooms.findOrCreate(data.roomId || 'default', title);
+      const room = rooms.findOrCreate(data.roomId || 'default');
       client.join(room.get('id'))
     })
     client.on('message', data => {
-      console.log('message socket-server', data)
       chat.insert(data)
+      console.log('this is the current user in soket', users)
       if(users[data.to]) {
-        users[data.to].emit('message', data)
+        console.log('find the user trying to send him a message')
+        users[data.to].emit('directMessage', data)
       }
       socket.in(data.roomId).emit('room:message', data)
     })
