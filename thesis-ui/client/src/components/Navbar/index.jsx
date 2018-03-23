@@ -53,7 +53,7 @@ class Navbar extends Component {
     </div>
   );
   render() {
-    if (localStorage) {
+    if (localStorage.token) {
       // localStorage need to change all logic to check local storage
       return this.loggedInView();
     }

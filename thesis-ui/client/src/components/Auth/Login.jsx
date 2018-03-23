@@ -23,6 +23,7 @@ class Login extends Component {
       localStorage.setItem('id', response.data.id);
       localStorage.setItem('email', response.data.email);
       localStorage.setItem('token', response.data.token.accessToken);
+      localStorage.removeItem('randId');
       // response.data.token = null;
       this.props.addActiveUserToStore(response.data);
       this.props.history.push('/home');

@@ -17,6 +17,7 @@
     "dotenv": "^5.0.1",
     "lodash": "^4.17.5",
     "nodemon": "^1.17.2",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "mongodb": "2.2.35"
   }
 }
