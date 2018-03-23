@@ -1,40 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { addCurrentFollowing, addCurrentWatching } from '../../actions';
-import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 
-// should render chat view if the buyer has an active offer with seller
 class BuyerPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
       post: '',
       photos: [],
-      currentlyFollowing: ''
+      currentlyFollowing: '',
+      currentlyWatching: ''
     };
   }
 
-  componentDidMount() {
+  async componentWillMount() {
     this.getPost();
     this.getPhotos();
-
-    const userId = this.props.current_post.user_id;
-    const followerId = this.props.active_user.id;
-    const { rows } = axios.get(
-      `http://localhost:3396/api/followings/${followerId}/${userId}`
-    );
-    console.log('ELBERT!!!data.rows!!!!!!', rows);
-    if (rows) {
-      this.setState({
-        currentlyFollowing: true
-      });
-    } else {
-      this.setState({
-        currentlyFollowing: false
-      });
-    }
+    this.getFollowing();
+    this.getWatching();
   }
 
   async getPost() {
@@ -60,28 +44,76 @@ class BuyerPost extends Component {
     });
   }
 
-  async addToWatchList() {
-    if (
-      this.props.active_user &&
-      this.props.active_user.id !== this.props.current_post.user_id
-    ) {
+  async getFollowing() {
+    try {
+      const userId = this.props.current_post.user_id;
+      const followerId = this.props.active_user.id;
+      const { data } = await axios.get(
+        `http://localhost:3396/api/followings/${followerId}/${userId}`
+      );
+      console.log('successfully receieved following list');
+      if (data.rowCount > 0) {
+        this.setState({
+          currentlyFollowing: true
+        });
+      } else {
+        this.setState({
+          currentlyFollowing: false
+        });
+      }
+    } catch (err) {
+      console.log('error getting followers');
+    }
+  }
+
+  async getWatching() {
+    try {
       const userId = this.props.active_user.id;
       const postId = this.props.current_post.id;
+      const { data } = await axios.get(
+        `http://localhost:3396/api/watchers/${userId}/${postId}`
+      );
+      console.log('successfully receieved watch list');
+      if (data.rowCount > 0) {
+        this.setState({
+          currentlyWatching: true
+        });
+      } else {
+        this.setState({
+          currentlyWatching: false
+        });
+      }
+    } catch (err) {
+      console.log('error getting watch list');
+    }
+  }
+
+  async toggleWatchList() {
+    const userId = this.props.active_user.id;
+    const postId = this.props.current_post.id;
+    if (this.state.currentlyWatching === true) {
+      await axios.delete(
+        `http://localhost:3396/api/watchers/${userId}/${postId}`
+      );
+      this.setState({
+        currentlyWatching: false
+      });
+      console.log('you are no longer watching this post');
+    } else {
       await axios.post(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
-      console.log('successfully added to watch list');
-    } else if (!this.props.active_user) {
-      console.log('you must be logged in to add to watch list');
-    } else if (this.props.active_user.id === this.props.current_post.user_id) {
-      console.log('you cant watch your own post');
+      this.setState({
+        currentlyWatching: true
+      });
+      console.log('you are now watching this post');
     }
   }
 
   async toggleFollowList() {
+    const userId = this.props.current_post.user_id;
+    const followerId = this.props.active_user.id;
     if (this.state.currentlyFollowing === true) {
-      const userId = this.props.current_post.user_id;
-      const followerId = this.props.active_user.id;
       await axios.delete(
         `http://localhost:3396/api/followings/${followerId}/${userId}`
       );
@@ -90,8 +122,6 @@ class BuyerPost extends Component {
       });
       console.log('you are no longer following this user!');
     } else {
-      const userId = this.props.current_post.user_id;
-      const followerId = this.props.active_user.id;
       await axios.post(
         `http://localhost:3396/api/followings/${followerId}/${userId}`
       );
@@ -124,7 +154,7 @@ class BuyerPost extends Component {
         {this.state.currentlyFollowing === true ? (
           <RaisedButton
             label="Unfollow"
-            primary={true}
+            secondary={true}
             style={{ margin: 12 }}
             onClick={() => this.toggleFollowList()}
           />
@@ -136,11 +166,20 @@ class BuyerPost extends Component {
             onClick={() => this.toggleFollowList()}
           />
         )}
-        <RaisedButton
-          label="Add to Watch List"
-          style={{ margin: 12 }}
-          onClick={() => this.addToWatchList()}
-        />
+        {this.state.currentlyWatching === true ? (
+          <RaisedButton
+            label="Unwatch"
+            secondary={true}
+            style={{ margin: 12 }}
+            onClick={() => this.toggleWatchList()}
+          />
+        ) : (
+          <RaisedButton
+            label="Add to Watch List"
+            style={{ margin: 12 }}
+            onClick={() => this.toggleWatchList()}
+          />
+        )}
       </div>
     );
   }
@@ -149,20 +188,8 @@ class BuyerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
-    active_user: state.active_user,
-    current_following: state.current_following,
-    current_watching: state.current_watching
+    active_user: state.active_user
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      addCurrentFollowing,
-      addCurrentWatching
-    },
-    dispatch
-  );
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BuyerPost);
+export default connect(mapStateToProps)(BuyerPost);
