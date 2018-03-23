@@ -6,6 +6,7 @@ import { addSocket } from '../../actions/index'
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+import Chattest from '../Chat/Chattest'
 class StatusBar extends Component {
   state = {
     messages: [],
@@ -49,7 +50,7 @@ class StatusBar extends Component {
         </IconButton>
         </div>
       }
-      
+      <Chattest />
         </div>
       </div>
     )

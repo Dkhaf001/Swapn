@@ -10,6 +10,7 @@ import currentWatchingReducers from './current_watchingReducers';
 import socketReducers from './socketReducers'
 import current_roomId from './roomIdReducers'
 
+
 export default combineReducers({
   dataReducers,
   active_user: activeUserReducers,
