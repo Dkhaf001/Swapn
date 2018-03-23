@@ -10,7 +10,9 @@
     "start:rest-server": "cd rest-server && npm run start",
     "setup:socket-server": "cd socket-server && npm install",
     "start:socket-server": "cd socket-server && npm run start",
-    "start": "npm-run-all -p start:rest-server start:socket-server"
+    "setup:s3-server": "cd s3-server && npm install",
+    "start:s3-server": "cd s3-server && npm run start",
+    "start": "npm-run-all -p start:rest-server start:socket-server start:s3-server"
   },
   "author": "",
   "license": "ISC",

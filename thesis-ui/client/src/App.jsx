@@ -8,6 +8,7 @@ import Chat from './components/Chat/Chat.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Protected from './routes/protect.jsx';
 import Rt from './routes/app.jsx';
+import PhotoUpload from './components/Photo';
 
 class App extends React.Component {
   constructor() {
@@ -21,10 +22,13 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
+        <hr />
+        <PhotoUpload />
+        <hr />
         <div ref="mainPanel">
           <div>
             <Switch>
-              { Rt.appRoutes.map((route, key) => {
+              {Rt.appRoutes.map((route, key) => {
                 // if (prop.redirect) {
                 //   return <Redirect from={prop.path} to={prop.to} key={key} />;
                 // }
@@ -33,7 +37,7 @@ class App extends React.Component {
                     <Route
                       path={route.path}
                       key={key}
-                      component={(props) => (<Protected component={route.component} {...props} />)}
+                      component={props => <Protected component={route.component} {...props} />}
                     />
                   );
                 }

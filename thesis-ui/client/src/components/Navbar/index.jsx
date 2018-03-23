@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore, addCurrentPost } from '../../actions';
-import StatusBar from './StatusBar.jsx'
+import StatusBar from './StatusBar.jsx';
 
 class Navbar extends Component {
   constructor() {
     super();
   }
+  componentWillMount() {}
   clearStorePost = () => {
     this.props.addCurrentPost('');
   };
   logout = () => {
-    window.localStorage.clear();
+    localStorage.clear();
     this.props.addActiveUserToStore('');
     this.props.addCurrentPost('');
   };
@@ -52,7 +53,8 @@ class Navbar extends Component {
     </div>
   );
   render() {
-    if (this.props.active_user) {
+    if (localStorage.token) {
+      // localStorage need to change all logic to check local storage
       return this.loggedInView();
     }
     return this.loggedOutView();
@@ -61,15 +63,15 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user
+    active_user: state.active_user,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore
+      addActiveUserToStore,
     },
-    dispatch
+    dispatch,
   );
 }
 
