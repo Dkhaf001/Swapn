@@ -31,15 +31,6 @@ class Navbar extends Component {
     <div>
       <StatusBar />
       <Search />
-      <Badge
-      badgeContent={10}
-      secondary={true}
-      badgeStyle={{top: 12, right: 12}}
-    >
-      <IconButton tooltip="Notifications">
-        <NotificationsIcon />
-      </IconButton>
-    </Badge>
       <Link to="/home" className="linkbutton">
         Home
       </Link>
@@ -58,17 +49,6 @@ class Navbar extends Component {
   loggedOutView = () => (
     <div>
       <Search />
-      <div>
-    <Badge
-      badgeContent={10}
-      secondary={true}
-      badgeStyle={{top: 12, right: 12}}
-    >
-      <IconButton tooltip="Notifications">
-        <NotificationsIcon />
-      </IconButton>
-    </Badge>
-  </div>
       <Link to="/home" className="linkbutton">
         Home
       </Link>
