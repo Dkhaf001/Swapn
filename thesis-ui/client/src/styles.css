@@ -1,0 +1,40 @@
+.rowbanner {
+  border: solid rgb(11, 22, 241);
+  background-color: #83d8ff;
+  width: 100%;
+  text-align: center;
+}
+
+.rightbanner {
+  float: left;
+}
+
+.leftbanner {
+  float: top;
+}
+
+.middlebanner{
+  width: 80;
+  text-align: center;
+}
+
+.row {
+  padding: 2%;
+}
+
+
+.class-tracker-col {
+  height: 80vh;
+  border: black solid 2px;
+}
+
+.selected-class-col {
+  height: 40vh;
+  border: black solid 2px;
+}
+
+.classlist {
+  /* padding-left: 2%; */
+  padding-top: 2%;
+}
+
