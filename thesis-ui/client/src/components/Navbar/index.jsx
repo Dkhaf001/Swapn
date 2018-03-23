@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore, addCurrentPost } from '../../actions';
-import StatusBar from './StatusBar.jsx'
+import StatusBar from './StatusBar.jsx';
 
 class Navbar extends Component {
   constructor() {
@@ -21,11 +21,7 @@ class Navbar extends Component {
   };
   loggedInView = () => (
     <div>
-<<<<<<< HEAD
       <StatusBar />
-=======
-      {/* <div>Currently Signed in as: {localStorage.username}</div> */}
->>>>>>> nav bar depedent on local storage check rather than redux store
       <Search />
       <Link to="/home" className="linkbutton">
         Home
