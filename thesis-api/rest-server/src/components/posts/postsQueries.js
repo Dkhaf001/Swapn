@@ -13,7 +13,7 @@ export const fetchAllPostsQuery = async payload => {
   try {
     const queryString = fetchAllPostsHelper(payload);
     const data = await db.queryAsync(queryString);
-    console.log('fetchAllPostsQuery - successfully retrieved data');
+    // console.log('fetchAllPostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
     console.log(err);

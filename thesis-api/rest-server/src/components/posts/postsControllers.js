@@ -32,6 +32,7 @@ export const fetchSinglePostsController = async (req, res) => {
   let user = req.params;
   try {
     const data = await fetchSinglePostsQuery(user, payload);
+    data[0].password = 'N/A';
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

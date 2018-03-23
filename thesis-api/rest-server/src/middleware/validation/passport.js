@@ -26,7 +26,6 @@ const jwtOptions = {
 passport.use(new LocalStrategy(localOptions, async (username, password, done) => {
   try {
     const { rows } = await userQuery({ username });
-    console.log('inside of localstrategy this is the rows', rows)
     if (!rows.length) {
       return done(null, false, { message: 'Incorrect username.' });
     }

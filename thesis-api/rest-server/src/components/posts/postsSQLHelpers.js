@@ -16,8 +16,8 @@ export const fetchUserPostsHelper = ({ user_id }) => {
 export const fetchSinglePostsHelper = ({ user_id, post_id }) => {
   return `
   SELECT * 
-  FROM posts 
-  WHERE id = ${post_id} AND user_id = ${user_id}
+  FROM posts AS p
+  INNER JOIN users AS u on (p.user_id=u.id) WHERE p.id=${post_id}
   `;
 };
 
