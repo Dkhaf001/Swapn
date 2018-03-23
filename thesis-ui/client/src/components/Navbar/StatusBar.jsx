@@ -9,7 +9,8 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import Chattest from '../Chat/Chattest'
+import Chattest from '../Chat/Chattest';
+import { Link } from 'react-router-dom';
 class StatusBar extends Component {
   state = {
     messages: [],
@@ -32,7 +33,7 @@ class StatusBar extends Component {
       console.log('err StatusBar component', err);
     }
   }
-  
+
   handleRequestClose = () => {
     this.setState({
       open: false,
@@ -77,8 +78,9 @@ class StatusBar extends Component {
             }}
             // onChange={this.handleDashChange.bind(this)} something like this to render what you click below
           >
-            <MenuItem key={1} value="Solid" primaryText={`You have ${this.state.messages.length} messages`}/>
-            <MenuItem key={2} value="ShortDash" primaryText="View Offers"/>
+            <MenuItem containerElement={<Link to="/profile/selling" />}
+            key={1} value="Solid" primaryText={`You have ${this.state.messages.length} messages`}/>
+            <MenuItem key={2} value="ShortDash" primaryText="View Offers"/> 
             <MenuItem key={3} value="ShortDot" primaryText="View Posts"/>
           </Menu>
         </Popover>
