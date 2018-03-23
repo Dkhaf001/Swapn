@@ -10,17 +10,22 @@ class Navbar extends Component {
   constructor() {
     super();
   }
+  componentWillMount() {}
   clearStorePost = () => {
     this.props.addCurrentPost('');
   };
   logout = () => {
-    window.localStorage.clear();
+    localStorage.clear();
     this.props.addActiveUserToStore('');
     this.props.addCurrentPost('');
   };
   loggedInView = () => (
     <div>
+<<<<<<< HEAD
       <StatusBar />
+=======
+      {/* <div>Currently Signed in as: {localStorage.username}</div> */}
+>>>>>>> nav bar depedent on local storage check rather than redux store
       <Search />
       <Link to="/home" className="linkbutton">
         Home
@@ -52,7 +57,8 @@ class Navbar extends Component {
     </div>
   );
   render() {
-    if (this.props.active_user) {
+    if (localStorage) {
+      // localStorage need to change all logic to check local storage
       return this.loggedInView();
     }
     return this.loggedOutView();
