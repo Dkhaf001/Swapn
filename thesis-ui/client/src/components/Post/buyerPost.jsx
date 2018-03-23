@@ -62,7 +62,7 @@ class BuyerPost extends Component {
         });
       }
     } catch (err) {
-      console.log('error getting followers');
+      console.log('error getting followers!');
     }
   }
 
@@ -84,7 +84,7 @@ class BuyerPost extends Component {
         });
       }
     } catch (err) {
-      console.log('error getting watch list');
+      console.log('error getting watch list!');
     }
   }
 
