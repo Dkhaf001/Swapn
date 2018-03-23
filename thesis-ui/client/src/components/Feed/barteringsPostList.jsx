@@ -27,8 +27,8 @@ class BarteringsPostList extends Component {
   async componentWillMount() {
     // grab data from db, update store
     try {
-      const username = this.props.active_user.username;
-      console.log('the username is', this.props.active_user);
+      const username = localStorage.username;
+      console.log('the username is', localStorage.username);
       const { data } = await axios.get(
         `http://localhost:3396/api/offers/${username}`
       );
@@ -69,8 +69,7 @@ class BarteringsPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
-    active_user: state.active_user
+    current_list: state.current_list
   };
 }
 

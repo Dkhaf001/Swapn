@@ -17,8 +17,8 @@ class Post extends Component {
     // console.log('active', this.props.active_user);
     // console.log('post', this.props.current_post.id);
 
-    if (this.props.active_user) {
-      if (this.props.active_user.id === this.props.current_post.user_id) {
+    if (localStorage.id) {
+      if (localStorage.id === this.props.current_post.user_id) {
         return <SellerPost />;
       }
     }
@@ -28,8 +28,7 @@ class Post extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
-    current_post: state.current_post,
+    current_post: state.current_post
   };
 }
 

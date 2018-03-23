@@ -15,7 +15,7 @@ class FollowingsListEntry extends Component {
   }
   async handleUnfollowButtonClick() {
     try {
-      const user_id = this.props.active_user.id;
+      const user_id = localStorage.id;
       await axios.delete(
         `http://localhost:3396/api/followings/${user_id}/${
           this.props.following.id
@@ -53,9 +53,7 @@ class FollowingsListEntry extends Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    active_user: state.active_user
-  };
+  return {};
 }
 
 export default connect(mapStateToProps)(FollowingsListEntry);

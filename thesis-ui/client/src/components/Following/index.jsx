@@ -13,9 +13,10 @@ class Following extends Component {
   }
   async componentDidMount() {
     try {
-      const user_id =
-        this.props.active_user.id ||
-        JSON.parse(window.localStorage.getItem('user')).id;
+      // const user_id =
+      //   this.props.active_user.id ||
+      //   JSON.parse(window.localStorage.getItem('user')).id;
+      const user_id = localStorage.id;
       const { data } = await axios.get(
         `http://localhost:3396/api/followings/${user_id}`
       );
@@ -39,9 +40,7 @@ class Following extends Component {
   }
 }
 function mapStateToProps(state) {
-  return {
-    active_user: state.active_user
-  };
+  return {};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({}, dispatch);

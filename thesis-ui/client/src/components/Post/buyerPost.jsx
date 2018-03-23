@@ -194,8 +194,7 @@ class BuyerPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post,
-    active_user: state.active_user
+    current_post: state.current_post
   };
 }
 
