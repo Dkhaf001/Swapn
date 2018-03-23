@@ -1,24 +1,34 @@
 export const addDataToStore = data => ({
   type: 'WORD',
-  payload: data,
+  payload: data
 });
 
 export const addActiveUserToStore = user => ({
   type: 'ACTIVE_USER',
-  payload: user,
+  payload: user
 });
 
 export const addCurrentList = lists => ({
   type: 'CURRENT_LIST',
-  payload: lists,
+  payload: lists
 });
 
 export const addCurrentPost = post => ({
   type: 'CURRENT_POST',
-  payload: post,
+  payload: post
 });
 
 export const addCurrentProfile = profile => ({
   type: 'CURRENT_PROFILE',
-  payload: profile,
+  payload: profile
+});
+
+export const addCurrentFollowing = following => ({
+  type: 'CURRENT_FOLLOWING',
+  payload: following
+});
+
+export const addCurrentWatching = watching => ({
+  type: 'CURRENT_WATCHING',
+  payload: watching
 });

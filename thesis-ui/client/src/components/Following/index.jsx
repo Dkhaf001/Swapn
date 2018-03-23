@@ -31,10 +31,8 @@ class Following extends Component {
     return (
       <div>
         {this.state.followings &&
-          this.state.followings.map(following => {
-            return (
-              <FollowingsListEntry key={following.id} following={following} />
-            );
+          this.state.followings.map((following, i) => {
+            return <FollowingsListEntry key={i} following={following} />;
           })}
       </div>
     );

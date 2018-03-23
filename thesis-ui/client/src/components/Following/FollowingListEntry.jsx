@@ -15,19 +15,17 @@ class FollowingsListEntry extends Component {
   }
   async handleUnfollowButtonClick() {
     try {
-      const user_id =
-        JSON.parse(window.localStorage.getItem('user')).id ||
-        this.props.active_user.id;
-      const { data } = await axios.delete(
+      const user_id = this.props.active_user.id;
+      await axios.delete(
         `http://localhost:3396/api/followings/${user_id}/${
           this.props.following.id
         }`
       );
       this.setState({
-        following: null
+        following: ''
       });
     } catch (err) {
-      console.log('err unfollwing user');
+      console.log('err unfollwing user', err);
     }
   }
   render() {
