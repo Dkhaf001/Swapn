@@ -4,15 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore, addCurrentPost } from '../../actions';
-<<<<<<< HEAD
-import StatusBar from './StatusBar.jsx';
-=======
 import StatusBar from './StatusBar.jsx'
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
->>>>>>> rebase
 
 class Navbar extends Component {
   constructor() {

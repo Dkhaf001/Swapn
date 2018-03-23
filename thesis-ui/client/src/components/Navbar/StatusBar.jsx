@@ -18,7 +18,7 @@ class StatusBar extends Component {
   }
   async componentDidMount() {
     try {
-      const username = localStorage.id;
+      const username = this.props.active_user.username
       // const username = this.props.active_user.username || JSON.parse(window.localStorage.getItem('user')).username
       const socket = io.connect('http://localhost:4155');
       this.props.addSocket(socket);

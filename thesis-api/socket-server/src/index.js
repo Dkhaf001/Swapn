@@ -35,7 +35,8 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
     })
     client.on('message', data => {
       chat.insert(data)
-      console.log('this is the current user in soket', users)
+      console.log('message event triggered', data, )
+
       if(users[data.to]) {
         console.log('find the user trying to send him a message')
         users[data.to].emit('directMessage', data)
