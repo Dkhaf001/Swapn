@@ -32,3 +32,13 @@ export const addCurrentWatching = watching => ({
   type: 'CURRENT_WATCHING',
   payload: watching
 });
+
+export const addSocket = socket => ({
+  type: "SOCKET",
+  payload: socket
+})
+
+export const addCurrentRoomId = id => ({
+  type: "ROOMID",
+  payload: id
+})

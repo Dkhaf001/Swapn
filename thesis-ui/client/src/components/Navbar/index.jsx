@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore, addCurrentPost } from '../../actions';
+import StatusBar from './StatusBar.jsx'
 
 class Navbar extends Component {
   constructor() {
@@ -19,6 +20,7 @@ class Navbar extends Component {
   };
   loggedInView = () => (
     <div>
+      <StatusBar />
       <Search />
       <Link to="/home" className="linkbutton">
         Home
