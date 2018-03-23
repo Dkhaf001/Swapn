@@ -10,13 +10,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class BarteringsPostList extends Component {
@@ -29,13 +29,15 @@ class BarteringsPostList extends Component {
     try {
       const username = this.props.active_user.username;
       console.log('the username is', this.props.active_user);
-      const { data } = await axios.get(`http://localhost:3396/api/offers/${username}`);
+      const { data } = await axios.get(
+        `http://localhost:3396/api/offers/${username}`
+      );
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
-  switchToSinglePost = (post) => {
+  switchToSinglePost = post => {
     console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
@@ -68,7 +70,7 @@ class BarteringsPostList extends Component {
 function mapStateToProps(state) {
   return {
     current_list: state.current_list,
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 
@@ -76,9 +78,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 
