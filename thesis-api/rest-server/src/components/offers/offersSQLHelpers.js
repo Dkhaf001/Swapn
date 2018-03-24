@@ -8,10 +8,10 @@ export const fetchAllOffersHelper = ({ username }) => {
   `;
 };
 
-export const addOffersHelper = ({ post_id, user_id }) => {
+export const addOffersHelper = ({ post_id, buyer_username }) => {
   return `
   INSERT INTO offers (buyer_username, post_id)
-  VALUES ('${user_id}', ${post_id})
+  VALUES ('${buyer_username}', ${post_id})
   RETURNING id, buyer_username, post_id
   `;
 };

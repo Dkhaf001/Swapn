@@ -60,7 +60,9 @@ class StatusBar extends Component {
       open: false,
     });
   };
-
+  showUsers() {
+    this.props.socket.emit('showUsers')
+  }
   render() {
     return (
       <div>
@@ -190,6 +192,7 @@ class StatusBar extends Component {
           )}  
         </div>}
       </div>}
+      <button onClick={()=>this.showUsers()}>show online users</button>
       </div>
     );
   }
@@ -198,6 +201,7 @@ class StatusBar extends Component {
 function mapStateToProps(state) {
   return {
     active_user: state.active_user,
+    socket: state.socket
   };
 }
 function mapDispatchToProps(dispatch) {

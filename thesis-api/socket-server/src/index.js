@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 4000
 const socket = require('socket.io').listen(PORT).sockets;
 import Rooms from './rooms';
 const users = {}
+
 let currentUsersNumber = 0;
 const rooms = new Rooms(socket);
 mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
@@ -21,6 +22,9 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
         currentUsersNumber++;
         console.log ('total user connect', currentUsersNumber)
       }
+    })
+    client.on('showUsers', () => {
+      console.log(users)
     })
     client.on('disconnect', data => {
       console.log(' a user disconneted')
