@@ -6,7 +6,9 @@ import AWS from 'aws-sdk';
 import path from 'path';
 
 // loading S3 Api Key
-AWS.config.loadFromPath(`${__dirname}/../../../../../configS3.json`);
+
+// bug here
+// AWS.config.loadFromPath(`${__dirname}/../../../../../configS3.json`);
 
 // Starting S3
 const s3 = new AWS.S3();
