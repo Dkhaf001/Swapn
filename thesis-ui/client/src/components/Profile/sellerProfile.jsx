@@ -13,18 +13,18 @@ class SellerProfile extends Component {
   render() {
     return (
       <div>
-        <Chattest/>
-      <div>
-        <Bio />
+        <Chattest />
         <div>
-          <ProfileNavbar />
-          <Switch>
-            {Rt.profileRoutes.map((prop, key) => (
-              <Route path={prop.path} component={prop.component} key={key} />
-            ))}
-          </Switch>
+          <Bio />
+          <div>
+            <ProfileNavbar />
+            <Switch>
+              {Rt.profileRoutes.map((prop, key) => (
+                <Route path={prop.path} component={prop.component} key={key} />
+              ))}
+            </Switch>
+          </div>
         </div>
-      </div>
       </div>
     );
   }

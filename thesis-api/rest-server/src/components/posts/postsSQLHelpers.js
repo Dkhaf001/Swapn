@@ -27,7 +27,7 @@ export const addPostsHelper = (
 ) => {
   return `
    INSERT INTO posts (title, description, condition, location, demand, user_id, status, main_photo)
-   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '${main_photo})
+   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '${main_photo}')
    RETURNING *
   `;
 };
@@ -52,7 +52,7 @@ export const updatePostsHelper = (
         demand='${demand}', 
         status='${status}',
         user_id=${user_id},
-        main_photo=${main_photo}
+        main_photo='${main_photo}'
    WHERE id=${post_id}
    RETURNING *
   `;

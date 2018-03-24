@@ -58,7 +58,7 @@ class BuyerPost extends Component {
       const { data } = await axios.get(
         `http://localhost:3396/api/followings/${followerId}/${userId}`
       );
-      console.log('successfully receieved following list');
+      console.log('successfully received following list');
       if (data.rowCount > 0) {
         this.setState({
           currentlyFollowing: true
@@ -80,7 +80,7 @@ class BuyerPost extends Component {
       const { data } = await axios.get(
         `http://localhost:3396/api/watchers/${userId}/${postId}`
       );
-      console.log('successfully receieved watch list');
+      console.log('successfully received watch list');
       if (data.rowCount > 0) {
         this.setState({
           currentlyWatching: true
@@ -98,51 +98,60 @@ class BuyerPost extends Component {
   async toggleWatchList() {
     const userId = localStorage.id;
     const postId = this.props.current_post.id;
-    if (this.state.currentlyWatching === true) {
-      await axios.delete(
-        `http://localhost:3396/api/watchers/${userId}/${postId}`
-      );
-      this.setState({
-        currentlyWatching: false
-      });
-      console.log('you are no longer watching this post');
+    if (localStorage.id) {
+      if (this.state.currentlyWatching === true) {
+        await axios.delete(
+          `http://localhost:3396/api/watchers/${userId}/${postId}`
+        );
+        this.setState({
+          currentlyWatching: false
+        });
+        console.log('you are no longer watching this post');
+      } else {
+        await axios.post(
+          `http://localhost:3396/api/watchers/${userId}/${postId}`
+        );
+        this.setState({
+          currentlyWatching: true
+        });
+        console.log('you are now watching this post');
+      }
     } else {
-      await axios.post(
-        `http://localhost:3396/api/watchers/${userId}/${postId}`
-      );
-      this.setState({
-        currentlyWatching: true
-      });
-      console.log('you are now watching this post');
+      this.props.history.push('/login');
     }
   }
 
   async toggleFollowList() {
     const userId = this.props.current_post.user_id;
     const followerId = localStorage.id;
-    if (this.state.currentlyFollowing === true) {
-      await axios.delete(
-        `http://localhost:3396/api/followings/${followerId}/${userId}`
-      );
-      this.setState({
-        currentlyFollowing: false
-      });
-      console.log('you are no longer following this user!');
+    if (localStorage.id) {
+      if (this.state.currentlyFollowing === true) {
+        await axios.delete(
+          `http://localhost:3396/api/followings/${followerId}/${userId}`
+        );
+        this.setState({
+          currentlyFollowing: false
+        });
+        console.log('you are no longer following this user!');
+      } else {
+        await axios.post(
+          `http://localhost:3396/api/followings/${followerId}/${userId}`
+        );
+        this.setState({
+          currentlyFollowing: true
+        });
+        console.log('you now following this user');
+      }
     } else {
-      await axios.post(
-        `http://localhost:3396/api/followings/${followerId}/${userId}`
-      );
-      this.setState({
-        currentlyFollowing: true
-      });
-      console.log('you now following this user');
+      this.props.history.push('/login');
     }
   }
 
   render() {
     return (
       <div>
-        hello from  buyer post
+        Welcome to the Buyer Post Page!
+        <h1>{this.props.current_post.username}'s posting</h1>
         <div>
           <img src={this.props.current_post.main_photo} />
         </div>
