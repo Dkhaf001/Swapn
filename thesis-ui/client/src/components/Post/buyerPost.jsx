@@ -148,12 +148,8 @@ class BuyerPost extends Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
         Welcome to the Buyer Post Page!
         <h1>{this.props.current_post.username}'s posting</h1>
-=======
-        hello from buyer post
->>>>>>> fixed status bar and tryng to work on chat right now
         <div>
           <img src={this.props.current_post.main_photo} />
         </div>
