@@ -31,6 +31,7 @@ class AddPost extends Component {
 
   async submitNewPost() {
     try {
+      // UNCOMMENT THIS WHEN FINISHED --> THIS WILL REQUIRE FIELDS FOR SUBMISSION
       // if (
       //   this.state.title !== '' &&
       //   this.state.description !== '' &&
@@ -62,7 +63,7 @@ class AddPost extends Component {
   render() {
     return (
       <div>
-        Hello from Post
+        Make a Post!
         <TextField
           hintText="What are you selling?"
           floatingLabelText="Title"

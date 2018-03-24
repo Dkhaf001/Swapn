@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addCurrentList } from '../../actions';
 import SellerPost from '../Post/sellerPost.jsx';
 import BuyerPost from '../Post/buyerPost';
+import { Route } from 'react-router-dom';
 
 class Post extends Component {
   constructor() {
@@ -14,14 +15,12 @@ class Post extends Component {
     // axios.get('http://localhost:3396/api/posts/login');
   }
   render() {
-    // console.log('active', this.props.active_user);
-    // console.log('post', this.props.current_post.id);
     if (localStorage.id) {
       if (localStorage.id === this.props.current_post.user_id) {
         return <SellerPost />;
       }
     }
-    return <BuyerPost />;
+    return <Route path="/" component={BuyerPost} />;
   }
 }
 
