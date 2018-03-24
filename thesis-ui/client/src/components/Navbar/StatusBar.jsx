@@ -54,9 +54,15 @@ class StatusBar extends Component {
       open: false,
     });
   };
+<<<<<<< HEAD
   submit () {
     console.log('this is the active_user', this.props.active_user)
   }
+=======
+
+
+
+>>>>>>> navbar fixs with image as home link
   render() {
     return (
       <div>
@@ -70,6 +76,7 @@ class StatusBar extends Component {
         >
         <IconButton tooltip="Notifications">
           <NotificationsIcon 
+          className="svg_icons"
           onClick={(event) => {
           this.setState({
             open: true,
@@ -114,14 +121,14 @@ class StatusBar extends Component {
                 badgeStyle={{ top: 12, right: 12 }}
               >
                 <IconButton tooltip="Notifications">
-                  <NotificationsIcon />
+                  <NotificationsIcon className="svg_icons"/>
                 </IconButton>
               </Badge>
             </div>
           ) : (
             <div>
               <IconButton tooltip="Notifications">
-                <NotificationsIcon
+                <NotificationsIcon className="svg_icons"
                   onClick={() => console.log('u clikced a button')}
                 />
               </IconButton>
