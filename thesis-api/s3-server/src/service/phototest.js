@@ -1,3 +1,6 @@
+// this stuff is how we send datat to server
+
+// data from in controller to add photo to db
 const host = require('./../service/s3');
 
 module.exports = {
