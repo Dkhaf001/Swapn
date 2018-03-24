@@ -30,9 +30,9 @@ class App extends React.Component {
           <div>
             <Switch>
               {Rt.appRoutes.map((route, key) => {
-                // if (prop.redirect) {
-                //   return <Redirect from={prop.path} to={prop.to} key={key} />;
-                // }
+                if (route.redirect) {
+                  return <Redirect from={route.path} to={route.to} key={key} />;
+                }
                 if (route.protected) {
                   return (
                     <Route
