@@ -3,8 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { addCurrentList } from '../../actions';
 import SellerPost from '../Post/sellerPost.jsx';
-import BuyerPost from '../Post/buyerPost';
-import { Route } from 'react-router-dom'
+import BuyerPost from '../Post/buyerPost.jsx';
+import { Route } from 'react-router-dom';
+
 class Post extends Component {
   constructor() {
     super();
@@ -16,10 +17,10 @@ class Post extends Component {
   render() {
     if (localStorage.id) {
       if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
-        return <Route path="/" component={SellerPost}/>
+        return <Route path="/" component={SellerPost} />;
       }
     }
-    return  <Route path='/' component={BuyerPost}/>;
+    return <Route path="/" component={BuyerPost} />;
   }
 }
 
