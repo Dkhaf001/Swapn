@@ -61,7 +61,7 @@ class Navbar extends Component {
         </Link>
       </div>
       <div className="rightbanner">
-        <StatusBar />
+        <Route path="/" component={StatusBar} />
       </div>
       <div className="leftbanner">
         <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
@@ -71,7 +71,7 @@ class Navbar extends Component {
     </div>
   );
   render() {
-    if (localStorage.token) {
+    if (this.props.active_user) {
       // localStorage need to change all logic to check local storage
       return this.loggedInView();
     }

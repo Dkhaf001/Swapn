@@ -12,10 +12,7 @@ class BuyerPost extends Component {
       currentlyFollowing: '',
       currentlyWatching: '',
       isLoggedIn: false,
-<<<<<<< HEAD
-=======
       bartering: false
->>>>>>> fixed status bar and tryng to work on chat right now
     };
   }
 
@@ -210,10 +207,7 @@ class BuyerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
-<<<<<<< HEAD
-=======
     active_user: state.active_user
->>>>>>> fixed status bar and tryng to work on chat right now
   };
 }
 
