@@ -77,15 +77,15 @@ export const addFileQuery = (bucketName, file, cb) => {
     Body: '',
     ACL: 'public-read',
   };
-  const fileStream = fs.createReadStream(file);
+  console.log('------------file---------', file);
+  const fileStream = fs.createReadStream(file.data);
   fileStream.on('error', (err) => {
     console.log('File Error', err);
   });
-  console.log(fileStream);
   // sets body = file data
-  uploadParams.Body = fileStream;
+  // uploadParams.Body = fileStream;
   // sets key = file name
-  uploadParams.Key = path.basename(file);
+  // uploadParams.Key = path.basename(file);
 
   // s3.upload(uploadParams, (err, data) => {
   //   if (err) {

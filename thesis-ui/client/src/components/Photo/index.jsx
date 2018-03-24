@@ -17,8 +17,10 @@ class PhotoUpload extends React.Component {
   cancelPost = () => {
     this.setState({ posting: false });
   };
-  urlInput = (event) => {
-    this.setState({ file: event.target.files[0] });
+  urlInput = async (event) => {
+    console.log(event.target.file);
+    await this.setState({ file: event.target.files[0] });
+    console.log('this file', this.state.file);
   };
 
   descInput = (event) => {
@@ -34,6 +36,7 @@ class PhotoUpload extends React.Component {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('post_id', 1);
+    console.log('formData', formData);
     // change to match the route i need for dp route
     axios.post('http://localhost:8593/api/addphoto', formData).then(() => {
       this.setState({
