@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
+import axios from 'axios'
 // edit post should reopen addPost but with the info already filled out including photos
 // should render chats if there are ongoing offers
 

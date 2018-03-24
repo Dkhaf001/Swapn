@@ -20,18 +20,19 @@ class StatusBar extends Component {
   };
   async componentWillMount() {
     try {
-      await this.verifyToken();
-      console.log('after verifyToken', this.props.active_user);
-      const username = this.props.active_user.username || 'null';
-      const socket = io.connect('http://localhost:4155');
-      this.props.addSocket(socket);
-      socket.emit('new user', username);
-      socket.on('directMessage', (data) => {
-        console.log('receive a direct message', data);
-        this.setState({
-          messages: [data].concat(this.state.messages),
+      if(localStorage.getItem('token')) {
+        await this.verifyToken();
+        const username = this.props.active_user.username || 'null'
+        const socket = io.connect('http://localhost:4155');
+        this.props.addSocket(socket);
+        socket.emit('new user', username);
+        socket.on('directMessage', data => {
+          console.log('receive a direct message', data);
+          this.setState({
+            messages: [data].concat(this.state.messages)
+          });
         });
-      });
+      }
     } catch (err) {
       // console.log('err StatusBar component', err);
     }
@@ -46,8 +47,9 @@ class StatusBar extends Component {
       });
       if (data) {
         await this.props.addActiveUserToStore(data);
-      } else {
-        this.props.history.push('/login');
+      }else{
+        console.log('no data', data)
+        this.props.history.push('/login')
       }
     } catch (err) {
       console.log('err verifuyToken', err);
@@ -62,6 +64,53 @@ class StatusBar extends Component {
   render() {
     return (
       <div>
+      {this.props.active_user &&
+      <div>
+      {this.state.messages.length  ? 
+        <div>
+        <Badge 
+        badgeContent={this.state.messages.length}
+        secondary={true}
+        badgeStyle={{top: 12, right: 12}}
+        >
+        <IconButton tooltip="Notifications">
+          <NotificationsIcon 
+          className="svg_icons"
+          onClick={(event) => {
+          this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+          });
+        }}
+        >Dash style</NotificationsIcon>
+        <Popover
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          onRequestClose={this.handleRequestClose}
+          animation={PopoverAnimationVertical}
+        >
+          <Menu
+            value={this.state.dashStyle}
+            onClick={(event) => {
+              this.setState({
+                open: false,
+                anchorEl: event.currentTarget,
+              });
+            }}
+            // onChange={this.handleDashChange.bind(this)} something like this to render what you click below
+          >
+            <MenuItem containerElement={<Link to="/profile/selling" />}
+            key={1} value="Solid" primaryText={`You have ${this.state.messages.length} messages`}/>
+            <MenuItem key={2} value="ShortDash" primaryText="View Offers"/> 
+            <MenuItem key={3} value="ShortDot" primaryText="View Posts"/>
+          </Menu>
+        </Popover>
+        </IconButton>
+        </Badge>
+        </div>
+        :
         <div>
           {this.state.messages.length > 0 ? (
             <div>
@@ -138,8 +187,9 @@ class StatusBar extends Component {
                 </div>
               )}
             </div>
-          )}
-        </div>
+          )}  
+        </div>}
+      </div>}
       </div>
     );
   }

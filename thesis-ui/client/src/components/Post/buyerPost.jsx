@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import Chattest from '../Chat/Chattest.jsx'
 class BuyerPost extends Component {
   constructor() {
     super();
@@ -12,6 +12,7 @@ class BuyerPost extends Component {
       currentlyFollowing: '',
       currentlyWatching: '',
       isLoggedIn: false,
+      bartering: false
     };
   }
 
@@ -20,7 +21,7 @@ class BuyerPost extends Component {
     this.getPhotos();
     this.getFollowing();
     this.getWatching();
-
+    console.log('buyerPost component', this.props)
     if (localStorage.token) {
       this.setState({
         isLoggedIn: true,
@@ -130,6 +131,16 @@ class BuyerPost extends Component {
       this.props.history.push('/login');
     }
   }
+  makeOffer() {
+    console.log('u just clicked a button', this.props.active_user)
+    if(this.props.active_user) {
+      this.setState({
+        bartering: true
+      })
+    }else {
+      this.props.history.push('/login')
+    }
+  }
 
   render() {
     return (
@@ -181,6 +192,13 @@ class BuyerPost extends Component {
             onClick={() => this.toggleWatchList()}
           />
         )}
+          <RaisedButton
+            label="MAKE OFFER"
+            backgroundColor="#a4c639"
+            style={{ margin: 12 }}
+            onClick={() => this.makeOffer()}
+          />
+          {this.state.bartering && <Chattest post={this.props.current_post}/>}
       </div>
     );
   }
@@ -189,6 +207,7 @@ class BuyerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
+    active_user: state.active_user
   };
 }
 
