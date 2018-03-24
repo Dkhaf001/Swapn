@@ -19,6 +19,7 @@ class EditPost extends Component {
       main_photo: ''
     };
   }
+
   async componentWillMount() {
     this.setState({
       title: this.props.current_post.title,
@@ -29,6 +30,7 @@ class EditPost extends Component {
       main_photo: this.props.current_post.main_photo
     });
   }
+
   async submitEditPost() {
     try {
       let userId = this.props.current_post.user_id;

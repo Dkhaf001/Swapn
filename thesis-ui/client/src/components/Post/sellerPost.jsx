@@ -16,27 +16,50 @@ import EditPost from './editPost.jsx';
 class SellerPost extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   post: '',
-    //   photos: []
-    // };
+    this.state = {
+      // photos: [],
+      offerAccepted: false,
+      accept: {
+        title: '',
+        description: '',
+        condition: '',
+        location: '',
+        demand: '',
+        status: '',
+        main_photo: ''
+      }
+    };
   }
 
   async componentWillMount() {
-    this.getPost();
     this.getPhotos();
-  }
-
-  async getPost() {
-    // const userId = this.props.current_post.user_id;
-    // const postId = this.props.current_post.id;
-    // const { data } = await axios.get(
-    //   `http://localhost:3396/api/posts/${userId}/${postId}`
-    // );
-    // console.log('successfully received post!');
-    // this.setState({
-    //   post: data.rows
-    // });
+    if (this.props.current_post.status === 'Accepting Offers') {
+      this.setState({
+        offerAccepted: false,
+        accept: {
+          title: this.props.current_post.title,
+          description: this.props.current_post.description,
+          condition: this.props.current_post.condition,
+          location: this.props.current_post.location,
+          demand: this.props.current_post.demand,
+          status: this.props.current_post.status,
+          main_photo: this.props.current_post.main_photo
+        }
+      });
+    } else if (this.props.current_post.status === 'Pending') {
+      this.setState({
+        offerAccepted: true,
+        accept: {
+          title: this.props.current_post.title,
+          description: this.props.current_post.description,
+          condition: this.props.current_post.condition,
+          location: this.props.current_post.location,
+          demand: this.props.current_post.demand,
+          status: this.props.current_post.status,
+          main_photo: this.props.current_post.main_photo
+        }
+      });
+    }
   }
 
   async getPhotos() {
@@ -50,18 +73,72 @@ class SellerPost extends Component {
     // });
   }
 
-  async removePost() {
-    const userId = this.props.current_post.user_id;
-    const postId = this.props.current_post.id;
-    const { data } = await axios.delete(
-      `http://localhost:3396/api/photos/${userId}/${postId}`
-    );
-    console.log('successfully deleted post!');
-    // refresh page after successfully deleting?
-  }
+  // async removePost() {
+  //   const userId = this.props.current_post.user_id;
+  //   const postId = this.props.current_post.id;
+  //   const { data } = await axios.delete(
+  //     `http://localhost:3396/api/photos/${userId}/${postId}`
+  //   );
+  //   console.log('successfully deleted post!');
+  //   // refresh page after successfully deleting?
+  // }
 
   editPost() {
     this.props.history.push('/editPost');
+  }
+
+  async acceptOffer() {
+    try {
+      let userId = this.props.current_post.user_id;
+      let postId = this.props.current_post.id;
+      const data = await axios.put(
+        `http://localhost:3396/api/posts/${userId}/${postId}`,
+        this.state.accept
+      );
+      this.setState({
+        offerAccepted: true,
+        accept: {
+          title: this.props.current_post.title,
+          description: this.props.current_post.description,
+          condition: this.props.current_post.condition,
+          location: this.props.current_post.location,
+          demand: this.props.current_post.demand,
+          status: 'Pending',
+          main_photo: this.props.current_post.main_photo
+        }
+      });
+      console.log('Successfully accepted an offer! Post status is now Pending');
+    } catch (err) {
+      console.log('Error accepting offer!');
+    }
+  }
+
+  async cancelOffer() {
+    try {
+      let userId = this.props.current_post.user_id;
+      let postId = this.props.current_post.id;
+      const data = await axios.put(
+        `http://localhost:3396/api/posts/${userId}/${postId}`,
+        this.state.accept
+      );
+      this.setState({
+        offerAccepted: false,
+        accept: {
+          title: this.props.current_post.title,
+          description: this.props.current_post.description,
+          condition: this.props.current_post.condition,
+          location: this.props.current_post.location,
+          demand: this.props.current_post.demand,
+          status: 'Accepting Offers',
+          main_photo: this.props.current_post.main_photo
+        }
+      });
+      console.log(
+        'Successfully cancelled an offer! Post status is now Accepting Offers'
+      );
+    } catch (err) {
+      console.log('Error cancelling offer!');
+    }
   }
 
   render() {
@@ -97,6 +174,22 @@ class SellerPost extends Component {
           // this onClick event should update the STATUS to SOLD
           // onClick={() => this.removePost()}
         />
+        <br />
+        {this.state.offerAccepted === false ? (
+          <RaisedButton
+            label="Accept Offer"
+            primary={true}
+            style={{ margin: 12 }}
+            onClick={() => this.acceptOffer()}
+          />
+        ) : (
+          <RaisedButton
+            label="Cancel Offer"
+            secondary={true}
+            style={{ margin: 12 }}
+            onClick={() => this.cancelOffer()}
+          />
+        )}
       </div>
     );
   }
