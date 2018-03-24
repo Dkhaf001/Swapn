@@ -54,15 +54,8 @@ class StatusBar extends Component {
       open: false,
     });
   };
-<<<<<<< HEAD
-  submit () {
-    console.log('this is the active_user', this.props.active_user)
-  }
-=======
 
 
-
->>>>>>> navbar fixs with image as home link
   render() {
     return (
       <div>
@@ -133,11 +126,8 @@ class StatusBar extends Component {
                 />
               </IconButton>
             </div>
-          )}
-          
+          )}  
         </div>}
-      <button onClick={()=> this.submit()}>button</button>
-
       </div>
       </div>
     );
