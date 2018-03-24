@@ -18,6 +18,13 @@ import Maps from '../components/Map/index.jsx';
 
 // const Rt = {};
 export const appRoutes = [
+  // {
+  //   redirect: true,
+  //   path: '/profile',
+  //   to: '/profile/selling',
+  //   navbarName: 'Redirect',
+  //   protected: true,
+  // },
   {
     path: '/maps',
     sidebarName: 'Maps',
