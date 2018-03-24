@@ -11,7 +11,7 @@ import BarteringList from '../components/Feed/barteringsPostList.jsx';
 import ListingList from '../components/Feed/listingPostList.jsx';
 import FollowingList from '../components/Following/index.jsx';
 import AddPost from '../components/Post/addPost.jsx';
-import EditPost from '../components/Post/EditPost.jsx';
+import EditPost from '../components/Post/editPost.jsx';
 import SinglePost from '../components/Post/index.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
