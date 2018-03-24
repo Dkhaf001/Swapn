@@ -24,6 +24,7 @@ class AddPost extends Component {
       condition: '',
       location: '',
       demand: '',
+      status: 'Accepting Offers',
       main_photo: ''
     };
   }

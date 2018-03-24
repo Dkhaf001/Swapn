@@ -46,7 +46,6 @@ export const addPostsQuery = async (user, payload) => {
   try {
     const queryString = addPostsHelper(user, payload);
     const data = await db.queryAsync(queryString);
-    console.log('################', data);
     console.log('addPostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
