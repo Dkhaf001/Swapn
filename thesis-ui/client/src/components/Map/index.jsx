@@ -63,7 +63,9 @@ export class MapContainer extends Component {
           position={{ lat: 33.759703, lng: -118.428093 }}
         />
         <Marker />
-        <Marker onClick={this.onMarkerClick} name={'Hack Reactor Nation'} />
+        <Marker 
+          onClick={this.onMarkerClick} 
+          name={'Hack Reactor Nation'} />
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
