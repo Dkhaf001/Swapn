@@ -3,6 +3,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import Chattest from '../Chat/Chattest.jsx'
+import randomstring from 'randomstring'
+let roomId
 class BuyerPost extends Component {
   constructor() {
     super();
@@ -132,7 +134,8 @@ class BuyerPost extends Component {
     }
   }
   async makeOffer() {
-    console.log('u just clicked a button', this.props.active_user)
+    roomId = randomstring.generate();
+    
     if(this.props.active_user) {
       this.setState({
         bartering: true
@@ -203,7 +206,7 @@ class BuyerPost extends Component {
             style={{ margin: 12 }}
             onClick={() => this.makeOffer()}
           />
-          {this.state.bartering && <Chattest post={this.props.current_post}/>}
+          {this.state.bartering && <Chattest post={this.props.current_post} roomId={roomId}/>}
       </div>
     )
   }

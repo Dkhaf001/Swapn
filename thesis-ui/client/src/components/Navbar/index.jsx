@@ -38,9 +38,12 @@ class Navbar extends Component {
           Logout
         </Link>
       </div>
-      <div className="rightbanner">
-        <Route path="/" component={StatusBar} />
-      </div>
+      {
+        localStorage.getItem('token') &&
+        <div className="rightbanner">
+          <Route path="/" component={StatusBar} />
+        </div>
+      }
       <div className="leftbanner">
         <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
           <ActionHome />
@@ -63,9 +66,13 @@ class Navbar extends Component {
           Login
         </Link>
       </div>
+      {
+      localStorage.getItem('token') &&
       <div className="rightbanner">
         <Route path="/" component={StatusBar} />
       </div>
+
+      }
       <div className="leftbanner">
         <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
           <ActionHome />

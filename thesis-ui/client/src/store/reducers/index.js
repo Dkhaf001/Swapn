@@ -9,9 +9,10 @@ import currentFollowingReducers from './current_followingReducers';
 import currentWatchingReducers from './current_watchingReducers';
 import socketReducers from './socketReducers'
 import current_roomId from './roomIdReducers'
-
+import messages from './messagesReducers'
 
 export default combineReducers({
+  messages,
   dataReducers,
   active_user: activeUserReducers,
   current_list: currentListReducers,
