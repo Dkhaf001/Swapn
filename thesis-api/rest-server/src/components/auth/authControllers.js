@@ -1,6 +1,7 @@
 import {
   userQuery,
-  signupQuery
+  signupQuery,
+  authQuery
 } from './authQueries';
 import {
   generateToken
@@ -46,3 +47,25 @@ export const loginController = async (req, res) => {
     res.status(404).send(err)
   }
 };
+
+export const authController = async (req, res) => {
+  try {
+    console.log('this is the query', req.query)
+    const payload = req.query;
+    const verified = await authQuery(payload)
+    console.log('this person is verified', verified)
+    if(verified) {
+      const { rows } = await userQuery(payload);   
+      const { id, email } = rows[0];   
+      const token = await generateToken(id, email);
+      rows[0].token = token
+      rows[0].password = null
+      res.status(200).append('authorization', JSON.stringify(token)).send(rows[0]);    
+    }else {
+      res.status(200).send()
+    }
+  
+  }catch(err) {
+    console.log('err Auth User', err)
+  }
+}

@@ -17,13 +17,24 @@ export const generateToken = (id, username) => {
   return token;
 };
 
-export const verifyUserWithJWT = (req, res, next) => {
+export const verifyUserWithJWT = (token) => {
   try {
-    verify(req.headers.authorization.slice(7), process.env.TOKEN_SECRET);
+    verify(token, process.env.TOKEN_SECRET);
     console.log('token verified');
-    next();
+    return true
   } catch (e) {
     console.log('token not verified');
-    next(e);
+    return false
   }
 };
+
+// export const verifyUserWithJWT = (req, res, next) => {
+//   try {
+//     verify(req.headers.authorization.slice(7), process.env.TOKEN_SECRET);
+//     console.log('token verified');
+//     next();
+//   } catch (e) {
+//     console.log('token not verified');
+//     next(e);
+//   }
+// };
