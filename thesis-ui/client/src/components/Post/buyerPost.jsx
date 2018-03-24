@@ -142,6 +142,7 @@ class BuyerPost extends Component {
   render() {
     return (
       <div>
+        hello from  buyer post
         <div>
           <img src={this.props.current_post.main_photo} />
         </div>
