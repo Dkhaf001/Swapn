@@ -131,12 +131,17 @@ class BuyerPost extends Component {
       this.props.history.push('/login');
     }
   }
-  makeOffer() {
+  async makeOffer() {
     console.log('u just clicked a button', this.props.active_user)
     if(this.props.active_user) {
       this.setState({
         bartering: true
       })
+      const { data } = await axios.post('http://localhost:3396/api/offers/', {
+        post_id: this.props.current_post.id,
+        buyer_username: this.props.active_user.username
+      })
+      console.log('just add offer to offer table', data)
     }else {
       this.props.history.push('/login')
     }
@@ -200,7 +205,7 @@ class BuyerPost extends Component {
           />
           {this.state.bartering && <Chattest post={this.props.current_post}/>}
       </div>
-    );
+    )
   }
 }
 

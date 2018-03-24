@@ -14,7 +14,8 @@ export const fetchAllOffersController = async (req, res) => {
   }
 };
 export const addOffersController = async (req, res) => {
-  let payload = req.params;
+  let payload = req.body;
+  console.log('this is the payload', payload)
   try {
     const data = await addOffersQuery(payload);
     return res.status(200).send(data);
