@@ -3,8 +3,8 @@ import {
   signUpHelper,
   loginHelper
 } from './authSQLHelpers';
-
-
+import {verifyUserWithJWT} from '../../middleware/auth/jwt'
+ 
 export const userQuery = async (body) => {
   try {
     const queryString = await loginHelper(body);
@@ -25,6 +25,16 @@ export const signupQuery = async (body) => {
   } catch(err) {
     console.log('signupQuery - error= ', err)
     return err
+  }
+}
+
+export const authQuery = async (body) => {
+  try {
+    console.log('i am right here')
+    const verified = await verifyUserWithJWT(body.token)
+    return verified
+  }catch(err) {
+    console.log('err auth query', err)
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Search from './Search.jsx';
-import { Link } from 'react-router-dom';
+import { Link, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore, addCurrentPost } from '../../actions';
@@ -43,7 +43,7 @@ class Navbar extends Component {
       Currently Signed in as : {localStorage.username} 
       </div>
       <div className="rightbanner">
-      <StatusBar />
+      <Route path='/' component={StatusBar}/>
       </div>
       <div className="middlebanner">
       <Search />

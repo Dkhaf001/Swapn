@@ -9,7 +9,6 @@ import postsRouter from '../components/posts/postsRouter';
 import usersRouter from '../components/users/usersRouter';
 import watchersRouter from '../components/watchers/watchersRouter';
 
-
 const router = express.Router();
 
 router.use('/auth', authRouter);
@@ -20,5 +19,6 @@ router.use('/photos', photosRouter);
 router.use('/posts', postsRouter);
 router.use('/users', usersRouter);
 router.use('/watchers', watchersRouter);
+
 
 export default router;

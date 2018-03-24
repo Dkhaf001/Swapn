@@ -10,15 +10,18 @@ import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
+import { addActiveUserToStore } from '../../actions'
+import axios from 'axios'
 class StatusBar extends Component {
   state = {
     messages: [],
     open: false
   }
-  async componentDidMount() {
+  async componentWillMount() {
     try {
-      const username = this.props.active_user.username
-      // const username = this.props.active_user.username || JSON.parse(window.localStorage.getItem('user')).username
+      await this.verifyToken();
+      console.log('after verifyToken', this.props.active_user)
+      const username = this.props.active_user.username || 'null'
       const socket = io.connect('http://localhost:4155');
       this.props.addSocket(socket);
       socket.emit('new user', username);
@@ -29,16 +32,31 @@ class StatusBar extends Component {
         });
       });
     } catch (err) {
-      console.log('err StatusBar component', err);
+      // console.log('err StatusBar component', err);
     }
   }
-
+  async verifyToken() {
+    try{
+      const { data } = await axios.get('http://localhost:3396/api/auth/authenticate', {
+        params: {username:localStorage.getItem('username') , token: localStorage.getItem('token')}
+      })
+      if(data) {
+        await this.props.addActiveUserToStore(data);
+      }else{
+        this.props.history.push('/login')
+      }
+    }catch(err) {
+      console.log('err verifuyToken', err)
+    }
+  }
   handleRequestClose = () => {
     this.setState({
       open: false,
     });
   };
-
+  submit () {
+    console.log('this is the active_user', this.props.active_user)
+  }
   render() {
     return (
       <div>
@@ -111,7 +129,7 @@ class StatusBar extends Component {
           )}
           
         </div>}
-      
+      <button onClick={()=> this.submit()}>button</button>
 
       </div>
       </div>
@@ -127,7 +145,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addSocket
+      addSocket,
+      addActiveUserToStore
     },
     dispatch
   );
