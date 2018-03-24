@@ -9,6 +9,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Protected from './routes/protect.jsx';
 import { appRoutes, profileRoutes } from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
+import Map from './components/Map/index.jsx';
 import './styles.css';
 
 class App extends React.Component {
@@ -22,6 +23,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Map />
         <Navbar />
         <hr />
         <PhotoUpload />
