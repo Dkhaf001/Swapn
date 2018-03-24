@@ -5,7 +5,6 @@ const style = {
   width: '100%',
   height: '100%'
 };
-
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -17,13 +16,17 @@ export class MapContainer extends Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
   }
-
   onMarkerClick(props, marker, e) {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
+  }
+
+  fetchPlaces= (mapProps, map)=> {
+    const {google} = mapProps;
+    const service = new google.maps.places.PlacesService(map);
   }
 
   onMapClicked(props) {
@@ -39,10 +42,12 @@ export class MapContainer extends Component {
     return (
       <Map
         google={this.props.google}
-        center={{
+        style={{width: '80%', height: '80%', position: 'relative'}}
+        initialCenter={{
           lat: 33.976,
           lng: -118.39
         }}
+        zoom={15}
         onClick={this.onMapClicked}
       >
         <Marker onClick={this.onMarkerClick} name={'Hack Reactor Nation'} />
