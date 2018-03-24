@@ -18,6 +18,13 @@ import Protected from '../routes/protect.jsx';
 // const Rt = {};
 export const appRoutes = [
   {
+    path: '/maps',
+    sidebarName: 'Maps',
+    navbarName: 'Maps',
+    component: Maps,
+    protected: false,
+  },
+  {
     path: '/home',
     sidebarName: 'Home',
     navbarName: 'Home',

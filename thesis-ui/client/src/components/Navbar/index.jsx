@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Search from './Search.jsx';
-import { Link, Route} from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore, addCurrentPost } from '../../actions';
-import StatusBar from './StatusBar.jsx'
+import StatusBar from './StatusBar.jsx';
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
@@ -26,57 +26,51 @@ class Navbar extends Component {
   loggedInView = () => (
     <div className="rowbanner">
       <div className="middlebanner">
-      Currently Signed in as : {localStorage.username} 
-      <Search />
-      <Link to="/post" className="linkbutton">
-        Listing 
-      </Link>
-      <Link to="/profile" className="linkbutton">
-        Profile 
-      </Link>
-      <Link to="/" onClick={this.logout} className="linkbutton">
-        Logout
-      </Link>
+        Currently Signed in as : {localStorage.username}
+        <Search />
+        <Link to="/post" className="linkbutton">
+          Listing
+        </Link>
+        <Link to="/profile" className="linkbutton">
+          Profile
+        </Link>
+        <Link to="/" onClick={this.logout} className="linkbutton">
+          Logout
+        </Link>
       </div>
       <div className="rightbanner">
-      <Route path='/' component={StatusBar}/>
+        <Route path="/" component={StatusBar} />
       </div>
       <div className="leftbanner">
-      <IconButton
-      className="svg_icons"
-    containerElement={<Link to="/profile/selling" />}
-    >
-      <ActionHome />
-    </IconButton >
-    </div>
+        <IconButton className="svg_icons" containerElement={<Link to="/profile/selling" />}>
+          <ActionHome />
+        </IconButton>
+      </div>
     </div>
   );
   // need to add logout functinoality and protection
   loggedOutView = () => (
     <div className="rowbanner">
-    <div className="middlebanner">
-      <Search />
-      <Link to="/signup" className="linkbutton">
-        SignUp
-      </Link>
-      <Link to="/" className="linkbutton">
-        Listings
-      </Link>
-      <Link to="/login" className="linkbutton">
-        Login
-      </Link>
-    </div>
-    <div className="rightbanner">
-      <StatusBar />
+      <div className="middlebanner">
+        <Search />
+        <Link to="/signup" className="linkbutton">
+          SignUp
+        </Link>
+        <Link to="/" className="linkbutton">
+          Listings
+        </Link>
+        <Link to="/login" className="linkbutton">
+          Login
+        </Link>
       </div>
-    <div className="leftbanner">
-      <IconButton
-      className="svg_icons"
-    containerElement={<Link to="/profile/selling" />}
-    >
-      <ActionHome />
-    </IconButton>
-    </div>
+      <div className="rightbanner">
+        <StatusBar />
+      </div>
+      <div className="leftbanner">
+        <IconButton className="svg_icons" containerElement={<Link to="/profile/selling" />}>
+          <ActionHome />
+        </IconButton>
+      </div>
     </div>
   );
   render() {
@@ -103,10 +97,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
-
-
-
-
-
-
-
