@@ -6,20 +6,17 @@ class Markers extends Component {
     super(props);
   }
 
-
-
   render() {
     return (
       <div>
-        
-          {this.props.markers &&
-            this.props.markers.map(marker => (
-              <Marker
-          onClick={this.onMarkerClick}
-          name={marker.name}
-          position={{ lat: 33.759703, lng: -118.428093 }}
-        />          
-            ))}   
+        {this.props.markers &&
+          this.props.markers.map(marker => (
+            <Marker
+              onClick={this.onMarkerClick}
+              name={name}
+              position={{ lat: 33.759703, lng: -118.428093 }}
+            />
+          ))}
       </div>
     );
   }
