@@ -30,6 +30,7 @@ body {
   width:100px;
 }
 .leftbanner {
+  padding-top: 35px;
   float:left;
   width:100px;
 }
@@ -38,7 +39,7 @@ body {
   display: inline-block;
   margin:0 auto;
   padding-left: 30px;
-  padding-top: 40px;
+  padding-top: 30px;
   width:500px;
 }
 

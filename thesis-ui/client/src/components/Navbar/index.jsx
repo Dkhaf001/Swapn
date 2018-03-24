@@ -10,13 +10,6 @@ import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import ActionHome from 'material-ui/svg-icons/action/home';
 
-const styles = {
-  large: {
-    width: 120,
-    height: 120,
-    padding: 30,
-  },
-};
 class Navbar extends Component {
   constructor() {
     super();
@@ -49,9 +42,12 @@ class Navbar extends Component {
       <Route path='/' component={StatusBar}/>
       </div>
       <div className="leftbanner">
-      <Link to="/home" className="linkpic" >
-    <img src="/../../ButtonPic.jpg" height="140" width="140" />
-      </Link>
+      <IconButton
+      className="svg_icons"
+    containerElement={<Link to="/profile/selling" />}
+    >
+      <ActionHome />
+    </IconButton >
     </div>
     </div>
   );
@@ -74,9 +70,12 @@ class Navbar extends Component {
       <StatusBar />
       </div>
     <div className="leftbanner">
-      <Link to="/home" className="linkpic" >
-    <img src="/../../ButtonPic.jpg" height="140" width="140" />
-      </Link>
+      <IconButton
+      className="svg_icons"
+    containerElement={<Link to="/profile/selling" />}
+    >
+      <ActionHome />
+    </IconButton>
     </div>
     </div>
   );
