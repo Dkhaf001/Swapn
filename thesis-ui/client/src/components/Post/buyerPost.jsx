@@ -98,22 +98,26 @@ class BuyerPost extends Component {
   async toggleWatchList() {
     const userId = localStorage.id;
     const postId = this.props.current_post.id;
-    if (this.state.currentlyWatching === true) {
-      await axios.delete(
-        `http://localhost:3396/api/watchers/${userId}/${postId}`
-      );
-      this.setState({
-        currentlyWatching: false
-      });
-      console.log('you are no longer watching this post');
+    if (localStorage.id) {
+      if (this.state.currentlyWatching === true) {
+        await axios.delete(
+          `http://localhost:3396/api/watchers/${userId}/${postId}`
+        );
+        this.setState({
+          currentlyWatching: false
+        });
+        console.log('you are no longer watching this post');
+      } else {
+        await axios.post(
+          `http://localhost:3396/api/watchers/${userId}/${postId}`
+        );
+        this.setState({
+          currentlyWatching: true
+        });
+        console.log('you are now watching this post');
+      }
     } else {
-      await axios.post(
-        `http://localhost:3396/api/watchers/${userId}/${postId}`
-      );
-      this.setState({
-        currentlyWatching: true
-      });
-      console.log('you are now watching this post');
+      this.props.history.push('/login');
     }
   }
 

@@ -16,7 +16,6 @@ class Post extends Component {
   render() {
     // console.log('active', this.props.active_user);
     // console.log('post', this.props.current_post.id);
-
     if (localStorage.id) {
       if (localStorage.id === this.props.current_post.user_id) {
         return <SellerPost />;
