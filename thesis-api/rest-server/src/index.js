@@ -4,6 +4,9 @@ import App from './config/express';
 import './config/database/index';
 // import './config/database/setup';
 
+// import { bulkPost } from './config/database/seedData';
+// bulkPost();
+
 const app = App.express;
 
 const server = http.createServer(app);
