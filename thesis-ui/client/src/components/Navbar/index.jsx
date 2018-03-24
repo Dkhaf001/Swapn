@@ -42,7 +42,7 @@ class Navbar extends Component {
         <Route path="/" component={StatusBar} />
       </div>
       <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/profile/selling" />}>
+        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
           <ActionHome />
         </IconButton>
       </div>
@@ -56,9 +56,6 @@ class Navbar extends Component {
         <Link to="/signup" className="linkbutton">
           SignUp
         </Link>
-        <Link to="/" className="linkbutton">
-          Listings
-        </Link>
         <Link to="/login" className="linkbutton">
           Login
         </Link>
@@ -67,7 +64,7 @@ class Navbar extends Component {
         <StatusBar />
       </div>
       <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/profile/selling" />}>
+        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
           <ActionHome />
         </IconButton>
       </div>

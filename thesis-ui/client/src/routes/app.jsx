@@ -21,7 +21,7 @@ export const appRoutes = [
     path: '/maps',
     sidebarName: 'Maps',
     navbarName: 'Maps',
-    component: Maps,
+    component: Home,
     protected: false,
   },
   {
@@ -50,7 +50,7 @@ export const appRoutes = [
     sidebarName: 'List',
     navbarName: 'List',
     component: AddPost,
-    protected: false,
+    protected: true,
   },
   {
     path: '/edit',
