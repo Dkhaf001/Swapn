@@ -14,9 +14,11 @@ import AddPost from '../components/Post/addPost.jsx';
 import SinglePost from '../components/Post/index.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
+import Maps from '../components/Map/index.jsx';
 
 // const Rt = {};
 export const appRoutes = [
+<<<<<<< HEAD
   // {
   //   path: '/maps',
   //   sidebarName: 'Maps',
@@ -24,6 +26,15 @@ export const appRoutes = [
   //   component: Maps,
   //   protected: false,
   // },
+=======
+  {
+    path: '/maps',
+    sidebarName: 'Maps',
+    navbarName: 'Maps',
+    component: Maps,
+    protected: false,
+  },
+>>>>>>> map v1.1
   {
     path: '/home',
     sidebarName: 'Home',

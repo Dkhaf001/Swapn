@@ -45,6 +45,9 @@ class Navbar extends Component {
         <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
           <ActionHome />
         </IconButton>
+        <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
+          <ActionHome />
+        </IconButton>
       </div>
     </div>
   );
@@ -65,6 +68,9 @@ class Navbar extends Component {
       </div>
       <div className="leftbanner">
         <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
+          <ActionHome />
+        </IconButton>
+        <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
           <ActionHome />
         </IconButton>
       </div>
