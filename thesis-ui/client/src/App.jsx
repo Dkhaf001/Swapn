@@ -7,7 +7,7 @@ import { addDataToStore } from './actions';
 import Chat from './components/Chat/Chat.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Protected from './routes/protect.jsx';
-import Rt from './routes/app.jsx';
+import { appRoutes, profileRoutes } from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
 import './styles.css';
 
@@ -29,28 +29,20 @@ class App extends React.Component {
         <div ref="mainPanel">
           <div>
             <Switch>
-              {Rt.appRoutes.map((route, key) => {
-                // if (prop.redirect) {
-                //   return <Redirect from={prop.path} to={prop.to} key={key} />;
-                // }
+              {appRoutes.map((route, key) => {
+                if (route.redirect) {
+                  return <Redirect from={route.path} to={route.to} key={key} />;
+                }
                 if (route.protected) {
                   return (
                     <Route
                       path={route.path}
                       key={key}
-                      component={props => (
-                        <Protected component={route.component} {...props} />
-                      )}
+                      component={props => <Protected component={route.component} {...props} />}
                     />
                   );
                 }
-                return (
-                  <Route
-                    path={route.path}
-                    component={route.component}
-                    key={key}
-                  />
-                );
+                return <Route path={route.path} component={route.component} key={key} />;
               })}
             </Switch>
           </div>
@@ -61,15 +53,15 @@ class App extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    dataFromReduxStorage: state.dataReducers
+    dataFromReduxStorage: state.dataReducers,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addDataToStore
+      addDataToStore,
     },
-    dispatch
+    dispatch,
   );
 }
 

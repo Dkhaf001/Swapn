@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { addCurrentList } from '../../actions';
 import SellerPost from '../Post/sellerPost.jsx';
 import BuyerPost from '../Post/buyerPost';
-import { Route } from 'react-router-dom';
 
 class Post extends Component {
   constructor() {
@@ -20,13 +19,13 @@ class Post extends Component {
         return <SellerPost />;
       }
     }
-    return <Route path="/" component={BuyerPost} />;
+    return <BuyerPost {...this.props} />;
   }
 }
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 
