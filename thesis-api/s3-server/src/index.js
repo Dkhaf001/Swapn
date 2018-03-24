@@ -20,5 +20,5 @@ const PORT = process.env.PORT || 2859;
 
 server.listen(PORT, (err) => {
   if (err) console.error(err);
-  console.log('successfully connected to port', PORT);
+  console.log('successfully connected S3-server to port', PORT);
 });

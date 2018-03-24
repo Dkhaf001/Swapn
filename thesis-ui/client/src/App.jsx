@@ -7,7 +7,7 @@ import { addDataToStore } from './actions';
 import Chat from './components/Chat/Chat.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Protected from './routes/protect.jsx';
-import Rt from './routes/app.jsx';
+import { appRoutes, profileRoutes } from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
 import './styles.css';
 
@@ -29,7 +29,7 @@ class App extends React.Component {
         <div ref="mainPanel">
           <div>
             <Switch>
-              {Rt.appRoutes.map((route, key) => {
+              {appRoutes.map((route, key) => {
                 if (route.redirect) {
                   return <Redirect from={route.path} to={route.to} key={key} />;
                 }

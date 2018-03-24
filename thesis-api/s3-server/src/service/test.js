@@ -90,7 +90,7 @@ function viewAlbum(albumName) {
       '</button>',
       '<button onclick="listAlbums()">',
         'Back To Albums',
-      '</button>',      
+      '</button>',
     ]
     document.getElementById('app').innerHTML = getHtml(htmlTemplate);
   });
@@ -156,12 +156,12 @@ function deletePhoto(albumName, photoKey) {
 
 // Load the SDK for JavaScript
 var AWS = require('aws-sdk');
-// Set the region 
+// Set the region
 AWS.config.update({region: 'REGION'});
 
 // Create S3 service object
 s3 = new AWS.S3({apiVersion: '2006-03-01'});
-                    
+
 // Call S3 to list current buckets
 s3.listBuckets(function(err, data) {
    if (err) {
@@ -174,11 +174,11 @@ s3.listBuckets(function(err, data) {
 // Create the parameters for calling createBucket
 var bucketParams = {
   Bucket : process.argv[2]
-};            
+};
 
 // Create S3 service object
 s3 = new AWS.S3({apiVersion: '2006-03-01'});
-                                  
+
 // Call S3 to create the bucket
 s3.createBucket(bucketParams, function(err, data) {
   if (err) {
@@ -193,7 +193,7 @@ s3.createBucket(bucketParams, function(err, data) {
 //  upload file
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
-// Set the region 
+// Set the region
 AWS.config.update({region: 'REGION'});
 
 // Create S3 service object
@@ -222,21 +222,20 @@ s3.upload (uploadParams, function (err, data) {
   }
 });
 
-
 // node s3_upload.js BUCKET_NAME FILE_NAME
 
 //list stuff in the bucket like albums
 
 // Load the SDK for JavaScript
 var AWS = require('aws-sdk');
-// Set the region 
+// Set the region
 AWS.config.update({region: 'REGION'});
 
 // Create the parameters for calling createBucket
 var bucketParams = {
    Bucket : BUCKET_NAME
-};                    
-                                   
+};
+
  // Call S3 to create the bucket
 s3.listObjects(bucketParams, function(err, data) {
    if (err) {
@@ -251,14 +250,14 @@ s3.listObjects(bucketParams, function(err, data) {
 //delete bucket
 // Load the SDK for JavaScript
 var AWS = require('aws-sdk');
-// Set the region 
+// Set the region
 AWS.config.update({region: 'REGION'});
 
 // Create the parameters for calling createBucket
 var bucketParams = {
    Bucket : BUCKET_NAME
-};                    
-                                   
+};
+
  // Call S3 to create the bucket
 s3.deleteBucket(bucketParams, function(err, data) {
    if (err) {
@@ -276,7 +275,7 @@ s3.deleteBucket(bucketParams, function(err, data) {
 //get cores data
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
-// Set the region 
+// Set the region
 AWS.config.update({region: 'REGION'});
 
 // Create S3 service object
@@ -297,7 +296,7 @@ s3.getBucketCors(bucketParams, function(err, data) {
 //set cores
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
-// Set the region 
+// Set the region
 AWS.config.update({region: 'REGION'});
 
 // Create S3 service object
@@ -338,7 +337,6 @@ s3.putBucketCors(corsParams, function(err, data) {
     console.log("Success", data);
   }
 });
-
 
 //----------------------------
 s3.getObject({ Bucket: 'bucketName', Key: 'keyName' });

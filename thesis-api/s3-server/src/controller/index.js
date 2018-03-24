@@ -1,4 +1,11 @@
-import {fetchAlbumQuery,addAlbumQuery,removeAlbumQuery,addPhotoQuery,removePhotoQuery} from
+// import {
+//   fetchAlbumQuery,
+//   addAlbumQuery,
+//   removeAlbumQuery,
+//   addPhotoQuery,
+//   removePhotoQuery,
+// } from '../model';
+
 export const fetchAlbumController = async (req, res) => {
   // const payload = req.params;
   try {

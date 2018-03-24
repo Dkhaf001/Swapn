@@ -15,8 +15,8 @@ import SinglePost from '../components/Post/index.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 
-const Rt = {};
-Rt.appRoutes = [
+// const Rt = {};
+export const appRoutes = [
   {
     path: '/home',
     sidebarName: 'Home',
@@ -73,7 +73,7 @@ Rt.appRoutes = [
   },
 ];
 
-Rt.profileRoutes = [
+export const profileRoutes = [
   {
     path: '/profile/following',
     sidebarName: 'Following',
@@ -104,4 +104,4 @@ Rt.profileRoutes = [
   },
 ];
 
-export default Rt;
+// export default Rt;
