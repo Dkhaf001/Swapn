@@ -9,6 +9,7 @@ import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import ActionHome from 'material-ui/svg-icons/action/home';
+import MapIcon from 'material-ui/svg-icons/maps/map';
 
 class Navbar extends Component {
   constructor() {
@@ -49,7 +50,7 @@ class Navbar extends Component {
           <ActionHome />
         </IconButton>
         <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
-          <ActionHome />
+          <MapIcon />
         </IconButton>
       </div>
     </div>
@@ -78,7 +79,7 @@ class Navbar extends Component {
           <ActionHome />
         </IconButton>
         <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
-          <ActionHome />
+          <MapIcon />
         </IconButton>
       </div>
     </div>

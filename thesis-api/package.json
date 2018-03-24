@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "google-map-react": "^0.34.0",
     "lodash": "^4.17.4",
     "npm": "^5.7.1",
     "npm-run-all": "^4.1.2"

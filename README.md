@@ -56,7 +56,6 @@ npm run start
 
 TO SETUP DATABASE
 cd thesis-api
-
 cd rest-server
 cd index.js
 uncomment line 5
