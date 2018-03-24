@@ -16,13 +16,11 @@ import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 import Maps from '../components/Map/index.jsx';
 
-// const Rt = {};
 export const appRoutes = [
   // {
   //   redirect: true,
-  //   path: '/profile',
+  //   from: '/profile',
   //   to: '/profile/selling',
-  //   navbarName: 'Redirect',
   //   protected: true,
   // },
   {

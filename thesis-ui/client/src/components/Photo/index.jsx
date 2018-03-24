@@ -10,43 +10,42 @@ class PhotoUpload extends React.Component {
       val: {
         file: null,
         url: '',
-        description: ''
-      }
+        description: '',
+      },
     };
   }
   cancelPost = () => {
     this.setState({ posting: false });
   };
-  urlInput = event => {
+  urlInput = (event) => {
     this.setState({ file: event.target.files[0] });
   };
 
-  descInput = event => {
+  descInput = (event) => {
     const value = this.state.val;
     value.description = event.target.value;
     this.setState({ val: value });
   };
   handleSubmit = () => {
-    this.props.loadingTrue();
+    // this.props.loadingTrue();
+    console.log('clicked');
     const value = this.state.val;
     const { file } = this.state;
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('post_id', this.props.current_post.id);
+    formData.append('post_id', 1);
     // change to match the route i need for dp route
-    axios
-      .post(`/api/${this.props.currentUser.username}/content`, formData)
-      .then(() => {
-        this.setState({
-          posting: false,
-          val: {
-            url: '',
-            description: ''
-          }
-        });
-        this.props.loadingFalse();
-        this.props.refreshCurrentUser();
+    axios.post('http://localhost:8593/api/addphoto', formData).then(() => {
+      this.setState({
+        posting: false,
+        val: {
+          url: '',
+          description: '',
+        },
       });
+      // this.props.loadingFalse();
+      // this.props.refreshCurrentUser();
+    });
   };
 
   renderForm = () => (
@@ -88,7 +87,7 @@ class PhotoUpload extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 

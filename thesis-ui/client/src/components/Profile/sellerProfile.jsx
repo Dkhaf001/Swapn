@@ -22,7 +22,7 @@ class SellerProfile extends Component {
                 if (route.redirect) {
                   return <Redirect from={route.path} to={route.to} key={key} />;
                 }
-                return <Route path={route.path} component={route.component} key={key} />;
+                <Route path={route.path} component={route.component} key={key} />;
               })}
             </Switch>
           </div>
