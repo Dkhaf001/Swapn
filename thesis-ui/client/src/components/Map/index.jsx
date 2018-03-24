@@ -16,6 +16,7 @@ export class MapContainer extends Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
   }
+  renderMarkers() {}
   onMarkerClick(props, marker, e) {
     this.setState({
       selectedPlace: props,
@@ -24,10 +25,10 @@ export class MapContainer extends Component {
     });
   }
 
-  fetchPlaces= (mapProps, map)=> {
-    const {google} = mapProps;
+  fetchPlaces = (mapProps, map) => {
+    const { google } = mapProps;
     const service = new google.maps.places.PlacesService(map);
-  }
+  };
 
   onMapClicked(props) {
     if (this.state.showingInfoWindow) {
@@ -42,7 +43,7 @@ export class MapContainer extends Component {
     return (
       <Map
         google={this.props.google}
-        style={{width: '80%', height: '80%', position: 'relative'}}
+        style={{ width: '80%', height: '80%', position: 'relative' }}
         initialCenter={{
           lat: 33.976,
           lng: -118.39
@@ -50,7 +51,21 @@ export class MapContainer extends Component {
         zoom={15}
         onClick={this.onMapClicked}
       >
-        <Marker onClick={this.onMarkerClick} name={'Hack Reactor Nation'} />
+        {/* {props.markers.map(marker => (
+          <Marker
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            key={marker.id}
+          />
+        ))} */}
+        <Marker
+          onClick={this.onMarkerClick}
+          name={'Elberts House'}
+          position={{ lat: 33.759703, lng: -118.428093 }}
+        />
+        <Marker />
+        <Marker 
+          onClick={this.onMarkerClick} 
+          name={'Hack Reactor Nation'} />
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
