@@ -13,7 +13,6 @@ class SellerProfile extends Component {
   render() {
     return (
       <div>
-        <Chattest />
         <div>
           <Bio />
           <div>

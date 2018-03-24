@@ -12,7 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
 import { addActiveUserToStore } from '../../actions';
 import axios from 'axios';
-
+import { addMessages } from '../../actions'
 class StatusBar extends Component {
   state = {
     messages: [],
@@ -21,6 +21,7 @@ class StatusBar extends Component {
   async componentWillMount() {
     try {
       if(localStorage.getItem('token')) {
+        console.log('find a token tryingto connect to socket server')
         await this.verifyToken();
         const username = this.props.active_user.username || 'null'
         const socket = io.connect('http://localhost:4155');
@@ -31,6 +32,7 @@ class StatusBar extends Component {
           this.setState({
             messages: [data].concat(this.state.messages)
           });
+          this.props.addMessages(this.state.messages)
         });
       }
     } catch (err) {
@@ -63,57 +65,14 @@ class StatusBar extends Component {
   showUsers() {
     this.props.socket.emit('showUsers')
   }
+  showMessages() {
+    console.log(this.props.messages)
+  }
   render() {
     return (
       <div>
       {this.props.active_user &&
       <div>
-      {this.state.messages.length  ? 
-        <div>
-        <Badge 
-        badgeContent={this.state.messages.length}
-        secondary={true}
-        badgeStyle={{top: 12, right: 12}}
-        >
-        <IconButton tooltip="Notifications">
-          <NotificationsIcon 
-          className="svg_icons"
-          onClick={(event) => {
-          this.setState({
-            open: true,
-            anchorEl: event.currentTarget,
-          });
-        }}
-        >Dash style</NotificationsIcon>
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={this.handleRequestClose}
-          animation={PopoverAnimationVertical}
-        >
-          <Menu
-            value={this.state.dashStyle}
-            onClick={(event) => {
-              this.setState({
-                open: false,
-                anchorEl: event.currentTarget,
-              });
-            }}
-            // onChange={this.handleDashChange.bind(this)} something like this to render what you click below
-          >
-            <MenuItem containerElement={<Link to="/profile/selling" />}
-            key={1} value="Solid" primaryText={`You have ${this.state.messages.length} messages`}/>
-            <MenuItem key={2} value="ShortDash" primaryText="View Offers"/> 
-            <MenuItem key={3} value="ShortDot" primaryText="View Posts"/>
-          </Menu>
-        </Popover>
-        </IconButton>
-        </Badge>
-        </div>
-        :
-        <div>
           {this.state.messages.length > 0 ? (
             <div>
               <Badge
@@ -152,13 +111,16 @@ class StatusBar extends Component {
                       // onChange={this.handleDashChange.bind(this)} something like this to render what you click below
                     >
                       <MenuItem
-                        containerElement={<Link to="/profile/selling" />}
                         key={1}
                         value="Solid"
                         primaryText={`You have ${this.state.messages.length} messages`}
                       />
-                      <MenuItem key={2} value="ShortDash" primaryText="View Offers" />
-                      <MenuItem key={3} value="ShortDot" primaryText="View Posts" />
+                      <MenuItem     
+                       containerElement={<Link to="/profile/selling" />}
+                        key={2} value="ShortDash" primaryText="View Offers" />
+                      <MenuItem
+                        containerElement={<Link to="/profile/bartering" />}
+                        key={3} value="ShortDot" primaryText="View Posts" />
                     </Menu>
                   </Popover>
                 </IconButton>
@@ -166,19 +128,6 @@ class StatusBar extends Component {
             </div>
           ) : (
             <div>
-              {this.state.messages.length > 0 ? (
-                <div>
-                  <Badge
-                    badgeContent={this.state.messages.length}
-                    secondary={true}
-                    badgeStyle={{ top: 12, right: 12 }}
-                  >
-                    <IconButton tooltip="Notifications">
-                      <NotificationsIcon className="svg_icons" />
-                    </IconButton>
-                  </Badge>
-                </div>
-              ) : (
                 <div>
                   <IconButton tooltip="Notifications">
                     <NotificationsIcon
@@ -187,12 +136,12 @@ class StatusBar extends Component {
                     />
                   </IconButton>
                 </div>
-              )}
             </div>
           )}  
-        </div>}
+
       </div>}
       <button onClick={()=>this.showUsers()}>show online users</button>
+      <button onClick={()=>this.showMessages()}>show messages</button>
       </div>
     );
   }
@@ -201,7 +150,8 @@ class StatusBar extends Component {
 function mapStateToProps(state) {
   return {
     active_user: state.active_user,
-    socket: state.socket
+    socket: state.socket,
+    messages: state.messages
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -209,6 +159,7 @@ function mapDispatchToProps(dispatch) {
     {
       addSocket,
       addActiveUserToStore,
+      addMessages
     },
     dispatch,
   );

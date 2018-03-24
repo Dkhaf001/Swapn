@@ -33,8 +33,8 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       currentUsersNumber--;
       console.log ('total user connect', currentUsersNumber)
     })
-    client.on('joinRoom', data => {
-      const room = rooms.findOrCreate(data.roomId || 'default');
+    client.on('joinRoom', roomId => {
+      const room = rooms.findOrCreate(roomId || 'default');
       client.join(room.get('id'))
     })
     client.on('message', data => {

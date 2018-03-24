@@ -26,23 +26,22 @@ class Chattest extends React.Component{
             console.log('u trying to send a meesage')
             this.props.socket.emit('message', {
                 from: this.props.active_user.username,
-                to: 'shayne002' || this.props.post.username,
-                postId: 1 || this.props.current_post.id || this.props.post.id,
+                to: this.props.post.username,
+                postId: this.props.post.id,
                 roomId: this.props.current_roomId,
                 message: this.state.message
             })
             this.setState({message: ''});
         }
     }
-    async genarateRoomId(){
-        return this.props.current_roomId ? this.props.current_roomId : randomstring.generate();
-    }
     async componentWillMount () {  
         try{
-            console.log('inside of chattest this is the socket', this.props.socket)
-            const roomId = await this.genarateRoomId() ;
-            this.props.addCurrentRoomId(roomId);
-            this.props.socket.emit('joinRoom',  {roomId});
+            console.log('inside of chattest this is the props shou have socket and roomId', this.props)
+            this.props.addCurrentRoomId(this.props.roomId);
+            this.props.socket.emit('joinRoom',  this.props.roomId);
+            this.props.socket.on('message:room', data => {
+                console.log('message:room event', data)
+            })
         } catch(err) {
             console.log('err in chattest ', err)
         }

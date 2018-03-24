@@ -42,3 +42,8 @@ export const addCurrentRoomId = id => ({
   type: "ROOMID",
   payload: id
 })
+
+export const addMessages = messages => ({
+  type: "MESSAGES",
+  payload: messages
+})
