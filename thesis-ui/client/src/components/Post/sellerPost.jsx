@@ -20,13 +20,13 @@ class SellerPost extends Component {
       // photos: [],
       offerAccepted: false,
       accept: {
-        title: '',
-        description: '',
-        condition: '',
-        location: '',
-        demand: '',
-        status: '',
-        main_photo: ''
+        title: this.props.current_post.title,
+        description: this.props.current_post.description,
+        condition: this.props.current_post.condition,
+        location: this.props.current_post.location,
+        demand: this.props.current_post.demand,
+        status: this.props.current_post.status,
+        main_photo: this.props.current_post.main_photo
       }
     };
   }
@@ -35,29 +35,11 @@ class SellerPost extends Component {
     this.getPhotos();
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
-        offerAccepted: false,
-        accept: {
-          title: this.props.current_post.title,
-          description: this.props.current_post.description,
-          condition: this.props.current_post.condition,
-          location: this.props.current_post.location,
-          demand: this.props.current_post.demand,
-          status: this.props.current_post.status,
-          main_photo: this.props.current_post.main_photo
-        }
+        offerAccepted: false
       });
     } else if (this.props.current_post.status === 'Pending') {
       this.setState({
-        offerAccepted: true,
-        accept: {
-          title: this.props.current_post.title,
-          description: this.props.current_post.description,
-          condition: this.props.current_post.condition,
-          location: this.props.current_post.location,
-          demand: this.props.current_post.demand,
-          status: this.props.current_post.status,
-          main_photo: this.props.current_post.main_photo
-        }
+        offerAccepted: true
       });
     }
   }
@@ -89,24 +71,25 @@ class SellerPost extends Component {
 
   async acceptOffer() {
     try {
+      let accept = {
+        title: this.props.current_post.title,
+        description: this.props.current_post.description,
+        condition: this.props.current_post.condition,
+        location: this.props.current_post.location,
+        demand: this.props.current_post.demand,
+        status: 'Pending',
+        main_photo: this.props.current_post.main_photo
+      };
       let userId = this.props.current_post.user_id;
       let postId = this.props.current_post.id;
-      const data = await axios.put(
-        `http://localhost:3396/api/posts/${userId}/${postId}`,
-        this.state.accept
-      );
       this.setState({
         offerAccepted: true,
-        accept: {
-          title: this.props.current_post.title,
-          description: this.props.current_post.description,
-          condition: this.props.current_post.condition,
-          location: this.props.current_post.location,
-          demand: this.props.current_post.demand,
-          status: 'Pending',
-          main_photo: this.props.current_post.main_photo
-        }
+        accept: accept
       });
+      const data = await axios.put(
+        `http://localhost:3396/api/posts/${userId}/${postId}`,
+        accept
+      );
       console.log('Successfully accepted an offer! Post status is now Pending');
     } catch (err) {
       console.log('Error accepting offer!');
@@ -115,23 +98,24 @@ class SellerPost extends Component {
 
   async cancelOffer() {
     try {
+      let cancel = {
+        title: this.props.current_post.title,
+        description: this.props.current_post.description,
+        condition: this.props.current_post.condition,
+        location: this.props.current_post.location,
+        demand: this.props.current_post.demand,
+        status: 'Accepting Offers',
+        main_photo: this.props.current_post.main_photo
+      };
       let userId = this.props.current_post.user_id;
       let postId = this.props.current_post.id;
       const data = await axios.put(
         `http://localhost:3396/api/posts/${userId}/${postId}`,
-        this.state.accept
+        cancel
       );
       this.setState({
         offerAccepted: false,
-        accept: {
-          title: this.props.current_post.title,
-          description: this.props.current_post.description,
-          condition: this.props.current_post.condition,
-          location: this.props.current_post.location,
-          demand: this.props.current_post.demand,
-          status: 'Accepting Offers',
-          main_photo: this.props.current_post.main_photo
-        }
+        accept: cancel
       });
       console.log(
         'Successfully cancelled an offer! Post status is now Accepting Offers'
@@ -159,7 +143,7 @@ class SellerPost extends Component {
             <strong>{this.props.current_post.username}</strong> wants to trade
             this item for: {this.props.current_post.demand}
           </h4>
-          <h4>Status: {this.props.current_post.status}</h4>
+          <h4>Status: {this.state.accept.status}</h4>
         </div>
         <RaisedButton
           label="Edit Post"
