@@ -14,7 +14,8 @@ class Markers extends Component {
             <Marker
               onClick={this.onMarkerClick}
               name={name}
-              position={{ lat: 33.759703, lng: -118.428093 }}
+              position={{ lat: marker.latitude, lng: marker.longitude }}
+              key={marker.id}
             />
           ))}
       </div>

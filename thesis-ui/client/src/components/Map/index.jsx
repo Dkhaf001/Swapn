@@ -51,6 +51,12 @@ export class MapContainer extends Component {
         zoom={15}
         onClick={this.onMapClicked}
       >
+        {/* {props.markers.map(marker => (
+          <Marker
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            key={marker.id}
+          />
+        ))} */}
         <Marker
           onClick={this.onMarkerClick}
           name={'Elberts House'}
