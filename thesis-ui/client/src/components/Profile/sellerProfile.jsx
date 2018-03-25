@@ -18,12 +18,10 @@ class SellerProfile extends Component {
           <div>
             <ProfileNavbar />
             <Switch>
-              {profileRoutes.map((route, key) => {
-                if (route.redirect) {
-                  return <Redirect from={route.path} to={route.to} key={key} />;
-                }
-                <Route path={route.path} component={route.component} key={key} />;
-              })}
+              {profileRoutes.map((prop, key) => (
+                <Route path={prop.path} component={prop.component} key={key} />
+              ))}
+              <Redirect from="/profile" to="/profile/selling" />
             </Switch>
           </div>
         </div>
