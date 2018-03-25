@@ -18,7 +18,6 @@ class PhotoUpload extends React.Component {
     this.setState({ posting: false });
   };
   urlInput = async (event) => {
-    console.log(event.target.file);
     await this.setState({ file: event.target.files[0] });
     console.log('this file', this.state.file);
   };

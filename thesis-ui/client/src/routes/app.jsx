@@ -12,17 +12,12 @@ import ListingList from '../components/Feed/listingPostList.jsx';
 import FollowingList from '../components/Following/index.jsx';
 import AddPost from '../components/Post/addPost.jsx';
 import SinglePost from '../components/Post/index.jsx';
+import EditPost from '../components/Post/editPost.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 import Maps from '../components/Map/index.jsx';
 
 export const appRoutes = [
-  // {
-  //   redirect: true,
-  //   from: '/profile',
-  //   to: '/profile/selling',
-  //   protected: true,
-  // },
   {
     path: '/maps',
     sidebarName: 'Maps',
@@ -63,6 +58,13 @@ export const appRoutes = [
     sidebarName: 'Edit',
     navbarName: 'Edit',
     component: Edit,
+    protected: true,
+  },
+  {
+    path: '/editPost',
+    sidebarName: 'Edit',
+    navbarName: 'Edit',
+    component: EditPost,
     protected: true,
   },
   {
@@ -116,5 +118,3 @@ export const profileRoutes = [
     protected: true,
   },
 ];
-
-// export default Rt;
