@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar/index.jsx';
 import { addDataToStore } from './actions';
 import Chat from './components/Chat/Chat.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Protected from './routes/protect.jsx';
-import { appRoutes, profileRoutes } from './routes/app.jsx';
+import { appRoutes } from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
 import Map from './components/Map/index.jsx';
 import './styles.css';

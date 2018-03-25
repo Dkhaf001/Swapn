@@ -31,3 +31,4 @@ bower_components/
 node_modules
 package-lock.json
 configS3.json
+configS3.js

@@ -1,5 +1,5 @@
-let multer = require('multer'),
-  multerS3 = require('multer-s3');
+// let multer = require('multer'),
+//   multerS3 = require('multer-s3');
 
 import fs from 'fs';
 import AWS from 'aws-sdk';
@@ -7,8 +7,21 @@ import path from 'path';
 
 // loading S3 Api Key
 
-// bug here
-// AWS.config.loadFromPath(`${__dirname}/../../../../../configS3.json`);
+// bug here webpack hell
+// https://www.javascriptstuff.com/aws-sdk-with-webpack/
+// https://aws.amazon.com/blogs/developer/using-webpack-and-the-aws-sdk-for-javascript-to-create-and-bundle-an-application-part-1/
+
+AWS.config.loadFromPath(`${__dirname}/../../../../../configS3.json`);
+// console.log('../../../../../configS3.json');
+// AWS.config.loadFromPath('../../../../configS3.json');
+AWS.config.update({
+  region: config.region,
+  credentials: {
+    accessKeyId: config.accessKeyId,
+    secretAccessKey: config.secretAccessKey,
+    /* */
+  },
+});
 
 // Starting S3
 const s3 = new AWS.S3();
@@ -70,32 +83,35 @@ export const removeBucketQuery = (bucketName, cb) => {
 
 // takes in bucketname and file bucket  from user
 // name could be post id
-export const addFileQuery = (bucketName, file, cb) => {
+export const addFileQuery = async (bucketName, filestream) => {
   const uploadParams = {
     Bucket: bucketName, // can be post id
     Key: '',
     Body: '',
     ACL: 'public-read',
   };
-  console.log('------------file---------', file);
-  const fileStream = fs.createReadStream(file.data);
-  fileStream.on('error', (err) => {
-    console.log('File Error', err);
-  });
-  // sets body = file data
-  // uploadParams.Body = fileStream;
-  // sets key = file name
-  // uploadParams.Key = path.basename(file);
-
-  // s3.upload(uploadParams, (err, data) => {
-  //   if (err) {
-  //     console.log('Error', err);
-  //   }
-  //   if (data) {
-  //     console.log('Upload Success', data.Location);
-  //     cb(data);
-  //   }
+  console.log('1!@@@@@@@@', filestream.name);
+  console.log('------------filestream---------', filestream);
+  const test = path.basename(filestream.name);
+  // const fileStream = fs.createReadStream(file);
+  // fileStream.on('error', (err) => {
+  //   console.log('File Error', err);
   // });
+
+  // sets body = file data
+  uploadParams.Body = filestream.data;
+  // sets key = file name
+  uploadParams.Key = path.basename(filestream.name);
+
+  s3.upload(uploadParams, (err, data) => {
+    if (err) {
+      console.log('Error', err);
+    }
+    if (data) {
+      console.log('Upload Success', data.Location);
+      return data;
+    }
+  });
 };
 
 // delete object in bucket
