@@ -1,9 +1,11 @@
-// let multer = require('multer'),
-//   multerS3 = require('multer-s3');
-
 import fs from 'fs';
 import AWS from 'aws-sdk';
 import path from 'path';
+
+// functions need add remove album  
+//add and remove photos
+// https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-example-photo-album.html
+
 
 // loading S3 Api Key
 
@@ -11,17 +13,7 @@ import path from 'path';
 // https://www.javascriptstuff.com/aws-sdk-with-webpack/
 // https://aws.amazon.com/blogs/developer/using-webpack-and-the-aws-sdk-for-javascript-to-create-and-bundle-an-application-part-1/
 
-AWS.config.loadFromPath(`${__dirname}/../../../../../configS3.json`);
-// console.log('../../../../../configS3.json');
-// AWS.config.loadFromPath('../../../../configS3.json');
-AWS.config.update({
-  region: config.region,
-  credentials: {
-    accessKeyId: config.accessKeyId,
-    secretAccessKey: config.secretAccessKey,
-    /* */
-  },
-});
+AWS.config.loadFromPath(`${__dirname}/configS3.json`);
 
 // Starting S3
 const s3 = new AWS.S3();

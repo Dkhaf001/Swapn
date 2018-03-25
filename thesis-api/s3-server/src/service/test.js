@@ -2,16 +2,8 @@
 const s3 = new AWS.S3();
 
 //Example Front End
-var albumBucketName = 'BUCKET_NAME';
-var bucketRegion = 'REGION';
-var IdentityPoolId = 'IDENTITY_POOL_ID';
+var albumBucketName = 'barterbruh';
 
-AWS.config.update({
-  region: bucketRegion,
-  credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: IdentityPoolId
-  })
-});
 
 var s3 = new AWS.S3({
   apiVersion: '2006-03-01',
@@ -50,10 +42,11 @@ function viewAlbum(albumName) {
     if (err) {
       return alert('There was an error viewing your album: ' + err.message);
     }
+    // done on back end ^^^^^^^^^^^^^^^^^^^^^  send data
     // `this` references the AWS.Response instance that represents the response
     var href = this.request.httpRequest.endpoint.href;
     var bucketUrl = href + albumBucketName + '/';
-
+    //this is the done on the front end vvvvvvvvvvvv
     var photos = data.Contents.map(function(photo) {
       var photoKey = photo.Key;
       var photoUrl = bucketUrl + encodeURIComponent(photoKey);
@@ -102,6 +95,10 @@ function deleteAlbum(albumName) {
     if (err) {
       return alert('There was an error deleting your album: ', err.message);
     }
+
+    //back
+    //------------------------------------------
+    //front
     var objects = data.Contents.map(function(object) {
       return {Key: object.Key};
     });
@@ -126,6 +123,7 @@ function addPhoto(albumName) {
   var fileName = file.name;
   var albumPhotosKey = encodeURIComponent(albumName) + '//';
 
+  //------------
   var photoKey = albumPhotosKey + fileName;
   s3.upload({
     Key: photoKey,

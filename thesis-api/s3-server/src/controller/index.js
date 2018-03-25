@@ -37,7 +37,7 @@ export const removeAlbumController = async (req, res) => {
 export const addPhotoController = async (req, res) => {
   console.log('file:!!!!!!!!!!!', req.files.file);
   const payload = req.files.file;
-  const bucketname = 'barterbruh';
+  const bucketname = 'barterbruh'; // set bucket name for this project 
   try {
     const data = await addFileQuery(bucketname, payload);
     return res.status(200).send(data);
