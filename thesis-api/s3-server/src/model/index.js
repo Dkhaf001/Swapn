@@ -4,6 +4,8 @@ import path from 'path';
 
 // functions need add remove album  
 //add and remove photos
+//view album
+
 // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-example-photo-album.html
 
 
