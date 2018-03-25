@@ -29,6 +29,14 @@ module.exports = {
         test: /.json$/,
         loaders: ['json'],
       },
+      // {
+      //   test: /\.(png|jpg|gif)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //     }
+      //   ]
+      // },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
