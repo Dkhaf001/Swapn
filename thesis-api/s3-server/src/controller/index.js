@@ -3,7 +3,7 @@ import {
   listBucketObjectsQuery,
   createBucketQuery,
   removeBucketQuery,
-  addFileQuery,
+  addBucketObjectQuery,
   removeBucketObjectsQuery,
 } from '../model';
 
