@@ -8,11 +8,11 @@ export const fetchAllOffersHelper = ({ username }) => {
   `;
 };
 
-export const addOffersHelper = ({ post_id, buyer_username }) => {
+export const addOffersHelper = ({ post_id, buyer_username, room_id }) => {
   return `
-  INSERT INTO offers (buyer_username, post_id)
-  VALUES ('${buyer_username}', ${post_id})
-  RETURNING id, buyer_username, post_id
+  INSERT INTO offers (buyer_username, post_id, room_id)
+  VALUES ('${buyer_username}', ${post_id}, '${room_id}')
+  RETURNING id, buyer_username, post_id, room_id
   `;
 };
 
@@ -22,3 +22,11 @@ export const removeOffersHelper = ({ post_id, user_id }) => {
   WHERE post_id=${post_id} AND buyer_username='${user_id}'
   `;
 };
+
+export const getSingleOfferHelper = ({buyer_username, post_id}) => {
+  return `
+  SELECT * 
+  FROM offers 
+  WHERE offers.buyer_username='${buyer_username}' AND offers.post_id=${post_id}
+  `
+}

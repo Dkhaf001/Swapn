@@ -217,7 +217,8 @@ export const createOfferTable = async () => {
       (
         id SERIAL PRIMARY KEY,
         buyer_username VARCHAR(18) NOT NULL,
-        post_id INT REFERENCES posts(id)
+        post_id INT REFERENCES posts(id),
+        room_id VARCHAR(255) NOT NULL
       )
       `
     );

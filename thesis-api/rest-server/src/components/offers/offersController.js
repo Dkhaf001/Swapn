@@ -1,7 +1,8 @@
 import {
   fetchAllOffersQuery,
   removeOffersQuery,
-  addOffersQuery
+  addOffersQuery,
+  getSingleOfferQuery
 } from './offersQueries';
 
 export const fetchAllOffersController = async (req, res) => {
@@ -33,3 +34,13 @@ export const removeOffersController = async (req, res) => {
     console.log(err);
   }
 };
+
+export const getSingleOffer = async (req, res) => {
+  try{
+    const data = await getSingleOfferQuery(req.params);
+    res.status(200).send(data)
+  }catch(err) {
+    console.log('err getting single offer', err)
+  }
+
+}

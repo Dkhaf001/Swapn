@@ -38,13 +38,16 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       client.join(room.get('id'))
     })
     client.on('message', data => {
-      chat.insert(data)
+     
       console.log('message event triggered', data, )
 
       if(users[data.to]) {
         console.log('find the user trying to send him a message')
         users[data.to].emit('directMessage', data)
+      }else{
+        data.read = 'false';
       }
+      chat.insert(data)
       socket.in(data.roomId).emit('room:message', data)
     })
   })
