@@ -9,44 +9,32 @@ import {
   removeBucketObjectsQuery,
 } from '../model';
 
-export const fetchAlbumController = async (req, res) => {
+export const fetchAlbumController = (req, res) => {
   const payload = req.params;
-  try {
-    const data = await fetchBucketAlbumQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+  fetchBucketAlbumQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
 
-export const removeAlbumController = async (req, res) => {
+export const removeAlbumController = (req, res) => {
   const payload = req.params;
-  try {
-    const data = await removeBucketAlbumQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+  const data = removeBucketAlbumQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
 
-export const addPhotoController = async (req, res) => {
-  console.log('file:!!!!!!!!!!!', req.files.file);
+export const addPhotoController = (req, res) => {
+  // console.log('file:!!!!!!!!!!!', req.files.file);
   // req.files.file.name = filename
   const payload = { file: req.files.file, album: req.params.post_id };
-  try {
-    const data = await addBucketObjectQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+  const data = addBucketObjectQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
 
-export const removePhotoController = async (req, res) => {
+export const removePhotoController = (req, res) => {
   const payload = req.params;
-  try {
-    const data = await removeBucketObjectsQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+  const data = removeBucketObjectsQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };

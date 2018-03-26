@@ -8,23 +8,23 @@ AWS.config.loadFromPath(path.resolve(__dirname, '../../../../configS3.json'));
 const s3 = new AWS.S3();
 const bucket = 'barterbruh';
 
-export const fetchBucketAlbumQuery = (payload) => {
+export const fetchBucketAlbumQuery = (payload, cb) => {
   const prefix = `${payload.post_id}/`;
   s3.listObjects({ Bucket: bucket, Prefix: prefix }, (err, data) => {
     if (err) {
-      console.log('There was an error deleting your album: ', err.message);
+      // console.log('There was an error deleting your album: ', err.message);
     }
-    return data;
+    cb(data.Contents);
   });
 };
 
-export const removeBucketAlbumQuery = (payload) => {
+export const removeBucketAlbumQuery = (payload, cb) => {
   // remove all file from album also removing album from s3
   // gets all files from bucket
   const prefix = `${payload.post_id}/`;
   s3.listObjects({ Bucket: bucket, Prefix: prefix }, (err, data) => {
     if (err) {
-      console.log('There was an error deleting your album: ', err.message);
+      console.log('There was an error getting your album removeBucketAlbumQuery: ', err.message);
     }
     // maps through album
     const objects = data.Contents.map(object => ({ Key: object.Key }));
@@ -34,14 +34,15 @@ export const removeBucketAlbumQuery = (payload) => {
       if (err) {
         console.log('There was an error deleting your album: ', err.message);
       }
-      return 'Successfully deleted album.';
+      const worked = 'Successfully deleted album.';
+      cb(worked);
     });
   });
 };
 
 // takes in bucketname and file bucket  from user
 // name could be post id
-export const addBucketObjectQuery = async (payload) => {
+export const addBucketObjectQuery = async (payload, cb) => {
   const uploadParams = {
     Bucket: bucket, // can be post id
     Key: '',
@@ -62,13 +63,14 @@ export const addBucketObjectQuery = async (payload) => {
     if (data) {
       console.log('Upload Success', data.Location);
       // sending back upload data so it can be used to render
-      return data;
+      const worked = 'Upload Success';
+      cb(worked);
     }
   });
 };
 
 // delete object in bucket
-export const removeBucketObjectsQuery = (payload) => {
+export const removeBucketObjectsQuery = (payload, cb) => {
   // key name has album name and file name insereted from controller
   const key = `${payload.post_id}/${payload.key}`;
   const object = { Key: key };
@@ -79,7 +81,8 @@ export const removeBucketObjectsQuery = (payload) => {
       console.log('Error', err);
     } else {
       console.log('Success', data);
-      return data;
+      const worked = 'Successfuly deleted Object';
+      cb(worked);
     }
   });
 };

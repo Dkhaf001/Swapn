@@ -55,10 +55,18 @@ class PhotoUpload extends React.Component {
     });
   };
 
-  removePhoto = async () => {
+  removePhoto = async (album, key) => {
     try {
-      this.setState({ posting: false });
-      const data = await axios.delete('http://localhost:8593/api/removephoto/1/clumsy.png');
+      const data = await axios.delete(`http://localhost:8593/api/removephoto/${album}/${key}`);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchAlbum = async () => {
+    try {
+      const data = await axios.get('http://localhost:8593/api/1');
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -75,6 +83,7 @@ class PhotoUpload extends React.Component {
         </label>
       </form>
       {this.state.file ? <button onClick={this.handleUpload}>Upload</button> : null}
+      <button onClick={this.fetchAlbum}>Fetch</button>
       <button onClick={this.removePhoto}>DeletePhoto</button>
       <button onClick={this.handleSubmit}>Submit</button>
       <button onClick={this.cancelPost}>Cancel</button>
