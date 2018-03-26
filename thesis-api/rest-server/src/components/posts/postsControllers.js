@@ -4,11 +4,11 @@ import {
   fetchSinglePostsQuery,
   updatePostsQuery,
   deletePostsQuery,
-  addPostsQuery
+  addPostsQuery,
 } from './postsQueries';
 
 export const fetchAllPostsController = async (req, res) => {
-  let payload = req.params;
+  const payload = req.params;
   try {
     const data = await fetchAllPostsQuery(payload);
     return res.status(200).send(data);
@@ -18,7 +18,7 @@ export const fetchAllPostsController = async (req, res) => {
 };
 
 export const fetchUserPostsController = async (req, res) => {
-  let payload = req.params;
+  const payload = req.params;
   try {
     const data = await fetchUserPostsQuery(payload);
     return res.status(200).send(data);
@@ -28,9 +28,9 @@ export const fetchUserPostsController = async (req, res) => {
 };
 
 export const fetchSinglePostsController = async (req, res) => {
-  let payload = req.params;
+  const payload = req.params;
   try {
-    console.log('this is the payload fetching single post', payload)
+    console.log('this is the payload fetching single post', payload);
     const data = await fetchSinglePostsQuery(payload);
     data[0].password = 'N/A';
     return res.status(200).send(data);
@@ -40,8 +40,8 @@ export const fetchSinglePostsController = async (req, res) => {
 };
 
 export const updatePostsController = async (req, res) => {
-  let payload = req.body;
-  let user = req.params;
+  const payload = req.body;
+  const user = req.params;
   try {
     const data = await updatePostsQuery(user, payload);
     return res.status(200).send(data);
@@ -51,8 +51,8 @@ export const updatePostsController = async (req, res) => {
 };
 
 export const deletePostsController = async (req, res) => {
-  let payload = req.body;
-  let user = req.params;
+  const payload = req.body;
+  const user = req.params;
   try {
     const data = await deletePostsQuery(user, payload);
     return res.status(200).send(data);
@@ -62,8 +62,8 @@ export const deletePostsController = async (req, res) => {
 };
 
 export const addPostsController = async (req, res) => {
-  let payload = req.body;
-  let user = req.params;
+  const payload = req.body;
+  const user = req.params;
   try {
     const data = await addPostsQuery(user, payload);
     return res.status(200).send(data);
