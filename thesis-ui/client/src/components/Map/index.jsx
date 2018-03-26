@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import Search from '../Navbar/Search.jsx';
 import Geolocation from './geolocation.jsx';
+import { connect } from 'react-redux';
 
 const style = {
   width: '100%',
@@ -17,6 +18,13 @@ export class MapContainer extends Component {
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
+    this.changePosition = this.changePosition.bind(this)
+  }
+  changePosition(position){
+    console.log('got it', position)
+    this.setState({
+      positiongeo: position
+    })
   }
   renderMarkers() {}
   onMarkerClick(props, marker, e) {
@@ -40,16 +48,21 @@ export class MapContainer extends Component {
       });
     }
   }
-
+  getProps = (e) => {
+    e.preventDefault()
+    console.log('this one is', this.state.positiongeo);
+  }
   render() {
     return (
       <div className="maps">
         <div>
         <form className="navbar-form navbar-left" role="search">
           <div className="form-group">
-          <Geolocation/>
+          <Geolocation changePosition={this.changePosition}/>
+          {console.log('the position is', this.state.position)}
             <input type="text" placeholder="Location" />
             <button type="submit">Submit</button>
+            <button type="submit" onClick={this.getProps}>Get Current Location</button>
           </div>
         </form>
       </div>
@@ -69,6 +82,13 @@ export class MapContainer extends Component {
             key={marker.id}
           />
         ))} */}
+        {this.state.positiongeo ?
+        <Marker
+          onClick={this.onMarkerClick}
+          name={'Your Position'}
+          position={{ lat: this.state.positiongeo.coords.latitude, lng: this.state.positiongeo.coords.longitude }}
+        /> : null
+      }
         <Marker
           onClick={this.onMarkerClick}
           name={'Elberts House'}
@@ -91,6 +111,12 @@ export class MapContainer extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    positiongeo: state.positiongeo
+  };
+}
+// export connect(mapStateToProps)(MapContainer)
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBZMS-V-GnSmcKvt_HKD4nRoajBRMm05CE'

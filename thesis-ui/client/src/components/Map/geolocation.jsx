@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-
-
-export default class Geolocation extends React.Component {
+import { getLocation } from '../../actions';
+import { bindActionCreators } from 'redux';
+class Geolocation extends Component{
   constructor (props) {
     super(props)
 
@@ -15,17 +15,17 @@ export default class Geolocation extends React.Component {
   }
 
   componentWillMount () {
-    // if (typeof window !== 'object') {
-    //   return
-    // }
+    if (typeof window !== 'object') {
+      return
+    }
 
-    // if (!('geolocation' in window.navigator)) {
-    //   return
-    // }
+    if (!('geolocation' in window.navigator)) {
+      return
+    }
 
-    // if (this.props.lazy) {
-    //   return
-    // }
+    if (this.props.lazy) {
+      return
+    }
 
     this.getCurrentPosition()
   }
@@ -47,12 +47,18 @@ export default class Geolocation extends React.Component {
 
     return window.navigator.geolocation.getCurrentPosition(
       position => {
-        if (this.willUnmount) return
+        console.log('this is the position', position);
+        this.props.changePosition(position);
+        // if (this.willUnmount) return
+        // this.setState({ position, fetchingPosition: false }, () => {
+        // onSuccess(position)
+        // console.log('run!', this.state)
+        // this.props.changePosition(position);
+        // console.log('run 2')
+        // console.log('the state is in geo after', this.state);
+        // })
 
-        this.setState({ position, fetchingPosition: false }, () =>
-          onSuccess(position)
-        )
-        console.log('position set to ', position)
+        // console.log('position set to ', position)
       },
       err => {
         if (this.willUnmount) return
@@ -93,8 +99,10 @@ Geolocation.propTypes = {
 Geolocation.defaultProps = {
   enableHighAccuracy: false,
   timeout: Infinity,
-  maximumAge: 0,
-  onSuccess: pos => {},
+  maximumAge: Infinity,
+  onSuccess: pos => {
+
+  },
   // eslint-disable-next-line handle-callback-err
   onError: err => {},
   lazy: false
@@ -104,5 +112,10 @@ function mapStateToProps(state) {
     current_list: state.current_list
   };
 }
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    getLocation
+  },dispatch) 
+}
 
-// export default connect(mapStateToProps)(Geolocation);
+export default connect(mapStateToProps, mapDispatchToProps)(Geolocation);
