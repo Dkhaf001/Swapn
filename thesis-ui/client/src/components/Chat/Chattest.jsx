@@ -23,13 +23,13 @@ class Chattest extends React.Component{
 
         this.sendMessage = ev => {
             ev.preventDefault();
-            console.log('u trying to send a meesage')
             this.props.socket.emit('message', {
                 from: this.props.active_user.username,
                 to: this.props.post.username,
                 postId: this.props.post.id,
-                roomId: this.props.current_roomId,
-                message: this.state.message
+                roomId: this.props.roomId,
+                message: this.state.message,
+                postTitle: this.props.post.title
             })
             this.setState({message: ''});
         }
@@ -91,7 +91,7 @@ function mapStateToProps(state) {
       active_user: state.active_user,
     //   current_post: current_post,
       dataFromReduxStorage: state.dataReducers,
-      current_roomId: state.current_roomId
+
     };
   }
 

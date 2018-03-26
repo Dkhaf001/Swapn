@@ -45,7 +45,10 @@ class HomePostList extends Component {
   switchToSinglePost = (post) => {
     console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.id}`);
+    this.props.history.push({
+      pathname: `/post/${post.title}`,
+      state: {id: `${post}`, post:`${post}`}
+    })
   };
 
   render() {

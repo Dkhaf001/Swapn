@@ -37,7 +37,6 @@ class ListingPostList extends Component {
   }
 
   switchToSinglePost = post => {
-    console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };

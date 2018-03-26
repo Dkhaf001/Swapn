@@ -10,9 +10,8 @@ import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
-import { addActiveUserToStore } from '../../actions';
+import { addMessages, addActiveUserToStore, addCurrentPost } from '../../actions';
 import axios from 'axios';
-import { addMessages } from '../../actions'
 class StatusBar extends Component {
   state = {
     messages: [],
@@ -68,6 +67,20 @@ class StatusBar extends Component {
   showMessages() {
     console.log(this.props.messages)
   }
+  async handleMessageClick(message) {
+    try{
+      let post_id = message.postId
+      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${post_id}`)
+      console.log('here!', data)
+      console.log('message', message)
+      this.props.addCurrentPost(data[0]);
+      this.props.history.push({
+        pathname: `post/${message.postTitle}`,
+        state: {message}
+      })
+    }catch(err) {
+    }
+  }
   render() {
     return (
       <div>
@@ -115,12 +128,15 @@ class StatusBar extends Component {
                         value="Solid"
                         primaryText={`You have ${this.state.messages.length} messages`}
                       />
-                      <MenuItem     
-                       containerElement={<Link to="/profile/selling" />}
-                        key={2} value="ShortDash" primaryText="View Offers" />
-                      <MenuItem
-                        containerElement={<Link to="/profile/bartering" />}
-                        key={3} value="ShortDot" primaryText="View Posts" />
+                      {
+                        this.state.messages.map(message => {
+                          return <MenuItem     
+                           onClick={()=>
+                             this.handleMessageClick(message)
+                           }
+                           key={2} value="ShortDash" primaryText="View Offers" />
+                        })
+                      }
                     </Menu>
                   </Popover>
                 </IconButton>
@@ -159,7 +175,8 @@ function mapDispatchToProps(dispatch) {
     {
       addSocket,
       addActiveUserToStore,
-      addMessages
+      addMessages,
+      addCurrentPost
     },
     dispatch,
   );

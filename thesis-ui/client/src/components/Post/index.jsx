@@ -13,6 +13,8 @@ class Post extends Component {
   }
   async componentWillMount() {
     // axios.get('http://localhost:3396/api/posts/login');
+    console.log('router', this.props)
+    
   }
   render() {
     if (localStorage.id) {

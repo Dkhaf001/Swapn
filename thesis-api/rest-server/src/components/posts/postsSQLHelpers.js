@@ -13,7 +13,7 @@ export const fetchUserPostsHelper = ({ user_id }) => {
   `;
 };
 
-export const fetchSinglePostsHelper = ({ user_id, post_id }) => {
+export const fetchSinglePostsHelper = ({post_id }) => {
   return `
   SELECT * 
   FROM posts AS p
