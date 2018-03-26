@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import Chattest from '../Chat/Chattest.jsx'
 import randomstring from 'randomstring'
-let roomId
+
 class BuyerPost extends Component {
   constructor() {
     super();
@@ -14,7 +14,8 @@ class BuyerPost extends Component {
       currentlyFollowing: '',
       currentlyWatching: '',
       isLoggedIn: false,
-      bartering: false
+      bartering: false,
+      room_id: ''
     };
   }
 
@@ -23,7 +24,6 @@ class BuyerPost extends Component {
     this.getPhotos();
     this.getFollowing();
     this.getWatching();
-    console.log('buyerPost component', this.props)
     if (localStorage.token) {
       this.getBartering();
       this.setState({
@@ -37,10 +37,11 @@ class BuyerPost extends Component {
       const post_id = this.props.current_post.id
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyer_username}/${post_id}`)
       this.setState({
+        room_id: data.rows[0] ? data.rows[0].room_id : null,
         bartering: !!data.rowCount
       })
-      console.log('getBartering', data)
-      roomId = data.rows[0].room_id
+      console.log('getBartering!!', this.state)
+
     }catch(err) {
       console.log('err get bartering status', err)
     }
@@ -148,8 +149,10 @@ class BuyerPost extends Component {
     }
   }
   async makeOffer() {
-    roomId = randomstring.generate();
-    
+    let roomId = randomstring.generate();
+    this.setState({
+      room_id: roomId
+    })
     if(this.props.active_user) {
       this.setState({
         bartering: true
@@ -223,7 +226,7 @@ class BuyerPost extends Component {
             onClick={() => this.makeOffer()}
           />
         }
-          {this.state.bartering && <Chattest post={this.props.current_post} roomId={roomId}/>}
+          {this.state.bartering && <Chattest post={this.props.current_post} roomId={this.state.room_id}/>}
       </div>
     )
   }
