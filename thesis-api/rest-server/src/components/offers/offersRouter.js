@@ -12,5 +12,7 @@ router.route('/:username').get(fetchAllOffersController);
 router.route('/').post(addOffersController);
 //Delete cancel offer Current User
 router.route('/:post_id/:user_id').delete(removeOffersController);
+//get single offer status for buyer post component
+router.route('/getSingleFet')
 
 export default router;
