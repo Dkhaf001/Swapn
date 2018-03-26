@@ -3,52 +3,48 @@ import {
   listBucketObjectsQuery,
   createBucketQuery,
   removeBucketQuery,
+  fetchBucketAlbumQuery,
+  removeBucketAlbumQuery,
   addBucketObjectQuery,
   removeBucketObjectsQuery,
 } from '../model';
 
 export const fetchAlbumController = async (req, res) => {
-  const payload = req;
+  const payload = req.params;
   try {
-    const data = await fetchAlbumQuery(payload);
+    const data = await fetchBucketAlbumQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
   }
 };
-export const addAlbumController = async (req, res) => {
-  const payload = req;
-  try {
-    const data = await addAlbumQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
-};
+
 export const removeAlbumController = async (req, res) => {
-  const payload = req;
+  const payload = req.params;
   try {
-    const data = await removeAlbumQuery(payload);
+    const data = await removeBucketAlbumQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
   }
 };
+
 export const addPhotoController = async (req, res) => {
   console.log('file:!!!!!!!!!!!', req.files.file);
-  const payload = req.files.file;
-  const bucketname = 'barterbruh'; // set bucket name for this project 
+  // req.files.file.name = filename
+  const payload = { file: req.files.file, album: req.params.post_id };
   try {
-    const data = await addFileQuery(bucketname, payload);
+    const data = await addBucketObjectQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
   }
 };
+
 export const removePhotoController = async (req, res) => {
-  const payload = req;
+  const payload = req.params;
   try {
-    const data = await removePhotoQuery(payload);
+    const data = await removeBucketObjectsQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
