@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import Search from '../Navbar/Search.jsx';
+import Geolocation from './geolocation.jsx';
 
 const style = {
   width: '100%',
@@ -41,9 +43,19 @@ export class MapContainer extends Component {
 
   render() {
     return (
+      <div className="maps">
+        <div>
+        <form className="navbar-form navbar-left" role="search">
+          <div className="form-group">
+          <Geolocation/>
+            <input type="text" placeholder="Location" />
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
       <Map
         google={this.props.google}
-        style={{ width: '80%', height: '80%', position: 'relative' }}
+        style={{ width: '40%', height: '60%', position: 'relative' }}
         initialCenter={{
           lat: 33.976,
           lng: -118.39
@@ -71,10 +83,11 @@ export class MapContainer extends Component {
           visible={this.state.showingInfoWindow}
         >
           <div>
-            <h1>{this.state.selectedPlace.name}</h1>
+            <small>{this.state.selectedPlace.name}</small>
           </div>
         </InfoWindow>
       </Map>
+      </div>
     );
   }
 }
