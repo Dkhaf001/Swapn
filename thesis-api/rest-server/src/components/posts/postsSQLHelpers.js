@@ -23,11 +23,11 @@ export const fetchSinglePostsHelper = ({post_id }) => {
 
 export const addPostsHelper = (
   { user_id },
-  { title, description, condition, location, demand, status, main_photo }
+  { title, description, condition, location, demand, status }
 ) => {
   return `
-   INSERT INTO posts (title, description, condition, location, demand, user_id, status, main_photo)
-   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '${main_photo}')
+   INSERT INTO posts (title, description, condition, location, demand, user_id, status)
+   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}')
    RETURNING *
   `;
 };

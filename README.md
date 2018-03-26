@@ -72,7 +72,7 @@ npm run start:server
 TO INSERT SEED DATA
 go to thesis-api/rest-server/src/index.js
 --uncomment line 5, and then comment line 5
-go to the app, and create 5 users
+go to the app, and create 3 users
 --after creating 5 users,
 --uncomment line 7 and 8 on thesis-api/rest-server/src/index.js
 --and comment them after

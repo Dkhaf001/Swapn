@@ -4,71 +4,78 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-// COMMENTS FROM ELBERT
-//this is the component that will render when you want to add a post to the feed
-// pop up?  or view change?
-// photo upload to S3 is here and sends to
-//iteration check
-// this componet is rendered in when clickin add listing from profile page and listing button from nav bar
-//
-
-// COMMENTS FROM EDDIE
-// Need to implement S3 when creating a post
+import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
+import FlatButton from 'material-ui/FlatButton';
 
 class AddPost extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      description: '',
-      condition: '',
-      location: '',
-      demand: '',
-      status: 'Accepting Offers',
-      main_photo: ''
+      newPost: {
+        title: '',
+        description: '',
+        condition: '',
+        location: '',
+        demand: '',
+        status: 'Accepting Offers'
+      }
     };
   }
 
-  async submitNewPost() {
+  submitNewPost = async () => {
     try {
       // UNCOMMENT THIS WHEN FINISHED --> THIS WILL REQUIRE FIELDS FOR SUBMISSION
       // if (
-      //   this.state.title !== '' &&
-      //   this.state.description !== '' &&
-      //   this.state.condition !== '' &&
-      //   this.state.location !== '' &&
-      //   this.state.demand !== ''
+      //   this.state.newPost.title !== '' &&
+      //   this.state.newPost.description !== '' &&
+      //   this.state.newPost.condition !== '' &&
+      //   this.state.newPost.location !== '' &&
+      //   this.state.newPost.demand !== ''
       // ) {
       //   const userId = localStorage.id;
       //   await axios.post(
       //     `http://localhost:3396/api/posts/${userId}`,
-      //     this.state
+      //     this.state.newPost
       //   );
       //   console.log('successfully submitted new post!');
       // } else {
       //   alert('Please fill out all text fields!');
       // }
-
       const userId = localStorage.id;
-      await axios.post(`http://localhost:3396/api/posts/${userId}`, this.state);
-      console.log('successfully submitted new post: ', this.state);
+      await axios.post(
+        `http://localhost:3396/api/posts/${userId}`,
+        this.state.newPost
+      );
+      console.log('successfully submitted new post: ', this.state.newPost);
       this.props.history.push('/home');
     } catch (err) {
       console.log('error submitting new post!');
     }
-  }
+  };
 
-  handleChange = (event, index, value) => this.setState({ condition: value });
+  handleChange = (event, index, value) => {
+    this.setState({
+      newPost: Object.assign({}, this.state.newPost, {
+        condition: value
+      })
+    });
+  };
 
   render() {
     return (
       <div>
-        Make a Post!
+        <h1>Make a Post!</h1>
         <TextField
           hintText="What are you selling?"
           floatingLabelText="Title"
           name="title"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          onChange={e => {
+            this.setState({
+              newPost: Object.assign({}, this.state.newPost, {
+                [e.target.name]: e.target.value
+              })
+            });
+          }}
         />
         <br />
         <TextField
@@ -78,12 +85,18 @@ class AddPost extends Component {
           rows={2}
           rowsMax={4}
           name="description"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          onChange={e => {
+            this.setState({
+              newPost: Object.assign({}, this.state.newPost, {
+                [e.target.name]: e.target.value
+              })
+            });
+          }}
         />
         <br />
         Condition:{' '}
         <DropDownMenu
-          value={this.state.condition}
+          value={this.state.newPost.condition}
           onChange={this.handleChange}
           style={{ width: 300 }}
           autoWidth={true}
@@ -112,29 +125,33 @@ class AddPost extends Component {
           hintText="Add Location Here"
           floatingLabelText="Location"
           name="location"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          onChange={e => {
+            this.setState({
+              newPost: Object.assign({}, this.state.newPost, {
+                [e.target.name]: e.target.value
+              })
+            });
+          }}
         />
         <br />
         <TextField
           hintText="What do you want for your item?"
           floatingLabelText="Demand"
           name="demand"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
-        />
-        <br />
-        {/* THIS MIGHT NEED TO BE CHANGED TO OUR FILEUPLOAD SYSTEM */}
-        <TextField
-          hintText="Enter photo URL"
-          floatingLabelText="Photo URL"
-          name="main_photo"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          onChange={e => {
+            this.setState({
+              newPost: Object.assign({}, this.state.newPost, {
+                [e.target.name]: e.target.value
+              })
+            });
+          }}
         />
         <br />
         <RaisedButton
           label="Submit"
           primary={true}
           style={{ margin: 12 }}
-          onClick={() => this.submitNewPost()}
+          onClick={this.submitNewPost}
         />
         <br />
       </div>
