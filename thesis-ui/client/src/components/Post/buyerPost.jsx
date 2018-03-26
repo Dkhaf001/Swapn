@@ -23,9 +23,9 @@ class BuyerPost extends Component {
     this.getPhotos();
     this.getFollowing();
     this.getWatching();
-    this.getBartering();
     console.log('buyerPost component', this.props)
     if (localStorage.token) {
+      this.getBartering();
       this.setState({
         isLoggedIn: true,
       });
@@ -33,7 +33,14 @@ class BuyerPost extends Component {
   }
   async getBartering() {
     try{
-      const { data } = axios.get('http://localhost:3396/api/offers')
+      const buyer_username = this.props.active_user.username;
+      const post_id = this.props.current_post.id
+      const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyer_username}/${post_id}`)
+      this.setState({
+        bartering: !!data.rowCount
+      })
+      console.log('getBartering', data)
+      roomId = data.rows[0].room_id
     }catch(err) {
       console.log('err get bartering status', err)
     }
@@ -149,7 +156,8 @@ class BuyerPost extends Component {
       })
       const { data } = await axios.post('http://localhost:3396/api/offers/', {
         post_id: this.props.current_post.id,
-        buyer_username: this.props.active_user.username
+        buyer_username: this.props.active_user.username,
+        room_id: roomId
       })
       console.log('just add offer to offer table', data)
     }else {
@@ -160,7 +168,7 @@ class BuyerPost extends Component {
   render() {
     return (
       <div>
-        Welcome to the Buyer Post Page!
+        Welcome to the Buyer Post Page!!!!!!!!!
         <h1>{this.props.current_post.username}'s posting</h1>
         <div>
           <img src={this.props.current_post.main_photo} />
@@ -207,12 +215,14 @@ class BuyerPost extends Component {
             onClick={() => this.toggleWatchList()}
           />
         )}
+        {!this.state.bartering && 
           <RaisedButton
             label="MAKE OFFER"
             backgroundColor="#a4c639"
             style={{ margin: 12 }}
             onClick={() => this.makeOffer()}
           />
+        }
           {this.state.bartering && <Chattest post={this.props.current_post} roomId={roomId}/>}
       </div>
     )
