@@ -17,9 +17,21 @@ const MapWithASearchBox = compose(
   withStateHandlers(() => ({
     count: 0,
   }), {
-    onClick: ({ count }) => () => ({
-      count: count + 1,
-    })
+    onClick: (position) => {
+      this.setState({
+        positiongeo: position
+      })
+    }
+
+    // changePosition(position){
+    //   console.log('got it', position)
+    //   this.setState({
+    //     positiongeo: position
+    //   })
+    // }
+
+
+
   }),
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBl4meuMNIFaMJDzAdWR_aCpOzafVTS1ug&v=3.exp&libraries=geometry,drawing,places",
@@ -29,6 +41,9 @@ const MapWithASearchBox = compose(
   }),
   lifecycle({
     componentWillMount() {
+      let lat = parseFloat(localStorage.getItem('latitude'));
+      let long = parseFloat(localStorage.getItem('longitude'));
+      console.log('lat is', lat, 'type of...', typeof lat)
       const refs = {}
 
       this.setState({
@@ -57,11 +72,11 @@ const MapWithASearchBox = compose(
           const bounds = new google.maps.LatLngBounds();
 
           places.forEach(place => {
-            console.log('the place is', place.formatted_address);
+            
             geocodeByAddress(place.formatted_address)
-  .then(results => getLatLng(results[0]))
-  .then(({ lat, lng }) => console.log('Successfully got latitude and longitude', { lat, lng }))
-  
+              .then(results => getLatLng(results[0]))
+                .then(({ lat, lng }) => console.log('Successfully got latitude and longitude', { lat, lng }))
+
             if (place.geometry.viewport) {
               bounds.union(place.geometry.viewport)
             } else {
@@ -117,7 +132,17 @@ const MapWithASearchBox = compose(
         }}
       />
     </SearchBox>
-    
+    {localStorage.getItem('longitude') ?
+        <Marker
+          // onClick={this.onMarkerClick}
+          icon={{
+            url: 'http://www.clker.com/cliparts/B/B/1/E/y/r/marker-pin-google.svg',
+            scaledSize: new google.maps.Size(36, 36)
+        }}
+          name={'Your Position'}
+          position={{ lat: parseFloat(localStorage.getItem('latitude')), lng: parseFloat(localStorage.getItem('longitude')) }}
+        /> : null
+      }
     {props.markers.map((marker, index) =>
       <Marker key={index} position={marker.position} />
     )}
