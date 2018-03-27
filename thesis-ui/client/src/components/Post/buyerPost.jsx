@@ -20,6 +20,7 @@ class BuyerPost extends Component {
   }
 
   async componentWillMount() {
+    localStorage.setItem('current_post_id', 1);
     // if (!this.props.current_post) {
     this.getPost();
     this.getPhotos();
@@ -176,7 +177,7 @@ class BuyerPost extends Component {
   }
 
   render() {
-    return (
+    return this.props.current_post ? (
       <div>
         Welcome to the Buyer Post Page!!!!!!!!!
         <h1>{!this.props.current_post || this.props.current_post.username}'s posting</h1>
@@ -237,6 +238,8 @@ class BuyerPost extends Component {
           <Chattest post={this.props.current_post} roomId={this.state.room_id} />
         )}
       </div>
+    ) : (
+      <div>Loading....</div>
     );
   }
 }

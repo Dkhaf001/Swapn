@@ -28,12 +28,26 @@ class Post extends Component {
     } catch (error) {}
   }
 
+  // render() {
+  //   if (this.props.current_post) {
+  //     return localStorage.id === this.props.current_post.user_id ? (
+  //       <Route path="/" component={SellerPost} />
+  //     ) : (
+  //       <Route path="/" component={BuyerPost} />
+  //     );
+  //   }
+  // }
+
   render() {
-    return this.props.current_post && localStorage.id === this.props.current_post.user_id ? (
-      <Route path="/" component={SellerPost} />
-    ) : (
-      <Route path="/" component={BuyerPost} />
-    );
+    if (this.props.current_post) {
+      if (localStorage.id) {
+        if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
+          return <SellerPost />;
+        }
+      }
+      return <BuyerPost />;
+    }
+    return <div>Loading...</div>;
   }
 }
 
