@@ -21,6 +21,7 @@ class SellerProfile extends Component {
               {profileRoutes.map((prop, key) => (
                 <Route path={prop.path} component={prop.component} key={key} />
               ))}
+              <Redirect from="/profile" to="/profile/selling" />
             </Switch>
           </div>
         </div>

@@ -1,7 +1,8 @@
 // import used components
 import React, { Component } from 'react';
 import Edit from '../components/Profile/edit.jsx';
-import Profile from '../components/Profile/sellerProfile.jsx';
+import SellerProfile from '../components/Profile/sellerProfile.jsx';
+import BuyerProfile from '../components/Profile/currentProfile.jsx';
 import SignUp from '../components/Auth/Signup.jsx';
 import Login from '../components/Auth/Login.jsx';
 import Home from '../components/Feed/homePostList.jsx';
@@ -12,11 +13,11 @@ import ListingList from '../components/Feed/listingPostList.jsx';
 import FollowingList from '../components/Following/index.jsx';
 import AddPost from '../components/Post/addPost.jsx';
 import SinglePost from '../components/Post/index.jsx';
+import EditPost from '../components/Post/editPost.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 import Maps from '../components/Map/index.jsx';
 
-// const Rt = {};
 export const appRoutes = [
   {
     path: '/maps',
@@ -33,10 +34,17 @@ export const appRoutes = [
     protected: false,
   },
   {
+    path: '/othersprofile/:user_id',
+    sidebarName: 'Profile',
+    navbarName: 'Profile',
+    component: BuyerProfile,
+    protected: true,
+  },
+  {
     path: '/profile',
     sidebarName: 'Profile',
     navbarName: 'Profile',
-    component: Profile,
+    component: SellerProfile,
     protected: true,
   },
   {
@@ -58,6 +66,13 @@ export const appRoutes = [
     sidebarName: 'Edit',
     navbarName: 'Edit',
     component: Edit,
+    protected: true,
+  },
+  {
+    path: '/editPost',
+    sidebarName: 'Edit',
+    navbarName: 'Edit',
+    component: EditPost,
     protected: true,
   },
   {
@@ -111,5 +126,3 @@ export const profileRoutes = [
     protected: true,
   },
 ];
-
-// export default Rt;

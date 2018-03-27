@@ -30,6 +30,7 @@ const envBuild = {
     'HOST=http://localhost',
     'DEBUG=TRUE',
     'PORT=8593',
+    'bucket=barterbruh',
     'AWS_ACCESS_KEY_ID=',
     'AWS_SECRET_ACCESS_KEY=',
     // 'AWS_SESSION_TOKEN=##########optional',

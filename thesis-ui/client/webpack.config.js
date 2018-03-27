@@ -6,8 +6,8 @@ const webpack = require('webpack');
 
 const options = {
   devTool: 'source-map',
-  uglify: {}
-}
+  uglify: {},
+};
 
 // if (process.env.NODE_ENV === 'production') {
 //   options.devTool = '';
@@ -16,23 +16,34 @@ const options = {
 //   }))
 // }
 
-
 module.exports = {
   entry: ['babel-polyfill', './src/index.jsx'],
   output: {
-    filename: './public/bundle.js'
+    filename: './public/bundle.js',
   },
   watch: true,
   devtool: options.devTool,
   module: {
     loaders: [
       {
+        test: /.json$/,
+        loaders: ['json'],
+      },
+      // {
+      //   test: /\.(png|jpg|gif)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //     }
+      //   ]
+      // },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
-        }
+        },
       },
       {
         test: /\.(scss|css)$/,
@@ -47,7 +58,7 @@ module.exports = {
             options: {
               mozjpeg: {
                 progressive: true,
-                quality: 65
+                quality: 65,
               },
               optipng: {
                 optimizationLevel: 7,
@@ -57,26 +68,26 @@ module.exports = {
               },
               svggo: {},
               webp: {
-                quality: 65
-              }
-            }
+                quality: 65,
+              },
+            },
           },
         ],
-      }
-    ]
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
-    }    
+    extensions: ['.js', '.jsx'],
+  },
   // plugins: [
   //   new ExtractTextPlugin('./client/styles/main.css', {
   //     allChunks: true
   //   }),
-    // new OptimizeCssAssetsPlugin({
-    //   assetNameRegExp: /\.optimize\.css$/g,
-    //   cssProcessor: require('cssnano'),
-    //   cssProcessorOptions: { discardComments: { removeAll: true } },
-    //   canPrint: true
-    // }),
+  // new OptimizeCssAssetsPlugin({
+  //   assetNameRegExp: /\.optimize\.css$/g,
+  //   cssProcessor: require('cssnano'),
+  //   cssProcessorOptions: { discardComments: { removeAll: true } },
+  //   canPrint: true
+  // }),
   // ]
-}
+};

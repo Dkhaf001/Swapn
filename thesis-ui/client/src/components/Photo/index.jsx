@@ -7,63 +7,91 @@ class PhotoUpload extends React.Component {
     super();
     this.state = {
       posting: false,
-      val: {
-        file: null,
-        url: '',
-        description: ''
-      }
+      file: null,
+      // val: {
+      //   file: null,
+      //   url: '',
+      // },
     };
   }
-  cancelPost = () => {
-    this.setState({ posting: false });
-  };
-  urlInput = event => {
-    this.setState({ file: event.target.files[0] });
+
+  cancelPost = async (postId) => {
+    try {
+      this.setState({ posting: false });
+      const data = await axios.delete('http://localhost:8593/api/1');
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  descInput = event => {
-    const value = this.state.val;
-    value.description = event.target.value;
-    this.setState({ val: value });
+  urlInput = async (event) => {
+    await this.setState({ file: event.target.files[0] });
+    console.log('this file', this.state.file);
   };
+
   handleSubmit = () => {
-    this.props.loadingTrue();
+    this.setState({
+      posting: false,
+      file: null,
+    });
+  };
+  handleUpload = async (postId) => {
+    // this.props.loadingTrue();
     const value = this.state.val;
+
     const { file } = this.state;
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('post_id', this.props.current_post.id);
+    formData.append('post_id', postId); // this is from state post id
+    // console.log('formData', formData);
     // change to match the route i need for dp route
-    axios
-      .post(`/api/${this.props.currentUser.username}/content`, formData)
-      .then(() => {
-        this.setState({
-          posting: false,
-          val: {
-            url: '',
-            description: ''
-          }
-        });
-        this.props.loadingFalse();
-        this.props.refreshCurrentUser();
-      });
+
+    // 1 changes to postID
+    await axios.post(`http://localhost:8593/api/addphoto/${postId}`, formData);
+    this.setState({
+      file: null,
+    });
   };
+
+  removePhoto = async (postId, key) => {
+    try {
+      const data = await axios.delete(`http://localhost:8593/api/removephoto/${postId}/${key}`);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchAlbum = async (postId) => {
+    try {
+      const data = await axios.get(`http://localhost:8593/api/${postId}`);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // photos = (bucket) => {
+  // <img src=`https://barterbruh.s3.amazonaws.com/${key}` /> ;
+  // };
 
   renderForm = () => (
     <div>
+      <img
+        style={{ width: '128px', height: '128px' }}
+        src={'https://s3-us-west-1.amazonaws.com/barterbruh/1/1de93ec.jpg'}
+      />
       <form>
         <label>
           Upload:
           <input type="file" onChange={this.urlInput} />
-          {/* Description:
-          <input
-            type="text"
-            value={this.state.val.description}
-            onChange={this.descInput}
-            placeholder="enter description here"
-          /> */}
+          {/* need to clear file after upload look up */}
         </label>
       </form>
+      {this.state.file ? <button onClick={this.handleUpload}>Upload</button> : null}
+      <button onClick={this.fetchAlbum}>Fetch</button>
+      <button onClick={this.removePhoto}>DeletePhoto</button>
       <button onClick={this.handleSubmit}>Submit</button>
       <button onClick={this.cancelPost}>Cancel</button>
     </div>
@@ -88,7 +116,7 @@ class PhotoUpload extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 

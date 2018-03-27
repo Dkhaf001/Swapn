@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import Bio from './bio.jsx';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import path from 'path';
+import { bindActionCreators } from 'redux';
+import { addCurrentList } from '../../actions';
 import ListingList from '../Feed/listingPostList.jsx';
 // Profile view will need feed view in here too.
 // two views one as a Buyer & Seller
@@ -13,6 +18,12 @@ class Profile extends Component {
   constructor() {
     super();
   }
+  async componentWillMount() {
+    const user_id = path.basename(window.location.href);
+    const { data } = await axios.get(`http://localhost:3396/api/posts/${user_id}`);
+    console.log('thisis data curret profie', data);
+    this.props.addCurrentList(data);
+  }
   render() {
     return (
       <div>
@@ -20,12 +31,27 @@ class Profile extends Component {
           <Bio />
         </div>
         <div>
-        <ListingList />
-        <div />
-      </div>
+          <ListingList />
+          <div />
+        </div>
       </div>
     );
   }
 }
 
-export default Profile;
+function mapStateToProps(state) {
+  return {
+    current_list: state.current_list,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentList,
+    },
+    dispatch,
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

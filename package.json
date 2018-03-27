@@ -17,8 +17,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup:api":
-      "cd thesis-api && npm run buildEnv && npm run setup:rest-server && npm run setup:socket-server",
+    "setup:api": "cd thesis-api && npm run buildEnv && npm run setup:rest-server && npm run setup:socket-server",
     "setup:ui": "cd thesis-ui && npm run buildEnv && npm run setup:server && npm run setup:client"
   },
   "repository": {

@@ -1,53 +1,40 @@
-// import {
-//   fetchAlbumQuery,
-//   addAlbumQuery,
-//   removeAlbumQuery,
-//   addPhotoQuery,
-//   removePhotoQuery,
-// } from '../model';
+import {
+  listBucketQuery,
+  listBucketObjectsQuery,
+  createBucketQuery,
+  removeBucketQuery,
+  fetchBucketAlbumQuery,
+  removeBucketAlbumQuery,
+  addBucketObjectQuery,
+  removeBucketObjectsQuery,
+} from '../model';
 
-export const fetchAlbumController = async (req, res) => {
-  // const payload = req.params;
-  try {
-    const data = await fetchAlbumQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+export const fetchAlbumController = (req, res) => {
+  const payload = req.params;
+  fetchBucketAlbumQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
-export const addAlbumController = async (req, res) => {
-  // const payload = req.params;
-  try {
-    const data = await addAlbumQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+
+export const removeAlbumController = (req, res) => {
+  const payload = req.params;
+  const data = removeBucketAlbumQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
-export const removeAlbumController = async (req, res) => {
-  // const payload = req.params;
-  try {
-    const data = await removeAlbumQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+
+export const addPhotoController = (req, res) => {
+  // console.log('file:!!!!!!!!!!!', req.files.file);
+  // req.files.file.name = filename
+  const payload = { file: req.files.file, album: req.params.post_id };
+  const data = addBucketObjectQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
-export const addPhotoController = async (req, res) => {
-  // const payload = req.params;
-  try {
-    const data = await addPhotoQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
-};
-export const removePhotoController = async (req, res) => {
-  // const payload = req.params;
-  try {
-    const data = await removePhotoQuery(payload);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-  }
+
+export const removePhotoController = (req, res) => {
+  const payload = req.params;
+  const data = removeBucketObjectsQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
 };
