@@ -35,9 +35,9 @@ const MapWithASearchBox = compose(
   }),
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBl4meuMNIFaMJDzAdWR_aCpOzafVTS1ug&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `200px` }} />,
-    containerElement: <div style={{ height: `200px` }} />,
-    mapElement: <div style={{ height: `200px` }} />,
+    loadingElement: <div style={{ height: `300px`, width: `400px` }} />,
+    containerElement: <div style={{ height: `300px`, width: `400px` }} />,
+    mapElement: <div style={{ height: `300px`, width: `400px` }} />,
   }),
   lifecycle({
     componentWillMount() {
@@ -46,9 +46,10 @@ const MapWithASearchBox = compose(
       console.log('lat is', lat, 'type of...', typeof lat)
       const refs = {}
 
+
       this.setState({
         bounds: null,
-        center: {
+        center: parseFloat(localStorage.getItem('latitude'))? {lat: parseFloat(localStorage.getItem('latitude')), lng: parseFloat(localStorage.getItem('longitude'))} : {
           lat: 33.9, lng: -118.39
         },
         markers: [],
@@ -102,7 +103,7 @@ const MapWithASearchBox = compose(
 )(props =>
   <GoogleMap
     ref={props.onMapMounted}
-    defaultZoom={15}
+    defaultZoom={10}
     center={props.center}
     onBoundsChanged={props.onBoundsChanged}
   >
