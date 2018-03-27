@@ -9,6 +9,7 @@ import Protected from './routes/protect.jsx';
 import { appRoutes } from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
 import Map from './components/Map/index.jsx';
+import Maptest from './components/Map/maptest.jsx';
 import './styles.css';
 
 class App extends React.Component {
