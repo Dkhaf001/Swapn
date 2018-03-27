@@ -19,7 +19,6 @@ class Bio extends Component {
   }
   async componentWillMount() {
     try {
-      console.log('Hi');
       // const data = await axios.get(`http://localhost:3369/users/${this.props.current_profile.user_id}`);
       // this.setState({ user: data });
       // create rout in backend

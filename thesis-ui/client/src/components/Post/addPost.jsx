@@ -172,7 +172,7 @@ class AddPost extends Component {
         );
       case 1:
         // ELBERT! S3 GOES HERE!
-        <PhotoUpload />;
+        return <PhotoUpload />;
       // return 'OVER HERE ELBERT!!!!!!!!';
       case 2:
         return (
