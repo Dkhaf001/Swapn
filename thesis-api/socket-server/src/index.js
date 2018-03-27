@@ -22,6 +22,12 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
         currentUsersNumber++;
         console.log ('total user connect', currentUsersNumber)
       }
+      chat.find({to: username, read: 'false'}).toArray((err, result) => {
+        client.emit('notifications',result);
+        // chat.updateOne({to: username, read: 'false'}, {read: 'true'}, (err, result) => {
+        //   console.log('update mongodb no more notifica')
+        // })
+      })
     })
     client.on('showUsers', () => {
       console.log(users)
@@ -35,7 +41,12 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
     })
     client.on('joinRoom', roomId => {
       const room = rooms.findOrCreate(roomId || 'default');
+      console.log('a user has join the room', room.get('id'))
       client.join(room.get('id'))
+      db.collection("chat").find({roomId: roomId}).toArray((err, result)=> {
+        if(err) throw err;
+        client.emit('history', result)
+      })
     })
     client.on('message', data => {
      
@@ -48,6 +59,7 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
         data.read = 'false';
       }
       chat.insert(data)
+      console.log('socket try8ingto send message to every one in this room', data.roomId)
       socket.in(data.roomId).emit('room:message', data)
     })
   })

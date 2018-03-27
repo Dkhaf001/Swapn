@@ -16,6 +16,9 @@ class StatusBar extends Component {
   state = {
     messages: [],
     open: false,
+    offers:'',
+    responseMessages: 0,
+    offersMessages: 0,
   };
   async componentWillMount() {
     try {
@@ -33,6 +36,23 @@ class StatusBar extends Component {
           });
           this.props.addMessages(this.state.messages)
         });
+        socket.on('notifications', result => {
+          console.log('notifications', result)
+          this.setState({
+            messages: result
+          })
+          for(var i = 0; i < result.length; i ++) {
+            if(result[i].buyer_username === this.props.active_user.username) {
+              this.setState({
+                responseMessages: this.state.responseMessages + 1
+              })
+            }else{
+              this.setState({
+                offersMessages: this.state.offersMessages + 1
+              })  
+            }
+          }
+        })
       }
     } catch (err) {
       // console.log('err StatusBar component', err);
@@ -80,6 +100,12 @@ class StatusBar extends Component {
       })
     }catch(err) {
     }
+  }
+  gotoMyPosts() {
+    this.props.history.push({
+      pathname: `/profile/selling`,
+      state: this.state.messages
+    })
   }
   render() {
     return (
@@ -129,13 +155,19 @@ class StatusBar extends Component {
                         primaryText={`You have ${this.state.messages.length} messages`}
                       />
                       {
-                        this.state.messages.map(message => {
-                          return <MenuItem     
-                           onClick={()=>
-                             this.handleMessageClick(message)
-                           }
-                           key={2} value="ShortDash" primaryText="View Offers" />
-                        })
+                        <MenuItem
+                        key={2}
+                        value="Solid"
+                        primaryText={`View Offers Messages `+ this.state.offersMessages}
+                        onClick = {()=>this.gotoMyPosts()}
+                      />
+                      }
+                      {
+                        <MenuItem
+                        key={3}
+                        value="Solid"
+                        primaryText={`view responded Messages `+ this.state.responseMessages}
+                      />
                       }
                     </Menu>
                   </Popover>

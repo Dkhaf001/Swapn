@@ -16,6 +16,7 @@ class BuyerPost extends Component {
       isLoggedIn: false,
       bartering: false,
       room_id: '',
+      buyer_username: ''
     };
   }
 
@@ -160,8 +161,9 @@ class BuyerPost extends Component {
     const roomId = randomstring.generate();
     this.setState({
       room_id: roomId,
-    });
-    if (this.props.active_user) {
+      buyer_username: this.props.active_user.username
+    })
+    if(this.props.active_user) {
       this.setState({
         bartering: true,
       });
@@ -235,7 +237,7 @@ class BuyerPost extends Component {
           />
         )}
         {this.state.bartering && (
-          <Chattest post={this.props.current_post} roomId={this.state.room_id} />
+          <Chattest post={this.props.current_post} roomId={this.state.room_id} buyer_username={this.state.buyer_username}/>
         )}
       </div>
     ) : (

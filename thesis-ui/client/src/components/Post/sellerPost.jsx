@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 import EditPost from './editPost.jsx';
-
+import Chattest from '../Chat/Chattest.jsx'
 class SellerPost extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class SellerPost extends Component {
 
   async componentWillMount() {
     console.log('sellerPost', this.props)
-    // this.getPhotos();
+    this.getPhotos();
     this.getOffers();
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
@@ -48,16 +48,38 @@ class SellerPost extends Component {
       });
     }
   }
+  async getOffers() {
+    try{
+      const post_id = this.props.current_post.id;
+      const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${post_id}`)
+      let message = this.props.history.location.state.message;
+      this.setState({
+        offers: data.rows,
+      })
+      console.log('offers',data.rows)
+    }catch(err) {
+      console.log('err fetching offers',err)
+    }
+  }
+  async getPhotos() {
+    // const postId = this.props.current_posts.id;
+    // const { data } = await axios.get(
+    //   `http://localhost:3396/api/photos/${postId}`
+    // );
+    // console.log('successfully received photos!');
+    // this.setState({
+    //   photos: data.rows
+    // });
+  }
 
-  // async getPhotos() {
-  // const postId = this.props.current_posts.id;
-  // const { data } = await axios.get(
-  //   `http://localhost:3396/api/photos/${postId}`
-  // );
-  // console.log('successfully received photos!');
-  // this.setState({
-  //   photos: data.rows
-  // });
+  // async removePost() {
+  //   const userId = this.props.current_post.user_id;
+  //   const postId = this.props.current_post.id;
+  //   const { data } = await axios.delete(
+  //     `http://localhost:3396/api/photos/${userId}/${postId}`
+  //   );
+  //   console.log('successfully deleted post!');
+  //   // refresh page after successfully deleting?
   // }
 
   editPost() {
@@ -206,12 +228,10 @@ class SellerPost extends Component {
           this.state.offers.map(offer => {
             return <div key={offer.id}>
               {offer.username}
+              
+              {this.state.currentTalking === offer.username && <Chattest offer={offer} roomId={offer.room_id}/>}
             </div>
           })
-        }
-        {
-          this.state.currentTalking && 
-          <textarea />
         }
       </div>
     ) : (
