@@ -33,6 +33,13 @@ export const appRoutes = [
     protected: false,
   },
   {
+    path: '/profile/:user_id',
+    sidebarName: 'Profile',
+    navbarName: 'Profile',
+    component: Profile,
+    protected: true,
+  },
+  {
     path: '/profile',
     sidebarName: 'Profile',
     navbarName: 'Profile',

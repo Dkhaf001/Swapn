@@ -12,7 +12,7 @@ class Bio extends Component {
     super();
     this.state = {
       user: {},
-      following: false
+      following: false,
     };
   }
   async componentWillMount() {
@@ -38,16 +38,12 @@ class Bio extends Component {
   followButton = async () => {
     await axios.post('http://localhost:3369/followings/', {
       user_id: localStorage.id,
-      following_id: this.state.user.id
+      following_id: this.state.user.id,
     });
     this.setState({ following: true });
   };
   unfollowButton = async () => {
-    await axios.delete(
-      `http://localhost:3369/followings/${localStorage.id}/${
-        this.state.user.id
-      }`
-    );
+    await axios.delete(`http://localhost:3369/followings/${localStorage.id}/${this.state.user.id}`);
     this.setState({ following: true });
   };
   sellerView = () => (
@@ -74,7 +70,7 @@ class Bio extends Component {
     </div>
   );
   render() {
-    if (localStorage.id === 1) {
+    if (localStorage.id === this.props.current_profile.user) {
       // this.current_profile.id;
       return this.sellerView();
     }
@@ -83,7 +79,7 @@ class Bio extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_profile: state.current_profile
+    current_profile: state.current_profile,
   };
 }
 
