@@ -59,12 +59,14 @@ const MapWithASearchBox = compose(
         onMarkerRightClick: () => {
           markers=this.state.markers;
         },
-        onBoundsChanged: () => {
-          this.setState({
-            bounds: refs.map.getBounds(),
-            center: refs.map.getCenter(),
-          })
-        },
+        //this bounds change makes dragging the map extremely choppy
+        //-------------------------------------------------------------------
+        // onBoundsChanged: () => {
+        //   this.setState({
+        //     bounds: refs.map.getBounds(),
+        //     center: refs.map.getCenter(),
+        //   })
+        // },
         onSearchBoxMounted: ref => {
           refs.searchBox = ref;
         },
@@ -138,9 +140,10 @@ const MapWithASearchBox = compose(
           // onClick={this.onMarkerClick}
           icon={{
             url: 'http://www.clker.com/cliparts/B/B/1/E/y/r/marker-pin-google.svg',
-            scaledSize: new google.maps.Size(36, 36)
+            scaledSize: new google.maps.Size(36, 36),
         }}
           name={'Your Position'}
+          radius={100000000}
           position={{ lat: parseFloat(localStorage.getItem('latitude')), lng: parseFloat(localStorage.getItem('longitude')) }}
         /> : null
       }
