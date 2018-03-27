@@ -45,22 +45,25 @@ class HomePostList extends Component {
   switchToSinglePost = (post) => {
     console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
-    this.props.history.push({
-      pathname: `/post/${post.title}`,
-      state: {id: `${post}`, post:`${post}`}
-    })
+    this.props.history.push(`/post/${post.id}`);
   };
 
   render() {
     return (
       <div style={styles.root}>
-      {/* <Chattest/> */}
-        <GridList cellHeight={200} cols={4} padding={15} style={styles.gridList} style={{
-      width: '80%',
-      margin: '10 auto',
-      // border: '2px solid rgb(11, 22, 241)',
-      // backgroundColor: '#83d8ff',
-    }}>
+        {/* <Chattest/> */}
+        <GridList
+          cellHeight={200}
+          cols={4}
+          padding={15}
+          style={styles.gridList}
+          style={{
+            width: '80%',
+            margin: '10 auto',
+            // border: '2px solid rgb(11, 22, 241)',
+            // backgroundColor: '#83d8ff',
+          }}
+        >
           {this.props.current_list &&
             this.props.current_list.map(post => (
               <GridTile
