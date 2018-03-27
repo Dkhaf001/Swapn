@@ -18,7 +18,8 @@ export class MapContainer extends Component {
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
-    this.changePosition = this.changePosition.bind(this)
+    this.changePosition = this.changePosition.bind(this);
+    this.mapClicked = this.mapClicked.bind(this);
   }
   changePosition(position){
     console.log('got it', position)
@@ -26,7 +27,19 @@ export class MapContainer extends Component {
       positiongeo: position
     })
   }
+  
+  // searchNearby(map, center) {
+  //   const {google} = this.props;
+  //   const service = new google.maps.places.PlacesService(map);
+  //   // Specify location, radius and place types for your Places API search.
+  //   const request = {
+  //      location: center,
+  //      radius: '500',
+  //      type: ['food']
+  //    };
+
   renderMarkers() {}
+
   onMarkerClick(props, marker, e) {
     this.setState({
       selectedPlace: props,
@@ -41,6 +54,7 @@ export class MapContainer extends Component {
   };
 
   onMapClicked(props) {
+    console.log('clicked map', props)
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
@@ -48,10 +62,15 @@ export class MapContainer extends Component {
       });
     }
   }
+  mapClicked=(mapProps, map, clickEvent)=> {
+    console.log('mapclicked', clickEvent);
+  }
+  
   getProps = (e) => {
     e.preventDefault()
-    console.log('this one is', this.state.positiongeo);
+    console.log('click', this.state.positiongeo);
   }
+
   render() {
     return (
       <div className="maps">
@@ -59,7 +78,6 @@ export class MapContainer extends Component {
         <form className="navbar-form navbar-left" role="search">
           <div className="form-group">
           <Geolocation changePosition={this.changePosition}/>
-          {console.log('the position is', this.state.position)}
             <input type="text" placeholder="Location" />
             <button type="submit">Submit</button>
             <button type="submit" onClick={this.getProps}>Get Current Location</button>
@@ -75,7 +93,10 @@ export class MapContainer extends Component {
         }}
         zoom={15}
         onClick={this.onMapClicked}
+        onClick={this.mapClicked}
       >
+        
+
         {/* {props.markers.map(marker => (
           <Marker
             position={{ lat: marker.latitude, lng: marker.longitude }}
@@ -85,6 +106,10 @@ export class MapContainer extends Component {
         {this.state.positiongeo ?
         <Marker
           onClick={this.onMarkerClick}
+          icon={{
+            url: 'http://www.clker.com/cliparts/B/B/1/E/y/r/marker-pin-google.svg',
+            scaledSize: new google.maps.Size(36, 36)
+        }}
           name={'Your Position'}
           position={{ lat: this.state.positiongeo.coords.latitude, lng: this.state.positiongeo.coords.longitude }}
         /> : null
@@ -111,6 +136,7 @@ export class MapContainer extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     positiongeo: state.positiongeo
