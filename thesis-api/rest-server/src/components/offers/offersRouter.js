@@ -3,7 +3,8 @@ import {
   fetchAllOffersController,
   addOffersController,
   removeOffersController,
-  getSingleOffer
+  getSingleOffer,
+  fetchPostOffers
 } from '../offers/offersController';
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.route('/:post_id/:user_id').delete(removeOffersController);
 //get single offer status for buyer post component
 router.route('/getSingleOffer/:buyer_username/:post_id').get(getSingleOffer)
 
+router.route('/fetchPostOffers/:post_id').get(fetchPostOffers)
 
 export default router;

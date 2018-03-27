@@ -2,7 +2,8 @@ import {
   fetchAllOffersQuery,
   removeOffersQuery,
   addOffersQuery,
-  getSingleOfferQuery
+  getSingleOfferQuery,
+  fetchPostOffersQuery
 } from './offersQueries';
 
 export const fetchAllOffersController = async (req, res) => {
@@ -42,5 +43,15 @@ export const getSingleOffer = async (req, res) => {
   }catch(err) {
     console.log('err getting single offer', err)
   }
+}
 
+export const fetchPostOffers = async (req, res) => {
+  let payload = req.params
+  try{
+    const data = await fetchPostOffersQuery(payload)
+    delete data.rows[0].password;
+    res.status(200).send(data)
+  }catch(err) {
+    console.log('err getting single post  offer', err)
+  }
 }

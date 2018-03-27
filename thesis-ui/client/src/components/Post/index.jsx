@@ -29,11 +29,17 @@ class Post extends Component {
   }
 
   render() {
+<<<<<<< HEAD
     if (this.props.current_post) {
       if (localStorage.id) {
         if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
           return <SellerPost />;
         }
+=======
+    if (localStorage.id) {
+      if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
+        return <Route path="/" render={()=> <SellerPost {...this.props} />} />;
+>>>>>>> still worikng on message system
       }
       return <BuyerPost />;
     }

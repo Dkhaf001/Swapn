@@ -21,11 +21,18 @@ class SellerPost extends Component {
         main_photo: this.props.current_post.main_photo,
       },
       sold: false,
+<<<<<<< HEAD
+=======
+      offers: [],
+      currentTalking:''
+>>>>>>> still worikng on message system
     };
   }
 
   async componentWillMount() {
-    // this.getPhotos();
+    console.log('sellerPost', this.props)
+    this.getPhotos();
+    this.getOffers();
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
         offerAccepted: false,
@@ -191,6 +198,21 @@ class SellerPost extends Component {
             onClick={() => this.cancelOffer()}
           />
         )}
+        <hr />
+        <button onClick={()=>this.showState()}>show state</button>
+        offers:
+        {
+          this.state.offers && 
+          this.state.offers.map(offer => {
+            return <div key={offer.id}>
+              {offer.username}
+            </div>
+          })
+        }
+        {
+          this.state.currentTalking && 
+          <textarea />
+        }
       </div>
     ) : (
       <div>Loading</div>

@@ -3,7 +3,8 @@ import {
   fetchAllOffersHelper,
   addOffersHelper,
   removeOffersHelper,
-  getSingleOfferHelper
+  getSingleOfferHelper,
+  fetchPostOffersHelper
 } from './offersSQLHelpers';
 
 export const fetchAllOffersQuery = async payload => {
@@ -47,5 +48,15 @@ export const getSingleOfferQuery = async payload => {
     return data;
   }catch(err) {
     console.log('err getting single offer Query', err)
+  }
+}
+
+export const fetchPostOffersQuery = async payload => {
+  try {
+    const queryString = fetchPostOffersHelper(payload)
+    const data = await db.queryAsync(queryString);
+    return data
+  }catch(err) {
+    console.log('err fetching post offer query', err)
   }
 }
