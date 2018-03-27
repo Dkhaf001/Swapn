@@ -7,11 +7,14 @@ import currentPostReducers from './current_postReducers';
 import currentProfileReducers from './current_profileReducers';
 import currentFollowingReducers from './current_followingReducers';
 import currentWatchingReducers from './current_watchingReducers';
-import socketReducers from './socketReducers'
-import current_roomId from './roomIdReducers'
-import messages from './messagesReducers'
+import socketReducers from './socketReducers';
+import current_roomId from './roomIdReducers';
+import messages from './messagesReducers';
+import positiongeo from './positionReducers.js';
+
 
 export default combineReducers({
+  positiongeo,
   messages,
   dataReducers,
   active_user: activeUserReducers,

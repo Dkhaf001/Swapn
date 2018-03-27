@@ -31,6 +31,7 @@
     "react": "^16.2.0",
     "react-codemirror2": "^1.0.0",
     "react-dom": "^16.2.0",
+    "react-geolocation": "^1.0.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-test-renderer": "^16.2.0",

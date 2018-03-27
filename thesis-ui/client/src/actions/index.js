@@ -47,3 +47,8 @@ export const addMessages = messages => ({
   type: "MESSAGES",
   payload: messages
 })
+
+export const getLocation = position => ({
+  type: "Position",
+  payload: position
+})

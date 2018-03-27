@@ -24,10 +24,7 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
-        <hr />
-        <PhotoUpload />
-        <hr />
-        <div ref="mainPanel">
+        <div className="view" ref="mainPanel">
           <div>
             <Switch>
               {appRoutes.map((route, key) => {
