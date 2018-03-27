@@ -17,13 +17,14 @@ import EditPost from '../components/Post/editPost.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 import Maps from '../components/Map/index.jsx';
+import Maptest from '../components/Map/maptest.jsx';
 
 export const appRoutes = [
   {
     path: '/maps',
     sidebarName: 'Maps',
     navbarName: 'Maps',
-    component: Maps,
+    component: Maptest,
     protected: false,
   },
   {
