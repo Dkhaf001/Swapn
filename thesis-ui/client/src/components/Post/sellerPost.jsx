@@ -18,9 +18,9 @@ class SellerPost extends Component {
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
         status: this.props.current_post.status,
-        main_photo: this.props.current_post.main_photo
+        main_photo: this.props.current_post.main_photo,
       },
-      sold: false
+      sold: false,
     };
   }
 
@@ -28,16 +28,16 @@ class SellerPost extends Component {
     // this.getPhotos();
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
-        offerAccepted: false
+        offerAccepted: false,
       });
     } else if (this.props.current_post.status === 'Pending') {
       this.setState({
-        offerAccepted: true
+        offerAccepted: true,
       });
     } else if (this.props.current_post.status === 'BARTERED') {
       this.setState({
         offerAccepted: true,
-        sold: true
+        sold: true,
       });
     }
   }
@@ -59,25 +59,22 @@ class SellerPost extends Component {
 
   async acceptOffer() {
     try {
-      let accept = {
+      const accept = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
         condition: this.props.current_post.condition,
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
         status: 'Pending',
-        main_photo: this.props.current_post.main_photo
+        main_photo: this.props.current_post.main_photo,
       };
-      let userId = this.props.current_post.user_id;
-      let postId = this.props.current_post.id;
+      const userId = this.props.current_post.user_id;
+      const postId = this.props.current_post.id;
       this.setState({
         offerAccepted: true,
-        accept: accept
+        accept,
       });
-      const data = await axios.put(
-        `http://localhost:3396/api/posts/${userId}/${postId}`,
-        accept
-      );
+      const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
       console.log('Successfully accepted an offer! Post status is now Pending');
     } catch (err) {
       console.log('Error accepting offer!');
@@ -86,29 +83,24 @@ class SellerPost extends Component {
 
   async cancelOffer() {
     try {
-      let cancel = {
+      const cancel = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
         condition: this.props.current_post.condition,
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
         status: 'Accepting Offers',
-        main_photo: this.props.current_post.main_photo
+        main_photo: this.props.current_post.main_photo,
       };
-      let userId = this.props.current_post.user_id;
-      let postId = this.props.current_post.id;
-      const data = await axios.put(
-        `http://localhost:3396/api/posts/${userId}/${postId}`,
-        cancel
-      );
+      const userId = this.props.current_post.user_id;
+      const postId = this.props.current_post.id;
+      const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, cancel);
       this.setState({
         offerAccepted: false,
         accept: cancel,
-        sold: false
+        sold: false,
       });
-      console.log(
-        'Successfully cancelled an offer! Post status is now Accepting Offers'
-      );
+      console.log('Successfully cancelled an offer! Post status is now Accepting Offers');
     } catch (err) {
       console.log('Error cancelling offer!');
     }
@@ -116,29 +108,24 @@ class SellerPost extends Component {
 
   async soldOffer() {
     try {
-      let sold = {
+      const sold = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
         condition: this.props.current_post.condition,
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
         status: 'BARTERED',
-        main_photo: this.props.current_post.main_photo
+        main_photo: this.props.current_post.main_photo,
       };
-      let userId = this.props.current_post.user_id;
-      let postId = this.props.current_post.id;
-      const data = await axios.put(
-        `http://localhost:3396/api/posts/${userId}/${postId}`,
-        sold
-      );
+      const userId = this.props.current_post.user_id;
+      const postId = this.props.current_post.id;
+      const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
       this.setState({
         offerAccepted: false,
         accept: sold,
-        sold: true
+        sold: true,
       });
-      console.log(
-        'Successfully bartered an offer! Post status is now BARTERED'
-      );
+      console.log('Successfully bartered an offer! Post status is now BARTERED');
       this.props.history.push('/home');
     } catch (err) {
       console.log('Error completing barter transaction!');
@@ -146,24 +133,24 @@ class SellerPost extends Component {
   }
 
   render() {
-    return (
+    return this.props.current_post ? (
       <div>
         <h1>Welcome to your post!</h1>
         <div>
-          <img src={this.props.current_post.main_photo} />
+          <img src={this.props.current_post && this.props.current_post.main_photo} />
         </div>
         <div>
           <h1>
-            <strong>{this.props.current_post.title}</strong>
+            <strong>{this.props.current_post && this.props.current_post.title}</strong>
           </h1>
-          <h3>{this.props.current_post.description}</h3>
-          <h3>{this.props.current_post.condition}</h3>
-          <h3>{this.props.current_post.location}</h3>
+          <h3>{this.props.current_post && this.props.current_post.description}</h3>
+          <h3>{this.props.current_post && this.props.current_post.condition}</h3>
+          <h3>{this.props.current_post && this.props.current_post.location}</h3>
           <h4>
-            <strong>{this.props.current_post.username}</strong> wants to trade
-            this item for: {this.props.current_post.demand}
+            <strong>{this.props.current_post && this.props.current_post.username}</strong> wants to
+            trade this item for: {this.props.current_post && this.props.current_post.demand}
           </h4>
-          <h4>Status: {this.state.accept.status}</h4>
+          <h4>Status: {this.props.current_post && this.state.accept.status}</h4>
         </div>
         {this.state.sold === false ? (
           <RaisedButton
@@ -205,13 +192,17 @@ class SellerPost extends Component {
           />
         )}
       </div>
+    ) : (
+      <div>Loading</div>
     );
+    //   }
+    //   return ;
   }
 }
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 
