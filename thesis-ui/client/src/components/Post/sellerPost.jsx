@@ -31,7 +31,7 @@ class SellerPost extends Component {
 
   async componentWillMount() {
     console.log('sellerPost', this.props)
-    this.getPhotos();
+    // this.getPhotos();
     this.getOffers();
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
