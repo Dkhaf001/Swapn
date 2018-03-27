@@ -77,6 +77,10 @@ go to the app, and create 3 users
 --uncomment line 7 and 8 on thesis-api/rest-server/src/index.js
 --and comment them after
 
+Front end code dependent on localstorage
+convert to be Redux depedent vs LocalStorage
+MVP++ --> ComponentWillMount get data if store prop is null after page refresh
+
 ## Contributing
 
 See [CONTRIBUTING.md](_CONTRIBUTING.md) for contribution guidelines.
