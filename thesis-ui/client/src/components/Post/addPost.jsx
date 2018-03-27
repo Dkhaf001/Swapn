@@ -22,8 +22,8 @@ class AddPost extends Component {
         condition: '',
         location: '',
         demand: '',
-        status: 'Accepting Offers',
-      },
+        status: 'Accepting Offers'
+      }
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleNext = this.handleNext.bind(this);
@@ -33,31 +33,23 @@ class AddPost extends Component {
 
   submitNewPost = async () => {
     try {
-      // UNCOMMENT THIS WHEN FINISHED --> THIS WILL REQUIRE FIELDS FOR SUBMISSION
-      // if (
-      //   this.state.newPost.title !== '' &&
-      //   this.state.newPost.description !== '' &&
-      //   this.state.newPost.condition !== '' &&
-      //   this.state.newPost.location !== '' &&
-      //   this.state.newPost.demand !== ''
-      // ) {
-      //   const userId = localStorage.id;
-      //   await axios.post(
-      //     `http://localhost:3396/api/posts/${userId}`,
-      //     this.state.newPost
-      //   );
-      //   console.log('successfully submitted new post!');
-      // } else {
-      //   alert('Please fill out all text fields!');
-      // }
-      const userId = localStorage.id;
-      const { data } = await axios.post(
-        `http://localhost:3396/api/posts/${userId}`,
-        this.state.newPost,
-      );
-      tempPostId = data.rows[0].id;
-      console.log('WILL IT WORK?', tempPostId);
-      console.log('successfully submitted new post: ', this.state.newPost);
+      if (
+        this.state.newPost.title !== '' &&
+        this.state.newPost.description !== '' &&
+        this.state.newPost.condition !== '' &&
+        this.state.newPost.location !== '' &&
+        this.state.newPost.demand !== ''
+      ) {
+        const userId = localStorage.id;
+        const { data } = await axios.post(
+          `http://localhost:3396/api/posts/${userId}`,
+          this.state.newPost
+        );
+        tempPostId = data.rows[0].id;
+        console.log('successfully submitted new post: ', this.state.newPost);
+      } else {
+        alert('Please fill out all text fields!');
+      }
     } catch (err) {
       console.log('error submitting new post!');
     }
@@ -66,8 +58,8 @@ class AddPost extends Component {
   handleChange = (event, index, value) => {
     this.setState({
       newPost: Object.assign({}, this.state.newPost, {
-        condition: value,
-      }),
+        condition: value
+      })
     });
   };
 
@@ -78,7 +70,7 @@ class AddPost extends Component {
     } else {
       this.setState({
         stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
+        finished: stepIndex >= 2
       });
     }
   }
@@ -102,11 +94,11 @@ class AddPost extends Component {
               hintText="What are you selling?"
               floatingLabelText="Title"
               name="title"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -118,11 +110,11 @@ class AddPost extends Component {
               rows={2}
               rowsMax={4}
               name="description"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -134,23 +126,38 @@ class AddPost extends Component {
               style={{ width: 300 }}
               autoWidth={true}
             >
-              <MenuItem value="New (never used)" primaryText="New (never used)" />
-              <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
-              <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
-              <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
+              <MenuItem
+                value="New (never used)"
+                primaryText="New (never used)"
+              />
+              <MenuItem
+                value="Reconditioned/Certified"
+                primaryText="Reconditioned/Certified"
+              />
+              <MenuItem
+                value="Open Box (never used)"
+                primaryText="Open Box (never used)"
+              />
+              <MenuItem
+                value="Used (normal wear)"
+                primaryText="Used (normal wear)"
+              />
               <MenuItem value="For Parts" primaryText="For Parts" />
-              <MenuItem value="Other (see description)" primaryText="Other (see description)" />
+              <MenuItem
+                value="Other (see description)"
+                primaryText="Other (see description)"
+              />
             </DropDownMenu>
             <br />
             <TextField
               hintText="Add Location Here"
               floatingLabelText="Location"
               name="location"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -159,11 +166,11 @@ class AddPost extends Component {
               hintText="What do you want for your item?"
               floatingLabelText="Demand"
               name="demand"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -182,11 +189,11 @@ class AddPost extends Component {
               floatingLabelText="Title"
               name="title"
               defaultValue={`${this.state.newPost.title}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -198,11 +205,11 @@ class AddPost extends Component {
               rowsMax={4}
               name="description"
               defaultValue={`${this.state.newPost.description}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -214,23 +221,38 @@ class AddPost extends Component {
               style={{ width: 300 }}
               autoWidth={true}
             >
-              <MenuItem value="New (never used)" primaryText="New (never used)" />
-              <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
-              <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
-              <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
+              <MenuItem
+                value="New (never used)"
+                primaryText="New (never used)"
+              />
+              <MenuItem
+                value="Reconditioned/Certified"
+                primaryText="Reconditioned/Certified"
+              />
+              <MenuItem
+                value="Open Box (never used)"
+                primaryText="Open Box (never used)"
+              />
+              <MenuItem
+                value="Used (normal wear)"
+                primaryText="Used (normal wear)"
+              />
               <MenuItem value="For Parts" primaryText="For Parts" />
-              <MenuItem value="Other (see description)" primaryText="Other (see description)" />
+              <MenuItem
+                value="Other (see description)"
+                primaryText="Other (see description)"
+              />
             </DropDownMenu>
             <br />
             <TextField
               floatingLabelText="Location"
               name="location"
               defaultValue={`${this.state.newPost.location}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -239,11 +261,11 @@ class AddPost extends Component {
               floatingLabelText="Demand"
               name="demand"
               defaultValue={`${this.state.newPost.demand}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
