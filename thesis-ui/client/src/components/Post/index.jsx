@@ -28,16 +28,6 @@ class Post extends Component {
     } catch (error) {}
   }
 
-  // render() {
-  //   if (this.props.current_post) {
-  //     return localStorage.id === this.props.current_post.user_id ? (
-  //       <Route path="/" component={SellerPost} />
-  //     ) : (
-  //       <Route path="/" component={BuyerPost} />
-  //     );
-  //   }
-  // }
-
   render() {
     if (this.props.current_post) {
       if (localStorage.id) {
