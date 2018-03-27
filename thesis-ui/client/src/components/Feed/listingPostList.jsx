@@ -10,13 +10,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
     overflowY: 'auto',
-  }
+  },
 };
 
 class ListingPostList extends Component {
@@ -27,16 +27,19 @@ class ListingPostList extends Component {
   async componentWillMount() {
     // grab data from db, update store
     try {
-      const id = localStorage.id;
-      console.log('the id is', localStorage.id);
-      const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
-      this.props.addCurrentList(data);
+      const url = window.location.href;
+      if (!url.includes('othersprofile')) {
+        const id = localStorage.id;
+        console.log('the id is', localStorage.id);
+        const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
+        this.props.addCurrentList(data);
+      }
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
 
-  switchToSinglePost = post => {
+  switchToSinglePost = (post) => {
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };
@@ -67,7 +70,7 @@ class ListingPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
@@ -75,9 +78,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 

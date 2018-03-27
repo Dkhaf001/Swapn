@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Edit from './edit.jsx';
+import path from 'path';
+
 // import { bindActionCreators } from 'redux'
 // import { bindActionCreators } from 'redux'
 // this is what people see  need a view for logged in matches current profile user
@@ -70,7 +72,8 @@ class Bio extends Component {
     </div>
   );
   render() {
-    if (localStorage.id === this.props.current_profile.user) {
+    const url = window.location.href;
+    if (!url.includes('othersprofile')) {
       // this.current_profile.id;
       return this.sellerView();
     }
