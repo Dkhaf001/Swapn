@@ -15,8 +15,8 @@ import ListingList from '../Feed/listingPostList.jsx';
 // buyer just render sellers current unsold listings
 // Profile will render profile --> bio will check if logged in matches current user
 class Profile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   async componentWillMount() {
     const user_id = path.basename(window.location.href);
@@ -24,6 +24,7 @@ class Profile extends Component {
     console.log('thisis data curret profie', data);
     this.props.addCurrentList(data);
   }
+
   render() {
     return (
       <div>
@@ -31,7 +32,7 @@ class Profile extends Component {
           <Bio />
         </div>
         <div>
-          <ListingList />
+          <ListingList {...this.props} />
           <div />
         </div>
       </div>
