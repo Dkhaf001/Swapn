@@ -18,13 +18,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
@@ -33,16 +33,18 @@ class HomePostList extends Component {
   }
 
   async componentWillMount() {
-    // grab data from db, update store
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
+      data.sort((a, b) => {
+        return b.id - a.id;
+      });
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts');
     }
   }
 
-  switchToSinglePost = (post) => {
+  switchToSinglePost = post => {
     console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
@@ -59,7 +61,7 @@ class HomePostList extends Component {
           style={styles.gridList}
           style={{
             width: '80%',
-            margin: '10 auto',
+            margin: '10 auto'
             // border: '2px solid rgb(11, 22, 241)',
             // backgroundColor: '#83d8ff',
           }}
@@ -87,7 +89,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
@@ -95,9 +97,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 

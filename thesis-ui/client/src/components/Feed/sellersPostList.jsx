@@ -34,6 +34,9 @@ class SellersPostList extends Component {
     try {
       const id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
+      data.sort((a, b) => {
+        return b.id - a.id;
+      });
       this.setState({
         lists: data
       });
