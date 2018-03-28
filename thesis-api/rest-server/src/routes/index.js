@@ -20,5 +20,4 @@ router.use('/posts', postsRouter);
 router.use('/users', usersRouter);
 router.use('/watchers', watchersRouter);
 
-
 export default router;

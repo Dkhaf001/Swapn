@@ -30,3 +30,11 @@ export const getSingleOfferHelper = ({buyer_username, post_id}) => {
   WHERE offers.buyer_username='${buyer_username}' AND offers.post_id=${post_id}
   `
 }
+
+export const  fetchPostOffersHelper = ({post_id}) => {
+  return `
+  SELECT *
+  FROM offers AS o
+  INNER JOIN users AS u ON u.username=o.buyer_username WHERE o.post_id=${post_id}
+  `
+}

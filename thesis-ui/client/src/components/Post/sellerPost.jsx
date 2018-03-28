@@ -21,11 +21,20 @@ class SellerPost extends Component {
         main_photo: this.props.current_post.main_photo,
       },
       sold: false,
+      offers: [],
+      currentTalking:''
     };
   }
 
   async componentWillMount() {
     // this.getPhotos();
+    this.getOffers();
+    console.log('going to emit a updateDatabase request')
+
+    this.props.socket.emit('updateDatabase', {
+      postId: this.props.current_post.id,
+      username: this.props.active_user.username
+    })
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
         offerAccepted: false,
@@ -41,7 +50,13 @@ class SellerPost extends Component {
       });
     }
   }
-
+  async getOffers() {
+    const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${this.props.current_post.id}`);
+    console.log('fetchPostOffers', data)
+    this.setState({
+      offers: data.rows
+    })
+  }
   // async getPhotos() {
   // const postId = this.props.current_posts.id;
   // const { data } = await axios.get(
@@ -75,7 +90,6 @@ class SellerPost extends Component {
         accept,
       });
       const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
-      console.log('Successfully accepted an offer! Post status is now Pending');
     } catch (err) {
       console.log('Error accepting offer!');
     }
@@ -125,7 +139,6 @@ class SellerPost extends Component {
         accept: sold,
         sold: true,
       });
-      console.log('Successfully bartered an offer! Post status is now BARTERED');
       this.props.history.push('/home');
     } catch (err) {
       console.log('Error completing barter transaction!');
@@ -191,6 +204,21 @@ class SellerPost extends Component {
             onClick={() => this.cancelOffer()}
           />
         )}
+        <hr />
+        <button onClick={()=>this.showState()}>show state</button>
+        offers:
+        {
+          this.state.offers && 
+          this.state.offers.map(offer => {
+            return <div key={offer.id}>
+              {offer.username}
+            </div>
+          })
+        }
+        {
+          this.state.currentTalking && 
+          <textarea />
+        }
       </div>
     ) : (
       <div>Loading</div>
@@ -203,6 +231,8 @@ class SellerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
+    socket: state.socket,
+    active_user: state.active_user
   };
 }
 
