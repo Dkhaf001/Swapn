@@ -7,6 +7,9 @@ import BuyerPost from '../Post/buyerPost.jsx';
 import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import path from 'path';
+import GoogleMap from '../Map/maptest.jsx';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+
 
 class Post extends Component {
   constructor() {
