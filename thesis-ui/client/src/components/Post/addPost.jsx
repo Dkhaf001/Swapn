@@ -28,10 +28,10 @@ class AddPost extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
-    this.submitNewPost = this.submitNewPost.bind(this);
+    this.submitPost = this.submitPost.bind(this);
   }
 
-  submitNewPost = async () => {
+  submitPost = async () => {
     try {
       if (
         this.state.newPost.title !== '' &&
@@ -41,7 +41,7 @@ class AddPost extends Component {
         this.state.newPost.demand !== ''
       ) {
         const userId = localStorage.id;
-        const { data } = await axios.post(
+        const { data } = await axios.put(
           `http://localhost:3396/api/posts/${userId}`,
           this.state.newPost
         );
@@ -55,6 +55,23 @@ class AddPost extends Component {
     }
   };
 
+  cancelPost = async () => {
+    try {
+      const userId = localStorage.id;
+      await axios.delete(
+        `http://localhost:3396/api/posts/${userId}/${tempPostId}`
+      );
+      // need to implement logic for delete from S3
+      // OVER HERE ELBERT!
+      console.log(userId, '<- this is localStorage.id');
+      console.log(tempPostId, '<- this is tempPostId');
+      console.log('successfully deleted new post');
+      this.props.history.push('/home');
+    } catch (err) {
+      console.log('Error cancelling new post');
+    }
+  };
+
   handleChange = (event, index, value) => {
     this.setState({
       newPost: Object.assign({}, this.state.newPost, {
@@ -63,9 +80,37 @@ class AddPost extends Component {
     });
   };
 
+  handleFirstNext = async () => {
+    try {
+      const { stepIndex } = this.state;
+      if (
+        this.state.newPost.title !== '' &&
+        this.state.newPost.description !== '' &&
+        this.state.newPost.condition !== '' &&
+        this.state.newPost.location !== '' &&
+        this.state.newPost.demand !== '' &&
+        stepIndex === 0
+      ) {
+        const userId = localStorage.id;
+        const { data } = await axios.post(
+          `http://localhost:3396/api/posts/${userId}`,
+          this.state.newPost
+        );
+        this.setState({ stepIndex: 1 });
+        tempPostId = data.rows[0].id;
+        console.log('successfully submitted new post: ', this.state.newPost);
+      } else {
+        this.handlePrev();
+        alert('Please fill out all text fields!');
+      }
+    } catch (err) {
+      console.log('Error handling first next button click');
+    }
+  };
+
   handleNext() {
     const { stepIndex } = this.state;
-    if (stepIndex === 0.5) {
+    if (stepIndex === 0) {
       this.setState({ stepIndex: 1 });
     } else {
       this.setState({
@@ -77,7 +122,7 @@ class AddPost extends Component {
 
   handlePrev() {
     const { stepIndex } = this.state;
-    if (stepIndex === 0.5 || stepIndex === 1) {
+    if (stepIndex === 1) {
       this.setState({ stepIndex: 0 });
     } else if (stepIndex > 0) {
       this.setState({ stepIndex: stepIndex - 1 });
@@ -305,18 +350,12 @@ class AddPost extends Component {
                   onClick={this.handlePrev}
                   style={{ marginRight: 12 }}
                 />
-                {/* <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Next'}
-                  primary={true}
-                  onClick={this.handleNext}
-                /> */}
                 {stepIndex === 0 ? (
                   <RaisedButton
                     label={'Next'}
                     primary={true}
                     onClick={() => {
-                      this.handleNext();
-                      this.submitNewPost();
+                      this.handleFirstNext();
                     }}
                   />
                 ) : stepIndex === 2 ? (
@@ -324,7 +363,7 @@ class AddPost extends Component {
                     label={'Finish'}
                     primary={true}
                     onClick={() => {
-                      this.submitNewPost();
+                      this.submitPost();
                     }}
                   />
                 ) : (
@@ -333,6 +372,24 @@ class AddPost extends Component {
                     primary={true}
                     onClick={() => {
                       this.handleNext();
+                    }}
+                  />
+                )}
+                {stepIndex === 0 ? (
+                  <RaisedButton
+                    label={'Cancel'}
+                    secondary={true}
+                    onClick={() => {
+                      // this.cancelFirstPost();
+                      console.log('hi :)');
+                    }}
+                  />
+                ) : (
+                  <RaisedButton
+                    label={'Cancel'}
+                    secondary={true}
+                    onClick={() => {
+                      this.cancelPost();
                     }}
                   />
                 )}
