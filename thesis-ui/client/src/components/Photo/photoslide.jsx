@@ -26,7 +26,6 @@ class PhotoSlide extends React.Component {
       showVideo: {},
       currentIndex: 0,
     };
-
     this.images = [
       {
         original: 'http://lorempixel.com/1000/600/nature/1/',

@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import { addActiveUserToStore } from '../../actions';
 import SimpleForm from '../Map/simpleForm.jsx';
 
-
 class Login extends Component {
   constructor() {
     super();
@@ -36,9 +35,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div>
-          <SimpleForm/>
-        </div>
+        <div>{/* <SimpleForm/> */}</div>
         <TextField
           hintText="Enter Username"
           floatingLabelText="Username"
