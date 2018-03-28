@@ -2,7 +2,7 @@ import db from '../../config/database/index';
 
 import { fetchUserHelper, updateUserHelper } from './usersSQLHelpers';
 
-export const fetchUserQuery = async payload => {
+export const fetchUserQuery = async (payload) => {
   try {
     const queryString = fetchUserHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -13,7 +13,7 @@ export const fetchUserQuery = async payload => {
   }
 };
 
-export const updateUserQuery = async payload => {
+export const updateUserQuery = async (payload) => {
   try {
     console.log('THIS IS THE PAYLOAD!!!', payload);
     const queryString = updateUserHelper(payload);

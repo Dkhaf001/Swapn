@@ -4,7 +4,7 @@ import {
   fetchSinglePostsQuery,
   updatePostsQuery,
   deletePostsQuery,
-  addPostsQuery
+  addPostsQuery,
 } from './postsQueries';
 
 export const fetchAllPostsController = async (req, res) => {
