@@ -8,7 +8,8 @@ import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import path from 'path';
 import GoogleMap from '../Map/maptest.jsx';
-import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+const geolib = require('geolib');
 
 class Post extends Component {
   constructor(props) {
