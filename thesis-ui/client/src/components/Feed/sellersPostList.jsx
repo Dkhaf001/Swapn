@@ -97,7 +97,7 @@ class SellersPostList extends Component {
       {
         this.state.entries.map(arr => {
           return <div key={arr[0]}>
-            Buyer: {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
+              {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
             </div>
         })
       }
