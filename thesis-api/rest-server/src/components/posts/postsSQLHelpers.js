@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-export const fetchAllPostsHelper = () => {
-  return `
+export const fetchAllPostsHelper = () => `
   SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username FROM posts
   INNER JOIN users on (posts.user_id=users.id) 
-=======
-export const fetchAllPostsHelper = () => `
-  SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, users.username FROM posts
-  INNER JOIN users on (posts.user_id=users.id)
->>>>>>> syntax issues
   `;
 
 export const fetchUserPostsHelper = ({ user_id }) => `

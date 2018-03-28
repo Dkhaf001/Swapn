@@ -206,7 +206,6 @@ class BuyerPost extends Component {
           <h3>{this.props.current_post.condition}</h3>
           <h3>{this.props.current_post.location}</h3>
           <h4>
-<<<<<<< HEAD
             <strong
               onClick={() =>
                 this.switchToSinglePost(this.props.current_post.user_id)
@@ -215,10 +214,6 @@ class BuyerPost extends Component {
               {this.props.current_post.username}
             </strong>{' '}
             wants to trade this item for: {this.props.current_post.demand}
-=======
-            <strong>{this.props.current_post.username}</strong> wants to trade this item for:{' '}
-            {this.props.current_post.demand}
->>>>>>> syntax issues
           </h4>
           <h4>Status: {this.props.current_post.status}</h4>
         </div>
