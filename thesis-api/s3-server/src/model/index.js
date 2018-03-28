@@ -64,7 +64,7 @@ export const addBucketObjectQuery = async (payload, cb) => {
       console.log('Upload Success', data.Location);
       // sending back upload data so it can be used to render
       const worked = 'Upload Success';
-      cb(worked);
+      cb(data);
     }
   });
 };

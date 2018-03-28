@@ -11,7 +11,7 @@ import socketReducers from './socketReducers';
 import current_roomId from './roomIdReducers';
 import messages from './messagesReducers';
 import positiongeo from './positionReducers.js';
-
+import images from './images';
 
 export default combineReducers({
   positiongeo,
@@ -24,5 +24,6 @@ export default combineReducers({
   current_following: currentFollowingReducers,
   current_watching: currentWatchingReducers,
   socket: socketReducers,
-  current_roomId: current_roomId
+  current_roomId,
+  images,
 });

@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addImages } from '../../actions';
 import PhotoSlide from './photoslide.jsx';
+import path from 'path';
 
 class PhotoUpload extends React.Component {
   constructor() {
@@ -9,24 +12,7 @@ class PhotoUpload extends React.Component {
     this.state = {
       posting: false,
       file: null,
-      // val: {
-      //   file: null,
-      //   url: '',
-      // },
-      images: [
-        {
-          original: 'http://lorempixel.com/1000/600/nature/1/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-        },
-        {
-          original: 'http://lorempixel.com/1000/600/nature/2/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/2/',
-        },
-        {
-          original: 'http://lorempixel.com/1000/600/nature/3/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/3/',
-        },
-      ],
+      images: [],
     };
   }
 
@@ -51,10 +37,12 @@ class PhotoUpload extends React.Component {
       file: null,
     });
   };
-  handleUpload = async (postId) => {
+  handleUpload = async () => {
     // this.props.loadingTrue();
+    const url = window.location.href;
+    const postId = path.basename(url);
     const value = this.state.val;
-
+    console.log('urlpostid should = home', postId);
     const { file } = this.state;
     const formData = new FormData();
     formData.append('file', file);
@@ -63,10 +51,17 @@ class PhotoUpload extends React.Component {
     // change to match the route i need for dp route
 
     // 1 changes to postID
-    await axios.post(`http://localhost:8593/api/addphoto/${postId}`, formData);
+    const { data } = await axios.post(`http://localhost:8593/api/addphoto/${postId}`, formData);
+    console.log('thisis data from upload', data.key);
+
     this.setState({
       file: null,
     });
+    this.state.images.push({
+      orgiinal: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
+    });
+    console.log(this.state.images);
+    // 'https://s3-us-west-1.amazonaws.com/barterbruh/1/1de93ec.jpg'
   };
 
   removePhoto = async (postId, key) => {
@@ -86,10 +81,6 @@ class PhotoUpload extends React.Component {
       console.log(error);
     }
   };
-
-  // photos = (bucket) => {
-  // <img src=`https://barterbruh.s3.amazonaws.com/${key}` /> ;
-  // };
 
   renderForm = () => (
     <div>
@@ -135,7 +126,17 @@ class PhotoUpload extends React.Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
+    images: state.images,
   };
 }
 
-export default connect(mapStateToProps)(PhotoUpload);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addImages,
+    },
+    dispatch,
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoUpload);
