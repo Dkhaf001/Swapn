@@ -8,6 +8,7 @@ class Protected extends Component {
       if (exp < Math.floor(Date.now() / 1000)) {
         window.localStorage.clear();
         this.props.history.push('/login');
+        location.reload();
       }
     } catch (e) {
       console.log('error in Protected ', e);
