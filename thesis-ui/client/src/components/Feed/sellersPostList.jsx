@@ -25,9 +25,10 @@ class SellersPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lists: []
+      lists: [],
+      messages: [],
+      entries:[]
     };
-    this.giveNotifications.bind(this);
   }
   async componentWillMount() {
     // grab data from db, update store
@@ -48,26 +49,27 @@ class SellersPostList extends Component {
   }
   async componentDidMount() {
     try{
-      
       const obj = {};
-      const messages = this.props.history.location.state;
+      const messages = this.props.messages;
       if(messages){
         for(var i = 0; i< messages.length; i++) {
-          obj[messages[i].postId] ? obj[messages[i].postId]++ : obj[messages[i].postId]=1
+          if(!obj[messages[i].roomId]) {
+            obj[messages[i].roomId] = messages[i]
+          }
         }
         const entries = Object.entries(obj)
-        for(var i = 0; i < entries.length; i++) {
-          this.giveNotifications(entries[i])
-        }
+        console.log('this is the entries', entries)
+        this.setState({
+          entries: entries
+        })
       }
+      console.log('messages', this.props.messages);
+      this.setState({
+        messages: this.props.messages
+      })
     } catch (err) {
       console.log('err in sellersPostList', err);
     }
-  }
-  giveNotifications(entries) {
-    const element = window.document.getElementById(entries[0]);
-    console.log('element and content', entries);
-    element.textContent = entries[1];
   }
   switchToSinglePost = post => {
     
@@ -91,16 +93,26 @@ class SellersPostList extends Component {
   render() {
     return (
       <div style={styles.root}>
+      <div id='status'>
+      {
+        this.state.entries.map(arr => {
+          return <div key={arr[0]}>
+            Buyer: {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
+            </div>
+        })
+      }
+      </div>
         <GridList cellHeight={200} style={styles.gridList}>
           {this.state.lists &&
-            this.state.lists.map(post => (
+            this.state.lists.map(post => {
+              return(
               <GridTile
                 key={post.id}
                 title={post.title}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
-                    <p id={`${post.id}`} />
+                    <p id={`${post.id}`} >what the heck</p>
                   </span>
                 }
                 onClick={() => this.switchToSinglePost(post)}
@@ -116,8 +128,8 @@ class SellersPostList extends Component {
                 }
               >
                 <img src={post.main_photo} />
-              </GridTile>
-            ))}
+              </GridTile>)
+          })}
         </GridList>
       </div>
     );
@@ -126,7 +138,8 @@ class SellersPostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
+    messages: state.messages
   };
 }
 

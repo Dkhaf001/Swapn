@@ -26,7 +26,7 @@ class Chattest extends React.Component{
             ev.preventDefault();
             this.props.socket.emit('message', {
                 from: this.props.active_user.username,
-                to: this.props.post ? this.props.post.username : this.props.offer.username,
+                to: this.props.buyer? this.props.buyer : this.props.current_post.username,
                 postId: this.props.current_post.id,
                 roomId: this.props.roomId,
                 message: this.state.message,

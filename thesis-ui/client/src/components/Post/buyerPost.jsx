@@ -37,6 +37,7 @@ class BuyerPost extends Component {
   async getBartering() {
     try {
       const buyer_username = this.props.active_user.username;
+      console.log('the activcve_user', this.props)
       const post_id = this.props.current_post.id;
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyer_username}/${post_id}`);
       if (data) {

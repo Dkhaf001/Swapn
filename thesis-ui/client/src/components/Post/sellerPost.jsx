@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 import EditPost from './editPost.jsx';
-
+import Chattest from '../Chat/Chattest.jsx'
 class SellerPost extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class SellerPost extends Component {
       },
       sold: false,
       offers: [],
-      currentTalking:''
+      currentRoom:''
     };
   }
 
@@ -144,7 +144,12 @@ class SellerPost extends Component {
       console.log('Error completing barter transaction!');
     }
   }
-
+  handleUserClick(e) {
+    console.log('u click on a user', e.target.id)
+    this.setState({
+      currentRoom: e.target.id
+    })
+  }
   render() {
     return this.props.current_post ? (
       <div>
@@ -211,7 +216,10 @@ class SellerPost extends Component {
           this.state.offers && 
           this.state.offers.map(offer => {
             return <div key={offer.id}>
+            <div id={offer.room_id} onClick={(e)=>this.handleUserClick(e)}>
               {offer.username}
+              </div>
+              {this.state.currentRoom === offer.room_id && <Chattest roomId={this.state.currentRoom} buyer={offer.buyer_username} />}
             </div>
           })
         }
