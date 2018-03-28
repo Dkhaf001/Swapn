@@ -18,7 +18,6 @@ class Protected extends Component {
 
   render() {
     const { component: Component } = this.props;
-    console.log(this.props.component);
     return <Component {...this.props} />;
   }
 }
