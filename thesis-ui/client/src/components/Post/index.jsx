@@ -8,7 +8,7 @@ import { Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import path from 'path';
 import GoogleMap from '../Map/maptest.jsx';
-import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 const geolib = require('geolib');
 
 class Post extends Component {
@@ -22,7 +22,9 @@ class Post extends Component {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
+      const { data } = await axios.get(
+        `http://localhost:3396/api/posts/fetchSinglePost/${postId}`
+      );
       console.log('successfully received post');
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });
@@ -85,15 +87,15 @@ class Post extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post,
+    current_post: state.current_post
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 
