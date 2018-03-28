@@ -21,11 +21,10 @@ class BuyerPost extends Component {
   }
 
   async componentWillMount() {
-    localStorage.setItem('current_post_id', 1);
-    // if (!this.props.current_post) {
-    this.getPost();
-    this.getPhotos();
-    // }
+    if (!this.props.current_post) {
+      this.getPost();
+      this.getPhotos();
+    }
     this.getFollowing();
     this.getWatching();
     if (localStorage.token) {
