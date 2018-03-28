@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
-// import Chattest from '../Chat/Chattest.jsx';
 
 // ELBERT'S COMMENTS
 // post list will need to render all post for all feeds by rendering stuff from store
@@ -53,7 +52,6 @@ class HomePostList extends Component {
   render() {
     return (
       <div style={styles.root}>
-        {/* <Chattest/> */}
         <GridList
           cellHeight={200}
           cols={4}

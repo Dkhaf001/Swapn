@@ -2,7 +2,7 @@ import {
   fetchAllFollowingQuery,
   addFollowingQuery,
   removeFollowingQuery,
-  fetchFollowingQuery
+  fetchFollowingQuery,
 } from './followingsQueries';
 
 export const fetchAllFollowingController = async (req, res) => {
@@ -19,7 +19,7 @@ export const fetchFollowingController = async (req, res) => {
   const payload = req.params;
   try {
     const data = await fetchFollowingQuery(payload);
-    return res.status(200).send(data);
+    return res.status(200).send(data.rows);
   } catch (err) {
     console.log(err);
   }

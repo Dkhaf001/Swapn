@@ -6,8 +6,9 @@ class Protected extends Component {
     try {
       const { exp } = jwtDecode(localStorage.token);
       if (exp < Math.floor(Date.now() / 1000)) {
-        localStorage.clear();
+        window.localStorage.clear();
         this.props.history.push('/login');
+        location.reload();
       }
     } catch (e) {
       console.log('error in Protected ', e);
@@ -17,7 +18,6 @@ class Protected extends Component {
 
   render() {
     const { component: Component } = this.props;
-    console.log(this.props.component);
     return <Component {...this.props} />;
   }
 }

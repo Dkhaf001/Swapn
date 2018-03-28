@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Edit from './edit.jsx';
 import path from 'path';
-
-// import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
+import { addCurrentProfile } from '../../actions';
 // import { bindActionCreators } from 'redux'
 // this is what people see  need a view for logged in matches current profile user
 // render edit view only if the user clicks the button to edit profile
@@ -14,15 +14,25 @@ class Bio extends Component {
     super();
     this.state = {
       user: {},
-      following: false,
+      currentlyFollowing: false,
     };
   }
-  async componentWillMount() {
+  async componentDidMount() {
+    const url = window.location.href;
+    const otherId = path.basename(url);
     try {
-      // const data = await axios.get(`http://localhost:3369/users/${this.props.current_profile.user_id}`);
-      // this.setState({ user: data });
+      const { data } = await axios.get(`http://localhost:3396/api/users/${otherId}`);
+      console.log('!!!!', data);
+      // this.props.addCurrentProfile(data[0]);
+      await this.getFollowing();
+      this.setState({ user: data[0] });
       // create rout in backend
-      // const following = await axios.get(`http://localhost:3369/followings/${this.props.active_user.id}/${this.state.user.id}`);
+      // console.log('this is active user id', this.props.active_user.id);
+      // console.log('this is profile id', this.state.user.id);
+      // const following = await axios.get(`http://localhost:3396/api/followings/single/${this.props.active_user.id}/${
+      //   this.state.user.id
+      // }`);
+      // console.log('~~~~!!!', following);
       // if (following.row.length > 1) {
       //   this.setState({ following: true });
       // }
@@ -30,22 +40,45 @@ class Bio extends Component {
       console.log('Bio Component Error');
     }
   }
+  async getFollowing() {
+    try {
+      const userId = this.props.active_user.id;
+      const followerId = this.state.user.id;
+      const { data } = await axios.get(`http://localhost:3396/api/followings/single/${userId}/${followerId}`);
+      console.log('successfully received following list');
+      console.log('thisis data~~~~', data);
+      if (data.length > 0) {
+        this.setState({
+          currentlyFollowing: true,
+        });
+        console.log('follow', this.state.currentlyFollowing);
+      } else {
+        this.setState({
+          currentlyFollowing: false,
+        });
+        console.log('unfollow', this.state.currentlyFollowing);
+      }
+    } catch (err) {
+      console.log('error getting followers!');
+    }
+  }
   buttonCheck = () => {
-    if (this.state.following) {
+    if (this.state.currentlyFollowing) {
       return <button onClick={this.unfollowButton}>Unfollow</button>;
     }
     return <button onClick={this.followButton}>Follow</button>;
   };
   followButton = async () => {
-    await axios.post('http://localhost:3369/followings/', {
-      user_id: localStorage.id,
-      following_id: this.state.user.id,
-    });
-    this.setState({ following: true });
+    const userId = this.props.active_user.id;
+    const followerId = this.state.user.id;
+    await axios.post(`http://localhost:3396/api/followings/${userId}/${followerId}`);
+    this.setState({ currentlyFollowing: true });
   };
   unfollowButton = async () => {
-    await axios.delete(`http://localhost:3369/followings/${localStorage.id}/${this.state.user.id}`);
-    this.setState({ following: true });
+    const userId = this.props.active_user.id;
+    const followerId = this.state.user.id;
+    await axios.delete(`http://localhost:3396/api/followings/${userId}/${followerId}`);
+    this.setState({ currentlyFollowing: false });
   };
   sellerView = () => (
     <div>
@@ -82,8 +115,17 @@ class Bio extends Component {
 function mapStateToProps(state) {
   return {
     current_profile: state.current_profile,
+    active_user: state.active_user,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentProfile,
+    },
+    dispatch,
+  );
+}
 
-export default connect(mapStateToProps)(Bio);
+export default connect(mapStateToProps, mapDispatchToProps)(Bio);
 // might not need this page just do rendering on profile page

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import PhotoSlide from './photoslide.jsx';
 
 class PhotoUpload extends React.Component {
   constructor() {
@@ -12,6 +13,20 @@ class PhotoUpload extends React.Component {
       //   file: null,
       //   url: '',
       // },
+      images: [
+        {
+          original: 'http://lorempixel.com/1000/600/nature/1/',
+          thumbnail: 'http://lorempixel.com/250/150/nature/1/',
+        },
+        {
+          original: 'http://lorempixel.com/1000/600/nature/2/',
+          thumbnail: 'http://lorempixel.com/250/150/nature/2/',
+        },
+        {
+          original: 'http://lorempixel.com/1000/600/nature/3/',
+          thumbnail: 'http://lorempixel.com/250/150/nature/3/',
+        },
+      ],
     };
   }
 
@@ -78,10 +93,10 @@ class PhotoUpload extends React.Component {
 
   renderForm = () => (
     <div>
-      <img
+      {/* <img
         style={{ width: '128px', height: '128px' }}
         src={'https://s3-us-west-1.amazonaws.com/barterbruh/1/1de93ec.jpg'}
-      />
+      /> */}
       <form>
         <label>
           Upload:
@@ -108,12 +123,15 @@ class PhotoUpload extends React.Component {
     </div>
   );
   render() {
-    if (this.state.posting) {
-      return this.renderForm();
-    }
-    return this.renderNormal();
+    return (
+      <div>
+        <PhotoSlide />
+        {this.state.posting ? this.renderForm() : this.renderNormal()}
+      </div>
+    );
   }
 }
+
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,

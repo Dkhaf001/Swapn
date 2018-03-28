@@ -17,16 +17,8 @@ class Post extends Component {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(
-        `http://localhost:3396/api/posts/fetchSinglePost/${postId}`
-      );
+      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
       console.log('successfully received post');
-      console.log('##############', data);
-      // this is the bug that was fixed by manually overriding the post.id
-      // originally, it return post.id as the userid
-      // =======
-      data[0].id = Number(postId);
-      // =======
       this.props.addCurrentPost(data[0]);
     } catch (error) {
       console.log('Error getting post on componentWillMount');
@@ -36,9 +28,7 @@ class Post extends Component {
   render() {
     if (this.props.current_post) {
       if (localStorage.id) {
-        if (
-          Number(localStorage.id) === Number(this.props.current_post.user_id)
-        ) {
+        if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
           return <SellerPost {...this.props} />;
         }
       }
@@ -50,15 +40,15 @@ class Post extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 

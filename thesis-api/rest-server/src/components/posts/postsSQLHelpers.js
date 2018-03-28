@@ -1,49 +1,46 @@
-export const fetchAllPostsHelper = () => {
-  return `
+export const fetchAllPostsHelper = () => `
   SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username FROM posts
   INNER JOIN users on (posts.user_id=users.id) 
   `;
-};
 
-export const fetchUserPostsHelper = ({ user_id }) => {
-  return `
+export const fetchUserPostsHelper = ({ user_id }) => `
   SELECT * 
   FROM posts 
   WHERE user_id = ${user_id}
   `;
-};
 
-export const fetchSinglePostsHelper = ({ post_id }) => {
-  return `
+export const fetchSinglePostsHelper = ({ post_id }) =>
+  `
   SELECT * 
-  FROM posts AS p
-  INNER JOIN users AS u on (p.user_id=u.id) WHERE p.id=${post_id}
+  FROM users 
+  INNER JOIN posts  ON  posts.user_id = users.id 
+  WHERE posts.id=${post_id}
   `;
-};
+// SELECT * FROM posts INNER JOIN users
+// post.id is overwriten by users.id when inner JOiNIng second table
 
 export const addPostsHelper = (
   { user_id },
-  { title, description, condition, location, demand, status }
-) => {
-  return `
+  {
+    title, description, condition, location, demand, status,
+  },
+) => `
    INSERT INTO posts (title, description, condition, location, demand, user_id, status)
    VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}')
    RETURNING *
   `;
-};
 
-export const deletePostsHelper = ({ user_id, post_id }) => {
-  return `
+export const deletePostsHelper = ({ user_id, post_id }) => `
     DELETE FROM posts
     WHERE id=${post_id} AND user_id=${user_id}
   `;
-};
 
 export const updatePostsHelper = (
   { user_id, post_id },
-  { title, description, condition, location, demand, status, main_photo }
-) => {
-  return `
+  {
+    title, description, condition, location, demand, status, main_photo,
+  },
+) => `
    UPDATE posts 
    SET  title='${title}', 
         description='${description}', 
@@ -56,4 +53,3 @@ export const updatePostsHelper = (
    WHERE id=${post_id}
    RETURNING *
   `;
-};
