@@ -44,12 +44,14 @@ class AddPost extends Component {
         this.state.newPost.demand !== ''
       ) {
         const userId = localStorage.id;
+        const postId = this.props.current_post.id;
         const { data } = await axios.put(
-          `http://localhost:3396/api/posts/${userId}`,
+          `http://localhost:3396/api/posts/${userId}/${postId}`,
           this.state.newPost
         );
         tempPostId = data.rows[0].id;
         console.log('successfully submitted new post: ', this.state.newPost);
+        this.props.history.push('/home');
       } else {
         alert('Please fill out all text fields!');
       }
