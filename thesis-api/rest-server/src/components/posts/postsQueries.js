@@ -53,9 +53,9 @@ export const addPostsQuery = async (user, payload) => {
   }
 };
 
-export const deletePostsQuery = async (user, payload) => {
+export const deletePostsQuery = async payload => {
   try {
-    const queryString = deletePostsHelper(user, payload);
+    const queryString = deletePostsHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('deletePostsQuery - successfully retrieved data');
     return data;

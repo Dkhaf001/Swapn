@@ -13,7 +13,7 @@ export const fetchUserPostsHelper = ({ user_id }) => {
   `;
 };
 
-export const fetchSinglePostsHelper = ({post_id }) => {
+export const fetchSinglePostsHelper = ({ post_id }) => {
   return `
   SELECT * 
   FROM posts AS p
@@ -32,7 +32,7 @@ export const addPostsHelper = (
   `;
 };
 
-export const deletePostsHelper = ({ user_id }, { post_id }) => {
+export const deletePostsHelper = ({ user_id, post_id }) => {
   return `
     DELETE FROM posts
     WHERE id=${post_id} AND user_id=${user_id}

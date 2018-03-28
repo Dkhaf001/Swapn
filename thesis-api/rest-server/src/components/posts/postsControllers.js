@@ -4,7 +4,7 @@ import {
   fetchSinglePostsQuery,
   updatePostsQuery,
   deletePostsQuery,
-  addPostsQuery,
+  addPostsQuery
 } from './postsQueries';
 
 export const fetchAllPostsController = async (req, res) => {
@@ -51,10 +51,9 @@ export const updatePostsController = async (req, res) => {
 };
 
 export const deletePostsController = async (req, res) => {
-  const payload = req.body;
-  const user = req.params;
+  const payload = req.params;
   try {
-    const data = await deletePostsQuery(user, payload);
+    const data = await deletePostsQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
