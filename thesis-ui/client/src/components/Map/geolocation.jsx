@@ -48,8 +48,8 @@ class Geolocation extends Component{
     return window.navigator.geolocation.getCurrentPosition(
       position => {
         console.log('this is the position', position);
-        localStorage.setItem('latitude', position.coords.latitude);
-        localStorage.setItem('longitude', position.coords.longitude);
+        localStorage.setItem('usersLat', position.coords.latitude);
+        localStorage.setItem('usersLng', position.coords.longitude);
         // this.props.changePosition(position);
         // if (this.willUnmount) return
         // this.setState({ position, fetchingPosition: false }, () => {

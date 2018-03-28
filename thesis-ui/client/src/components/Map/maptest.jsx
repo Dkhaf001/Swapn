@@ -40,6 +40,7 @@ const MapWithASearchBox = compose(
   }),
   lifecycle({
     componentWillMount() {
+      console.log('mount');
       let lat = parseFloat(localStorage.getItem('latitude'));
       let long = parseFloat(localStorage.getItem('longitude'));
       // console.log('lat is', lat, 'type of...', typeof lat)
@@ -74,7 +75,6 @@ const MapWithASearchBox = compose(
           const bounds = new google.maps.LatLngBounds();
 
           places.forEach(place => {
-            
             geocodeByAddress(place.formatted_address)
               .then(results => getLatLng(results[0]))
                 .then(({ lat, lng }) => console.log('Successfully got latitude and longitude', { lat, lng }))
@@ -98,13 +98,74 @@ const MapWithASearchBox = compose(
         },
       })
     },
+    componentDidMount() {
+      console.log('update');
+      let lat = parseFloat(localStorage.getItem('latitude'));
+      let long = parseFloat(localStorage.getItem('longitude'));
+      // console.log('lat is', lat, 'type of...', typeof lat)
+      const refs = {}
+
+
+      this.setState({
+        bounds: null,
+        center: parseFloat(localStorage.getItem('latitude'))? {lat: parseFloat(localStorage.getItem('latitude')), lng: parseFloat(localStorage.getItem('longitude'))} : {
+          lat: 33.9, lng: -118.39
+        },
+        markers: [],
+        onMapMounted: ref => {
+          refs.map = ref;
+        },
+        onMarkerRightClick: () => {
+          markers=this.state.markers;
+        },
+        //this bounds change makes dragging the map extremely choppy
+        //-------------------------------------------------------------------
+        // onBoundsChanged: () => {
+        //   this.setState({
+        //     bounds: refs.map.getBounds(),
+        //     center: refs.map.getCenter(),
+        //   })
+        // },
+        onSearchBoxMounted: ref => {
+          refs.searchBox = ref;
+        },
+        onPlacesChanged: () => {
+          const places = refs.searchBox.getPlaces();
+          const bounds = new google.maps.LatLngBounds();
+
+          places.forEach(place => {
+            console.log('what is this', place.formatted_address);
+            console.log('what is that', place);
+            geocodeByAddress(place.formatted_address)
+              .then(results => getLatLng(results[0]))
+                .then(({ lat, lng }) => console.log('Successfully got latitude and longitude', { lat, lng }))
+
+            if (place.geometry.viewport) {
+              bounds.union(place.geometry.viewport)
+            } else {
+              bounds.extend(place.geometry.location)
+            }
+          });
+          const nextMarkers = places.map(place => ({
+            position: place.geometry.location,
+          }));
+          const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+
+          this.setState({
+            center: nextCenter,
+            markers: nextMarkers,
+          });
+          // refs.map.fitBounds(bounds);
+        },
+      })
+    }
   }),
   withScriptjs,
   withGoogleMap
 )(props =>
   <GoogleMap
     ref={props.onMapMounted}
-    defaultZoom={10}
+    defaultZoom={15}
     center={props.center}
     onBoundsChanged={props.onBoundsChanged}
   >
