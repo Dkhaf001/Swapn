@@ -7,9 +7,11 @@ import MenuItem from 'material-ui/MenuItem';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import PhotoUpload from '../Photo/index.jsx';
+import { addCurrentPost } from '../../actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 let tempPostId;
-
 class AddPost extends Component {
   constructor() {
     super();
@@ -29,6 +31,7 @@ class AddPost extends Component {
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
     this.submitPost = this.submitPost.bind(this);
+    this.cancelPost = this.cancelPost.bind(this);
   }
 
   submitPost = async () => {
@@ -57,14 +60,13 @@ class AddPost extends Component {
 
   cancelPost = async () => {
     try {
-      const userId = localStorage.id;
-      await axios.delete(
-        `http://localhost:3396/api/posts/${userId}/${tempPostId}`
-      );
+      const userId = this.props.current_post.user_id;
+      const postId = this.props.current_post.id;
+      await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
+      // ============================================
       // need to implement logic for delete from S3
       // OVER HERE ELBERT!
-      console.log(userId, '<- this is localStorage.id');
-      console.log(tempPostId, '<- this is tempPostId');
+      // ============================================
       console.log('successfully deleted new post');
       this.props.history.push('/home');
     } catch (err) {
@@ -97,8 +99,9 @@ class AddPost extends Component {
           this.state.newPost
         );
         this.setState({ stepIndex: 1 });
+        this.props.addCurrentPost(data.rows[0]);
         tempPostId = data.rows[0].id;
-        console.log('successfully submitted new post: ', this.state.newPost);
+        console.log('successfully submitted new post: ', data.rows[0]);
       } else {
         this.handlePrev();
         alert('Please fill out all text fields!');
@@ -402,4 +405,19 @@ class AddPost extends Component {
   }
 }
 
-export default AddPost;
+function mapStateToProps(state) {
+  return {
+    current_post: state.current_post
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addCurrentPost
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPost);
