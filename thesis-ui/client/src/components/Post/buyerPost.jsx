@@ -196,12 +196,23 @@ class BuyerPost extends Component {
     }
   }
 
+  switchToSinglePost = userId => {
+    console.log('switching to user id:', userId);
+    this.props.history.push(`/othersprofile/${userId}`);
+  };
+
   render() {
     return this.props.current_post ? (
       <div>
         Welcome to the Buyer Post Page!!!!!!!!!
         <h1>
-          <a>{this.props.current_post.username}</a>'s posting
+          <a
+            onClick={() =>
+              this.switchToSinglePost(this.props.current_post.user_id)
+            }
+          >
+            {this.props.current_post.username}
+          </a>'s posting
         </h1>
         <div>
           <img src={this.props.current_post.main_photo} />
@@ -214,8 +225,14 @@ class BuyerPost extends Component {
           <h3>{this.props.current_post.condition}</h3>
           <h3>{this.props.current_post.location}</h3>
           <h4>
-            <strong>{this.props.current_post.username}</strong> wants to trade
-            this item for: {this.props.current_post.demand}
+            <strong
+              onClick={() =>
+                this.switchToSinglePost(this.props.current_post.user_id)
+              }
+            >
+              {this.props.current_post.username}
+            </strong>{' '}
+            wants to trade this item for: {this.props.current_post.demand}
           </h4>
           <h4>Status: {this.props.current_post.status}</h4>
         </div>
