@@ -5,8 +5,7 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
-import GoogleMap from '../Map/maptest.jsx';
-import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+
 // ELBERT'S COMMENTS
 // post list will need to render all post for all feeds by rendering stuff from store
 // best to have three way conditional rendered views due to styling
@@ -30,37 +29,10 @@ const styles = {
 class HomePostList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      address: '26025 Scott Rd, Menifee, CA 92584, USA'
-    };
   }
 
   async componentWillMount() {
-    console.log('home mount', localStorage);
     try {
-      localStorage.setItem('oldLat',localStorage.getItem('latitude')) 
-      localStorage.setItem('oldLng', localStorage.getItem('longitude'))
-  
-      let geo = geocodeByAddress(this.state.address)
-      .then(results => {
-        console.log('results is from', results[0].formatted_address)
-
-        getLatLng(results[0])
-        .then(latLng => {
-          console.log('SuccessHome', latLng)
-          localStorage.setItem('latitude', latLng.lat);
-          localStorage.setItem('longitude', latLng.lng);
-        })
-        .catch(error => {
-          console.log('Error', error);
-        })
-      })
-      .catch(error => {
-        console.error('Error', error)
-      });
-
-      // localStorage.setItem('latitude', 30);
-      // localStorage.setItem('longitude', -118);
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => {
         return b.id - a.id;
@@ -69,14 +41,6 @@ class HomePostList extends Component {
     } catch (err) {
       console.log('err fetching posts');
     }
-  }
-  async componentWillUnmount() {
-    let oldLat = localStorage.getItem('oldLat');
-    let oldLng = localStorage.getItem('oldLng');
-    console.log('unmount pre ', localStorage);
-    await localStorage.setItem('latitude', oldLat);
-    await localStorage.setItem('longitude', oldLng);
-    await console.log('unmount post ', localStorage);
   }
 
   switchToSinglePost = post => {
@@ -116,10 +80,6 @@ class HomePostList extends Component {
               </GridTile>
             ))}
         </GridList>
-        <div>
-          <GoogleMap 
-          center={{ lat: 30.9, lng: -117.39 }}/>
-        </div>
       </div>
     );
   }

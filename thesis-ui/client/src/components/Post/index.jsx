@@ -12,12 +12,37 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 
 class Post extends Component {
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: this.props.current_post.location
+    };
   }
   async componentWillMount() {
     try {
+
+      localStorage.setItem('oldLat',localStorage.getItem('latitude')) 
+      localStorage.setItem('oldLng', localStorage.getItem('longitude'))
+  
+      let geo = geocodeByAddress(this.state.address)
+      .then(results => {
+        console.log('results is from', results[0].formatted_address)
+
+        getLatLng(results[0])
+        .then(latLng => {
+          console.log('SuccessHome', latLng)
+          localStorage.setItem('latitude', latLng.lat);
+          localStorage.setItem('longitude', latLng.lng);
+        })
+        .catch(error => {
+          console.log('Error', error);
+        })
+      })
+      .catch(error => {
+        console.error('Error', error)
+      });
+
+
       const url = window.location.href;
       const postId = path.basename(url);
       const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
@@ -27,15 +52,31 @@ class Post extends Component {
       console.log('Error getting post on componentWillMount');
     }
   }
+  async componentWillUnmount() {
+    let oldLat = localStorage.getItem('oldLat');
+    let oldLng = localStorage.getItem('oldLng');
+    console.log('unmount pre ', localStorage);
+    await localStorage.setItem('latitude', oldLat);
+    await localStorage.setItem('longitude', oldLng);
+    await console.log('unmount post ', localStorage);
+  }
+
 
   render() {
     if (this.props.current_post) {
       if (localStorage.id) {
         if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
-          return <SellerPost {...this.props} />;
+          return <div>
+            {console.log(this.props.current_post)}
+            <SellerPost {...this.props} />
+            <GoogleMap/>;
+                 </div>
         }
       }
-      return <BuyerPost {...this.props} />;
+      return <div>
+        <BuyerPost {...this.props} />
+        <GoogleMap/>
+        </div> ;
     }
     return <div>Loading...</div>;
   }
