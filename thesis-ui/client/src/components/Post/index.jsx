@@ -21,8 +21,8 @@ class Post extends Component {
   async componentWillMount() {
     try {
 
-      localStorage.setItem('oldLat',localStorage.getItem('latitude')) 
-      localStorage.setItem('oldLng', localStorage.getItem('longitude'))
+      // localStorage.setItem('oldLat',localStorage.getItem('latitude')) 
+      // localStorage.setItem('oldLng', localStorage.getItem('longitude'))
   
       let geo = geocodeByAddress(this.state.address)
       .then(results => {
@@ -52,14 +52,14 @@ class Post extends Component {
       console.log('Error getting post on componentWillMount');
     }
   }
-  async componentWillUnmount() {
-    let oldLat = localStorage.getItem('oldLat');
-    let oldLng = localStorage.getItem('oldLng');
-    console.log('unmount pre ', localStorage);
-    await localStorage.setItem('latitude', oldLat);
-    await localStorage.setItem('longitude', oldLng);
-    await console.log('unmount post ', localStorage);
-  }
+  // async componentWillUnmount() {
+  //   let oldLat = localStorage.getItem('oldLat');
+  //   let oldLng = localStorage.getItem('oldLng');
+  //   console.log('unmount pre ', localStorage);
+  //   await localStorage.setItem('latitude', oldLat);
+  //   await localStorage.setItem('longitude', oldLng);
+  //   await console.log('unmount post ', localStorage);
+  // }
 
 
   render() {
