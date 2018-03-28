@@ -1,7 +1,7 @@
 export const fetchAllPostsHelper = () => {
   return `
-  SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, users.username FROM posts
-  INNER JOIN users on (posts.user_id=users.id)
+  SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username FROM posts
+  INNER JOIN users on (posts.user_id=users.id) 
   `;
 };
 

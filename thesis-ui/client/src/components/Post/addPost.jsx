@@ -50,7 +50,10 @@ class AddPost extends Component {
           this.state.newPost
         );
         tempPostId = data.rows[0].id;
-        console.log('successfully submitted new post: ', this.state.newPost);
+        console.log(
+          'successfully instantiated a new post (completed): ',
+          this.state.newPost
+        );
         this.props.history.push('/home');
       } else {
         alert('Please fill out all text fields!');
@@ -107,7 +110,10 @@ class AddPost extends Component {
         this.setState({ stepIndex: 1 });
         this.props.addCurrentPost(data.rows[0]);
         tempPostId = data.rows[0].id;
-        console.log('successfully submitted new post: ', data.rows[0]);
+        console.log(
+          'successfully submitted new post (pending): ',
+          data.rows[0]
+        );
       } else {
         this.handlePrev();
         alert('Please fill out all text fields!');

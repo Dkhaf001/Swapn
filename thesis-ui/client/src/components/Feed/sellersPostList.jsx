@@ -4,6 +4,8 @@ import { addCurrentList, addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
+import Delete from 'material-ui/svg-icons/action/delete';
 import axios from 'axios';
 
 const styles = {
@@ -19,52 +21,51 @@ const styles = {
   }
 };
 
-// post list will need to render all post for all feeds by rendering stuff from store
-// best to have three way conditional rendered views due to styling
-// main feed,
-// watching feed, barttering feed
-// selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
-
 class SellersPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lists: []
-    }
-    this.giveNotifications.bind(this)
+    };
+    this.giveNotifications.bind(this);
   }
   async componentWillMount() {
     // grab data from db, update store
     try {
       const id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
+      data.sort((a, b) => {
+        return b.id - a.id;
+      });
       this.setState({
         lists: data
-      })
+      });
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
   async componentDidMount() {
-    try{
+    try {
       const obj = {};
       const messages = this.props.history.location.state;
-      for(var i = 0; i< messages.length; i++) {
-        obj[messages[i].postId] ? obj[messages[i].postId]++ : obj[messages[i].postId]=1
+      for (var i = 0; i < messages.length; i++) {
+        obj[messages[i].postId]
+          ? obj[messages[i].postId]++
+          : (obj[messages[i].postId] = 1);
       }
-      const entries = Object.entries(obj)
-      for(var i = 0; i < entries.length; i++) {
-        this.giveNotifications(entries[i])
+      const entries = Object.entries(obj);
+      for (var i = 0; i < entries.length; i++) {
+        this.giveNotifications(entries[i]);
       }
-    }catch(err) {
-      console.log('err in sellersPostList', err)
+    } catch (err) {
+      console.log('err in sellersPostList', err);
     }
   }
   giveNotifications(entries) {
     const element = window.document.getElementById(entries[0]);
-    console.log('element and content', entries)
-    element.textContent = entries[1]
+    console.log('element and content', entries);
+    element.textContent = entries[1];
   }
   switchToSinglePost = post => {
     console.log('Clicked post.id:', post.id);
@@ -72,22 +73,44 @@ class SellersPostList extends Component {
     this.props.history.push(`/post/${post.id}`);
   };
 
+  async removePost(userId, postId) {
+    try {
+      await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
+      console.log('successfully deleted post from selling list');
+      const records = this.state.lists.filter(data => data.post_id !== postId);
+      this.setState({ lists: records });
+      this.props.history.push('/profile/selling');
+    } catch (err) {
+      console.log('err deleting a post from your selling list');
+    }
+  }
+
   render() {
     return (
       <div style={styles.root}>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
+          {this.state.lists &&
+            this.state.lists.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
-                    <p id={`${post.id}`}></p>
+                    <p id={`${post.id}`} />
                   </span>
                 }
                 onClick={() => this.switchToSinglePost(post)}
+                actionIcon={
+                  <IconButton
+                    onClick={e => {
+                      e.stopPropagation();
+                      this.removePost(localStorage.id, post.id);
+                    }}
+                  >
+                    <Delete color="white" />
+                  </IconButton>
+                }
               >
                 <img src={post.main_photo} />
               </GridTile>
