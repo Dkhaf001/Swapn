@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addImages } from '../../actions';
 import PhotoSlide from './photoslide.jsx';
 
 class PhotoUpload extends React.Component {
@@ -9,24 +11,7 @@ class PhotoUpload extends React.Component {
     this.state = {
       posting: false,
       file: null,
-      // val: {
-      //   file: null,
-      //   url: '',
-      // },
-      images: [
-        {
-          original: 'http://lorempixel.com/1000/600/nature/1/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-        },
-        {
-          original: 'http://lorempixel.com/1000/600/nature/2/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/2/',
-        },
-        {
-          original: 'http://lorempixel.com/1000/600/nature/3/',
-          thumbnail: 'http://lorempixel.com/250/150/nature/3/',
-        },
-      ],
+      images: [],
     };
   }
 
@@ -135,7 +120,17 @@ class PhotoUpload extends React.Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
+    images: state.images,
   };
 }
 
-export default connect(mapStateToProps)(PhotoUpload);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addImages,
+    },
+    dispatch,
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoUpload);
