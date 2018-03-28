@@ -32,7 +32,9 @@ class StatusBar extends Component {
         socket.on('directMessage', data => {
           console.log('receive a direct message', data);
           this.setState({
-            messages: [data].concat(this.state.messages)
+            messages: [data].concat(this.state.messages),
+            offersMessages: data.buyer_username === this.props.active_user.username ? this.state.offersMessages : this.state.offersMessages+1,
+            responseMessages: data.buyer_username === this.props.active_user.username ? this.state.responseMessages+1 : this.state.responseMessages
           });
           this.props.addMessages(this.state.messages)
         });
@@ -102,6 +104,9 @@ class StatusBar extends Component {
     }
   }
   gotoMyPosts() {
+    this.setState({
+      offersMessages: 0
+    })
     this.props.history.push({
       pathname: `/profile/selling`,
       state: this.state.messages

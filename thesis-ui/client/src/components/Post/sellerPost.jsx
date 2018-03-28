@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 import EditPost from './editPost.jsx';
-import Chattest from '../Chat/Chattest.jsx'
+
 class SellerPost extends Component {
   constructor(props) {
     super(props);
@@ -21,18 +21,20 @@ class SellerPost extends Component {
         main_photo: this.props.current_post.main_photo,
       },
       sold: false,
-<<<<<<< HEAD
-=======
       offers: [],
       currentTalking:''
->>>>>>> still worikng on message system
     };
   }
 
   async componentWillMount() {
-    console.log('sellerPost', this.props)
-    this.getPhotos();
+    // this.getPhotos();
     this.getOffers();
+    console.log('going to emit a updateDatabase request')
+
+    this.props.socket.emit('updateDatabase', {
+      postId: this.props.current_post.id,
+      username: this.props.active_user.username
+    })
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
         offerAccepted: false,
@@ -49,37 +51,21 @@ class SellerPost extends Component {
     }
   }
   async getOffers() {
-    try{
-      const post_id = this.props.current_post.id;
-      const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${post_id}`)
-      let message = this.props.history.location.state.message;
-      this.setState({
-        offers: data.rows,
-      })
-      console.log('offers',data.rows)
-    }catch(err) {
-      console.log('err fetching offers',err)
-    }
+    const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${this.props.current_post.id}`);
+    console.log('fetchPostOffers', data)
+    this.setState({
+      offers: data.rows
+    })
   }
-  async getPhotos() {
-    // const postId = this.props.current_posts.id;
-    // const { data } = await axios.get(
-    //   `http://localhost:3396/api/photos/${postId}`
-    // );
-    // console.log('successfully received photos!');
-    // this.setState({
-    //   photos: data.rows
-    // });
-  }
-
-  // async removePost() {
-  //   const userId = this.props.current_post.user_id;
-  //   const postId = this.props.current_post.id;
-  //   const { data } = await axios.delete(
-  //     `http://localhost:3396/api/photos/${userId}/${postId}`
-  //   );
-  //   console.log('successfully deleted post!');
-  //   // refresh page after successfully deleting?
+  // async getPhotos() {
+  // const postId = this.props.current_posts.id;
+  // const { data } = await axios.get(
+  //   `http://localhost:3396/api/photos/${postId}`
+  // );
+  // console.log('successfully received photos!');
+  // this.setState({
+  //   photos: data.rows
+  // });
   // }
 
   editPost() {
@@ -104,7 +90,6 @@ class SellerPost extends Component {
         accept,
       });
       const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
-      console.log('Successfully accepted an offer! Post status is now Pending');
     } catch (err) {
       console.log('Error accepting offer!');
     }
@@ -154,7 +139,6 @@ class SellerPost extends Component {
         accept: sold,
         sold: true,
       });
-      console.log('Successfully bartered an offer! Post status is now BARTERED');
       this.props.history.push('/home');
     } catch (err) {
       console.log('Error completing barter transaction!');
@@ -228,10 +212,12 @@ class SellerPost extends Component {
           this.state.offers.map(offer => {
             return <div key={offer.id}>
               {offer.username}
-              
-              {this.state.currentTalking === offer.username && <Chattest offer={offer} roomId={offer.room_id}/>}
             </div>
           })
+        }
+        {
+          this.state.currentTalking && 
+          <textarea />
         }
       </div>
     ) : (
@@ -245,6 +231,8 @@ class SellerPost extends Component {
 function mapStateToProps(state) {
   return {
     current_post: state.current_post,
+    socket: state.socket,
+    active_user: state.active_user
   };
 }
 

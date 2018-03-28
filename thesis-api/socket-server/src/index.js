@@ -29,6 +29,15 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
         // })
       })
     })
+    client.on("updateDatabase", ({postId, username}) => {
+      console.log('receive a update database request', postId, username)
+      chat.update({postId: postId, read: 'false'}, {$set:{read: 'true'}}, {multi: true} ,(err, updated) => {
+        chat.find({to: username, read: 'false'}).toArray((err, result) => {
+          client.emit('notifications',result);
+        })
+      });
+
+    })
     client.on('showUsers', () => {
       console.log(users)
     })
