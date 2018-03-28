@@ -18,9 +18,12 @@ class PhotoUpload extends React.Component {
 
   cancelPost = async (postId) => {
     try {
+      const url = window.location.href;
+      const postId = path.basename(url);
       this.setState({ posting: false });
-      const data = await axios.delete('http://localhost:8593/api/1');
+      const data = await axios.delete(`http://localhost:8593/api/${postId}`);
       console.log(data);
+      this.props.addImages(null);
     } catch (error) {
       console.log(error);
     }
@@ -58,10 +61,12 @@ class PhotoUpload extends React.Component {
       file: null,
     });
     this.state.images.push({
-      orgiinal: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
+      original: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
+      thumbnail: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
     });
     console.log(this.state.images);
-    // 'https://s3-us-west-1.amazonaws.com/barterbruh/1/1de93ec.jpg'
+    this.props.addImages(this.state.images);
+    // 'https://{s3-us-west-1}.amazonaws.com/{barterbruh}/{1/1de93ec.jpg}'
   };
 
   removePhoto = async (postId, key) => {
@@ -86,7 +91,7 @@ class PhotoUpload extends React.Component {
     <div>
       {/* <img
         style={{ width: '128px', height: '128px' }}
-        src={'https://s3-us-west-1.amazonaws.com/barterbruh/1/1de93ec.jpg'}
+        src={'https://s3-us-west-1.amazonaws.com/barterbruh/localhost%3A1337/1de93ec.jpg'}
       /> */}
       <form>
         <label>
