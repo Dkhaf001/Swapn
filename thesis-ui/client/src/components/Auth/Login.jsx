@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore } from '../../actions';
-
+import MyFancyMap from '../Map/maptest.jsx';
 class Login extends Component {
   constructor() {
     super();
@@ -34,6 +34,9 @@ class Login extends Component {
   render() {
     return (
       <div>
+        <div>
+          <MyFancyMap center={{lat: 39.9, lng: -118.39}} />
+        </div>
         <TextField
           hintText="Enter Username"
           floatingLabelText="Username"

@@ -4,7 +4,6 @@ const { compose, withProps, lifecycle, withStateHandlers } = require("recompose"
 import Geolocation from './geolocation.jsx';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
-
 const {
   withScriptjs,
   withGoogleMap,
@@ -43,7 +42,7 @@ const MapWithASearchBox = compose(
     componentWillMount() {
       let lat = parseFloat(localStorage.getItem('latitude'));
       let long = parseFloat(localStorage.getItem('longitude'));
-      console.log('lat is', lat, 'type of...', typeof lat)
+      // console.log('lat is', lat, 'type of...', typeof lat)
       const refs = {}
 
 
@@ -139,11 +138,10 @@ const MapWithASearchBox = compose(
         <Marker
           // onClick={this.onMarkerClick}
           icon={{
-            url: 'http://www.clker.com/cliparts/B/B/1/E/y/r/marker-pin-google.svg',
+            url:'http://www.clker.com/cliparts/4/4/4/f/12422388151474571261Bronze_circle.svg.thumb.png',
             scaledSize: new google.maps.Size(36, 36),
         }}
           name={'Your Position'}
-          radius={100000000}
           position={{ lat: parseFloat(localStorage.getItem('latitude')), lng: parseFloat(localStorage.getItem('longitude')) }}
         /> : null
       }
