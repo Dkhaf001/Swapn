@@ -21,7 +21,12 @@ class Post extends Component {
         `http://localhost:3396/api/posts/fetchSinglePost/${postId}`
       );
       console.log('successfully received post');
+      console.log('##############', data);
+      // this is the bug that was fixed by manually overriding the post.id
+      // originally, it return post.id as the userid
+      // =======
       data[0].id = Number(postId);
+      // =======
       this.props.addCurrentPost(data[0]);
     } catch (error) {
       console.log('Error getting post on componentWillMount');

@@ -74,6 +74,10 @@ class AddPost extends Component {
     }
   };
 
+  cancelFirstPost = () => {
+    this.props.history.push('/home');
+  };
+
   handleChange = (event, index, value) => {
     this.setState({
       newPost: Object.assign({}, this.state.newPost, {
@@ -320,7 +324,7 @@ class AddPost extends Component {
           </div>
         );
       default:
-        return "You're a long way from home sonny jim!";
+        return 'Step right up!';
     }
   }
 
@@ -383,8 +387,7 @@ class AddPost extends Component {
                     label={'Cancel'}
                     secondary={true}
                     onClick={() => {
-                      // this.cancelFirstPost();
-                      console.log('hi :)');
+                      this.cancelFirstPost();
                     }}
                   />
                 ) : (
