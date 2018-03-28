@@ -40,13 +40,17 @@ class HomePostList extends Component {
       console.log('err fetching posts');
     }
   }
+<<<<<<< HEAD
 
   switchToSinglePost = (post) => {
     console.log('Clicked post.id:', post.id);
+=======
+  switchToSinglePost = (post) => {
+    console.log('Clicked post.id from homePostList:', post);
+>>>>>>> final step
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };
-
   render() {
     return (
       <div>

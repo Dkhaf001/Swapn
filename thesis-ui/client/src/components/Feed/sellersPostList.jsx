@@ -39,24 +39,26 @@ class SellersPostList extends Component {
       });
       this.setState({
         lists: data
-      });
+      })
+      console.log('hello from sellerspostlist', data)
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
   async componentDidMount() {
-    try {
+    try{
+      
       const obj = {};
       const messages = this.props.history.location.state;
-      for (var i = 0; i < messages.length; i++) {
-        obj[messages[i].postId]
-          ? obj[messages[i].postId]++
-          : (obj[messages[i].postId] = 1);
-      }
-      const entries = Object.entries(obj);
-      for (var i = 0; i < entries.length; i++) {
-        this.giveNotifications(entries[i]);
+      if(messages){
+        for(var i = 0; i< messages.length; i++) {
+          obj[messages[i].postId] ? obj[messages[i].postId]++ : obj[messages[i].postId]=1
+        }
+        const entries = Object.entries(obj)
+        for(var i = 0; i < entries.length; i++) {
+          this.giveNotifications(entries[i])
+        }
       }
     } catch (err) {
       console.log('err in sellersPostList', err);
@@ -68,7 +70,8 @@ class SellersPostList extends Component {
     element.textContent = entries[1];
   }
   switchToSinglePost = post => {
-    console.log('Clicked post.id:', post.id);
+    
+    console.log('!!!shayne::Clicked post.id:', post);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };

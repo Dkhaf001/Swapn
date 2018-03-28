@@ -26,6 +26,7 @@ class BarteringsPostList extends Component {
 
   async componentWillMount() {
     // grab data from db, update store
+    console.log('hello from bartering List .jsx')
     try {
       const username = localStorage.username;
       console.log('the username is', localStorage.username);
@@ -38,7 +39,7 @@ class BarteringsPostList extends Component {
     }
   }
   switchToSinglePost = post => {
-    console.log('Clicked post.id:', post.id);
+    console.log('Clicked post.id:', post);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };
