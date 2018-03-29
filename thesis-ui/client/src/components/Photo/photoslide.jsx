@@ -217,12 +217,12 @@ class PhotoSlide extends React.Component {
   render() {
     return (
       <div>
-        {this.props.images_list && this.props.images_list.length > 0 ? (
+        {this.props.images_list && this.props.images_list.length >= 1 ? (
           <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
         ) : null}
 
         <section className="app">
-          {this.props.images_list && this.props.images_list.length > 0 ? (
+          {this.props.images_list && this.props.images_list.length >= 1 ? (
             <ImageGallery
               ref={i => (this._imageGallery = i)}
               items={this.props.images_list}
@@ -263,4 +263,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToPropss)(PhotoSlide);
+export default connect(mapStateToProps)(PhotoSlide);

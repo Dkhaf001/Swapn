@@ -15,12 +15,22 @@ class PhotoUpload extends React.Component {
       images: [],
     };
   }
+  removePhoto = async (postId, key) => {
+    try {
+      const data = await axios.delete(`http://localhost:8593/api/removephoto/${postId}/${key}`);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   removingPhoto = (input) => {
     const temp = this.state.images;
     temp.splice(input, 1);
     console.log('thisisTemp', temp);
     this.props.addImages(temp);
     this.setState({ images: temp });
+
     // axios delete request
   };
   cancelPost = async (postId) => {
@@ -74,15 +84,6 @@ class PhotoUpload extends React.Component {
     console.log(this.state.images);
     this.props.addImages(this.state.images);
     // 'https://{s3-us-west-1}.amazonaws.com/{barterbruh}/{1/1de93ec.jpg}'
-  };
-
-  removePhoto = async (postId, key) => {
-    try {
-      const data = await axios.delete(`http://localhost:8593/api/removephoto/${postId}/${key}`);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   fetchAlbum = async (postId) => {
