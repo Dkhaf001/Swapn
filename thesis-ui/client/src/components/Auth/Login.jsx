@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore } from '../../actions';
-import SimpleForm from '../Map/simpleForm.jsx';
+
 
 class Login extends Component {
   constructor() {
@@ -35,7 +35,6 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div>{/* <SimpleForm/> */}</div>
         <TextField
           hintText="Enter Username"
           floatingLabelText="Username"

@@ -10,6 +10,7 @@ import PhotoUpload from '../Photo/index.jsx';
 import { addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 let tempPostId;
 class AddPost extends Component {
@@ -43,6 +44,16 @@ class AddPost extends Component {
         this.state.newPost.location !== '' &&
         this.state.newPost.demand !== ''
       ) {
+        console.log('entering submit post logic', this.state.newPost.location);
+        let results = await geocodeByAddress(this.state.newPost.location);
+        console.log('results is from', results[0].formatted_address);
+        let latLng = await getLatLng(results[0]);
+        console.log('Success Post', latLng);
+        this.setState({
+          newPost: Object.assign({}, this.state.newPost, {
+            location: latLng,
+          })
+        });
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
