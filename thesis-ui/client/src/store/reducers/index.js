@@ -13,6 +13,10 @@ import current_roomId from './roomIdReducers';
 import messages from './messagesReducers';
 import positiongeo from './positionReducers.js';
 import newPostIdReducer from './new_postIdReducers';
+import followingListReducer from './following_listReducers';
+import barteringListReducer from './bartering_listReducers';
+import watchingListReducer from './watching_listReducers';
+import sellingListReducer from './selling_listReducers';
 
 export default combineReducers({
   positiongeo,
@@ -28,4 +32,8 @@ export default combineReducers({
   current_roomId,
   images: imagesReducers,
   newPostId: newPostIdReducer,
+  selling_list: sellingListReducer,
+  watching_list: watchingListReducer,
+  bartering_list: barteringListReducer,
+  following_list: followingListReducer,
 });

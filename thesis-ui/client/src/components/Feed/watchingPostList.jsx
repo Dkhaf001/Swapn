@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList, addCurrentPost } from '../../actions';
+import { addCurrentPost, addWatchingList } from '../../actions';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -33,10 +33,11 @@ class WatchingPostList extends Component {
       const id = localStorage.id;
       // console.log('the id is', localStorage.id);
       const { data } = await axios.get(`http://localhost:3396/api/watchers/${id}`);
-      this.props.addCurrentList(data);
+      this.props.addWatchingList(data);
       this.setState({
         watching: data,
       });
+      this.props.addWatchingList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
@@ -46,6 +47,7 @@ class WatchingPostList extends Component {
       await axios.delete(`http://localhost:3396/api/watchers/${userId}/${postId}`);
       const records = this.state.watching.filter(data => data.post_id !== postId);
       this.setState({ watching: records });
+      this.props.addWatchingList(this.state.watching);
     } catch (err) {
       console.log('err deleting a post from your watch list');
     }
@@ -59,8 +61,8 @@ class WatchingPostList extends Component {
     return (
       <div style={styles.root}>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.state.watching &&
-            this.state.watching.map(post => (
+          {this.props.watching_list &&
+            this.props.watching_list.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
@@ -93,14 +95,14 @@ class WatchingPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    watching_list: state.watching_list,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
       addCurrentPost,
+      addWatchingList,
     },
     dispatch,
   );

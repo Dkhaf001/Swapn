@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList, addCurrentPost } from '../../actions';
+import { addCurrentPost, addSellingList } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
@@ -36,11 +36,9 @@ class SellersPostList extends Component {
       const id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
       data.sort((a, b) => b.id - a.id);
-      this.setState({
-        lists: data,
-      });
+      this.setState({ lists: data });
       // console.log('hello from sellerspostlist', data);
-      this.props.addCurrentList(data);
+      this.props.addSellingList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
@@ -81,6 +79,7 @@ class SellersPostList extends Component {
       console.log('successfully deleted post from selling list');
       const records = this.state.lists.filter(data => data.post_id !== postId);
       this.setState({ lists: records });
+      this.props.addSellingList(this.state.lists);
       this.props.history.push('/profile/selling');
     } catch (err) {
       console.log('err deleting a post from your selling list');
@@ -98,8 +97,8 @@ class SellersPostList extends Component {
           ))}
         </div>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.state.lists &&
-            this.state.lists.map(post => (
+          {this.props.selling_list &&
+            this.props.selling_list.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
@@ -132,15 +131,15 @@ class SellersPostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
     messages: state.messages,
+    selling_list: state.selling_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
+      addSellingList,
       addCurrentPost,
     },
     dispatch,
