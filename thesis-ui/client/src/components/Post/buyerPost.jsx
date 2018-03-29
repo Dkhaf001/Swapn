@@ -78,9 +78,11 @@ class BuyerPost extends Component {
   async getFollowing() {
     try {
       const userId = this.props.current_post.user_id;
+      console.log('????????', this.props.current_post.user_id);
       const followerId = localStorage.id;
+      console.log('foller', followerId);
       const { data } = await axios.get(`http://localhost:3396/api/followings/single/${followerId}/${userId}`);
-      console.log('successfully received following list', data[0]);
+      console.log('successfully received following list', data);
 
       if (data.rowCount > 0) {
         this.setState({

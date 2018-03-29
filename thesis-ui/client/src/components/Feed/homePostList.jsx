@@ -32,24 +32,24 @@ class HomePostList extends Component {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
 
-      for (let i = 0; i < data.length; i++) {
-        if (i === 8) break;
-        const address = data[i].location;
-        const results = await geocodeByAddress(address);
-        // console.log('results is from', results[0].formatted_address);
-        const latLng = await getLatLng(results[0]);
-        // console.log('SuccessHome', latLng);
-        const distance = geolib.getDistance(
-          {
-            latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
-            longitude: parseFloat(localStorage.getItem('usersLng')) || -118,
-          },
-          latLng,
-        );
-        // console.log('right here', distance/1609);
-        data[i].distance = Math.round(distance / 1609);
-        // console.log('the data obj is before', data)
-      }
+      // for (let i = 0; i < data.length; i++) {
+      //   if (i === 8) break;
+      //   const address = data[i].location;
+      //   const results = await geocodeByAddress(address);
+      //   // console.log('results is from', results[0].formatted_address);
+      //   const latLng = await getLatLng(results[0]);
+      //   // console.log('SuccessHome', latLng);
+      //   const distance = geolib.getDistance(
+      //     {
+      //       latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
+      //       longitude: parseFloat(localStorage.getItem('usersLng')) || -118,
+      //     },
+      //     latLng,
+      //   );
+      //   // console.log('right here', distance/1609);
+      //   data[i].distance = Math.round(distance / 1609);
+      //   // console.log('the data obj is before', data)
+      // }
       // console.log('the data obj is after', data);
       this.props.addCurrentList(data);
     } catch (err) {
@@ -58,7 +58,7 @@ class HomePostList extends Component {
   }
 
   switchToSinglePost = (post) => {
-    console.log('Clicked post.id:', post.id);
+    // console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };

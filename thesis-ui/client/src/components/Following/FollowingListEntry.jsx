@@ -10,19 +10,15 @@ class FollowingsListEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      following: this.props.following
+      following: this.props.following,
     };
   }
   async handleUnfollowButtonClick() {
     try {
       const user_id = localStorage.id;
-      await axios.delete(
-        `http://localhost:3396/api/followings/${user_id}/${
-          this.props.following.id
-        }`
-      );
+      await axios.delete(`http://localhost:3396/api/followings/${user_id}/${this.props.following.id}`);
       this.setState({
-        following: ''
+        following: '',
       });
     } catch (err) {
       console.log('err unfollwing user', err);
@@ -33,10 +29,7 @@ class FollowingsListEntry extends Component {
       <div>
         <List>
           {this.state.following && (
-            <ListItem
-              disabled={true}
-              leftAvatar={<Avatar src={this.state.following.photo_url} />}
-            >
+            <ListItem disabled={true} leftAvatar={<Avatar src={this.state.following.photo_url} />}>
               {this.state.following.username}
               <RaisedButton
                 label="Unfollow"

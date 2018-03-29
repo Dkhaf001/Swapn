@@ -19,7 +19,7 @@ export const fetchFollowingController = async (req, res) => {
   const payload = req.params;
   try {
     const data = await fetchFollowingQuery(payload);
-    return res.status(200).send(data.rows);
+    return res.status(200).send(data);
   } catch (err) {
     console.log(err);
   }

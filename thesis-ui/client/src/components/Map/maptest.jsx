@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+const {
+  withScriptjs, withGoogleMap, GoogleMap, Marker,
+} = require('react-google-maps');
+
 const _ = require('lodash');
 const {
   compose, withProps, lifecycle, withStateHandlers,
@@ -8,9 +12,6 @@ const {
 import Geolocation from './geolocation.jsx';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-const {
-  withScriptjs, withGoogleMap, GoogleMap, Marker,
-} = require('react-google-maps');
 const { SearchBox } = require('react-google-maps/lib/components/places/SearchBox');
 
 const MapWithASearchBox = compose(

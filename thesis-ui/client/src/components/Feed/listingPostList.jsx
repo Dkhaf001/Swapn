@@ -25,13 +25,12 @@ class ListingPostList extends Component {
   }
 
   async componentWillMount() {
-    // grab data from db, update store
     try {
-      console.log('hello forn listing post list');
+      // console.log('hello forn listing post list');
       const url = window.location.href;
       if (!url.includes('othersprofile')) {
         const id = localStorage.id;
-        console.log('the id is', localStorage.id);
+        // console.log('the id is', localStorage.id);
         const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
         this.props.addCurrentList(data);
       }
