@@ -12,7 +12,7 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 const geolib = require('geolib');
 
 class Post extends Component {
-  constructor(props) {
+constructor(props) {
     super(props);
     this.state = {
       address: '',
@@ -22,17 +22,14 @@ class Post extends Component {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(
-        `http://localhost:3396/api/posts/fetchSinglePost/${postId}`
-      );
+      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
       console.log('successfully received post');
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });
-
       // localStorage.setItem('oldLat',localStorage.getItem('latitude'))
       // localStorage.setItem('oldLng', localStorage.getItem('longitude'))
-      const geo = await geocodeByAddress(this.state.address)
-        .then((results) => {
+      let geo = geocodeByAddress(this.state.address)
+        .then(results => {
           console.log('results is from', results[0].formatted_address);
 
           getLatLng(results[0])
@@ -48,10 +45,12 @@ class Post extends Component {
         .catch((error) => {
           console.error('Error', error);
         });
-    } catch (error) {
-      console.log('Error getting post on componentWillMount', error);
-    }
   }
+  catch(error){
+    console.log(error)
+  }  
+  }
+     
   // async componentWillUnmount() {
   //   let oldLat = localStorage.getItem('oldLat');
   //   let oldLng = localStorage.getItem('oldLng');
