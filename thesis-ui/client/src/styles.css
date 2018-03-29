@@ -25,7 +25,9 @@ body {
   position: fixed;
   /* opacity: .5 */
 }
-
+.hidden {
+  display: hidden;
+}
 .rightbanner {
   /* padding-top: 35px; */
   float:right;

@@ -7,7 +7,6 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
 import Delete from 'material-ui/svg-icons/action/delete';
-
 const styles = {
   root: {
     display: 'flex',
@@ -20,7 +19,6 @@ const styles = {
     overflowY: 'auto'
   }
 };
-
 class WatchingPostList extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +26,6 @@ class WatchingPostList extends Component {
       watching: []
     };
   }
-
   async componentDidMount() {
     // grab data from db, update store
     try {
@@ -45,7 +42,6 @@ class WatchingPostList extends Component {
       console.log('err fetching posts', err);
     }
   }
-
   async removeFromWatchList(userId, postId) {
     try {
       await axios.delete(
@@ -59,13 +55,11 @@ class WatchingPostList extends Component {
       console.log('err deleting a post from your watch list');
     }
   }
-
   switchToSinglePost = post => {
     console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };
-
   render() {
     return (
       <div style={styles.root}>
@@ -107,7 +101,6 @@ function mapStateToProps(state) {
     current_list: state.current_list
   };
 }
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
@@ -117,5 +110,4 @@ function mapDispatchToProps(dispatch) {
     dispatch
   );
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(WatchingPostList);
