@@ -10,6 +10,9 @@ import { appRoutes } from './routes/app.jsx';
 import PhotoUpload from './components/Photo';
 import Map from './components/Map/index.jsx';
 import Maptest from './components/Map/maptest.jsx';
+import GoogleMap from './components/Map/maptest.jsx';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+const geolib = require('geolib');
 import './styles.css';
 
 class App extends React.Component {
@@ -43,6 +46,7 @@ class App extends React.Component {
                 return <Route path={route.path} component={route.component} key={key} />;
               })}
             </Switch>
+            <GoogleMap/>
           </div>
         </div>
       </div>

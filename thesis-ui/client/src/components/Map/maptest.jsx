@@ -171,7 +171,7 @@ const MapWithASearchBox = compose(
   >
     <Geolocation />
             <button onClick={props.onClick} type="submit">Get {props.count}</button>
-    <SearchBox
+    {/* <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}
       controlPosition={google.maps.ControlPosition.TOP_LEFT}
@@ -194,7 +194,7 @@ const MapWithASearchBox = compose(
           textOverflow: `ellipses`,
         }}
       />
-    </SearchBox>
+    </SearchBox> */}
     {localStorage.getItem('longitude') ?
         <Marker
           // onClick={this.onMarkerClick}
