@@ -3,7 +3,6 @@ import { fetchAllCategorysController } from './categoriesControllers';
 
 const router = express.Router();
 
-router.route('/:type')
- .get(fetchAllCategorysController)
+router.route('/:category_id').get(fetchAllCategorysController);
 
 export default router;

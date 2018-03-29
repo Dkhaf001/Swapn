@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-// need two input feild standard search and location search button
-// test
+import Categories from './Categories.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
+
 class Search extends Component {
   constructor() {
     super();
@@ -10,13 +11,14 @@ class Search extends Component {
       <div>
         <form className="navbar-form navbar-left" role="search">
           <div className="form-group">
+            <Categories />
             <input type="text" placeholder="Search" />
             <input type="text" placeholder="Location" />
-            <button type="submit">Submit</button>
+            <RaisedButton label="Submit" style={{ margin: 12 }} />
           </div>
         </form>
       </div>
     );
-}
+  }
 }
 export default Search;
