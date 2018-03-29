@@ -27,6 +27,7 @@ class ListingPostList extends Component {
   async componentWillMount() {
     // grab data from db, update store
     try {
+      console.log('hello forn listing post list')
       const url = window.location.href;
       if (!url.includes('othersprofile')) {
         const id = localStorage.id;

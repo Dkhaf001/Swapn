@@ -26,21 +26,23 @@ class BarteringsPostList extends Component {
 
   async componentWillMount() {
     // grab data from db, update store
+    console.log('hello from bartering List .jsx')
     try {
       const username = localStorage.username;
       console.log('the username is', localStorage.username);
       const { data } = await axios.get(
         `http://localhost:3396/api/offers/${username}`
       );
+      console.log('list', data)
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
   switchToSinglePost = post => {
-    console.log('Clicked post.id:', post.id);
+    console.log('Clicked post:', this.props.current_list);
     this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.id}`);
+    this.props.history.push(`/post/${post.post_id}`);
   };
 
   render() {

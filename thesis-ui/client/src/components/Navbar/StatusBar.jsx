@@ -19,6 +19,7 @@ class StatusBar extends Component {
     offers:'',
     responseMessages: 0,
     offersMessages: 0,
+    notifications:0
   };
   async componentWillMount() {
     try {
@@ -30,18 +31,22 @@ class StatusBar extends Component {
         this.props.addSocket(socket);
         socket.emit('new user', username);
         socket.on('directMessage', data => {
-          console.log('receive a direct message', data);
+          console.log('receive a direct message',  this.state.notifications+1);
           this.setState({
             messages: [data].concat(this.state.messages),
             offersMessages: data.buyer_username === this.props.active_user.username ? this.state.offersMessages : this.state.offersMessages+1,
-            responseMessages: data.buyer_username === this.props.active_user.username ? this.state.responseMessages+1 : this.state.responseMessages
+            responseMessages: data.buyer_username === this.props.active_user.username ? this.state.responseMessages+1 : this.state.responseMessages,
+            notifications: this.state.notifications+1
           });
           this.props.addMessages(this.state.messages)
+
         });
         socket.on('notifications', result => {
           console.log('notifications', result)
+          this.props.addMessages(result)
           this.setState({
-            messages: result
+            messages: result,
+            notifications: result.length
           })
           for(var i = 0; i < result.length; i ++) {
             if(result[i].buyer_username === this.props.active_user.username) {
@@ -84,7 +89,7 @@ class StatusBar extends Component {
     });
   };
   showUsers() {
-    this.props.socket.emit('showUsers')
+    console.log('this.state', this.state)
   }
   showMessages() {
     console.log(this.props.messages)
@@ -98,13 +103,13 @@ class StatusBar extends Component {
       this.props.addCurrentPost(data[0]);
       this.props.history.push({
         pathname: `post/${message.postTitle}`,
-        state: {message}
       })
     }catch(err) {
     }
   }
   gotoMyPosts() {
     this.setState({
+      notifications: this.state.notifications - this.state.offersMessages,
       offersMessages: 0
     })
     this.props.history.push({
@@ -117,10 +122,10 @@ class StatusBar extends Component {
       <div>
       {this.props.active_user &&
       <div>
-          {this.state.messages.length > 0 ? (
+          {this.state.notifications > 0 ? (
             <div>
               <Badge
-                badgeContent={this.state.messages.length}
+                badgeContent={this.state.notifications}
                 secondary={true}
                 badgeStyle={{ top: 12, right: 12 }}
               >
@@ -165,13 +170,6 @@ class StatusBar extends Component {
                         value="Solid"
                         primaryText={`View Offers Messages `+ this.state.offersMessages}
                         onClick = {()=>this.gotoMyPosts()}
-                      />
-                      }
-                      {
-                        <MenuItem
-                        key={3}
-                        value="Solid"
-                        primaryText={`view responded Messages `+ this.state.responseMessages}
                       />
                       }
                     </Menu>
