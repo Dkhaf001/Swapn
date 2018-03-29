@@ -15,7 +15,14 @@ class PhotoUpload extends React.Component {
       images: [],
     };
   }
-
+  removingPhoto = (input) => {
+    const temp = this.state.images;
+    temp.splice(input, 1);
+    console.log('thisisTemp', temp);
+    this.props.addImages(temp);
+    this.setState({ images: temp });
+    // axios delete request
+  };
   cancelPost = async (postId) => {
     try {
       const url = window.location.href;
@@ -121,7 +128,7 @@ class PhotoUpload extends React.Component {
   render() {
     return (
       <div>
-        <PhotoSlide />
+        <PhotoSlide removePhoto={this.removingPhoto} />
         {this.state.posting ? this.renderForm() : this.renderNormal()}
       </div>
     );

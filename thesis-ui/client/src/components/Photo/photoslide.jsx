@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
-
+import { bindActionCreators } from 'redux';
 import ImageGallery from 'react-image-gallery';
+import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 
 class PhotoSlide extends React.Component {
   constructor(props) {
@@ -86,7 +86,6 @@ class PhotoSlide extends React.Component {
   }
   componentWillMount() {
     console.log('~~~~~~~~~~~~', this.props.images_list);
-    console.log('askjdgjadgflkjadjgfkhbadkljgjakdblkj;');
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -102,6 +101,7 @@ class PhotoSlide extends React.Component {
   //-----------------------------
   removeCurrentPhoto = () => {
     console.log('currentindex', this.state.currentIndex);
+    this.props.removePhoto(this.state.currentIndex);
   };
   //-----------------------------
   _onImageClick(event) {
@@ -120,6 +120,7 @@ class PhotoSlide extends React.Component {
   _onSlide(index) {
     this._resetVideo();
     console.debug('slid to index', index);
+    console.log('index', index);
     this.setState({ currentIndex: index });
   }
 
@@ -216,9 +217,12 @@ class PhotoSlide extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+        {this.props.images_list && this.props.images_list.length > 0 ? (
+          <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+        ) : null}
+
         <section className="app">
-          {this.props.images_list ? (
+          {this.props.images_list && this.props.images_list.length > 0 ? (
             <ImageGallery
               ref={i => (this._imageGallery = i)}
               items={this.props.images_list}
@@ -259,4 +263,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(PhotoSlide);
+export default connect(mapStateToPropss)(PhotoSlide);

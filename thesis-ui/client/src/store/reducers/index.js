@@ -9,6 +9,7 @@ import currentFollowingReducers from './current_followingReducers';
 import currentWatchingReducers from './current_watchingReducers';
 import socketReducers from './socketReducers';
 import imagesReducers from './imagesReducers';
+import currentImageReducers from './current_imageReducers';
 import current_roomId from './roomIdReducers';
 import messages from './messagesReducers';
 import positiongeo from './positionReducers.js';

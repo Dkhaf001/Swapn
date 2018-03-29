@@ -52,6 +52,7 @@ export const getLocation = position => ({
   type: 'Position',
   payload: position,
 });
+
 export const addImages = position => ({
   type: 'IMAGES',
   payload: position,
