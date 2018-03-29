@@ -28,12 +28,16 @@ class PhotoUpload extends React.Component {
     try {
       const temp = this.state.images;
       const hold = temp.splice(input, 1);
-      console.log('this is hold', hold.Key);
-      console.log(`http://localhost:8593/api/removephoto/${hold[0].Key}`);
+      // console.log('this is hold', hold.Key);
+      // console.log(`http://localhost:8593/api/removephoto/${hold[0].Key}`);
       // has Key
-      console.log('thisisTemp', temp);
-      this.props.addImages(temp);
-      this.setState({ images: temp });
+      // console.log('thisisTemp', temp);
+      if (temp.length === 0) {
+        this.props.addImages(null);
+      } else {
+        this.props.addImages(temp);
+        this.setState({ images: temp });
+      }
       const data = await axios.delete(`http://localhost:8593/api/removephoto/${hold[0].Key}`);
       console.log(data);
     } catch (err) {}

@@ -37,10 +37,10 @@ class BuyerPost extends Component {
   async getBartering() {
     try {
       const buyer_username = this.props.active_user.username;
-      console.log('the activcve_user', this.props)
+      console.log('the activcve_user', this.props);
       const post_id = this.props.current_post.post_id;
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyer_username}/${post_id}`);
-      console.log('trying to get all offers', data)
+      console.log('trying to get all offers', data);
       if (data) {
         this.setState({
           room_id: data.rows[0] ? data.rows[0].room_id : null,
@@ -80,7 +80,8 @@ class BuyerPost extends Component {
       const userId = this.props.current_post.user_id;
       const followerId = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/followings/single/${followerId}/${userId}`);
-      console.log('successfully received following list');
+      console.log('successfully received following list', data[0]);
+
       if (data.rowCount > 0) {
         this.setState({
           currentlyFollowing: true,
@@ -179,7 +180,7 @@ class BuyerPost extends Component {
     }
   }
 
-  switchToSinglePost = userId => {
+  switchToSinglePost = (userId) => {
     console.log('switching to user id:', userId);
     this.props.history.push(`/othersprofile/${userId}`);
   };
@@ -189,11 +190,7 @@ class BuyerPost extends Component {
       <div>
         Welcome to the Buyer Post Page!!!!!!!!!
         <h1>
-          <a
-            onClick={() =>
-              this.switchToSinglePost(this.props.current_post.user_id)
-            }
-          >
+          <a onClick={() => this.switchToSinglePost(this.props.current_post.user_id)}>
             {this.props.current_post.username}
           </a>'s posting
         </h1>
@@ -208,11 +205,7 @@ class BuyerPost extends Component {
           <h3>{this.props.current_post.condition}</h3>
           <h3>{this.props.current_post.location}</h3>
           <h4>
-            <strong
-              onClick={() =>
-                this.switchToSinglePost(this.props.current_post.user_id)
-              }
-            >
+            <strong onClick={() => this.switchToSinglePost(this.props.current_post.user_id)}>
               {this.props.current_post.username}
             </strong>{' '}
             wants to trade this item for: {this.props.current_post.demand}

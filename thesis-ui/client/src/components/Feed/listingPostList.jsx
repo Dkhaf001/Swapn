@@ -27,7 +27,7 @@ class ListingPostList extends Component {
   async componentWillMount() {
     // grab data from db, update store
     try {
-      console.log('hello forn listing post list')
+      console.log('hello forn listing post list');
       const url = window.location.href;
       if (!url.includes('othersprofile')) {
         const id = localStorage.id;
@@ -56,6 +56,7 @@ class ListingPostList extends Component {
                 title={post.title}
                 subtitle={
                   <span>
+                    <b>{post.id}</b>
                     <b>{post.username}</b>
                   </span>
                 }

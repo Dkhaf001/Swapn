@@ -222,7 +222,7 @@ class PhotoSlide extends React.Component {
         ) : null}
 
         <section className="app">
-          {this.props.images_list && this.props.images_list.length >= 1 ? (
+          {this.props.images_list && this.props.images_list.length > 0 ? (
             <ImageGallery
               ref={i => (this._imageGallery = i)}
               items={this.props.images_list}
