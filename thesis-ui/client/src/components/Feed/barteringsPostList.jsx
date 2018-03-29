@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList, addCurrentPost } from '../../actions';
+import { addCurrentPost, addBarteringList } from '../../actions';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -30,14 +30,13 @@ class BarteringsPostList extends Component {
       console.log('the username is', localStorage.username);
       const { data } = await axios.get(`http://localhost:3396/api/offers/${username}`);
       console.log('list', data);
-      this.props.addCurrentList(data);
+      this.props.addBarteringList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
 
   switchToSinglePost = (post) => {
-    // console.log('Clicked post:', post, this.props.current_list);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.post_id}`);
   };
@@ -46,8 +45,8 @@ class BarteringsPostList extends Component {
     return (
       <div style={styles.root}>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
+          {this.props.bartering_list &&
+            this.props.bartering_list.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
@@ -68,15 +67,15 @@ class BarteringsPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    bartering_list: state.bartering_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
       addCurrentPost,
+      addBarteringList,
     },
     dispatch,
   );

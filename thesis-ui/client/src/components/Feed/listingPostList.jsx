@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCurrentList, addCurrentPost } from '../../actions';
+import { addCurrentPost, addSellingList } from '../../actions';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -22,6 +22,10 @@ const styles = {
 class ListingPostList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      // filtered out sold listings
+      listings: [],
+    };
   }
 
   async componentWillMount() {
@@ -32,7 +36,11 @@ class ListingPostList extends Component {
         const id = localStorage.id;
         // console.log('the id is', localStorage.id);
         const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
-        this.props.addCurrentList(data);
+        data.sort((a, b) => b.id - a.id);
+        this.setState({ listings: data });
+        this.props.addSellingList(data);
+        // filter out sold listings from sellers listing and render that
+        // set state --> reder bottom
       }
     } catch (err) {
       console.log('err fetching posts', err);
@@ -48,8 +56,8 @@ class ListingPostList extends Component {
     return (
       <div style={styles.root}>
         <GridList cellHeight={200} style={styles.gridList}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
+          {this.state.listings &&
+            this.state.listings.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
@@ -71,15 +79,15 @@ class ListingPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    selling_list: state.selling_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
       addCurrentPost,
+      addSellingList,
     },
     dispatch,
   );

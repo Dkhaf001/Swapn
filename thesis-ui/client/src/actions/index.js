@@ -57,3 +57,28 @@ export const addImages = position => ({
   type: 'IMAGES',
   payload: position,
 });
+
+export const addNewPostId = position => ({
+  type: 'NEW_POST_ID',
+  payload: position,
+});
+
+export const addSellingList = position => ({
+  type: 'SELLING_LIST',
+  payload: position,
+});
+
+export const addWatchingList = position => ({
+  type: 'WATCHING_LIST',
+  payload: position,
+});
+
+export const addBarteringList = position => ({
+  type: 'BARTERING_LIST',
+  payload: position,
+});
+
+export const addFollowingList = position => ({
+  type: 'FOLLOWING_LIST',
+  payload: position,
+});
