@@ -57,10 +57,14 @@ class HomePostList extends Component {
     }
   }
 
-  switchToSinglePost = (post) => {
-    // console.log('Clicked post.id:', post.id);
-    this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.id}`);
+  switchToSinglePost = async (post) => {
+    // console.log('!!!shayne::Clicked post.id:', post);
+    try {
+      this.props.addCurrentPost(post);
+      this.props.history.push(`/post/${post.id}`);
+    } catch (err) {
+      console.log('homepostswitch', err);
+    }
   };
   render() {
     return (

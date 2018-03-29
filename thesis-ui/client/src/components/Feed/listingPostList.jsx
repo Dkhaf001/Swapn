@@ -46,12 +46,15 @@ class ListingPostList extends Component {
       console.log('err fetching posts', err);
     }
   }
-
-  switchToSinglePost = (post) => {
-    this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.id}`);
+  switchToSinglePost = async (post) => {
+    // console.log('!!!shayne::Clicked post.id:', post);
+    try {
+      this.props.addCurrentPost(post);
+      this.props.history.push(`/post/${post.id}`);
+    } catch (err) {
+      console.log('listingpostswitch', err);
+    }
   };
-
   render() {
     return (
       <div style={styles.root}>

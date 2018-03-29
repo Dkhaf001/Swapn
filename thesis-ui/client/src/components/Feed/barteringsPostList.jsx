@@ -36,9 +36,14 @@ class BarteringsPostList extends Component {
     }
   }
 
-  switchToSinglePost = (post) => {
-    this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.post_id}`);
+  switchToSinglePost = async (post) => {
+    // console.log('!!!shayne::Clicked post.id:', post);
+    try {
+      this.props.addCurrentPost(post);
+      this.props.history.push(`/post/${post.post_id}`);
+    } catch (err) {
+      console.log('barteringpostswitch', err);
+    }
   };
 
   render() {
