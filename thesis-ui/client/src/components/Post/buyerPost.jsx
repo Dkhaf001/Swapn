@@ -38,8 +38,9 @@ class BuyerPost extends Component {
     try {
       const buyer_username = this.props.active_user.username;
       console.log('the activcve_user', this.props)
-      const post_id = this.props.current_post.id;
+      const post_id = this.props.current_post.post_id;
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyer_username}/${post_id}`);
+      console.log('trying to get all offers', data)
       if (data) {
         this.setState({
           room_id: data.rows[0] ? data.rows[0].room_id : null,

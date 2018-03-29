@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import randomstring from 'randomstring';
 import { addCurrentRoomId } from '../../actions' 
 import axios from 'axios'
+
 class Chattest extends React.Component{
     constructor(props){
         super(props);
@@ -13,7 +14,7 @@ class Chattest extends React.Component{
             username: '',
             message: '',
             messages: [],
-            roomId:''
+            roomId:'',
         };
         const addMessage = data => {
             console.log('Username is', this.state.username);
@@ -72,9 +73,10 @@ class Chattest extends React.Component{
                                 <div className="messages">
                                     {this.state.messages.map((message,key) => {
                                         return (
-                                            <div key={key}>{message.author}: {message.message}</div>
+                                            <div key={key}>{message.from}: {message.message}</div>
                                         )
-                                    })}
+                                    })
+                                    }
                                 </div>
 
                             </div>
@@ -85,6 +87,7 @@ class Chattest extends React.Component{
                                 <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
                                 <br/>
                                 <button onClick={(e)=>this.sendMessage(e)} className="btn btn-primary form-control">Send</button>
+                                <button onClick={()=>this.props.accept(this.props.buyer)}>accept</button>
                             </div>
                         </div>
                     </div>

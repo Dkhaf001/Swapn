@@ -24,6 +24,7 @@ class SellerPost extends Component {
       offers: [],
       currentRoom:''
     };
+    this.acceptOffer = this.acceptOffer.bind(this);
   }
 
   async componentWillMount() {
@@ -72,8 +73,9 @@ class SellerPost extends Component {
     this.props.history.push('/editPost');
   }
 
-  async acceptOffer() {
+  async acceptOffer(buyer) {
     try {
+      this.props.socket.emit('accept', {buyer_username: buyer, post_id: this.props.current_post.id, status: 'progress'})
       const accept = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
@@ -90,6 +92,7 @@ class SellerPost extends Component {
         accept,
       });
       const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
+
     } catch (err) {
       console.log('Error accepting offer!');
     }
@@ -219,7 +222,7 @@ class SellerPost extends Component {
             <div id={offer.room_id} onClick={(e)=>this.handleUserClick(e)}>
               {offer.username}
               </div>
-              {this.state.currentRoom === offer.room_id && <Chattest roomId={this.state.currentRoom} buyer={offer.buyer_username} />}
+              {this.state.currentRoom === offer.room_id && <Chattest roomId={this.state.currentRoom} buyer={offer.buyer_username} accept={this.acceptOffer} {...this.props} />}
             </div>
           })
         }
@@ -240,7 +243,8 @@ function mapStateToProps(state) {
   return {
     current_post: state.current_post,
     socket: state.socket,
-    active_user: state.active_user
+    active_user: state.active_user,
+    socket: state.socket
   };
 }
 
