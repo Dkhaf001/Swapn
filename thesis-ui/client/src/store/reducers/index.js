@@ -8,10 +8,10 @@ import currentProfileReducers from './current_profileReducers';
 import currentFollowingReducers from './current_followingReducers';
 import currentWatchingReducers from './current_watchingReducers';
 import socketReducers from './socketReducers';
+import imagesReducers from './imagesReducers';
 import current_roomId from './roomIdReducers';
 import messages from './messagesReducers';
 import positiongeo from './positionReducers.js';
-import images from './images';
 
 export default combineReducers({
   positiongeo,
@@ -25,5 +25,5 @@ export default combineReducers({
   current_watching: currentWatchingReducers,
   socket: socketReducers,
   current_roomId,
-  images,
+  images: imagesReducers,
 });

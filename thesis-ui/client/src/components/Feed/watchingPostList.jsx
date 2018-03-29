@@ -12,60 +12,49 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
-
 class WatchingPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      watching: []
+      watching: [],
     };
   }
-
   async componentDidMount() {
     // grab data from db, update store
     try {
       const id = localStorage.id;
-      console.log('the id is', localStorage.id);
-      const { data } = await axios.get(
-        `http://localhost:3396/api/watchers/${id}`
-      );
+      // console.log('the id is', localStorage.id);
+      const { data } = await axios.get(`http://localhost:3396/api/watchers/${id}`);
       this.props.addCurrentList(data);
       this.setState({
-        watching: data
+        watching: data,
       });
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
-
   async removeFromWatchList(userId, postId) {
     try {
-      await axios.delete(
-        `http://localhost:3396/api/watchers/${userId}/${postId}`
-      );
-      const records = this.state.watching.filter(
-        data => data.post_id !== postId
-      );
+      await axios.delete(`http://localhost:3396/api/watchers/${userId}/${postId}`);
+      const records = this.state.watching.filter(data => data.post_id !== postId);
       this.setState({ watching: records });
     } catch (err) {
       console.log('err deleting a post from your watch list');
     }
   }
-
-  switchToSinglePost = post => {
-    console.log('Clicked post.id:', post.id);
+  switchToSinglePost = (post) => {
+    // console.log('Clicked post.id:', post.post_id);
     this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.id}`);
+    this.props.history.push(`/post/${post.post_id}`);
   };
-
   render() {
     return (
       <div style={styles.root}>
@@ -85,7 +74,7 @@ class WatchingPostList extends Component {
                 }}
                 actionIcon={
                   <IconButton
-                    onClick={e => {
+                    onClick={(e) => {
                       e.stopPropagation();
                       this.removeFromWatchList(localStorage.id, post.post_id);
                     }}
@@ -104,18 +93,16 @@ class WatchingPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(WatchingPostList);

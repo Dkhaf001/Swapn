@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import ImageGallery from 'react-image-gallery';
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 
-import ImageGallery from 'react-image-gallery';
-
-const PREFIX_URL = 'https://raw.githubusercontent.com/xiaolin/react-image-gallery/master/static/';
-
 class PhotoSlide extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showIndex: false,
       slideOnThumbnailHover: false,
@@ -25,50 +24,68 @@ class PhotoSlide extends React.Component {
       thumbnailPosition: 'bottom',
       showVideo: {},
       currentIndex: 0,
+      images: this.props.images_list,
+      // || [
+      //   {
+      //     original: 'http://lorempixel.com/1000/600/nature/1/',
+      //     thumbnail: 'http://lorempixel.com/250/150/nature/1/',
+      //   },
+      //   {
+      //     original: 'http://lorempixel.com/1000/600/nature/2/',
+      //     thumbnail: 'http://lorempixel.com/250/150/nature/2/',
+      //   },
+      //   {
+      //     original: 'http://lorempixel.com/1000/600/nature/3/',
+      //     thumbnail: 'http://lorempixel.com/250/150/nature/3/',
+      //   },
+      // ],
     };
-    this.images = [
-      {
-        original: 'http://lorempixel.com/1000/600/nature/1/',
-        thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-      },
-      {
-        original: 'http://lorempixel.com/1000/600/nature/2/',
-        thumbnail: 'http://lorempixel.com/250/150/nature/2/',
-      },
-      {
-        original: 'http://lorempixel.com/1000/600/nature/3/',
-        thumbnail: 'http://lorempixel.com/250/150/nature/3/',
-      },
-      //   {
-      //     thumbnail: `${PREFIX_URL}4v.jpg`,
-      //     original: `${PREFIX_URL}4v.jpg`,
-      //     embedUrl: 'https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0',
-      //     description: 'Render custom slides within the gallery',
-      //     renderItem: this._renderVideo.bind(this),
-      //   },
-      //   {
-      //     original: `${PREFIX_URL}image_set_default.jpg`,
-      //     thumbnail: `${PREFIX_URL}image_set_thumb.jpg`,
-      //     imageSet: [
-      //       {
-      //         srcSet: `${PREFIX_URL}image_set_cropped.jpg`,
-      //         media: '(max-width: 1280px)',
-      //       },
-      //       {
-      //         srcSet: `${PREFIX_URL}image_set_default.jpg`,
-      //         media: '(min-width: 1280px)',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     original: `${PREFIX_URL}1.jpg`,
-      //     thumbnail: `${PREFIX_URL}1t.jpg`,
-      //     originalClass: 'featured-slide',
-      //     thumbnailClass: 'featured-thumb',
-      //     description: 'Custom class for slides & thumbnails',
-      //   },
-    ];
+    // this.images = [
+    //   {
+    //     original: 'http://lorempixel.com/1000/600/nature/1/',
+    //     thumbnail: 'http://lorempixel.com/250/150/nature/1/',
+    //   },
+    //   {
+    //     original: 'http://lorempixel.com/1000/600/nature/2/',
+    //     thumbnail: 'http://lorempixel.com/250/150/nature/2/',
+    //   },
+    //   {
+    //     original: 'http://lorempixel.com/1000/600/nature/3/',
+    //     thumbnail: 'http://lorempixel.com/250/150/nature/3/',
+    //   },
+    //   {
+    //     thumbnail: `${PREFIX_URL}4v.jpg`,
+    //     original: `${PREFIX_URL}4v.jpg`,
+    //     embedUrl: 'https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0',
+    //     description: 'Render custom slides within the gallery',
+    //     renderItem: this._renderVideo.bind(this),
+    //   },
+    //   {
+    //     original: `${PREFIX_URL}image_set_default.jpg`,
+    //     thumbnail: `${PREFIX_URL}image_set_thumb.jpg`,
+    //     imageSet: [
+    //       {
+    //         srcSet: `${PREFIX_URL}image_set_cropped.jpg`,
+    //         media: '(max-width: 1280px)',
+    //       },
+    //       {
+    //         srcSet: `${PREFIX_URL}image_set_default.jpg`,
+    //         media: '(min-width: 1280px)',
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     original: `${PREFIX_URL}1.jpg`,
+    //     thumbnail: `${PREFIX_URL}1t.jpg`,
+    //     originalClass: 'featured-slide',
+    //     thumbnailClass: 'featured-thumb',
+    //     description: 'Custom class for slides & thumbnails',
+    //   },
+    // ];
     // .concat(this._getStaticImages());
+  }
+  componentWillMount() {
+    console.log('~~~~~~~~~~~~', this.props.images_list);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -84,6 +101,7 @@ class PhotoSlide extends React.Component {
   //-----------------------------
   removeCurrentPhoto = () => {
     console.log('currentindex', this.state.currentIndex);
+    this.props.removePhoto(this.state.currentIndex);
   };
   //-----------------------------
   _onImageClick(event) {
@@ -102,6 +120,7 @@ class PhotoSlide extends React.Component {
   _onSlide(index) {
     this._resetVideo();
     console.debug('slid to index', index);
+    console.log('index', index);
     this.setState({ currentIndex: index });
   }
 
@@ -198,37 +217,50 @@ class PhotoSlide extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+        {this.props.images_list && this.props.images_list.length >= 1 ? (
+          <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+        ) : null}
+
         <section className="app">
-          <ImageGallery
-            ref={i => (this._imageGallery = i)}
-            items={this.images}
-            lazyLoad={false}
-            onClick={this._onImageClick.bind(this)}
-            onImageLoad={this._onImageLoad}
-            onSlide={this._onSlide.bind(this)}
-            onPause={this._onPause.bind(this)}
-            onScreenChange={this._onScreenChange.bind(this)}
-            onPlay={this._onPlay.bind(this)}
-            infinite={this.state.infinite}
-            showBullets={this.state.showBullets}
-            showFullscreenButton={
-              this.state.showFullscreenButton && this.state.showGalleryFullscreenButton
-            }
-            showPlayButton={this.state.showPlayButton && this.state.showGalleryPlayButton}
-            showThumbnails={this.state.showThumbnails}
-            showIndex={this.state.showIndex}
-            showNav={this.state.showNav}
-            thumbnailPosition={this.state.thumbnailPosition}
-            slideDuration={parseInt(this.state.slideDuration)}
-            slideInterval={parseInt(this.state.slideInterval)}
-            slideOnThumbnailHover={this.state.slideOnThumbnailHover}
-            additionalClass="app-image-gallery"
-          />
+          {this.props.images_list && this.props.images_list.length > 0 ? (
+            <ImageGallery
+              ref={i => (this._imageGallery = i)}
+              items={this.props.images_list}
+              lazyLoad={false}
+              onClick={this._onImageClick.bind(this)}
+              onImageLoad={this._onImageLoad}
+              onSlide={this._onSlide.bind(this)}
+              onPause={this._onPause.bind(this)}
+              onScreenChange={this._onScreenChange.bind(this)}
+              onPlay={this._onPlay.bind(this)}
+              infinite={this.state.infinite}
+              showBullets={this.state.showBullets}
+              showFullscreenButton={
+                this.state.showFullscreenButton && this.state.showGalleryFullscreenButton
+              }
+              showPlayButton={this.state.showPlayButton && this.state.showGalleryPlayButton}
+              showThumbnails={this.state.showThumbnails}
+              showIndex={this.state.showIndex}
+              showNav={this.state.showNav}
+              thumbnailPosition={this.state.thumbnailPosition}
+              slideDuration={parseInt(this.state.slideDuration)}
+              slideInterval={parseInt(this.state.slideInterval)}
+              slideOnThumbnailHover={this.state.slideOnThumbnailHover}
+              additionalClass="app-image-gallery"
+            />
+          ) : (
+            <div>noPhotos</div>
+          )}
         </section>
       </div>
     );
   }
 }
 
-export default PhotoSlide;
+function mapStateToProps(state) {
+  return {
+    images_list: state.images,
+  };
+}
+
+export default connect(mapStateToProps)(PhotoSlide);

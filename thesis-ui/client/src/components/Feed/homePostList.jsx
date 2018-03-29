@@ -5,16 +5,9 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
-import Photo from '../Photo/index.jsx';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-const geolib = require('geolib');
 
-// ELBERT'S COMMENTS
-// post list will need to render all post for all feeds by rendering stuff from store
-// best to have three way conditional rendered views due to styling
-// main feed,
-// watching feed, barttering feed
-// selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
+const geolib = require('geolib');
 
 const styles = {
   root: {
@@ -33,46 +26,39 @@ class HomePostList extends Component {
   constructor(props) {
     super(props);
   }
-//-------------------------------------------------------------
+
   async componentWillMount() {
-    try{
+    try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
-      
-      for (let i = 0; i < data.length; i++) {
-        if (i === 8) break;
-        let address = data[i].location;
-        let results = await geocodeByAddress(address);
-        // console.log('results is from', results[0].formatted_address);
-        let latLng = await getLatLng(results[0]);
-        // console.log('SuccessHome', latLng);
-        let distance = geolib.getDistance(
-          {
-            latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
-            longitude: parseFloat(localStorage.getItem('usersLng')) || -118
-          },
-          latLng
-        );
-        // console.log('right here', distance/1609);
-        data[i].distance = Math.round(distance / 1609);
-        // console.log('the data obj is before', data);
 
-      }
-      
+      // for (let i = 0; i < data.length; i++) {
+      //   if (i === 8) break;
+      //   const address = data[i].location;
+      //   const results = await geocodeByAddress(address);
+      //   // console.log('results is from', results[0].formatted_address);
+      //   const latLng = await getLatLng(results[0]);
+      //   // console.log('SuccessHome', latLng);
+      //   const distance = geolib.getDistance(
+      //     {
+      //       latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
+      //       longitude: parseFloat(localStorage.getItem('usersLng')) || -118,
+      //     },
+      //     latLng,
+      //   );
+      //   // console.log('right here', distance/1609);
+      //   data[i].distance = Math.round(distance / 1609);
+      //   // console.log('the data obj is before', data)
+      // }
       // console.log('the data obj is after', data);
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('Error:', err);
     }
-  };
-        
-    
-    
-    
-//-----------------------------------------------------
+  }
 
   switchToSinglePost = (post) => {
-    console.log('Clicked post.id:', post.id);
+    // console.log('Clicked post.id:', post.id);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };
@@ -86,7 +72,7 @@ class HomePostList extends Component {
           style={styles.gridList}
           style={{
             width: '80%',
-            margin: '10 auto'
+            margin: '10 auto',
             // border: '2px solid rgb(11, 22, 241)',
             // backgroundColor: '#83d8ff',
           }}
@@ -98,12 +84,13 @@ class HomePostList extends Component {
                 title={post.title}
                 subtitle={
                   <div>
-                  <span>
-                    <b>{post.username}</b>
-                  </span><br/>
-                  <span>
-                    <b>{post.distance? post.distance:null} miles away</b>
-                  </span>
+                    <span>
+                      <b>{post.username}</b>
+                    </span>
+                    <br />
+                    <span>
+                      <b>{post.distance ? post.distance : null} miles away</b>
+                    </span>
                   </div>
                 }
                 onClick={() => this.switchToSinglePost(post)}

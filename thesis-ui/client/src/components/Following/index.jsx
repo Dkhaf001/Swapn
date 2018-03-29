@@ -3,26 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import FollowingsListEntry from './FollowingListEntry.jsx';
 import axios from 'axios';
-//this component will be used in the profile feed renders all users from following table
+// this component will be used in the profile feed renders all users from following table
 class Following extends Component {
   constructor() {
     super();
     this.state = {
-      followings: ''
+      followings: '',
     };
   }
   async componentDidMount() {
     try {
-      // const user_id =
-      //   this.props.active_user.id ||
-      //   JSON.parse(window.localStorage.getItem('user')).id;
       const user_id = localStorage.id;
-      const { data } = await axios.get(
-        `http://localhost:3396/api/followings/${user_id}`
-      );
+      const { data } = await axios.get(`http://localhost:3396/api/followings/${user_id}`);
       console.log('this is the data', data);
       this.setState({
-        followings: data
+        followings: data,
       });
     } catch (err) {
       console.log('err fetching followers');
@@ -32,9 +27,9 @@ class Following extends Component {
     return (
       <div>
         {this.state.followings &&
-          this.state.followings.map((following, i) => {
-            return <FollowingsListEntry key={i} following={following} />;
-          })}
+          this.state.followings.map((following, i) => (
+            <FollowingsListEntry key={i} following={following} />
+          ))}
       </div>
     );
   }

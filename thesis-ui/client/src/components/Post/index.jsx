@@ -9,10 +9,11 @@ import { bindActionCreators } from 'redux';
 import path from 'path';
 import GoogleMap from '../Map/maptest.jsx';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+
 const geolib = require('geolib');
 
 class Post extends Component {
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       address: '',
@@ -28,29 +29,28 @@ constructor(props) {
       this.setState({ address: data[0].location });
       // localStorage.setItem('oldLat',localStorage.getItem('latitude'))
       // localStorage.setItem('oldLng', localStorage.getItem('longitude'))
-      let geo = geocodeByAddress(this.state.address)
-        .then(results => {
-          console.log('results is from', results[0].formatted_address);
+      // const geo = geocodeByAddress(this.state.address)
+      //   .then((results) => {
+      //     console.log('results is from', results[0].formatted_address);
 
-          getLatLng(results[0])
-            .then((latLng) => {
-              console.log('SuccessHome', latLng);
-              localStorage.setItem('latitude', latLng.lat);
-              localStorage.setItem('longitude', latLng.lng);
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-        })
-        .catch((error) => {
-          console.error('Error', error);
-        });
+      //     getLatLng(results[0])
+      //       .then((latLng) => {
+      //         console.log('SuccessHome', latLng);
+      //         localStorage.setItem('latitude', latLng.lat);
+      //         localStorage.setItem('longitude', latLng.lng);
+      //       })
+      //       .catch((error) => {
+      //         console.log('Error', error);
+      //       });
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error', error);
+      //   });
+    } catch (error) {
+      console.log(error);
+    }
   }
-  catch(error){
-    console.log(error)
-  }  
-  }
-     
+
   // async componentWillUnmount() {
   //   let oldLat = localStorage.getItem('oldLat');
   //   let oldLng = localStorage.getItem('oldLng');
@@ -66,9 +66,8 @@ constructor(props) {
         if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
           return (
             <div>
-              {console.log(this.props.current_post)}
               <SellerPost {...this.props} />
-              <GoogleMap />;
+              {/* <GoogleMap />; */}
             </div>
           );
         }
@@ -76,7 +75,7 @@ constructor(props) {
       return (
         <div>
           <BuyerPost {...this.props} />
-          <GoogleMap />
+          {/* <GoogleMap /> */}
         </div>
       );
     }
@@ -86,15 +85,15 @@ constructor(props) {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 

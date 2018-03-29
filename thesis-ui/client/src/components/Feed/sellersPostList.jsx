@@ -12,13 +12,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class SellersPostList extends Component {
@@ -27,7 +27,7 @@ class SellersPostList extends Component {
     this.state = {
       lists: [],
       messages: [],
-      entries:[]
+      entries: [],
     };
   }
   async componentWillMount() {
@@ -35,45 +35,42 @@ class SellersPostList extends Component {
     try {
       const id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
-      data.sort((a, b) => {
-        return b.id - a.id;
-      });
+      data.sort((a, b) => b.id - a.id);
       this.setState({
-        lists: data
-      })
-      console.log('hello from sellerspostlist', data)
+        lists: data,
+      });
+      // console.log('hello from sellerspostlist', data);
       this.props.addCurrentList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
   async componentDidMount() {
-    try{
+    try {
       const obj = {};
       const messages = this.props.messages;
-      if(messages){
-        for(var i = 0; i< messages.length; i++) {
-          if(!obj[messages[i].roomId]) {
-            obj[messages[i].roomId] = messages[i]
+      if (messages) {
+        for (let i = 0; i < messages.length; i++) {
+          if (!obj[messages[i].roomId]) {
+            obj[messages[i].roomId] = messages[i];
           }
         }
-        const entries = Object.entries(obj)
-        console.log('this is the entries', entries)
+        const entries = Object.entries(obj);
+        // console.log('this is the entries', entries);
         this.setState({
-          entries: entries
-        })
+          entries,
+        });
       }
-      console.log('messages', this.props.messages);
+      // console.log('messages', this.props.messages);
       this.setState({
-        messages: this.props.messages
-      })
+        messages: this.props.messages,
+      });
     } catch (err) {
       console.log('err in sellersPostList', err);
     }
   }
-  switchToSinglePost = post => {
-    
-    console.log('!!!shayne::Clicked post.id:', post);
+  switchToSinglePost = (post) => {
+    // console.log('!!!shayne::Clicked post.id:', post);
     this.props.addCurrentPost(post);
     this.props.history.push(`/post/${post.id}`);
   };
@@ -93,32 +90,29 @@ class SellersPostList extends Component {
   render() {
     return (
       <div style={styles.root}>
-      <div id='status'>
-      {
-        this.state.entries.map(arr => {
-          return <div key={arr[0]}>
+        <div id="status">
+          {this.state.entries.map(arr => (
+            <div key={arr[0]}>
               {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
             </div>
-        })
-      }
-      </div>
+          ))}
+        </div>
         <GridList cellHeight={200} style={styles.gridList}>
           {this.state.lists &&
-            this.state.lists.map(post => {
-              return(
+            this.state.lists.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
-                    <p id={`${post.id}`} >what the heck</p>
+                    <p id={`${post.id}`}>what the heck</p>
                   </span>
                 }
                 onClick={() => this.switchToSinglePost(post)}
                 actionIcon={
                   <IconButton
-                    onClick={e => {
+                    onClick={(e) => {
                       e.stopPropagation();
                       this.removePost(localStorage.id, post.id);
                     }}
@@ -128,8 +122,8 @@ class SellersPostList extends Component {
                 }
               >
                 <img src={post.main_photo} />
-              </GridTile>)
-          })}
+              </GridTile>
+            ))}
         </GridList>
       </div>
     );
@@ -139,7 +133,7 @@ class SellersPostList extends Component {
 function mapStateToProps(state) {
   return {
     current_list: state.current_list,
-    messages: state.messages
+    messages: state.messages,
   };
 }
 
@@ -147,9 +141,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 
