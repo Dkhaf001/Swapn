@@ -48,8 +48,8 @@ class HomePostList extends Component {
         // console.log('SuccessHome', latLng);
         let distance = geolib.getDistance(
           {
-            latitude: parseFloat(localStorage.getItem('usersLat')),
-            longitude: parseFloat(localStorage.getItem('usersLng'))
+            latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
+            longitude: parseFloat(localStorage.getItem('usersLng')) || -118
           },
           latLng
         );
