@@ -13,7 +13,7 @@ export const fetchUserPostsHelper = ({ user_id }) => `
 
 export const fetchSinglePostsHelper = ({ post_id }) =>
   `
-  SELECT * 
+  SELECT *, post.id AS post_id 
   FROM users 
   INNER JOIN posts  ON  posts.user_id = users.id 
   INNER JOIN categorys on (posts.category=categorys.id)

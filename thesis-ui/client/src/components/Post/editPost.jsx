@@ -34,12 +34,13 @@ class EditPost extends Component {
   async submitEditPost() {
     try {
       let userId = this.props.current_post.user_id;
+      console.log(this.props.current_post);
       let postId = this.props.current_post.id;
       const data = await axios.put(
         `http://localhost:3396/api/posts/${userId}/${postId}`,
         this.state
       );
-      console.log('successfully edited post!');
+      console.log('successfully edited post!', this.state);
       this.props.history.push('/home');
     } catch (err) {
       console.log('error editing post');
