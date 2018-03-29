@@ -12,6 +12,7 @@ import imagesReducers from './imagesReducers';
 import current_roomId from './roomIdReducers';
 import messages from './messagesReducers';
 import positiongeo from './positionReducers.js';
+import newPostIdReducer from './new_postIdReducers';
 
 export default combineReducers({
   positiongeo,
@@ -26,4 +27,5 @@ export default combineReducers({
   socket: socketReducers,
   current_roomId,
   images: imagesReducers,
+  newPostId: newPostIdReducer,
 });

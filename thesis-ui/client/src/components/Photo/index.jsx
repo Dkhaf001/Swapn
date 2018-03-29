@@ -15,6 +15,7 @@ class PhotoUpload extends React.Component {
       images: [],
     };
   }
+  componentDidMount() {}
   removePhoto = async (postId, key) => {
     try {
       const data = await axios.delete(`http://localhost:8593/api/removephoto/${postId}/${key}`);
@@ -72,8 +73,9 @@ class PhotoUpload extends React.Component {
   };
   handleUpload = async () => {
     // this.props.loadingTrue();
+    console.log(this.props.npId, 'right before upload idPost');
     const url = window.location.href;
-    const postId = path.basename(url);
+    const postId = this.props.npId; // this.props.idPost; // path.basename(url);
     const value = this.state.val;
     console.log('urlpostid should = home', postId);
     const { file } = this.state;
@@ -154,6 +156,7 @@ function mapStateToProps(state) {
   return {
     current_post: state.current_post,
     images: state.images,
+    npId: state.newPostId,
   };
 }
 

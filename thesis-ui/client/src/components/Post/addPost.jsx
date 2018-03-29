@@ -7,7 +7,8 @@ import MenuItem from 'material-ui/MenuItem';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import PhotoUpload from '../Photo/index.jsx';
-import { addCurrentPost } from '../../actions';
+import PhotoSlide from '../Photo/photoslide.jsx';
+import { addCurrentPost, addNewPostId } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
@@ -45,14 +46,14 @@ class AddPost extends Component {
         this.state.newPost.demand !== ''
       ) {
         console.log('entering submit post logic', this.state.newPost.location);
-        let results = await geocodeByAddress(this.state.newPost.location);
+        const results = await geocodeByAddress(this.state.newPost.location);
         console.log('results is from', results[0].formatted_address);
-        let latLng = await getLatLng(results[0]);
+        const latLng = await getLatLng(results[0]);
         console.log('Success Post', latLng);
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
             location: latLng,
-          })
+          }),
         });
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
@@ -61,10 +62,7 @@ class AddPost extends Component {
           this.state.newPost,
         );
         tempPostId = data.rows[0].id;
-        console.log(
-          'successfully instantiated a new post (completed): ',
-          this.state.newPost
-        );
+        console.log('successfully instantiated a new post (completed): ', this.state.newPost);
         this.props.history.push('/home');
       } else {
         alert('Please fill out all text fields!');
@@ -120,11 +118,13 @@ class AddPost extends Component {
         );
         this.setState({ stepIndex: 1 });
         this.props.addCurrentPost(data.rows[0]);
+        console.log('thisis id from addpost', data.rows[0].id);
         tempPostId = data.rows[0].id;
-        console.log(
-          'successfully submitted new post (pending): ',
-          data.rows[0]
-        );
+
+        // set
+        this.props.addNewPostId(data.rows[0].id);
+
+        console.log('successfully submitted new post (pending): ', data.rows[0]);
       } else {
         this.handlePrev();
         alert('Please fill out all text fields!');
@@ -235,11 +235,14 @@ class AddPost extends Component {
         );
       case 1:
         // ELBERT! S3 GOES HERE!
-        return <PhotoUpload />;
+        return <PhotoUpload idPost={tempPostId} />;
       // return 'OVER HERE ELBERT!!!!!!!!';
       case 2:
         return (
           <div>
+            <div>
+              <PhotoSlide />
+            </div>
             <h1>Confirm your post!</h1>
             <TextField
               floatingLabelText="Title"
@@ -408,6 +411,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentPost,
+      addNewPostId,
     },
     dispatch,
   );

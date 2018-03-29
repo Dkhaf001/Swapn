@@ -57,3 +57,8 @@ export const addImages = position => ({
   type: 'IMAGES',
   payload: position,
 });
+
+export const addNewPostId = position => ({
+  type: 'NEW_POST_ID',
+  payload: position,
+});
