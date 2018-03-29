@@ -9,13 +9,6 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 const geolib = require('geolib');
 
-// ELBERT'S COMMENTS
-// post list will need to render all post for all feeds by rendering stuff from store
-// best to have three way conditional rendered views due to styling
-// main feed,
-// watching feed, barttering feed
-// selling list --> needs aditional button to create listing and delete listings and render if it was bartered or not
-
 const styles = {
   root: {
     display: 'flex',
@@ -55,9 +48,8 @@ class HomePostList extends Component {
         );
         // console.log('right here', distance/1609);
         data[i].distance = Math.round(distance / 1609);
-        // console.log('the data obj is before', data);
+        // console.log('the data obj is before', data)
       }
-
       // console.log('the data obj is after', data);
       this.props.addCurrentList(data);
     } catch (err) {
