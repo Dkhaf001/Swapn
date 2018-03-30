@@ -19,35 +19,34 @@ class Bio extends Component {
   }
   async componentDidMount() {
     const url = window.location.href;
-    const otherId = path.basename(url);
+    let userId;
+    if (url.includes('othersprofile')) {
+      userId = path.basename(url);
+    } else {
+      userId = this.props.active_user.id;
+    }
     try {
-      const { data } = await axios.get(`http://localhost:3396/api/users/${otherId}`);
+      const { data } = await axios.get(`http://localhost:3396/api/users/${userId}`);
       console.log('!!!!', data);
       // this.props.addCurrentProfile(data[0]);
-      await this.getFollowing();
       this.setState({ user: data[0] });
-      // create rout in backend
-      // console.log('this is active user id', this.props.active_user.id);
-      // console.log('this is profile id', this.state.user.id);
-      // const following = await axios.get(`http://localhost:3396/api/followings/single/${this.props.active_user.id}/${
-      //   this.state.user.id
-      // }`);
-      // console.log('~~~~!!!', following);
-      // if (following.row.length > 1) {
-      //   this.setState({ following: true });
-      // }
+
+      if (url.includes('othersprofile')) {
+        this.getFollowing();
+      }
     } catch (err) {
       console.log('Bio Component Error');
     }
   }
-  async getFollowing() {
+
+  getFollowing = async () => {
+    const userId = this.props.active_user.id;
+    const followerId = this.state.user.id;
     try {
-      const userId = this.props.active_user.id;
-      const followerId = this.state.user.id;
       const { data } = await axios.get(`http://localhost:3396/api/followings/single/${userId}/${followerId}`);
       console.log('successfully received following list');
       console.log('thisis data~~~~', data);
-      if (data.length > 0) {
+      if (data.rowCount > 0) {
         this.setState({
           currentlyFollowing: true,
         });
@@ -61,7 +60,8 @@ class Bio extends Component {
     } catch (err) {
       console.log('error getting followers!');
     }
-  }
+  };
+
   buttonCheck = () => {
     if (this.state.currentlyFollowing) {
       return <button onClick={this.unfollowButton}>Unfollow</button>;

@@ -6,10 +6,10 @@ import {
   fetchSinglePostsHelper,
   updatePostsHelper,
   deletePostsHelper,
-  addPostsHelper
+  addPostsHelper,
 } from './postsSQLHelpers';
 
-export const fetchAllPostsQuery = async payload => {
+export const fetchAllPostsQuery = async (payload) => {
   try {
     const queryString = fetchAllPostsHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -20,7 +20,7 @@ export const fetchAllPostsQuery = async payload => {
   }
 };
 
-export const fetchUserPostsQuery = async payload => {
+export const fetchUserPostsQuery = async (payload) => {
   try {
     const queryString = fetchUserPostsHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -31,12 +31,12 @@ export const fetchUserPostsQuery = async payload => {
   }
 };
 
-export const fetchSinglePostsQuery = async payload => {
+export const fetchSinglePostsQuery = async (payload) => {
   try {
     const queryString = fetchSinglePostsHelper(payload);
-    console.log('queryString', queryString)
+    console.log('queryString', queryString);
     const data = await db.queryAsync(queryString);
-    console.log('lookhere', data)
+    // console.log('lookhere', data)
     console.log('fetchSinglePostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
@@ -55,7 +55,7 @@ export const addPostsQuery = async (user, payload) => {
   }
 };
 
-export const deletePostsQuery = async payload => {
+export const deletePostsQuery = async (payload) => {
   try {
     const queryString = deletePostsHelper(payload);
     const data = await db.queryAsync(queryString);

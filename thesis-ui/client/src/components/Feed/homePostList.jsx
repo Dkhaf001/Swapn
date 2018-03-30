@@ -5,9 +5,11 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
-import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import Geolocation from '../Map/geolocation.jsx';
+import { getDistance } from 'geolib';
 
 const geolib = require('geolib');
 
@@ -15,13 +17,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class HomePostList extends Component {
@@ -35,32 +37,37 @@ class HomePostList extends Component {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
 
-      // for (let i = 0; i < data.length; i++) {
-      //   if (i === 8) break;
-      //   const address = data[i].location;
-      //   const results = await geocodeByAddress(address);
-      //   // console.log('results is from', results[0].formatted_address);
-      //   const latLng = await getLatLng(results[0]);
-      //   // console.log('SuccessHome', latLng);
-      //   const distance = geolib.getDistance(
-      //     {
-      //       latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
-      //       longitude: parseFloat(localStorage.getItem('usersLng')) || -118,
-      //     },
-      //     latLng,
-      //   );
-      //   // console.log('right here', distance/1609);
-      //   data[i].distance = Math.round(distance / 1609);
-      //   // console.log('the data obj is before', data)
-      // }
-      // console.log('the data obj is after', data);
-      this.props.addCurrentList(data);
+      console.log('the data obj is before', data);
+      const modifiedData = await this.getDistance(data);
+      console.log('the data obj is after', data);
+      this.props.addCurrentList(modifiedData);
     } catch (err) {
       console.log('Error:', err);
     }
   }
+  getDistance = async (data) => {
+    for (let i = 0; i < data.length; i++) {
+      if (i === 8) break;
+      const address = data[i].location;
+      const results = await geocodeByAddress(address);
+      // console.log('results is from', results[0].formatted_address);
+      const latLng = await getLatLng(results[0]);
+      // console.log('SuccessHome', latLng);
+      const distance = geolib.getDistance(
+        {
+          latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
+          longitude: parseFloat(localStorage.getItem('usersLng')) || -118,
+        },
+        latLng,
+      );
+      // console.log('right here', distance/1609);
+      data[i].distance = Math.round(distance / 1609);
+      // console.log('the data obj is before', data)
+    }
+    return data;
+  };
 
-  switchToSinglePost = async post => {
+  switchToSinglePost = async (post) => {
     // console.log('!!!shayne::Clicked post.id:', post);
     try {
       this.props.addCurrentPost(post);
@@ -71,7 +78,7 @@ class HomePostList extends Component {
   };
 
   handleChange = async (event, index, value) => {
-    this.setState({ value: value });
+    this.setState({ value });
     if (value === 1) {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
@@ -85,9 +92,8 @@ class HomePostList extends Component {
       data.sort((a, b) => {
         if (a.title < b.title) {
           return -1;
-        } else {
-          return 1;
         }
+        return 1;
       });
       this.props.addCurrentList(data);
     }
@@ -117,7 +123,7 @@ class HomePostList extends Component {
             style={styles.gridList}
             style={{
               width: '80%',
-              margin: '10 auto'
+              margin: '10 auto',
               // border: '2px solid rgb(11, 22, 241)',
               // backgroundColor: '#83d8ff',
             }}
@@ -144,6 +150,7 @@ class HomePostList extends Component {
                 </GridTile>
               ))}
           </GridList>
+          <Geolocation />
         </div>
       </div>
     );
@@ -152,7 +159,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
@@ -160,9 +167,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import path from 'path';
 
 const styles = {
   root: {
@@ -29,13 +30,14 @@ class ListingPostList extends Component {
   }
 
   async componentWillMount() {
+    const url = window.location.href;
     try {
       // console.log('hello forn listing post list');
-      const url = window.location.href;
-      if (!url.includes('othersprofile')) {
-        const id = localStorage.id;
+      if (url.includes('othersprofile')) {
+        const userId = path.basename(url);
+
         // console.log('the id is', localStorage.id);
-        const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
+        const { data } = await axios.get(`http://localhost:3396/api/posts/${userId}`);
         data.sort((a, b) => b.id - a.id);
         this.setState({ listings: data });
         this.props.addSellingList(data);
