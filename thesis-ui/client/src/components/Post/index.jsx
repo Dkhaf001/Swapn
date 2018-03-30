@@ -16,14 +16,16 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: '',
+      address: ''
     };
   }
   async componentWillMount() {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
+      const { data } = await axios.get(
+        `http://localhost:3396/api/posts/fetchSinglePost/${postId}`
+      );
       console.log('successfully received post');
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });
@@ -63,7 +65,7 @@ class Post extends Component {
   render() {
     if (this.props.current_post) {
       if (localStorage.id) {
-        if (Number(localStorage.id) === Number(this.props.current_post.user_id)) {
+        if (Number(localStorage.id) === this.props.current_post.user_id) {
           return (
             <div>
               <SellerPost {...this.props} />
@@ -85,15 +87,15 @@ class Post extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post,
+    current_post: state.current_post
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 
