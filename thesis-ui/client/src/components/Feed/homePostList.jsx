@@ -6,6 +6,8 @@ import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 const geolib = require('geolib');
 
@@ -13,18 +15,19 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
   constructor(props) {
     super(props);
+    this.state = { value: 1 };
   }
 
   async componentWillMount() {
@@ -57,7 +60,7 @@ class HomePostList extends Component {
     }
   }
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     // console.log('!!!shayne::Clicked post.id:', post);
     try {
       this.props.addCurrentPost(post);
@@ -66,43 +69,82 @@ class HomePostList extends Component {
       console.log('homepostswitch', err);
     }
   };
+
+  handleChange = async (event, index, value) => {
+    this.setState({ value: value });
+    if (value === 1) {
+      const { data } = await axios.get('http://localhost:3396/api/posts');
+      data.sort((a, b) => b.id - a.id);
+      this.props.addCurrentList(data);
+    } else if (value === 2) {
+      const { data } = await axios.get('http://localhost:3396/api/posts');
+      // UNCOMMENT THIS CODE WHEN DANIEL FINISHES DISTANCE CALCULATION
+      // data.sort((a, b) => a.distance - b.distance);
+
+      // this is sorting by alphabetical order (placeholder until distance is setup)
+      data.sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+      this.props.addCurrentList(data);
+    }
+  };
+
   render() {
     return (
-      <div style={styles.root}>
-        <GridList
-          cellHeight={200}
-          cols={4}
-          padding={15}
-          style={styles.gridList}
-          style={{
-            width: '80%',
-            margin: '10 auto',
-            // border: '2px solid rgb(11, 22, 241)',
-            // backgroundColor: '#83d8ff',
-          }}
-        >
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
-              <GridTile
-                key={post.id}
-                title={post.title}
-                subtitle={
-                  <div>
-                    <span>
-                      <b>{post.username}</b>
-                    </span>
-                    <br />
-                    <span>
-                      <b>{post.distance ? post.distance : null} miles away</b>
-                    </span>
-                  </div>
-                }
-                onClick={() => this.switchToSinglePost(post)}
-              >
-                <img src={post.main_photo} />
-              </GridTile>
-            ))}
-        </GridList>
+      <div>
+        <div>
+          {' '}
+          <DropDownMenu
+            value={this.state.value}
+            onChange={this.handleChange}
+            openImmediately={false}
+            style={{ float: 'right' }}
+          >
+            <MenuItem value={1} primaryText="Sort by Newest" />
+            <MenuItem value={2} primaryText="Sort by Distance" />
+          </DropDownMenu>
+        </div>
+
+        <div style={styles.root}>
+          <GridList
+            cellHeight={200}
+            cols={4}
+            padding={15}
+            style={styles.gridList}
+            style={{
+              width: '80%',
+              margin: '10 auto'
+              // border: '2px solid rgb(11, 22, 241)',
+              // backgroundColor: '#83d8ff',
+            }}
+          >
+            {this.props.current_list &&
+              this.props.current_list.map(post => (
+                <GridTile
+                  key={post.id}
+                  title={post.title}
+                  subtitle={
+                    <div>
+                      <span>
+                        <b>{post.username}</b>
+                      </span>
+                      <br />
+                      <span>
+                        <b>{post.distance ? post.distance : null} miles away</b>
+                      </span>
+                    </div>
+                  }
+                  onClick={() => this.switchToSinglePost(post)}
+                >
+                  <img src={post.main_photo} />
+                </GridTile>
+              ))}
+          </GridList>
+        </div>
       </div>
     );
   }
@@ -110,7 +152,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
@@ -118,9 +160,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 

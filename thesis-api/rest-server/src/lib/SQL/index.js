@@ -56,7 +56,8 @@ export const createPostTable = async () => {
       offer_count INT NOT NULL DEFAULT 0,
       status VARCHAR(255) NOT NULL,
       main_photo VARCHAR(255) NULL,
-      created_at TIMESTAMP DEFAULT NOW()
+      created_at TIMESTAMP DEFAULT NOW(),
+      category INT REFERENCES categorys(id)
       )
       `
     );
@@ -190,8 +191,7 @@ export const createCategoryTable = async () => {
       CREATE TABLE IF NOT EXISTS categorys
       (
       id SERIAL PRIMARY KEY,
-      type VARCHAR(255) NOT NULL,
-      post_id INT REFERENCES posts(id)
+      type VARCHAR(255) NOT NULL
       )
       `
     );

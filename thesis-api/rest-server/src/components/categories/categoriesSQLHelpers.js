@@ -1,9 +1,12 @@
-export const fetchAllCategorysHelper = ({ type }) => {
+export const fetchAllCategorysHelper = ({ category_id }) => {
   return `
    SELECT * 
-   FROM posts 
-   INNER JOIN categorys
-   ON posts.id = categorys.post_id 
-   WHERE categorys.type = ${type}
+   FROM posts
+   WHERE posts.category = ${category_id}
   `;
 };
+
+// SELECT *
+//    FROM posts
+//    INNER JOIN categorys ON posts.category = categorys.id
+//    WHERE posts.category = ${category_id}
