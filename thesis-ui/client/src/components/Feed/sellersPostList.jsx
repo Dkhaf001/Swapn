@@ -43,34 +43,38 @@ class SellersPostList extends Component {
       console.log('err fetching posts', err);
     }
   }
-  async componentDidMount() {
-    try {
-      const obj = {};
-      const messages = this.props.messages;
-      if (messages) {
-        for (let i = 0; i < messages.length; i++) {
-          if (!obj[messages[i].roomId]) {
-            obj[messages[i].roomId] = messages[i];
-          }
-        }
-        const entries = Object.entries(obj);
-        // console.log('this is the entries', entries);
-        this.setState({
-          entries,
-        });
-      }
-      // console.log('messages', this.props.messages);
-      this.setState({
-        messages: this.props.messages,
-      });
-    } catch (err) {
-      console.log('err in sellersPostList', err);
-    }
-  }
-  switchToSinglePost = (post) => {
+  // async componentDidMount() {
+  //   try {
+  //     const obj = {};
+  //     const messages = this.props.messages;
+  //     if (messages) {
+  //       for (let i = 0; i < messages.length; i++) {
+  //         if (!obj[messages[i].roomId]) {
+  //           obj[messages[i].roomId] = messages[i];
+  //         }
+  //       }
+  //       const entries = Object.entries(obj);
+  //       // console.log('this is the entries', entries);
+  //       this.setState({
+  //         entries,
+  //       });
+  //     }
+  //     // console.log('messages', this.props.messages);
+  //     this.setState({
+  //       messages: this.props.messages,
+  //     });
+  //   } catch (err) {
+  //     console.log('err in sellersPostList', err);
+  //   }
+  // }
+  switchToSinglePost = async (post) => {
     // console.log('!!!shayne::Clicked post.id:', post);
-    this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.id}`);
+    try {
+      this.props.addCurrentPost(post);
+      this.props.history.push(`/post/${post.id}`);
+    } catch (err) {
+      console.log('sellerpostswitch', err);
+    }
   };
 
   async removePost(userId, postId) {
@@ -89,13 +93,13 @@ class SellersPostList extends Component {
   render() {
     return (
       <div style={styles.root}>
-        <div id="status">
+        {/* <div id="status">
           {this.state.entries.map(arr => (
             <div key={arr[0]}>
               {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
             </div>
           ))}
-        </div>
+        </div> */}
         <GridList cellHeight={200} style={styles.gridList}>
           {this.props.selling_list &&
             this.props.selling_list.map(post => (

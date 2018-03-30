@@ -33,7 +33,6 @@ class WatchingPostList extends Component {
       const id = localStorage.id;
       // console.log('the id is', localStorage.id);
       const { data } = await axios.get(`http://localhost:3396/api/watchers/${id}`);
-      this.props.addWatchingList(data);
       this.setState({
         watching: data,
       });
@@ -52,10 +51,15 @@ class WatchingPostList extends Component {
       console.log('err deleting a post from your watch list');
     }
   }
-  switchToSinglePost = (post) => {
-    // console.log('Clicked post.id:', post.post_id);
-    this.props.addCurrentPost(post);
-    this.props.history.push(`/post/${post.post_id}`);
+
+  switchToSinglePost = async (post) => {
+    // console.log('!!!shayne::Clicked post.id:', post);
+    try {
+      this.props.addCurrentPost(post);
+      this.props.history.push(`/post/${post.post_id}`);
+    } catch (err) {
+      console.log('watchingpostswitch', err);
+    }
   };
   render() {
     return (
