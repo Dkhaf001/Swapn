@@ -23,12 +23,10 @@ export const fetchSinglePostsHelper = ({ post_id }) =>
 
 export const addPostsHelper = (
   { user_id },
-  {
-    title, description, condition, location, demand, status,
-  },
+  { title, description, condition, location, category, demand, status }
 ) => `
-   INSERT INTO posts (title, description, condition, location, demand, user_id, status, category, main_photo)
-   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '1','https://s3.amazonaws.com/uifaces/faces/twitter/mbilderbach/128.jpg')
+   INSERT INTO posts (title, description, condition, location, category, demand, user_id, status, main_photo)
+   VALUES ('${title}', '${description}', '${condition}', '${location}', ${category}, '${demand}', ${user_id}, '${status}', 'https://s3.amazonaws.com/uifaces/faces/twitter/mbilderbach/128.jpg')
    RETURNING *
   `;
 
@@ -40,8 +38,15 @@ export const deletePostsHelper = ({ user_id, post_id }) => `
 export const updatePostsHelper = (
   { user_id, post_id },
   {
-    title, description, condition, location, demand, status, main_photo, tradingWith,
-  },
+    title,
+    description,
+    condition,
+    location,
+    demand,
+    status,
+    main_photo,
+    tradingWith
+  }
 ) => `
    UPDATE posts 
    SET  title='${title}', 
