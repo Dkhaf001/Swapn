@@ -17,6 +17,7 @@ export const removeOffersHelper = ({ room_id }) => {
   DELETE FROM offers
   WHERE room_id='${room_id}'
   `;
+}
 
 export const getSingleOfferHelper = ({ buyer_username, post_id }) => `
   SELECT * 
