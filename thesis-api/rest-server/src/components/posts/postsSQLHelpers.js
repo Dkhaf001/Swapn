@@ -16,7 +16,6 @@ export const fetchSinglePostsHelper = ({ post_id }) =>
   SELECT *, post.id AS post_id 
   FROM users 
   INNER JOIN posts  ON  posts.user_id = users.id 
-  INNER JOIN categorys on (posts.category=categorys.id)
   WHERE posts.id=${post_id}
   `;
 // SELECT * FROM posts INNER JOIN users

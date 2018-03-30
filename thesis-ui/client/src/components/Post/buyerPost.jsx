@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import Chattest from '../Chat/Chattest.jsx';
 import randomstring from 'randomstring';
+import path from 'path';
 
 class BuyerPost extends Component {
   constructor() {
@@ -62,12 +63,15 @@ class BuyerPost extends Component {
       const { data } = await axios.get(
         `http://localhost:3396/api/posts/fetchSinglePost/${postId}`
       );
-      console.log('successfully received post');
+      console.log('successfully received post', data);
+      console.log('what is this??', data[0]);
       this.props.addCurrentPost(data[0]);
       // this.setState({
       //   post: data[0],
       // });
-    } catch (err) {}
+    } catch (err) {
+      console.log('error getPost', err);
+    }
   };
 
   async getPhotos() {

@@ -18,21 +18,21 @@ import {
 } from '../../lib/SQL';
 
 const setup = async () => {
-  await dropFollowingTable();
   await dropPhotoTable();
   await dropRatingTable();
   await dropOfferTable();
   await dropWatchTable();
+  await dropFollowingTable();
   await dropPostTable();
   await dropCategoryTable();
   await dropUserTable();
   await createUserTable();
   await createCategoryTable();
   await createPostTable();
+  await createFollowingTable();
   await createWatchTable();
   await createRatingTable();
   await createPhotoTable();
-  await createFollowingTable();
   await createOfferTable();
   process.exit();
 };
