@@ -6,14 +6,14 @@ export const fetchAllPostsHelper = () => `
 
 export const fetchUserPostsHelper = ({ user_id }) => `
   SELECT * 
-  FROM posts 
-  INNER JOIN categorys on (posts.category=categorys.id)
+  FROM categorys 
+  INNER JOIN posts on (posts.category=categorys.id)
   WHERE user_id = ${user_id}
   `;
 
 export const fetchSinglePostsHelper = ({ post_id }) =>
   `
-  SELECT *, post.id AS post_id 
+  SELECT *
   FROM users 
   INNER JOIN posts  ON  posts.user_id = users.id 
   WHERE posts.id=${post_id}
@@ -23,10 +23,12 @@ export const fetchSinglePostsHelper = ({ post_id }) =>
 
 export const addPostsHelper = (
   { user_id },
-  { title, description, condition, location, demand, status }
+  {
+    title, description, condition, location, demand, status,
+  },
 ) => `
-   INSERT INTO posts (title, description, condition, location, demand, user_id, status)
-   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}')
+   INSERT INTO posts (title, description, condition, location, demand, user_id, status, category, main_photo)
+   VALUES ('${title}', '${description}', '${condition}', '${location}', '${demand}', ${user_id}, '${status}', '1','https://s3.amazonaws.com/uifaces/faces/twitter/mbilderbach/128.jpg')
    RETURNING *
   `;
 
@@ -37,7 +39,9 @@ export const deletePostsHelper = ({ user_id, post_id }) => `
 
 export const updatePostsHelper = (
   { user_id, post_id },
-  { title, description, condition, location, demand, status, main_photo }
+  {
+    title, description, condition, location, demand, status, main_photo,
+  },
 ) => `
    UPDATE posts 
    SET  title='${title}', 

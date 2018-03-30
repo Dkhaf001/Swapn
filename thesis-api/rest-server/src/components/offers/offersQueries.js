@@ -4,10 +4,10 @@ import {
   addOffersHelper,
   removeOffersHelper,
   getSingleOfferHelper,
-  fetchPostOffersHelper
+  fetchPostOffersHelper,
 } from './offersSQLHelpers';
 
-export const fetchAllOffersQuery = async payload => {
+export const fetchAllOffersQuery = async (payload) => {
   try {
     const queryString = fetchAllOffersHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -18,7 +18,7 @@ export const fetchAllOffersQuery = async payload => {
   }
 };
 
-export const addOffersQuery = async payload => {
+export const addOffersQuery = async (payload) => {
   try {
     const queryString = addOffersHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -29,7 +29,7 @@ export const addOffersQuery = async payload => {
   }
 };
 
-export const removeOffersQuery = async payload => {
+export const removeOffersQuery = async (payload) => {
   try {
     const queryString = removeOffersHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -40,23 +40,23 @@ export const removeOffersQuery = async payload => {
   }
 };
 
-export const getSingleOfferQuery = async payload => {
+export const getSingleOfferQuery = async (payload) => {
   try {
     const queryString = getSingleOfferHelper(payload);
     const data = await db.queryAsync(queryString);
-    console.log('getSingleOfferQuery!!!!!!', data)
+    // console.log('getSingleOfferQuery!!!!!!', data)
     return data;
-  }catch(err) {
-    console.log('err getting single offer Query', err)
+  } catch (err) {
+    console.log('err getting single offer Query', err);
   }
-}
+};
 
-export const fetchPostOffersQuery = async payload => {
+export const fetchPostOffersQuery = async (payload) => {
   try {
-    const queryString = fetchPostOffersHelper(payload)
+    const queryString = fetchPostOffersHelper(payload);
     const data = await db.queryAsync(queryString);
-    return data
-  }catch(err) {
-    console.log('err fetching post offer query', err)
+    return data;
+  } catch (err) {
+    console.log('err fetching post offer query', err);
   }
-}
+};

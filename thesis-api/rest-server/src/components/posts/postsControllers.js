@@ -30,7 +30,7 @@ export const fetchUserPostsController = async (req, res) => {
 export const fetchSinglePostsController = async (req, res) => {
   const payload = req.params;
   try {
-    console.log('this is the payload fetching single post', payload);
+    // console.log('this is the payload fetching single post', payload);
     const data = await fetchSinglePostsQuery(payload);
     data[0].password = 'N/A';
     return res.status(200).send(data);
