@@ -44,7 +44,6 @@ export const getSingleOfferQuery = async (payload) => {
   try {
     const queryString = getSingleOfferHelper(payload);
     const data = await db.queryAsync(queryString);
-    // console.log('getSingleOfferQuery!!!!!!', data)
     return data;
   } catch (err) {
     console.log('err getting single offer Query', err);

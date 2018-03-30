@@ -36,13 +36,10 @@ class HomePostList extends Component {
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
-
-      console.log('the data obj is before', data);
       const modifiedData = await this.getDistance(data);
-      console.log('the data obj is after', data);
       this.props.addCurrentList(modifiedData);
     } catch (err) {
-      console.log('Error:', err);
+      console.log('Error on componentWillMount - homePostList');
     }
   }
   getDistance = async (data) => {
@@ -50,9 +47,7 @@ class HomePostList extends Component {
       if (i === 8) break;
       const address = data[i].location;
       const results = await geocodeByAddress(address);
-      // console.log('results is from', results[0].formatted_address);
       const latLng = await getLatLng(results[0]);
-      // console.log('SuccessHome', latLng);
       const distance = geolib.getDistance(
         {
           latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
@@ -60,15 +55,12 @@ class HomePostList extends Component {
         },
         latLng,
       );
-      // console.log('right here', distance/1609);
       data[i].distance = Math.round(distance / 1609);
-      // console.log('the data obj is before', data)
     }
     return data;
   };
 
   switchToSinglePost = async (post) => {
-    // console.log('!!!shayne::Clicked post.id:', post);
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);

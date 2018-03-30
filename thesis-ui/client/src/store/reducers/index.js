@@ -18,6 +18,7 @@ import barteringListReducer from './bartering_listReducers';
 import watchingListReducer from './watching_listReducers';
 import sellingListReducer from './selling_listReducers';
 
+import acceptedOffers from './accepted_offersReducers'
 export default combineReducers({
   positiongeo,
   messages,
@@ -36,4 +37,5 @@ export default combineReducers({
   watching_list: watchingListReducer,
   bartering_list: barteringListReducer,
   following_list: followingListReducer,
+  acceptedOffers
 });

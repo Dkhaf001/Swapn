@@ -27,30 +27,26 @@ class SellersPostList extends Component {
     this.state = {
       lists: [],
       messages: [],
-      entries: [],
     };
   }
   async componentWillMount() {
-    // grab data from db, update store
     try {
       const id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
       data.sort((a, b) => b.id - a.id);
       this.setState({ lists: data });
-      // console.log('hello from sellerspostlist', data);
       this.props.addSellingList(data);
     } catch (err) {
-      console.log('err fetching posts', err);
+      console.log('error with componentWillMount - sellersPostList');
     }
   }
 
   switchToSinglePost = async (post) => {
-    // console.log('!!!shayne::Clicked post.id:', post);
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
     } catch (err) {
-      console.log('sellerpostswitch', err);
+      console.log('error with switchToSinglePost - sellersPostList');
     }
   };
 

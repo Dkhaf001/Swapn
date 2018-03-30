@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 import EditPost from './editPost.jsx';
-import Chattest from '../Chat/Chattest.jsx'
+import Chattest from '../Chat/Chattest.jsx';
+
 class SellerPost extends Component {
   constructor(props) {
     super(props);
@@ -22,20 +23,21 @@ class SellerPost extends Component {
       },
       sold: false,
       offers: [],
-      currentRoom:''
+      currentRoom: '',
+      tradingWith: false,
     };
     this.acceptOffer = this.acceptOffer.bind(this);
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     // this.getPhotos();
-    this.getOffers();
-    console.log('going to emit a updateDatabase request')
+    await this.getOffers();
+    console.log('currentTitle', this.props.current_post);
 
     this.props.socket.emit('updateDatabase', {
       postId: this.props.current_post.id,
-      username: this.props.active_user.username
-    })
+      username: this.props.active_user.username,
+    });
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
         offerAccepted: false,
@@ -52,11 +54,32 @@ class SellerPost extends Component {
     }
   }
   async getOffers() {
-    const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${this.props.current_post.id}`);
-    console.log('fetchPostOffers', data)
-    this.setState({
-      offers: data.rows
-    })
+    try {
+      console.log('going to do a fetch post offer request', this.props.current_post);
+      const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${this.props.current_post.id}`);
+      console.log('fetchPostOffers', data);
+      this.setState({
+        offers: data.rows,
+      });
+      console.log('going to do the iterate');
+      if (this.props.current_post.tradingWith) {
+        for (let i = 0; i < data.rows.length; i++) {
+          if (data.rows[i].buyer_username === this.props.current_post.tradingWith) {
+            this.setState({
+              tradingWith: true,
+            });
+          }
+        }
+        console.log('after the for loop');
+        if (!this.state.tradingWith) {
+          console.log('inside of if statement');
+          alert(`${this.props.current_post.tradingWith} canceled his/her offer`);
+          this.cancelOffer();
+        }
+      }
+    } catch (err) {
+      console.log('err sellerPost');
+    }
   }
   // async getPhotos() {
   // const postId = this.props.current_posts.id;
@@ -73,26 +96,36 @@ class SellerPost extends Component {
     this.props.history.push('/editPost');
   }
 
-  async acceptOffer(buyer) {
+  async acceptOffer() {
     try {
-      this.props.socket.emit('accept', {buyer_username: buyer, post_id: this.props.current_post.id, status: 'progress'})
-      const accept = {
-        title: this.props.current_post.title,
-        description: this.props.current_post.description,
-        condition: this.props.current_post.condition,
-        location: this.props.current_post.location,
-        demand: this.props.current_post.demand,
-        status: 'Pending',
-        main_photo: this.props.current_post.main_photo,
-      };
-      const userId = this.props.current_post.user_id;
-      const postId = this.props.current_post.id;
-      this.setState({
-        offerAccepted: true,
-        accept,
-      });
-      const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
-
+      if (this.state.currentTalking) {
+        this.props.socket.emit('accept', {
+          buyer: this.state.currentTalking,
+          seller: this.props.current_post.username,
+          post_id: this.props.current_post.id,
+          title: this.props.current_post.title,
+          status: 'progress',
+        });
+        const accept = {
+          title: this.props.current_post.title,
+          description: this.props.current_post.description,
+          condition: this.props.current_post.condition,
+          location: this.props.current_post.location,
+          demand: this.props.current_post.demand,
+          status: 'Pending',
+          tradingWith: this.state.currentTalking,
+          main_photo: this.props.current_post.main_photo,
+        };
+        const userId = this.props.current_post.user_id;
+        const postId = this.props.current_post.id;
+        this.setState({
+          offerAccepted: true,
+          accept,
+        });
+        const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
+      } else {
+        alert('please choose the person you want to trade with');
+      }
     } catch (err) {
       console.log('Error accepting offer!');
     }
@@ -100,6 +133,7 @@ class SellerPost extends Component {
 
   async cancelOffer() {
     try {
+      this.props.socket.emit('deleteOffers', this.props.current_post.id);
       const cancel = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
@@ -107,17 +141,20 @@ class SellerPost extends Component {
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
         status: 'Accepting Offers',
+        tradingWith: '',
         main_photo: this.props.current_post.main_photo,
       };
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
-      const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, cancel);
+
+      const [data] = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, cancel);
       this.setState({
         offerAccepted: false,
         accept: cancel,
         sold: false,
       });
-      console.log('Successfully cancelled an offer! Post status is now Accepting Offers');
+
+      console.log('Successfully cancelled an offer! Post status is now Accepting Offers', data);
     } catch (err) {
       console.log('Error cancelling offer!');
     }
@@ -136,23 +173,25 @@ class SellerPost extends Component {
       };
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
-      const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
+      console.log('right before put request');
+      const { data } = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
       this.setState({
         offerAccepted: false,
         accept: sold,
         sold: true,
       });
+      console.log('dataa from sold offer', data);
       this.props.history.push('/home');
     } catch (err) {
       console.log('Error completing barter transaction!');
     }
   }
-  handleUserClick(e) {
-    console.log('u click on a user', e.target.id)
+  handleUserClick = (offer) => {
     this.setState({
-      currentRoom: e.target.id
-    })
-  }
+      currentRoom: offer.room_id,
+      currentTalking: offer.buyer_username,
+    });
+  };
   render() {
     return this.props.current_post ? (
       <div>
@@ -213,23 +252,24 @@ class SellerPost extends Component {
           />
         )}
         <hr />
-        <button onClick={()=>this.showState()}>show state</button>
+        <button onClick={() => this.showState()}>show state</button>
         offers:
-        {
-          this.state.offers && 
-          this.state.offers.map(offer => {
-            return <div key={offer.id}>
-            <div id={offer.room_id} onClick={(e)=>this.handleUserClick(e)}>
-              {offer.username}
+        {this.state.offers &&
+          this.state.offers.map(offer => (
+            <div key={offer.id}>
+              <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
+                {offer.username}
               </div>
-              {this.state.currentRoom === offer.room_id && <Chattest roomId={this.state.currentRoom} buyer={offer.buyer_username} accept={this.acceptOffer} {...this.props} />}
+              {this.state.currentRoom === offer.room_id && (
+                <Chattest
+                  roomId={this.state.currentRoom}
+                  buyer={offer.buyer_username}
+                  accept={this.acceptOffer}
+                  {...this.props}
+                />
+              )}
             </div>
-          })
-        }
-        {
-          this.state.currentTalking && 
-          <textarea />
-        }
+          ))}
       </div>
     ) : (
       <div>Loading</div>
@@ -244,7 +284,7 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     socket: state.socket,
     active_user: state.active_user,
-    socket: state.socket
+    socket: state.socket,
   };
 }
 

@@ -5,6 +5,7 @@ import './config/database/index';
 // import './config/database/setup';
 
 // import { bulkCategories, bulkPost } from './config/database/seedData';
+
 // bulkCategories();
 // bulkPost();
 

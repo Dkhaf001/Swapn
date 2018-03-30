@@ -24,7 +24,7 @@ class Post extends Component {
       const url = window.location.href;
       const postId = path.basename(url);
       const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
-      console.log('successfully received post');
+      console.log('successfully received post', data);
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });
       localStorage.setItem('oldLat', localStorage.getItem('latitude'));
