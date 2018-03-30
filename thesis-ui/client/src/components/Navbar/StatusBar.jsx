@@ -10,57 +10,50 @@ import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
-import { addMessages, addActiveUserToStore, addCurrentPost } from '../../actions';
+import { addMessages, addActiveUserToStore, addCurrentPost, addAcceptedOffers } from '../../actions';
 import axios from 'axios';
 class StatusBar extends Component {
   state = {
     messages: [],
     open: false,
     offers:'',
-    responseMessages: 0,
-    offersMessages: 0,
-    notifications:0
+    messagesCount:0,
+    acceptedOffers: 0
   };
   async componentWillMount() {
     try {
-      if(localStorage.getItem('token')) {
         console.log('find a token tryingto connect to socket server')
         await this.verifyToken();
-        const username = this.props.active_user.username || 'null'
+        const username = this.props.active_user.username;
         const socket = io.connect('http://localhost:4155');
         this.props.addSocket(socket);
         socket.emit('new user', username);
         socket.on('directMessage', data => {
-          console.log('receive a direct message',  this.state.notifications+1);
+          console.log('receive a direct message');
           this.setState({
-            messages: [data].concat(this.state.messages),
-            offersMessages: data.buyer_username === this.props.active_user.username ? this.state.offersMessages : this.state.offersMessages+1,
-            responseMessages: data.buyer_username === this.props.active_user.username ? this.state.responseMessages+1 : this.state.responseMessages,
-            notifications: this.state.notifications+1
+            messagesCount: this.state.messagesCount+1
           });
-          this.props.addMessages(this.state.messages)
+          this.props.addMessages(this.props.messages.concat(data))
 
         });
         socket.on('notifications', result => {
           console.log('notifications', result)
           this.props.addMessages(result)
           this.setState({
-            messages: result,
-            notifications: result.length
+            messagesCount: result.length
           })
-          for(var i = 0; i < result.length; i ++) {
-            if(result[i].buyer_username === this.props.active_user.username) {
-              this.setState({
-                responseMessages: this.state.responseMessages + 1
-              })
-            }else{
-              this.setState({
-                offersMessages: this.state.offersMessages + 1
-              })  
-            }
-          }
         })
-      }
+        socket.on('offerAccepted', data => {
+          console.log('your offer has been accepted! please contact the seller')
+          socket.emit('fetchAllAcceptedOffers', this.props.active_user.username)
+        })
+        socket.on('acceptedOffersdata', data => {
+          console.log('acceptedOffersdata', data);
+          this.props.addAcceptedOffers(data);
+          this.setState({
+            acceptedOffers: data.length
+          })
+        })
     } catch (err) {
       // console.log('err StatusBar component', err);
     }
@@ -110,8 +103,9 @@ class StatusBar extends Component {
   gotoMyPosts() {
     this.setState({
       notifications: this.state.notifications - this.state.offersMessages,
-      offersMessages: 0
+      messagesCount: 0
     })
+    
     this.props.history.push({
       pathname: `/profile/selling`,
       state: this.state.messages
@@ -122,10 +116,10 @@ class StatusBar extends Component {
       <div>
       {this.props.active_user &&
       <div>
-          {this.state.notifications > 0 ? (
+          {this.state.messagesCount + this.state.acceptedOffers > 0 ? (
             <div>
               <Badge
-                badgeContent={this.state.notifications}
+                badgeContent={this.state.messagesCount + this.state.acceptedOffers}
                 secondary={true}
                 badgeStyle={{ top: 12, right: 12 }}
               >
@@ -162,13 +156,13 @@ class StatusBar extends Component {
                       <MenuItem
                         key={1}
                         value="Solid"
-                        primaryText={`You have ${this.state.messages.length} messages`}
+                        primaryText={`${this.state.messagesCount} Messages Unread and ${this.state.acceptedOffers} Accepted Offers`}
                       />
                       {
                         <MenuItem
                         key={2}
                         value="Solid"
-                        primaryText={`View Offers Messages `+ this.state.offersMessages}
+                        primaryText={`View Messages `}
                         onClick = {()=>this.gotoMyPosts()}
                       />
                       }
@@ -191,8 +185,6 @@ class StatusBar extends Component {
           )}  
 
       </div>}
-      <button onClick={()=>this.showUsers()}>show online users</button>
-      <button onClick={()=>this.showMessages()}>show messages</button>
       </div>
     );
   }
@@ -211,7 +203,8 @@ function mapDispatchToProps(dispatch) {
       addSocket,
       addActiveUserToStore,
       addMessages,
-      addCurrentPost
+      addCurrentPost,
+      addAcceptedOffers
     },
     dispatch,
   );

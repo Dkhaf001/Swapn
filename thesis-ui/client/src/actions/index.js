@@ -82,3 +82,7 @@ export const addFollowingList = position => ({
   type: 'FOLLOWING_LIST',
   payload: position,
 });
+export const addAcceptedOffers = offers => ({
+  type: "ACCEPTED_OFFERS",
+  payload: offers
+})

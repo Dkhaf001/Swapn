@@ -27,7 +27,6 @@ class SellersPostList extends Component {
     this.state = {
       lists: [],
       messages: [],
-      entries: [],
     };
   }
   async componentWillMount() {
@@ -35,6 +34,7 @@ class SellersPostList extends Component {
     try {
       const id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
+      console.log('data papa', data)
       data.sort((a, b) => b.id - a.id);
       this.setState({ lists: data });
       // console.log('hello from sellerspostlist', data);

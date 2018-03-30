@@ -10,7 +10,8 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
   if(err) { 
     throw err
   }
-  const chat = db.collection('chat')
+  const chat = db.collection('chat');
+  const offers = db.collection('offers')
   console.log('mongo db connected!!! and socket server is listening on port', PORT)
   socket.on('connection', client => {
     console.log('a user is connected')
@@ -24,9 +25,13 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       }
       chat.find({to: username, read: 'false'}).toArray((err, result) => {
         client.emit('notifications',result);
-        // chat.updateOne({to: username, read: 'false'}, {read: 'true'}, (err, result) => {
-        //   console.log('update mongodb no more notifica')
-        // })
+        chat.updateOne({to: username, read: 'false'}, {read: 'true'}, (err, result) => {
+          console.log('update mongodb no more notifica')
+        })
+      })
+      offers.find({buyer: username, status: 'progress'}).toArray((err, data) => {
+        console.log('trying to find all accepted offers', data)
+        client.emit('acceptedOffersdata', data)
       })
     })
     client.on("updateDatabase", ({postId, username}) => {
@@ -70,6 +75,26 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       chat.insert(data)
       console.log('socket try8ingto send message to every one in this room', data.roomId)
       socket.in(data.roomId).emit('room:message', data)
+    })
+
+    client.on('accept', data => {
+      console.log('accept request received', data);
+      offers.insert(data);
+      if(users[data.buyer]) {
+        console.log('this user is online tryingto send to him')
+        users[data.buyer].emit('offerAccepted', data)
+      }
+    })
+    client.on('fetchAllAcceptedOffers', buyer => {
+      offers.find({buyer: buyer, status: 'progress'}).toArray((err, data) => {
+        client.emit('acceptedOffersdata', data)
+      })
+    })
+    client.on('deleteOffers', data => {
+      console.log('deleteOffers', data)
+      offers.deleteMany({post_id: data}, (err, data) => {
+        console.log('deleteOffers  DELETED')
+      })
     })
   })
 })

@@ -13,7 +13,7 @@ router.route('/:username').get(fetchAllOffersController);
 //Add offer -opens chat
 router.route('/').post(addOffersController);
 //Delete cancel offer Current User
-router.route('/:post_id/:user_id').delete(removeOffersController);
+router.route('/deleteOffer').post(removeOffersController);
 //get single offer status for buyer post component
 router.route('/getSingleOffer/:buyer_username/:post_id').get(getSingleOffer)
 

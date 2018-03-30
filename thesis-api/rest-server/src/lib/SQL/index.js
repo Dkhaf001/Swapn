@@ -58,6 +58,7 @@ export const createPostTable = async () => {
       main_photo VARCHAR(255) NULL,
       created_at TIMESTAMP DEFAULT NOW(),
       category INT REFERENCES categorys(id)
+      tradingWith VARCHAR(255) NULL,
       )
       `
     );

@@ -27,7 +27,8 @@ export const addOffersController = async (req, res) => {
 };
 
 export const removeOffersController = async (req, res) => {
-  let payload = req.params;
+  let payload = req.body;
+  console.log('req.body',payload)
   try {
     const data = await removeOffersQuery(payload);
     return res.status(200).send(data);
@@ -48,9 +49,12 @@ export const getSingleOffer = async (req, res) => {
 export const fetchPostOffers = async (req, res) => {
   let payload = req.params
   try{
+    console.log('this is the payload', payload)
     const data = await fetchPostOffersQuery(payload)
-    delete data.rows[0].password;
-    res.status(200).send(data)
+    if(data.rows.length) {
+      delete data.rows[0].password;
+    }
+      res.status(200).send(data)
   }catch(err) {
     console.log('err getting single post  offer', err)
   }
