@@ -12,6 +12,7 @@ import { addCurrentPost, addNewPostId } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import Simpleform from '../Map/simpleForm.jsx';
 
 let tempPostId;
 class AddPost extends Component {
@@ -205,6 +206,7 @@ class AddPost extends Component {
               <MenuItem value="Other (see description)" primaryText="Other (see description)" />
             </DropDownMenu>
             <br />
+            <Simpleform />
             <TextField
               hintText="Add Location Here"
               floatingLabelText="Location"
