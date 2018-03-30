@@ -79,7 +79,7 @@ class SellersPostList extends Component {
                 subtitle={
                   <span>
                     <b>{post.username}</b>
-                    <p id={`${post.id}`}>what the heck</p>
+                    <p>{post.id}</p>
                   </span>
                 }
                 onClick={() => this.switchToSinglePost(post)}
