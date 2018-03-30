@@ -15,7 +15,6 @@ export const fetchUserQuery = async (payload) => {
 
 export const updateUserQuery = async (payload) => {
   try {
-    console.log('THIS IS THE PAYLOAD!!!', payload);
     const queryString = updateUserHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('updateUserQuery - success updating user');

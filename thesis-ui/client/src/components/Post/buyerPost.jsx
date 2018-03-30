@@ -37,7 +37,7 @@ class BuyerPost extends Component {
   }
   getBartering = async () => {
     try {
-      const buyerUsername = this.props.active_user.username;// localStorage.getItem('username');
+      const buyerUsername = this.props.active_user.username; // localStorage.getItem('username');
       const postId = this.props.current_post.id;
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyerUsername}/${postId}`);
       console.log('trying to get all offers', data);
@@ -180,7 +180,11 @@ class BuyerPost extends Component {
         this.setState({
           bartering: true,
         });
-        console.log('~~~~~~~~~~~~~~~~~~~~', this.props.current_post);
+        const { data } = await axios.post('http://localhost:3396/api/offers/', {
+          post_id: this.props.current_post.id,
+          buyer_username: this.props.active_user.username,
+          room_id: roomId,
+        });
         console.log('just add offer to offer table', data);
       } else {
         this.props.history.push('/login');
@@ -195,19 +199,18 @@ class BuyerPost extends Component {
     this.props.history.push(`/othersprofile/${userId}`);
   };
   async cancelOffer() {
-    console.log('cancel button clicked')
+    console.log('cancel button clicked');
     try {
       await axios.post('http://localhost:3396/api/offers/deleteOffer', {
-        room_id: this.state.room_id
-      })
+        room_id: this.state.room_id,
+      });
       this.setState({
-        bartering: false
-      })
-      this.props.socket.emit('deleteOffers',this.props.current_post.id)
-    }catch(err) {
-      console.log('err deleteing offer')
+        bartering: false,
+      });
+      this.props.socket.emit('deleteOffers', this.props.current_post.id);
+    } catch (err) {
+      console.log('err deleteing offer');
     }
-
   }
   render() {
     return this.props.current_post ? (
@@ -265,14 +268,14 @@ class BuyerPost extends Component {
             onClick={() => this.toggleWatchList()}
           />
         )}
-        {this.state.bartering &&
+        {this.state.bartering && (
           <RaisedButton
-          label="Cancel Offer"
-          secondary={true}
-          style={{ margin: 12 }}
-          onClick={() => this.cancelOffer()}
-        />
-        }
+            label="Cancel Offer"
+            secondary={true}
+            style={{ margin: 12 }}
+            onClick={() => this.cancelOffer()}
+          />
+        )}
         {!this.state.bartering && (
           <RaisedButton
             label="MAKE OFFER"
@@ -299,7 +302,7 @@ function mapStateToProps(state) {
   return {
     current_post: state.current_post,
     active_user: state.active_user,
-    socket: state.socket
+    socket: state.socket,
   };
 }
 

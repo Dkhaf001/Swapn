@@ -14,7 +14,7 @@ class SellerProfile extends Component {
     return (
       <div>
         <div>
-          {/* <Bio /> */}
+          <Bio />
           <div>
             <ProfileNavbar />
             <Switch>

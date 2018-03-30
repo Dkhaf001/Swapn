@@ -1,14 +1,13 @@
 import db from '../../config/database';
-import { fetchAllCategorysHelper } from "./categoriesSQLHelpers";
-
+import { fetchAllCategorysHelper } from './categoriesSQLHelpers';
 
 export const fetchAllCategorysQuery = async (payload) => {
   try {
-    const queryString = await fetchAllCategorysHelper(payload)
+    const queryString = await fetchAllCategorysHelper(payload);
     const data = await db.queryAsync(queryString);
-    console.log('categorysQueryHelper - successfully retrieved data', data)
+    console.log('categorysQueryHelper - successfully retrieved data');
     return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };

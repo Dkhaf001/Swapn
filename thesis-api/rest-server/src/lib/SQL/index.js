@@ -1,13 +1,10 @@
 require('dotenv').config();
 
 import db from '../../config/database/index';
-
 // const database = process.env || 'barter';
-
 export const createUserTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS users
       (
       id SERIAL PRIMARY KEY,
@@ -21,27 +18,23 @@ export const createUserTable = async () => {
       follower_count INT NOT NULL DEFAULT 0,
       following_count INT NOT NULL DEFAULT 0
       )
-      `
-    );
+      `);
     console.log('successfully created users table');
   } catch (err) {
     console.log('error creating users table ', err);
   }
 };
-
 export const dropUserTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS users`);
+    await db.queryAsync('DROP TABLE IF EXISTS users');
     console.log('successfully dropped users table');
   } catch (err) {
     console.log('error dropping users table ', err);
   }
 };
-
 export const createPostTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS posts
       (
       id SERIAL PRIMARY KEY,
@@ -57,164 +50,140 @@ export const createPostTable = async () => {
       status VARCHAR(255) NOT NULL,
       main_photo VARCHAR(255) NULL,
       created_at TIMESTAMP DEFAULT NOW(),
-      category INT REFERENCES categorys(id)
-      tradingWith VARCHAR(255) NULL,
+      category INT REFERENCES categorys(id),
+      tradingWith VARCHAR(255) NULL
       )
-      `
-    );
+      `);
     console.log('successfully created users table');
   } catch (err) {
     console.log('error creating users table ', err);
   }
 };
-
 export const dropPostTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS posts`);
+    await db.queryAsync('DROP TABLE IF EXISTS posts');
     console.log('successfully dropped posts table');
   } catch (err) {
     console.log('error dropping users table ', err);
   }
 };
-
 export const createWatchTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS watchs
       (
       id SERIAL PRIMARY KEY,
       user_id INT REFERENCES users(id),
       post_id INT REFERENCES posts(id)
       )
-      `
-    );
+      `);
     console.log('successfully created watchs table');
   } catch (err) {
     console.log('error creating watchs table ', err);
   }
 };
-
 export const dropWatchTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS watchs`);
+    await db.queryAsync('DROP TABLE IF EXISTS watchs');
     console.log('successfully dropped watchs table');
   } catch (err) {
     console.log('error dropping watchs table ', err);
   }
 };
-
 export const createRatingTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS ratings
       (
       id SERIAL PRIMARY KEY,
       user_id INT REFERENCES users(id),
       rating INT NULL
       )
-      `
-    );
+      `);
     console.log('successfully created ratings table');
   } catch (err) {
     console.log('error creating ratings table ', err);
   }
 };
-
 export const dropRatingTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS ratings`);
+    await db.queryAsync('DROP TABLE IF EXISTS ratings');
     console.log('successfully dropped ratings table');
   } catch (err) {
     console.log('error dropping ratings table ', err);
   }
 };
-
 export const createPhotoTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS photos
       (
       id SERIAL PRIMARY KEY,
       post_id INT REFERENCES posts(id),
       url VARCHAR(255) NOT NULL
       )
-      `
-    );
+      `);
     console.log('successfully created photos table');
   } catch (err) {
     console.log('error creating photos table ', err);
   }
 };
-
 export const dropPhotoTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS photos`);
+    await db.queryAsync('DROP TABLE IF EXISTS photos');
     console.log('successfully dropped photos table');
   } catch (err) {
     console.log('error dropping photos table ', err);
   }
 };
-
 export const createFollowingTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS followings
       (
       id SERIAL PRIMARY KEY,
       user_id INT REFERENCES users(id),
       following_id INT NOT NULL
       )
-      `
-    );
+      `);
     console.log('successfully created followings table');
   } catch (err) {
     console.log('error creating followings table ', err);
   }
 };
-
 export const dropFollowingTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS followings`);
+    await db.queryAsync('DROP TABLE IF EXISTS followings');
     console.log('successfully dropped followings table');
   } catch (err) {
     console.log('error dropping followings table ', err);
   }
 };
-
 export const createCategoryTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS categorys
       (
       id SERIAL PRIMARY KEY,
       type VARCHAR(255) NOT NULL
       )
-      `
-    );
+      `);
     console.log('successfully created categorys table');
   } catch (err) {
     console.log('error creating categorys table ', err);
   }
 };
-
 export const dropCategoryTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS categorys`);
+    await db.queryAsync('DROP TABLE IF EXISTS categorys');
     console.log('successfully dropped categorys table');
   } catch (err) {
     console.log('error dropping categorys table ', err);
   }
 };
-
 export const createOfferTable = async () => {
   try {
-    await db.queryAsync(
-      `
+    await db.queryAsync(`
       CREATE TABLE IF NOT EXISTS offers
       (
         id SERIAL PRIMARY KEY,
@@ -222,17 +191,15 @@ export const createOfferTable = async () => {
         post_id INT REFERENCES posts(id),
         room_id VARCHAR(255) NOT NULL
       )
-      `
-    );
+      `);
     console.log('successfully created offers table');
   } catch (err) {
     console.log('error creating offers table ', err);
   }
 };
-
 export const dropOfferTable = async () => {
   try {
-    await db.queryAsync(`DROP TABLE IF EXISTS offers`);
+    await db.queryAsync('DROP TABLE IF EXISTS offers');
     console.log('successfully dropped offers table');
   } catch (err) {
     console.log('error dropping offers table ', err);

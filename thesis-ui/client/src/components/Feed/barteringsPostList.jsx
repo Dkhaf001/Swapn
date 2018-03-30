@@ -37,7 +37,6 @@ class BarteringsPostList extends Component {
   }
 
   switchToSinglePost = async (post) => {
-    // console.log('!!!shayne::Clicked post.id:', post);
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);

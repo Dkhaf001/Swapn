@@ -24,7 +24,6 @@ class ListingPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // filtered out sold listings
       listings: [],
     };
   }
@@ -32,11 +31,8 @@ class ListingPostList extends Component {
   async componentWillMount() {
     const url = window.location.href;
     try {
-      // console.log('hello forn listing post list');
       if (url.includes('othersprofile')) {
         const userId = path.basename(url);
-
-        // console.log('the id is', localStorage.id);
         const { data } = await axios.get(`http://localhost:3396/api/posts/${userId}`);
         data.sort((a, b) => b.id - a.id);
         this.setState({ listings: data });
@@ -49,12 +45,11 @@ class ListingPostList extends Component {
     }
   }
   switchToSinglePost = async (post) => {
-    // console.log('!!!shayne::Clicked post.id:', post);
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
     } catch (err) {
-      console.log('listingpostswitch', err);
+      console.log('error with switchToSinglePost');
     }
   };
   render() {

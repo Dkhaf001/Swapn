@@ -13,7 +13,7 @@ export const fetchAllPostsQuery = async (payload) => {
   try {
     const queryString = fetchAllPostsHelper(payload);
     const data = await db.queryAsync(queryString);
-    // console.log('fetchAllPostsQuery - successfully retrieved data');
+    console.log('fetchAllPostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
     console.log(err);
@@ -34,9 +34,7 @@ export const fetchUserPostsQuery = async (payload) => {
 export const fetchSinglePostsQuery = async (payload) => {
   try {
     const queryString = fetchSinglePostsHelper(payload);
-    console.log('queryString', queryString);
     const data = await db.queryAsync(queryString);
-    // console.log('lookhere', data)
     console.log('fetchSinglePostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
