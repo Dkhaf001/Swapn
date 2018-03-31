@@ -23,10 +23,8 @@ class StatusBar extends Component {
     messages: [],
     open: false,
     offers: '',
-    messagesCount: 0,
-    acceptedOffers: 0,
-    allMessages: [],
-    obj: {},
+    Allmessages: [],
+    arr: [],
   };
   async componentWillMount() {
     try {
@@ -41,20 +39,44 @@ class StatusBar extends Component {
 
       socket.emit('new user', username);
       socket.on('directMessage', (data) => {
-        console.log('receive a direct message');
-
-        this.setState({
-          messagesCount: this.state.messagesCount + 1,
-        });
-        this.props.addMessages(this.props.messages.concat(data));
+        console.log(
+          'receive a direct message current_roomId and data.roomId',
+          this.props.current_roomId,
+          data.roomId,
+        );
+        if (document.getElementById(data.roomId) && this.props.current_roomId === data.roomId) {
+          console.log('you are in the current room wont show unread meesage');
+          console.log('current_roomId', this.props.current_roomId);
+        } else {
+          let temp = false;
+          for (let i = 0; i < this.state.arr.length; i++) {
+            if (this.state.arr[i][0] === data.roomId) {
+              temp = true;
+            }
+          }
+          if (!temp) {
+            console.log('u dont have this user unread in ur notification component going to do concat');
+            const array = this.state.arr.slice();
+            array.push([data.roomId, data]);
+            console.log('arr', array);
+            this.setState({
+              arr: array,
+            });
+          } else {
+            console.log('this user send you a  message u have not read  and he sned another one');
+          }
+        }
       });
       socket.on('notifications', (result) => {
         console.log('notifications', result);
-        this.props.addMessages(result);
-
+        const obj = {};
+        for (let i = 0; i < result.length; i++) {
+          obj[result[i].roomId] = result[i];
+        }
+        const arr = Object.entries(obj);
         this.setState({
-          messagesCount: result.length,
-          allMessages: result,
+          arr,
+          Allmessages: result,
         });
       });
       socket.on('offerAccepted', (data) => {
@@ -95,26 +117,22 @@ class StatusBar extends Component {
       open: false,
     });
   };
-  gotoMyPosts() {
-    this.setState({
-      notifications: this.state.notifications - this.state.offersMessages,
-      messagesCount: 0,
-    });
-
+  gotoMyPosts(message) {
     this.props.history.push({
-      pathname: '/profile/selling',
-      state: this.state.messages,
+      pathname: `/post/${message.postId}`,
+      state: message,
     });
+    location.reload();
   }
   render() {
     return (
       <div>
         {this.props.active_user && (
           <div>
-            {this.state.messagesCount + this.state.acceptedOffers > 0 ? (
+            {this.state.arr.length > 0 ? (
               <div>
                 <Badge
-                  badgeContent={this.state.messagesCount + this.state.acceptedOffers}
+                  badgeContent={this.state.arr.length}
                   secondary={true}
                   badgeStyle={{ top: 12, right: 12 }}
                 >
@@ -155,22 +173,22 @@ class StatusBar extends Component {
                             this.state.acceptedOffers
                           } Accepted Offers`}
                         /> */}
-                        {this.state.allMessages.map(message => (
+                        {/* {this.state.Allmessages.map(message => (
                           <MenuItem
                             key={message._id}
                             value="Solid"
-                            primaryText={`${message.message}`}
+                            primaryText={`${message.from} send you a message`}
                             onClick={() => this.gotoMyPosts()}
+                          />
+                        ))} */}
+                        {this.state.arr.map(message => (
+                          <MenuItem
+                            key={message[0]}
+                            value="Solid"
+                            primaryText={`${JSON.stringify(message[1])}`}
+                            onClick={() => this.gotoMyPosts(message[1])}
                           />
                         ))}
-                        {
-                          <MenuItem
-                            key={2}
-                            value="Solid"
-                            primaryText={'View Messages '}
-                            onClick={() => this.gotoMyPosts()}
-                          />
-                        }
                       </Menu>
                     </Popover>
                   </IconButton>
@@ -200,6 +218,8 @@ function mapStateToProps(state) {
     active_user: state.active_user,
     socket: state.socket,
     messages: state.messages,
+    current_roomId: state.current_roomId,
+    changeRoomId: state.changeRoomId,
   };
 }
 function mapDispatchToProps(dispatch) {

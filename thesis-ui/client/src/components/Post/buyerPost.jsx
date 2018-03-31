@@ -37,10 +37,16 @@ class BuyerPost extends Component {
   }
   getBartering = async () => {
     try {
-      const buyerUsername = this.props.active_user.username; // localStorage.getItem('username');
-      const postId = this.props.current_post.id;
+      const url = window.location.href;
+      const postId = path.basename(url);
+      const buyerUsername = this.props.active_user.username; // localStorage.getItem('username');;
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyerUsername}/${postId}`);
-      console.log('trying to get all offers', data);
+      console.log(
+        'trying to get all offers using this buyername, and postId',
+        buyerUsername,
+        postId,
+        data,
+      );
       if (data.rowCount > 0) {
         this.setState({
           room_id: data.rows[0] ? data.rows[0].room_id : null,

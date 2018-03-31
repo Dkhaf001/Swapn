@@ -83,6 +83,11 @@ export const addFollowingList = position => ({
   payload: position,
 });
 export const addAcceptedOffers = offers => ({
-  type: "ACCEPTED_OFFERS",
-  payload: offers
-})
+  type: 'ACCEPTED_OFFERS',
+  payload: offers,
+});
+
+export const addChangeRoomId = func => ({
+  type: 'FUNCTION',
+  payload: func,
+});
