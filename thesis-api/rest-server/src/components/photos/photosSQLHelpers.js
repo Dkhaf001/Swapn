@@ -14,3 +14,8 @@ export const removePhotosHelper = ({ post_id, photo_id }) => `
   DELETE FROM photos
   WHERE photos.post_id=${post_id} AND id=${photo_id}
   `;
+
+export const removeAllPhotosHelper = ({ post_id }) => `
+  DELETE FROM photos
+  WHERE post_id=${post_id} 
+  `;

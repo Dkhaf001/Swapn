@@ -1,4 +1,9 @@
-import { fetchAllPhotosQuery, addPhotosQuery, removePhotosQuery } from '../photos/photosQueries';
+import {
+  fetchAllPhotosQuery,
+  addPhotosQuery,
+  removePhotosQuery,
+  removeAllPhotosQuery,
+} from '../photos/photosQueries';
 
 export const fetchAllPhotosController = async (req, res) => {
   const payload = req.params;
@@ -25,6 +30,18 @@ export const removePhotosController = async (req, res) => {
   const payload = req.params;
   try {
     const data = await removePhotosQuery(payload);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const removeAllPhotosController = async (req, res) => {
+  console.log('FIRES FIRST ----------------');
+  console.log(req.params);
+  const payload = req.params;
+  try {
+    const data = await removeAllPhotosQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

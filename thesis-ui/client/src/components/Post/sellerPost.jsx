@@ -3,15 +3,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
+import path from 'path';
+import { bindActionCreators } from 'redux';
+import PhotoSlide from '../Photo/photoslide.jsx';
 import EditPost from './editPost.jsx';
 import Chattest from '../Chat/Chattest.jsx';
-import path from 'path';
+import { addImages } from '../../actions';
 
 class SellerPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // photos: [],
+      photos: [],
       offerAccepted: false,
       accept: {
         title: this.props.current_post.title,
@@ -29,9 +32,10 @@ class SellerPost extends Component {
     };
     this.acceptOffer = this.acceptOffer.bind(this);
   }
-
+  componentWillMount() {
+    this.getPhotos();
+  }
   async componentDidMount() {
-    // this.getPhotos();
     console.log(' fetchPostOffers before calling');
     await this.getOffers();
     console.log('finished adding');
@@ -91,16 +95,21 @@ class SellerPost extends Component {
       console.log('err sellerPost', err);
     }
   }
-  // async getPhotos() {
-  // const postId = this.props.current_posts.id;
-  // const { data } = await axios.get(
-  //   `http://localhost:3396/api/photos/${postId}`
-  // );
-  // console.log('successfully received photos!');
-  // this.setState({
-  //   photos: data.rows
-  // });
-  // }
+
+  getPhotos = async () => {
+    try {
+      const postId = this.props.current_post.id;
+      const { data } = await axios.get(`http://localhost:3396/api/photos/${postId}`);
+      console.log('successfully received photos');
+      const images = data.rows.map(values => JSON.parse(values.url));
+      this.setState({
+        photos: images,
+      });
+      this.props.addImages(images);
+    } catch (err) {
+      console.log('error getphoto', err);
+    }
+  };
 
   editPost() {
     this.props.history.push('/editPost');
@@ -222,7 +231,7 @@ class SellerPost extends Component {
       <div>
         <h1>Welcome to your post!</h1>
         <div>
-          <img src={this.props.current_post && this.props.current_post.main_photo} />
+          <PhotoSlide />
         </div>
         <div>
           <h1>
@@ -317,13 +326,17 @@ function mapStateToProps(state) {
     socket: state.socket,
     active_user: state.active_user,
     socket: state.socket,
+    images: state.images,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    addChangeRoomId,
-  });
+  return bindActionCreators(
+    {
+      addImages,
+    },
+    dispatch,
+  );
 }
 
-export default connect(mapStateToProps)(SellerPost);
+export default connect(mapStateToProps, mapDispatchToProps)(SellerPost);
