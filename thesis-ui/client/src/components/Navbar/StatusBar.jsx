@@ -25,6 +25,8 @@ class StatusBar extends Component {
     offers: '',
     messagesCount: 0,
     acceptedOffers: 0,
+    allMessages: [],
+    obj: {},
   };
   async componentWillMount() {
     try {
@@ -32,10 +34,15 @@ class StatusBar extends Component {
       await this.verifyToken();
       const username = this.props.active_user.username;
       const socket = io.connect('http://localhost:4155');
+
+      // =======THIS IS THE BUG=======
       this.props.addSocket(socket);
+      // =============================
+
       socket.emit('new user', username);
       socket.on('directMessage', (data) => {
         console.log('receive a direct message');
+
         this.setState({
           messagesCount: this.state.messagesCount + 1,
         });
@@ -44,8 +51,10 @@ class StatusBar extends Component {
       socket.on('notifications', (result) => {
         console.log('notifications', result);
         this.props.addMessages(result);
+
         this.setState({
           messagesCount: result.length,
+          allMessages: result,
         });
       });
       socket.on('offerAccepted', (data) => {
@@ -86,24 +95,6 @@ class StatusBar extends Component {
       open: false,
     });
   };
-  showUsers() {
-    console.log('this.state', this.state);
-  }
-  showMessages() {
-    console.log(this.props.messages);
-  }
-  async handleMessageClick(message) {
-    try {
-      const post_id = message.postId;
-      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${post_id}`);
-      console.log('here!', data);
-      console.log('message', message);
-      this.props.addCurrentPost(data[0]);
-      this.props.history.push({
-        pathname: `post/${message.postTitle}`,
-      });
-    } catch (err) {}
-  }
   gotoMyPosts() {
     this.setState({
       notifications: this.state.notifications - this.state.offersMessages,
@@ -157,13 +148,21 @@ class StatusBar extends Component {
                         }}
                         // onChange={this.handleDashChange.bind(this)} something like this to render what you click below
                       >
-                        <MenuItem
+                        {/* <MenuItem
                           key={1}
                           value="Solid"
                           primaryText={`${this.state.messagesCount} Messages Unread and ${
                             this.state.acceptedOffers
                           } Accepted Offers`}
-                        />
+                        /> */}
+                        {this.state.allMessages.map(message => (
+                          <MenuItem
+                            key={message._id}
+                            value="Solid"
+                            primaryText={`${message.message}`}
+                            onClick={() => this.gotoMyPosts()}
+                          />
+                        ))}
                         {
                           <MenuItem
                             key={2}
@@ -183,7 +182,7 @@ class StatusBar extends Component {
                   <IconButton tooltip="Notifications">
                     <NotificationsIcon
                       className="svg_icons"
-                      onClick={() => console.log('u clikced a button')}
+                      onClick={() => console.log('you clicked the notication button!')}
                     />
                   </IconButton>
                 </div>

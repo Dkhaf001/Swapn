@@ -16,9 +16,7 @@ class Navbar extends Component {
     super();
   }
   componentWillMount() {}
-  clearStorePost = () => {
-    this.props.addCurrentPost('');
-  };
+
   logout = () => {
     localStorage.clear();
     this.props.addActiveUserToStore('');
@@ -82,11 +80,7 @@ class Navbar extends Component {
     </div>
   );
   render() {
-    if (localStorage.token) {
-      // localStorage need to change all logic to check local storage
-      return this.loggedInView();
-    }
-    return this.loggedOutView();
+    return localStorage.token ? this.loggedInView() : this.loggedOutView();
   }
 }
 
