@@ -25,12 +25,14 @@ class AddPost extends Component {
         title: '',
         description: '',
         condition: '',
+        category: '',
         location: '',
         demand: '',
-        status: 'Accepting Offers',
-      },
+        status: 'Accepting Offers'
+      }
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleConditionChange = this.handleConditionChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
     this.submitPost = this.submitPost.bind(this);
@@ -43,6 +45,7 @@ class AddPost extends Component {
         this.state.newPost.title !== '' &&
         this.state.newPost.description !== '' &&
         this.state.newPost.condition !== '' &&
+        this.state.newPost.category !== '' &&
         this.state.newPost.location !== '' &&
         this.state.newPost.demand !== ''
       ) {
@@ -53,17 +56,20 @@ class AddPost extends Component {
         console.log('Success Post', latLng);
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
-            location: latLng,
-          }),
+            location: latLng
+          })
         });
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
           `http://localhost:3396/api/posts/${userId}/${postId}`,
-          this.state.newPost,
+          this.state.newPost
         );
         tempPostId = data.rows[0].id;
-        console.log('successfully instantiated a new post (completed): ', this.state.newPost);
+        console.log(
+          'successfully instantiated a new post (completed): ',
+          this.state.newPost
+        );
         this.props.history.push('/home');
       } else {
         alert('Please fill out all text fields!');
@@ -93,11 +99,19 @@ class AddPost extends Component {
     this.props.history.push('/home');
   };
 
-  handleChange = (event, index, value) => {
+  handleConditionChange = (event, index, value) => {
     this.setState({
       newPost: Object.assign({}, this.state.newPost, {
-        condition: value,
-      }),
+        condition: value
+      })
+    });
+  };
+
+  handleCategoryChange = (event, index, value) => {
+    this.setState({
+      newPost: Object.assign({}, this.state.newPost, {
+        category: value
+      })
     });
   };
 
@@ -108,6 +122,7 @@ class AddPost extends Component {
         this.state.newPost.title !== '' &&
         this.state.newPost.description !== '' &&
         this.state.newPost.condition !== '' &&
+        this.state.newPost.category !== '' &&
         this.state.newPost.location !== '' &&
         this.state.newPost.demand !== '' &&
         stepIndex === 0
@@ -115,23 +130,27 @@ class AddPost extends Component {
         const userId = localStorage.id;
         const { data } = await axios.post(
           `http://localhost:3396/api/posts/${userId}`,
-          this.state.newPost,
+          this.state.newPost
         );
         this.setState({ stepIndex: 1 });
         this.props.addCurrentPost(data.rows[0]);
-        console.log('thisis id from addpost', data.rows[0].id);
+        console.log('this is id from addpost', data.rows[0].id);
         tempPostId = data.rows[0].id;
 
         // set
         this.props.addNewPostId(data.rows[0].id);
 
-        console.log('successfully submitted new post (pending): ', data.rows[0]);
+        console.log(
+          'successfully submitted new post (pending): ',
+          data.rows[0]
+        );
       } else {
         this.handlePrev();
         alert('Please fill out all text fields!');
       }
     } catch (err) {
       console.log('Error handling first next button click');
+      this.handlePrev();
     }
   };
 
@@ -142,7 +161,7 @@ class AddPost extends Component {
     } else {
       this.setState({
         stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
+        finished: stepIndex >= 2
       });
     }
   }
@@ -166,11 +185,11 @@ class AddPost extends Component {
               hintText="What are you selling?"
               floatingLabelText="Title"
               name="title"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -182,11 +201,11 @@ class AddPost extends Component {
               rows={2}
               rowsMax={4}
               name="description"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -194,16 +213,58 @@ class AddPost extends Component {
             Condition:<br />
             <DropDownMenu
               value={this.state.newPost.condition}
-              onChange={this.handleChange}
+              onChange={this.handleConditionChange}
               style={{ width: 300 }}
               autoWidth={true}
             >
-              <MenuItem value="New (never used)" primaryText="New (never used)" />
-              <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
-              <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
-              <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
+              <MenuItem
+                value="New (never used)"
+                primaryText="New (never used)"
+              />
+              <MenuItem
+                value="Reconditioned/Certified"
+                primaryText="Reconditioned/Certified"
+              />
+              <MenuItem
+                value="Open Box (never used)"
+                primaryText="Open Box (never used)"
+              />
+              <MenuItem
+                value="Used (normal wear)"
+                primaryText="Used (normal wear)"
+              />
               <MenuItem value="For Parts" primaryText="For Parts" />
-              <MenuItem value="Other (see description)" primaryText="Other (see description)" />
+              <MenuItem
+                value="Other (see description)"
+                primaryText="Other (see description)"
+              />
+            </DropDownMenu>
+            <br />
+            Category:<br />
+            <DropDownMenu
+              value={this.state.newPost.category}
+              onChange={this.handleCategoryChange}
+              style={{ width: 300 }}
+              autoWidth={true}
+            >
+              <MenuItem value="1" primaryText="Antiques & Collectibles" />
+              <MenuItem value="2" primaryText="Appliances & Furniture" />
+              <MenuItem value="3" primaryText="Baby & Kids" />
+              <MenuItem value="4" primaryText="Beauty & Health" />
+              <MenuItem value="5" primaryText="Automotive" />
+              <MenuItem
+                value="6"
+                primaryText="Electronics, Computers & Office"
+              />
+              <MenuItem value="7" primaryText="Clothing & Shoes" />
+              <MenuItem value="8" primaryText="Free" />
+              <MenuItem value="9" primaryText="Games & Toys" />
+              <MenuItem value="10" primaryText="Home, Garden & Tools" />
+              <MenuItem value="11" primaryText="Jewelry & Accessories" />
+              <MenuItem value="12" primaryText="Musical Instruments" />
+              <MenuItem value="13" primaryText="Pet Supplies" />
+              <MenuItem value="14" primaryText="Sports & Outdoors" />
+              <MenuItem value="15" primaryText="Tickets" />
             </DropDownMenu>
             <br />
             <Simpleform />
@@ -211,11 +272,11 @@ class AddPost extends Component {
               hintText="Add Location Here"
               floatingLabelText="Location"
               name="location"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -224,11 +285,11 @@ class AddPost extends Component {
               hintText="What do you want for your item?"
               floatingLabelText="Demand"
               name="demand"
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -250,11 +311,11 @@ class AddPost extends Component {
               floatingLabelText="Title"
               name="title"
               defaultValue={`${this.state.newPost.title}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -266,11 +327,11 @@ class AddPost extends Component {
               rowsMax={4}
               name="description"
               defaultValue={`${this.state.newPost.description}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -278,27 +339,69 @@ class AddPost extends Component {
             Condition:<br />
             <DropDownMenu
               value={`${this.state.newPost.condition}`}
-              onChange={this.handleChange}
+              onChange={this.handleConditionChange}
               style={{ width: 300 }}
               autoWidth={true}
             >
-              <MenuItem value="New (never used)" primaryText="New (never used)" />
-              <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
-              <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
-              <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
+              <MenuItem
+                value="New (never used)"
+                primaryText="New (never used)"
+              />
+              <MenuItem
+                value="Reconditioned/Certified"
+                primaryText="Reconditioned/Certified"
+              />
+              <MenuItem
+                value="Open Box (never used)"
+                primaryText="Open Box (never used)"
+              />
+              <MenuItem
+                value="Used (normal wear)"
+                primaryText="Used (normal wear)"
+              />
               <MenuItem value="For Parts" primaryText="For Parts" />
-              <MenuItem value="Other (see description)" primaryText="Other (see description)" />
+              <MenuItem
+                value="Other (see description)"
+                primaryText="Other (see description)"
+              />
+            </DropDownMenu>
+            <br />
+            Category:<br />
+            <DropDownMenu
+              value={this.state.newPost.category}
+              onChange={this.handleCategoryChange}
+              style={{ width: 300 }}
+              autoWidth={true}
+            >
+              <MenuItem value="1" primaryText="Antiques & Collectibles" />
+              <MenuItem value="2" primaryText="Appliances & Furniture" />
+              <MenuItem value="3" primaryText="Baby & Kids" />
+              <MenuItem value="4" primaryText="Beauty & Health" />
+              <MenuItem value="5" primaryText="Automotive" />
+              <MenuItem
+                value="6"
+                primaryText="Electronics, Computers & Office"
+              />
+              <MenuItem value="7" primaryText="Clothing & Shoes" />
+              <MenuItem value="8" primaryText="Free" />
+              <MenuItem value="9" primaryText="Games & Toys" />
+              <MenuItem value="10" primaryText="Home, Garden & Tools" />
+              <MenuItem value="11" primaryText="Jewelry & Accessories" />
+              <MenuItem value="12" primaryText="Musical Instruments" />
+              <MenuItem value="13" primaryText="Pet Supplies" />
+              <MenuItem value="14" primaryText="Sports & Outdoors" />
+              <MenuItem value="15" primaryText="Tickets" />
             </DropDownMenu>
             <br />
             <TextField
               floatingLabelText="Location"
               name="location"
               defaultValue={`${this.state.newPost.location}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -307,11 +410,11 @@ class AddPost extends Component {
               floatingLabelText="Demand"
               name="demand"
               defaultValue={`${this.state.newPost.demand}`}
-              onChange={(e) => {
+              onChange={e => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value,
-                  }),
+                    [e.target.name]: e.target.value
+                  })
                 });
               }}
             />
@@ -405,7 +508,7 @@ class AddPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post,
+    current_post: state.current_post
   };
 }
 
@@ -413,9 +516,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentPost,
-      addNewPostId,
+      addNewPostId
     },
-    dispatch,
+    dispatch
   );
 }
 
