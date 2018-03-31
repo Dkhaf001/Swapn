@@ -47,6 +47,14 @@ class EditPost extends Component {
     }
   }
 
+  cancelEditPost = async () => {
+    try {
+      this.props.history.push('/home');
+    } catch (err) {
+      console.log('error canceling post on editPost');
+    }
+  };
+
   handleChange = (event, index, value) => this.setState({ condition: value });
 
   render() {
@@ -112,6 +120,12 @@ class EditPost extends Component {
           primary={true}
           style={{ margin: 12 }}
           onClick={() => this.submitEditPost()}
+        />
+        <RaisedButton
+          label="Cancel"
+          secondary={true}
+          style={{ margin: 12 }}
+          onClick={() => this.cancelEditPost()}
         />
         <br />
       </div>

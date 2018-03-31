@@ -9,7 +9,7 @@ import Home from '../components/Feed/homePostList.jsx';
 import SellingList from '../components/Feed/sellersPostList.jsx';
 import WatchingList from '../components/Feed/watchingPostList.jsx';
 import BarteringList from '../components/Feed/barteringsPostList.jsx';
-import FollowingList from '../components/Feed/folllowingList.jsx';
+import FollowingList from '../components/Feed/followingList.jsx';
 import AddPost from '../components/Post/addPost.jsx';
 import SinglePost from '../components/Post/index.jsx';
 import EditPost from '../components/Post/editPost.jsx';
@@ -31,69 +31,69 @@ export const appRoutes = [
     sidebarName: 'Home',
     navbarName: 'Home',
     component: Home,
-    protected: false,
+    protected: false
   },
   {
     path: '/othersprofile/:user_id',
     sidebarName: 'Profile',
     navbarName: 'Profile',
     component: BuyerProfile,
-    protected: true,
+    protected: true
   },
   {
     path: '/profile',
     sidebarName: 'Profile',
     navbarName: 'Profile',
     component: SellerProfile,
-    protected: true,
+    protected: true
   },
   {
     path: '/post/:id',
     sidebarName: 'Login',
     navbarName: 'Login',
     component: SinglePost,
-    protected: false,
+    protected: false
   },
   {
     path: '/post',
     sidebarName: 'List',
     navbarName: 'List',
     component: AddPost,
-    protected: true,
+    protected: true
   },
   {
     path: '/edit',
     sidebarName: 'Edit',
     navbarName: 'Edit',
     component: Edit,
-    protected: true,
+    protected: true
   },
   {
     path: '/editPost',
     sidebarName: 'Edit',
     navbarName: 'Edit',
     component: EditPost,
-    protected: true,
+    protected: true
   },
   {
     path: '/signup',
     sidebarName: 'Login',
     navbarName: 'Login',
     component: SignUp,
-    protected: false,
+    protected: false
   },
   {
     path: '/login',
     sidebarName: 'Login',
     navbarName: 'Login',
     component: Login,
-    protected: false,
+    protected: false
   },
   {
     path: '*',
     component: Home,
-    protected: false,
-  },
+    protected: false
+  }
 ];
 
 export const profileRoutes = [
@@ -102,27 +102,27 @@ export const profileRoutes = [
     sidebarName: 'Following',
     navbarName: 'Following',
     component: FollowingList,
-    protected: true,
+    protected: true
   },
   {
     path: '/profile/watchlist',
     sidebarName: 'Watchlist',
     navbarName: 'Watchlist',
     component: WatchingList,
-    protected: true,
+    protected: true
   },
   {
     path: '/profile/bartering',
     sidebarName: 'Bartering',
     navbarName: 'Bartering',
     component: BarteringList,
-    protected: true,
+    protected: true
   },
   {
     path: '/profile/selling',
     sidebarName: 'Selling',
     navbarName: 'Selling',
     component: SellingList,
-    protected: true,
-  },
+    protected: true
+  }
 ];
