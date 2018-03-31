@@ -22,14 +22,14 @@ class BuyerPost extends Component {
   }
 
   async componentWillMount() {
-    // if (!this.props.current_post) {
-    this.getPost();
-    this.getPhotos();
-    // }
-    this.getFollowing();
-    this.getWatching();
+    if (!this.props.current_post) {
+      this.getPost();
+      this.getPhotos();
+    }
     if (localStorage.token) {
       this.getBartering();
+      this.getFollowing();
+      this.getWatching();
       this.setState({
         isLoggedIn: true,
       });
@@ -41,13 +41,15 @@ class BuyerPost extends Component {
       const postId = this.props.current_post.id;
       const { data } = await axios.get(`http://localhost:3396/api/offers/getSingleOffer/${buyerUsername}/${postId}`);
       console.log('trying to get all offers', data);
-      if (data) {
+      if (data.rowCount > 0) {
         this.setState({
           room_id: data.rows[0] ? data.rows[0].room_id : null,
-          bartering: !!data.rowCount,
+          bartering: true,
         });
-
-        console.log('getBartering!!', this.state);
+      } else {
+        this.setState({
+          bartering: false,
+        });
       }
     } catch (err) {
       console.log('err get bartering status', err);
@@ -85,9 +87,9 @@ class BuyerPost extends Component {
   getFollowing = async () => {
     try {
       const userId = this.props.current_post.user_id;
-      console.log('????????', this.props.current_post.user_id);
+      // console.log('????????', this.props.current_post.user_id);
       const followerId = localStorage.id;
-      console.log('foller', followerId);
+      // console.log('foller', followerId);
       const { data } = await axios.get(`http://localhost:3396/api/followings/single/${followerId}/${userId}`);
       console.log('successfully received following list', data);
 
@@ -194,16 +196,20 @@ class BuyerPost extends Component {
     }
   };
 
-  switchToSinglePost = (userId) => {
-    console.log('switching to user id:', userId);
-    this.props.history.push(`/othersprofile/${userId}`);
+  switchToSinglePost = async (userId) => {
+    try {
+      this.props.history.push(`/othersprofile/${userId}`);
+    } catch (err) {
+      console.log('error on switchToSinglePost - buyingPostList');
+    }
   };
+
   async cancelOffer() {
     console.log('cancel button clicked');
     try {
-      await axios.post('http://localhost:3396/api/offers/deleteOffer', {
-        room_id: this.state.room_id,
-      });
+      const userName = localStorage.username;
+      const postId = this.props.current_post.id;
+      await axios.delete(`http://localhost:3396/api/offers/deleteOffer/${userName}/${postId}`);
       this.setState({
         bartering: false,
       });
@@ -212,6 +218,7 @@ class BuyerPost extends Component {
       console.log('err deleteing offer');
     }
   }
+
   render() {
     return this.props.current_post ? (
       <div>

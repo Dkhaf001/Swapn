@@ -146,8 +146,11 @@ class SellerPost extends Component {
       };
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
-
-      const [data] = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, cancel);
+      const { data } = await axios.put(
+        `http://localhost:3396/api/posts/${userId}/${postId}`,
+        cancel,
+      );
+      console.log('after Delte');
       this.setState({
         offerAccepted: false,
         accept: cancel,
@@ -192,6 +195,18 @@ class SellerPost extends Component {
       currentTalking: offer.buyer_username,
     });
   };
+
+  denyActiveOffer = async (userName, offerId, offer) => {
+    try {
+      await axios.delete(`http://localhost:3396/api/offers/deleteOffer/${userName}/${offerId}`);
+      const records = this.state.offers.filter(dat => dat.id !== offer);
+      this.setState({ offers: records });
+      console.log('Delted Offer from seller');
+    } catch (err) {
+      console.log('err deleting a post from your selling active offer list');
+    }
+  };
+
   render() {
     return this.props.current_post ? (
       <div>
@@ -258,7 +273,15 @@ class SellerPost extends Component {
           this.state.offers.map(offer => (
             <div key={offer.id}>
               <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
-                {offer.username}
+                <a>{offer.username}</a>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.denyActiveOffer(offer.username, this.props.current_post.id, offer.id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
               {this.state.currentRoom === offer.room_id && (
                 <Chattest

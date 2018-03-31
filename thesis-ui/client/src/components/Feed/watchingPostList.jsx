@@ -39,7 +39,7 @@ class WatchingPostList extends Component {
       console.log('error on componentDidMount - watchingPostList');
     }
   }
-  async removeFromWatchList(userId, postId) {
+  removeFromWatchList = async (userId, postId) => {
     try {
       await axios.delete(`http://localhost:3396/api/watchers/${userId}/${postId}`);
       const records = this.state.watching.filter(data => data.post_id !== postId);
@@ -48,11 +48,11 @@ class WatchingPostList extends Component {
     } catch (err) {
       console.log('err deleting a post from your watch list');
     }
-  }
+  };
 
   switchToSinglePost = async (post) => {
     try {
-      this.props.addCurrentPost(post);
+      // this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);
     } catch (err) {
       console.log('error on switchToSinglePost - watchingPostList');

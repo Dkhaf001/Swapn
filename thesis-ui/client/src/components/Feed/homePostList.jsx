@@ -62,7 +62,7 @@ class HomePostList extends Component {
 
   switchToSinglePost = async (post) => {
     try {
-      this.props.addCurrentPost(post);
+      // this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
     } catch (err) {
       console.log('homepostswitch', err);

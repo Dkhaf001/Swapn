@@ -27,7 +27,7 @@ export const addOffersController = async (req, res) => {
 };
 
 export const removeOffersController = async (req, res) => {
-  const payload = req.body;
+  const payload = req.params;
   console.log('req.body', payload);
   try {
     const data = await removeOffersQuery(payload);
