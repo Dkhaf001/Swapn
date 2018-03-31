@@ -153,17 +153,17 @@ class PhotoSlide extends React.Component {
   }
 
   //--------------------------------------
-  _getStaticImages() {
-    const images = [];
-    for (let i = 2; i < 12; i++) {
-      images.push({
-        original: `${PREFIX_URL}${i}.jpg`,
-        thumbnail: `${PREFIX_URL}${i}t.jpg`,
-      });
-    }
+  // _getStaticImages() {
+  //   const images = [];
+  //   for (let i = 2; i < 12; i++) {
+  //     images.push({
+  //       original: `${PREFIX_URL}${i}.jpg`,
+  //       thumbnail: `${PREFIX_URL}${i}t.jpg`,
+  //     });
+  //   }
 
-    return images;
-  }
+  //   return images;
+  // }
   //---------------------------------
 
   _resetVideo() {
