@@ -5,6 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chattest from '../Chat/Chattest.jsx';
 import randomstring from 'randomstring';
 import path from 'path';
+import PhotoSlide from '../Photo/photoslide.jsx';
+import { addImages } from '../../actions';
+import { bindActionCreators } from 'redux';
 
 class BuyerPost extends Component {
   constructor(props) {
@@ -22,10 +25,11 @@ class BuyerPost extends Component {
   }
 
   async componentWillMount() {
+    this.getPhotos();
     if (!this.props.current_post) {
       this.getPost();
-      this.getPhotos();
     }
+
     if (localStorage.token) {
       this.getBartering();
       this.getFollowing();
@@ -66,8 +70,8 @@ class BuyerPost extends Component {
       const url = window.location.href;
       const postId = path.basename(url);
       const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
-      console.log('successfully received post', data);
-      console.log('what is this??', data[0]);
+      // console.log('successfully received post', data);
+      // console.log('what is this??', data[0]);
       this.props.addCurrentPost(data[0]);
       // this.setState({
       //   post: data[0],
@@ -79,12 +83,14 @@ class BuyerPost extends Component {
 
   getPhotos = async () => {
     try {
-      const postId = this.props.current_post && this.props.current_post.id;
+      const postId = this.props.current_post.id;
       const { data } = await axios.get(`http://localhost:3396/api/photos/${postId}`);
       console.log('successfully received photos');
+      const images = data.rows.map(values => JSON.parse(values.url));
       this.setState({
-        photos: data.rows,
+        photos: images,
       });
+      this.props.addImages(images);
     } catch (err) {
       console.log('error getphoto', err);
     }
@@ -235,7 +241,7 @@ class BuyerPost extends Component {
           </a>'s posting
         </h1>
         <div>
-          <img src={this.props.current_post.main_photo} />
+          <PhotoSlide />
         </div>
         <div>
           <h1>
@@ -316,7 +322,16 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     active_user: state.active_user,
     socket: state.socket,
+    images: state.images,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      addImages,
+    },
+    dispatch,
+  );
+}
 
-export default connect(mapStateToProps)(BuyerPost);
+export default connect(mapStateToProps, mapDispatchToProps)(BuyerPost);

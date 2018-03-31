@@ -1,9 +1,14 @@
 import db from '../../config/database';
-import { fetchAllPhotosHelper, addPhotosHelper, removePhotosHelper } from './photosSQLHelpers';
+import {
+  fetchAllPhotosHelper,
+  addPhotosHelper,
+  removePhotosHelper,
+  removeAllPhotosHelper,
+} from './photosSQLHelpers';
 
 export const fetchAllPhotosQuery = async (payload) => {
   try {
-    const queryString = fetchAllPhotosHelper(payload, url);
+    const queryString = fetchAllPhotosHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('fetchAllPhotosQuery - successfully retrieved data');
     return data;
@@ -28,6 +33,17 @@ export const removePhotosQuery = async (payload) => {
     const queryString = removePhotosHelper(payload);
     const data = await db.queryAsync(queryString);
     console.log('removePhotosQuery - successfully retrieved data');
+    return data;
+  } catch (err) {
+    console.log('removePhotosQuery - ERROR:', err);
+  }
+};
+
+export const removeAllPhotosQuery = async (payload) => {
+  try {
+    const queryString = removeAllPhotosHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('removeAllPhotosQuery - successfully retrieved data');
     return data;
   } catch (err) {
     console.log('removePhotosQuery - ERROR:', err);

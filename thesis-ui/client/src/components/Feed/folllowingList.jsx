@@ -20,7 +20,6 @@ class Following extends Component {
     try {
       const user_id = localStorage.id;
       const { data } = await axios.get(`http://localhost:3396/api/followings/${user_id}`);
-      console.log('this is the data', data);
       this.setState({
         followings: data,
       });

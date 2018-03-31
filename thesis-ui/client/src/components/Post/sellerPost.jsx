@@ -3,15 +3,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Route } from 'react-router-dom';
+import path from 'path';
+import { bindActionCreators } from 'redux';
+import PhotoSlide from '../Photo/photoslide.jsx';
 import EditPost from './editPost.jsx';
 import Chattest from '../Chat/Chattest.jsx';
-import path from 'path';
+import { addImages } from '../../actions';
 
 class SellerPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // photos: [],
+      photos: [],
       offerAccepted: false,
       accept: {
         title: this.props.current_post.title,
@@ -29,14 +32,11 @@ class SellerPost extends Component {
     };
     this.acceptOffer = this.acceptOffer.bind(this);
   }
-
+  componentWillMount() {
+    this.getPhotos();
+  }
   async componentDidMount() {
-    // this.getPhotos();
-    console.log(' fetchPostOffers before calling');
     await this.getOffers();
-    console.log('finished adding');
-
-    console.log('current room id', this.props.room_id);
     if (this.props.location.state) {
       this.setState({
         currentRoom: this.props.location.state.roomId,
@@ -65,13 +65,10 @@ class SellerPost extends Component {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      console.log('going to do fetchPostOffers on', postId);
       const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${postId}`);
-      console.log('fetchPostOffers', data);
       this.setState({
         offers: data.rows,
       });
-      console.log('going to do the iterate');
       if (this.props.current_post.tradingWith) {
         for (let i = 0; i < data.rows.length; i++) {
           if (data.rows[i].buyer_username === this.props.current_post.tradingWith) {
@@ -80,9 +77,7 @@ class SellerPost extends Component {
             });
           }
         }
-        console.log('after the for loop');
         if (!this.state.tradingWith) {
-          console.log('inside of if statement');
           alert(`${this.props.current_post.tradingWith} canceled his/her offer`);
           this.cancelOffer();
         }
@@ -91,16 +86,21 @@ class SellerPost extends Component {
       console.log('err sellerPost', err);
     }
   }
-  // async getPhotos() {
-  // const postId = this.props.current_posts.id;
-  // const { data } = await axios.get(
-  //   `http://localhost:3396/api/photos/${postId}`
-  // );
-  // console.log('successfully received photos!');
-  // this.setState({
-  //   photos: data.rows
-  // });
-  // }
+
+  getPhotos = async () => {
+    try {
+      const postId = this.props.current_post.id;
+      const { data } = await axios.get(`http://localhost:3396/api/photos/${postId}`);
+      console.log('successfully received photos');
+      const images = data.rows.map(values => JSON.parse(values.url));
+      this.setState({
+        photos: images,
+      });
+      this.props.addImages(images);
+    } catch (err) {
+      console.log('error getphoto', err);
+    }
+  };
 
   editPost() {
     this.props.history.push('/editPost');
@@ -160,13 +160,11 @@ class SellerPost extends Component {
         `http://localhost:3396/api/posts/${userId}/${postId}`,
         cancel,
       );
-      console.log('after Delte');
       this.setState({
         offerAccepted: false,
         accept: cancel,
         sold: false,
       });
-
       console.log('Successfully cancelled an offer! Post status is now Accepting Offers', data);
     } catch (err) {
       console.log('Error cancelling offer!');
@@ -186,14 +184,12 @@ class SellerPost extends Component {
       };
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
-      console.log('right before put request');
       const { data } = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
       this.setState({
         offerAccepted: false,
         accept: sold,
         sold: true,
       });
-      console.log('dataa from sold offer', data);
       this.props.history.push('/home');
     } catch (err) {
       console.log('Error completing barter transaction!');
@@ -222,7 +218,7 @@ class SellerPost extends Component {
       <div>
         <h1>Welcome to your post!</h1>
         <div>
-          <img src={this.props.current_post && this.props.current_post.main_photo} />
+          <PhotoSlide />
         </div>
         <div>
           <h1>
@@ -317,13 +313,17 @@ function mapStateToProps(state) {
     socket: state.socket,
     active_user: state.active_user,
     socket: state.socket,
+    images: state.images,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    addChangeRoomId,
-  });
+  return bindActionCreators(
+    {
+      addImages,
+    },
+    dispatch,
+  );
 }
 
-export default connect(mapStateToProps)(SellerPost);
+export default connect(mapStateToProps, mapDispatchToProps)(SellerPost);

@@ -52,11 +52,20 @@ class SellersPostList extends Component {
 
   async removePost(userId, postId) {
     try {
+      // delete photos from sql then delte post then s3
+      await axios.delete(`http://localhost:3396/api/photos/removeall/${postId}`);
       await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
+      await axios.delete(`http://localhost:8593/api/${postId}`);
+
       console.log('successfully deleted post from selling list');
       const records = this.state.lists.filter(data => data.post_id !== postId);
       this.setState({ lists: records });
       this.props.addSellingList(this.state.lists);
+      // remove from s3 photos
+      // remove photos from sql dataBASE
+      //
+      //
+      //
       this.props.history.push('/profile/selling');
     } catch (err) {
       console.log('err deleting a post from your selling list');

@@ -27,7 +27,6 @@ class Bio extends Component {
     }
     try {
       const { data } = await axios.get(`http://localhost:3396/api/users/${userId}`);
-      console.log('!!!!', data);
       // this.props.addCurrentProfile(data[0]);
       this.setState({ user: data[0] });
 

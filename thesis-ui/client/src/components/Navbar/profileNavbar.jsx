@@ -26,7 +26,6 @@ class ProfileNavbar extends Component {
           entries,
         });
       }
-      console.log('hello from profileNavbar', this.props.acceptedOffers);
     } catch (err) {
       console.log('err profile navbar', err);
     }
@@ -39,12 +38,12 @@ class ProfileNavbar extends Component {
           {this.props.acceptedOffers ? (
             <div>
               {this.props.acceptedOffers.map(acceptedOffers => (
-                  <div key={acceptedOffers._id}>
-                    {acceptedOffers.seller} accepted your offers on his posts{' '}
-                    <Link to={`/post/${acceptedOffers.post_id}`}>{acceptedOffers.title}</Link>{' '}
-                    please contact him as soon as possible
-                  </div>
-                ))}
+                <div key={acceptedOffers._id}>
+                  {acceptedOffers.seller} accepted your offers on his posts{' '}
+                  <Link to={`/post/${acceptedOffers.post_id}`}>{acceptedOffers.title}</Link> please
+                  contact him as soon as possible
+                </div>
+              ))}
             </div>
           ) : (
             <div>No offer has been accepted</div>

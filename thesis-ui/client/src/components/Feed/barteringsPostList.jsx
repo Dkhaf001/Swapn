@@ -56,7 +56,7 @@ class BarteringsPostList extends Component {
 
   switchToSinglePost = async (post) => {
     try {
-      // this.props.addCurrentPost(post);
+      // await this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);
     } catch (err) {
       console.log('barteringpostswitch', err);

@@ -52,7 +52,7 @@ class WatchingPostList extends Component {
 
   switchToSinglePost = async (post) => {
     try {
-      // this.props.addCurrentPost(post);
+      this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);
     } catch (err) {
       console.log('error on switchToSinglePost - watchingPostList');
