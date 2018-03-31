@@ -86,8 +86,7 @@ export const addAcceptedOffers = offers => ({
   type: 'ACCEPTED_OFFERS',
   payload: offers,
 });
-
-export const addChangeRoomId = func => ({
-  type: 'FUNCTION',
-  payload: func,
+export const addMainPhoto = offers => ({
+  type: 'MAIN_PHOTO',
+  payload: offers,
 });

@@ -8,7 +8,7 @@ import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import PhotoUpload from '../Photo/index.jsx';
 import PhotoSlide from '../Photo/photoslide.jsx';
-import { addCurrentPost, addNewPostId } from '../../actions';
+import { addCurrentPost, addNewPostId, addMainPhoto, addImages } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
@@ -28,8 +28,9 @@ class AddPost extends Component {
         category: '',
         location: '',
         demand: '',
-        status: 'Accepting Offers'
-      }
+        status: 'Accepting Offers',
+        mainPhoto: '',
+      },
     };
     this.handleConditionChange = this.handleConditionChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -38,7 +39,17 @@ class AddPost extends Component {
     this.submitPost = this.submitPost.bind(this);
     this.cancelPost = this.cancelPost.bind(this);
   }
-
+  componentWillMount() {
+    // remove photos in s3 usning newPostID
+    // clear newPostID / images / mainPhoto
+    // on final submit clearn above too
+    if (this.props.newPostId) {
+      this.cancelPost(this.props.newPostId);
+    }
+    this.props.addNewPostId(null);
+    this.props.addImages(null);
+    this.props.addMainPhoto(null);
+  }
   submitPost = async () => {
     try {
       if (
@@ -56,26 +67,36 @@ class AddPost extends Component {
         console.log('Success Post', latLng);
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
-            location: latLng
-          })
+            location: latLng,
+          }),
         });
+        // this.uploadImages();
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
           `http://localhost:3396/api/posts/${userId}/${postId}`,
-          this.state.newPost
+          this.state.newPost,
         );
         tempPostId = data.rows[0].id;
-        console.log(
-          'successfully instantiated a new post (completed): ',
-          this.state.newPost
-        );
+        console.log('successfully instantiated a new post (completed): ', this.state.newPost);
         this.props.history.push('/home');
       } else {
         alert('Please fill out all text fields!');
       }
+      // clear local redux store
+      this.props.addNewPostId(null);
+      this.props.addImages(null);
+      this.props.addMainPhoto(null);
     } catch (err) {
       console.log('error submitting new post!');
+    }
+  };
+  uploadImages = async () => {
+    try {
+      console.log('mianphoto', this.state.main_photo);
+      // grab main image from main store
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -84,10 +105,11 @@ class AddPost extends Component {
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
       await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
-      // ============================================
-      // need to implement logic for delete from S3
-      // OVER HERE ELBERT!
-      // ============================================
+      // S3
+      // =========================================
+      await axios.delete(`http://localhost:8593/api/${postId}`);
+      //
+      // =======================================
       console.log('successfully deleted new post');
       this.props.history.push('/home');
     } catch (err) {
@@ -102,16 +124,16 @@ class AddPost extends Component {
   handleConditionChange = (event, index, value) => {
     this.setState({
       newPost: Object.assign({}, this.state.newPost, {
-        condition: value
-      })
+        condition: value,
+      }),
     });
   };
 
   handleCategoryChange = (event, index, value) => {
     this.setState({
       newPost: Object.assign({}, this.state.newPost, {
-        category: value
-      })
+        category: value,
+      }),
     });
   };
 
@@ -130,7 +152,7 @@ class AddPost extends Component {
         const userId = localStorage.id;
         const { data } = await axios.post(
           `http://localhost:3396/api/posts/${userId}`,
-          this.state.newPost
+          this.state.newPost,
         );
         this.setState({ stepIndex: 1 });
         this.props.addCurrentPost(data.rows[0]);
@@ -140,10 +162,7 @@ class AddPost extends Component {
         // set
         this.props.addNewPostId(data.rows[0].id);
 
-        console.log(
-          'successfully submitted new post (pending): ',
-          data.rows[0]
-        );
+        console.log('successfully submitted new post (pending): ', data.rows[0]);
       } else {
         this.handlePrev();
         alert('Please fill out all text fields!');
@@ -154,17 +173,38 @@ class AddPost extends Component {
     }
   };
 
-  handleNext() {
-    const { stepIndex } = this.state;
-    if (stepIndex === 0) {
-      this.setState({ stepIndex: 1 });
-    } else {
-      this.setState({
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2
-      });
+  handleNext = async () => {
+    try {
+      // photo
+      if (!this.props.main_photo) {
+        this.setState({
+          newPost: Object.assign({}, this.state.newPost, {
+            mainPhoto: this.props.images[0].original,
+          }),
+        });
+        this.props.addMainPhoto(this.props.images[0]);
+      } else {
+        this.setState({
+          newPost: Object.assign({}, this.state.newPost, {
+            mainPhoto: this.props.main_photo.original,
+          }),
+        });
+      }
+      // switch to next step
+      const { stepIndex } = this.state;
+      if (stepIndex === 0) {
+        this.setState({ stepIndex: 1 });
+      } else {
+        this.setState({
+          stepIndex: stepIndex + 1,
+          finished: stepIndex >= 2,
+        });
+      }
+    } catch (err) {
+      console.log('handlenext addpost.jsx error:', err);
     }
-  }
+    // make them choose photo before moving on
+  };
 
   handlePrev() {
     const { stepIndex } = this.state;
@@ -185,11 +225,11 @@ class AddPost extends Component {
               hintText="What are you selling?"
               floatingLabelText="Title"
               name="title"
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -201,11 +241,11 @@ class AddPost extends Component {
               rows={2}
               rowsMax={4}
               name="description"
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -217,27 +257,12 @@ class AddPost extends Component {
               style={{ width: 300 }}
               autoWidth={true}
             >
-              <MenuItem
-                value="New (never used)"
-                primaryText="New (never used)"
-              />
-              <MenuItem
-                value="Reconditioned/Certified"
-                primaryText="Reconditioned/Certified"
-              />
-              <MenuItem
-                value="Open Box (never used)"
-                primaryText="Open Box (never used)"
-              />
-              <MenuItem
-                value="Used (normal wear)"
-                primaryText="Used (normal wear)"
-              />
+              <MenuItem value="New (never used)" primaryText="New (never used)" />
+              <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
+              <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
+              <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
               <MenuItem value="For Parts" primaryText="For Parts" />
-              <MenuItem
-                value="Other (see description)"
-                primaryText="Other (see description)"
-              />
+              <MenuItem value="Other (see description)" primaryText="Other (see description)" />
             </DropDownMenu>
             <br />
             Category:<br />
@@ -252,10 +277,7 @@ class AddPost extends Component {
               <MenuItem value="3" primaryText="Baby & Kids" />
               <MenuItem value="4" primaryText="Beauty & Health" />
               <MenuItem value="5" primaryText="Automotive" />
-              <MenuItem
-                value="6"
-                primaryText="Electronics, Computers & Office"
-              />
+              <MenuItem value="6" primaryText="Electronics, Computers & Office" />
               <MenuItem value="7" primaryText="Clothing & Shoes" />
               <MenuItem value="8" primaryText="Free" />
               <MenuItem value="9" primaryText="Games & Toys" />
@@ -272,11 +294,11 @@ class AddPost extends Component {
               hintText="Add Location Here"
               floatingLabelText="Location"
               name="location"
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -285,11 +307,11 @@ class AddPost extends Component {
               hintText="What do you want for your item?"
               floatingLabelText="Demand"
               name="demand"
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -311,11 +333,11 @@ class AddPost extends Component {
               floatingLabelText="Title"
               name="title"
               defaultValue={`${this.state.newPost.title}`}
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -327,11 +349,11 @@ class AddPost extends Component {
               rowsMax={4}
               name="description"
               defaultValue={`${this.state.newPost.description}`}
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -343,27 +365,12 @@ class AddPost extends Component {
               style={{ width: 300 }}
               autoWidth={true}
             >
-              <MenuItem
-                value="New (never used)"
-                primaryText="New (never used)"
-              />
-              <MenuItem
-                value="Reconditioned/Certified"
-                primaryText="Reconditioned/Certified"
-              />
-              <MenuItem
-                value="Open Box (never used)"
-                primaryText="Open Box (never used)"
-              />
-              <MenuItem
-                value="Used (normal wear)"
-                primaryText="Used (normal wear)"
-              />
+              <MenuItem value="New (never used)" primaryText="New (never used)" />
+              <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
+              <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
+              <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
               <MenuItem value="For Parts" primaryText="For Parts" />
-              <MenuItem
-                value="Other (see description)"
-                primaryText="Other (see description)"
-              />
+              <MenuItem value="Other (see description)" primaryText="Other (see description)" />
             </DropDownMenu>
             <br />
             Category:<br />
@@ -378,10 +385,7 @@ class AddPost extends Component {
               <MenuItem value="3" primaryText="Baby & Kids" />
               <MenuItem value="4" primaryText="Beauty & Health" />
               <MenuItem value="5" primaryText="Automotive" />
-              <MenuItem
-                value="6"
-                primaryText="Electronics, Computers & Office"
-              />
+              <MenuItem value="6" primaryText="Electronics, Computers & Office" />
               <MenuItem value="7" primaryText="Clothing & Shoes" />
               <MenuItem value="8" primaryText="Free" />
               <MenuItem value="9" primaryText="Games & Toys" />
@@ -397,11 +401,11 @@ class AddPost extends Component {
               floatingLabelText="Location"
               name="location"
               defaultValue={`${this.state.newPost.location}`}
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -410,11 +414,11 @@ class AddPost extends Component {
               floatingLabelText="Demand"
               name="demand"
               defaultValue={`${this.state.newPost.demand}`}
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({
                   newPost: Object.assign({}, this.state.newPost, {
-                    [e.target.name]: e.target.value
-                  })
+                    [e.target.name]: e.target.value,
+                  }),
                 });
               }}
             />
@@ -508,7 +512,10 @@ class AddPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
+    main_photo: state.main_photo,
+    newPostId: state.newPostId,
+    images: state.images,
   };
 }
 
@@ -516,9 +523,11 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentPost,
-      addNewPostId
+      addNewPostId,
+      addImages,
+      addMainPhoto,
     },
-    dispatch
+    dispatch,
   );
 }
 

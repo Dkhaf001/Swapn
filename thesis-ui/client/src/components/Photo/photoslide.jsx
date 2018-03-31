@@ -84,9 +84,7 @@ class PhotoSlide extends React.Component {
     // ];
     // .concat(this._getStaticImages());
   }
-  componentWillMount() {
-    console.log('~~~~~~~~~~~~', this.props.images_list);
-  }
+  componentWillMount() {}
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -101,9 +99,15 @@ class PhotoSlide extends React.Component {
   //-----------------------------
   removeCurrentPhoto = () => {
     console.log('currentindex', this.state.currentIndex);
+    // remove photo passed down from photo index
     this.props.removePhoto(this.state.currentIndex);
   };
   //-----------------------------
+  makeMainPhoto = () => {
+    // set image list
+    this.props.mainPhoto(this.state.currentIndex);
+  };
+
   _onImageClick(event) {
     console.debug(
       'clicked on image',
@@ -218,7 +222,10 @@ class PhotoSlide extends React.Component {
     return (
       <div>
         {this.props.images_list && this.props.images_list.length >= 1 ? (
-          <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+          <div>
+            <button onClick={this.makeMainPhoto}>Make Main Photo</button>
+            <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+          </div>
         ) : null}
 
         <section className="app">

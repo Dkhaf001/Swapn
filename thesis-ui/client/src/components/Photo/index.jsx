@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addImages } from '../../actions';
+import { addImages, addMainPhoto } from '../../actions';
 import PhotoSlide from './photoslide.jsx';
 import path from 'path';
 
@@ -13,26 +13,27 @@ class PhotoUpload extends React.Component {
       posting: false,
       file: null,
       images: [],
+      mainPhoto: [],
     };
   }
-  componentDidMount() {}
-  removePhoto = async (postId, key) => {
-    try {
-      const data = await axios.delete(`http://localhost:8593/api/removephoto/${postId}/${key}`);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+
+  mainPhoto = (input) => {
+    const temp = this.state.images;
+    let copy;
+    if (temp.length > 1) {
+      copy = temp.slice(input, input + 1);
+    } else {
+      copy = temp.slice(input);
     }
+    // update store for main photo
+    this.setState({ mainPhoto: copy[0] });
+    this.props.addMainPhoto(copy[0]);
   };
 
   removingPhoto = async (input) => {
     try {
       const temp = this.state.images;
       const hold = temp.splice(input, 1);
-      // console.log('this is hold', hold.Key);
-      // console.log(`http://localhost:8593/api/removephoto/${hold[0].Key}`);
-      // has Key
-      // console.log('thisisTemp', temp);
       if (temp.length === 0) {
         this.props.addImages(null);
       } else {
@@ -145,7 +146,7 @@ class PhotoUpload extends React.Component {
   render() {
     return (
       <div>
-        <PhotoSlide removePhoto={this.removingPhoto} />
+        <PhotoSlide mainPhoto={this.mainPhoto} removePhoto={this.removingPhoto} />
         {this.state.posting ? this.renderForm() : this.renderNormal()}
       </div>
     );
@@ -157,6 +158,7 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     images: state.images,
     npId: state.newPostId,
+    main_photo: state.main_photo,
   };
 }
 
@@ -164,6 +166,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addImages,
+      addMainPhoto,
     },
     dispatch,
   );
