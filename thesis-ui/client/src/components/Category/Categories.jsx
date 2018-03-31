@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { addCurrentList } from '../../actions';
+import { addCategoryList } from '../../actions';
 import { bindActionCreators } from 'redux';
+import { Link, Route } from 'react-router-dom';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
+import CategoryList from './categoryList.jsx';
 
-const options = [
+const categories = [
   'Antiques & Collectibles',
   'Appliances & Furniture',
   'Baby & Kids',
@@ -43,7 +45,7 @@ class Categories extends Component {
       `http://localhost:3396/api/categories/${index}`
     );
     console.log('clicked! this is the data: ', data.rows);
-    this.props.addCurrentList(data.rows);
+    this.props.addCategoryList(data.rows);
   };
 
   render() {
@@ -56,7 +58,7 @@ class Categories extends Component {
           open={this.state.open}
           onRequestChange={open => this.setState({ open })}
         >
-          {options.map((category, i) => (
+          {categories.map((category, i) => (
             <MenuItem
               onClick={() => {
                 this.handleClose();
@@ -65,6 +67,7 @@ class Categories extends Component {
               key={i}
             >
               {category}
+              {/* <CategoryList category={category} type={i + 1} /> */}
             </MenuItem>
           ))}
         </Drawer>
@@ -75,14 +78,14 @@ class Categories extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    category_list: state.category_list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList
+      addCategoryList
     },
     dispatch
   );

@@ -13,19 +13,18 @@ import FollowingList from '../components/Feed/followingList.jsx';
 import AddPost from '../components/Post/addPost.jsx';
 import SinglePost from '../components/Post/index.jsx';
 import EditPost from '../components/Post/editPost.jsx';
+import Categories from '../components/Category/Categories.jsx';
 import jwtDecode from 'jwt-decode';
 import Protected from '../routes/protect.jsx';
 // import Maps from '../components/Map/index.jsx';
 // import Maptest from '../components/Map/maptest.jsx';
 
 export const appRoutes = [
-  // {
-  //   path: '/maps',
-  //   sidebarName: 'Maps',
-  //   navbarName: 'Maps',
-  //   component: Maptest,
-  //   protected: false,
-  // },
+  {
+    path: '/categories',
+    component: Categories,
+    protected: false
+  },
   {
     path: '/home',
     sidebarName: 'Home',
