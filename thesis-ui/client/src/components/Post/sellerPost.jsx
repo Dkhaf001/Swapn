@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Route } from 'react-router-dom';
 import EditPost from './editPost.jsx';
 import Chattest from '../Chat/Chattest.jsx';
+import path from 'path';
 
 class SellerPost extends Component {
   constructor(props) {
@@ -31,13 +32,20 @@ class SellerPost extends Component {
 
   async componentDidMount() {
     // this.getPhotos();
+    console.log(' fetchPostOffers before calling');
     await this.getOffers();
-    console.log('currentTitle', this.props.current_post);
+    console.log('finished adding');
 
-    this.props.socket.emit('updateDatabase', {
-      postId: this.props.current_post.id,
-      username: this.props.active_user.username,
-    });
+    console.log('current room id', this.props.room_id);
+    if (this.props.location.state) {
+      this.setState({
+        currentRoom: this.props.location.state.roomId,
+      });
+    } else {
+      this.setState({
+        currentRoom: this.props.room_id,
+      });
+    }
     if (this.props.current_post.status === 'Accepting Offers') {
       this.setState({
         offerAccepted: false,
@@ -55,8 +63,10 @@ class SellerPost extends Component {
   }
   async getOffers() {
     try {
-      console.log('going to do a fetch post offer request', this.props.current_post);
-      const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${this.props.current_post.id}`);
+      const url = window.location.href;
+      const postId = path.basename(url);
+      console.log('going to do fetchPostOffers on', postId);
+      const { data } = await axios.get(`http://localhost:3396/api/offers/fetchPostOffers/${postId}`);
       console.log('fetchPostOffers', data);
       this.setState({
         offers: data.rows,
@@ -78,7 +88,7 @@ class SellerPost extends Component {
         }
       }
     } catch (err) {
-      console.log('err sellerPost');
+      console.log('err sellerPost', err);
     }
   }
   // async getPhotos() {
@@ -287,7 +297,6 @@ class SellerPost extends Component {
                 <Chattest
                   roomId={this.state.currentRoom}
                   buyer={offer.buyer_username}
-                  accept={this.acceptOffer}
                   {...this.props}
                 />
               )}
@@ -309,6 +318,12 @@ function mapStateToProps(state) {
     active_user: state.active_user,
     socket: state.socket,
   };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    addChangeRoomId,
+  });
 }
 
 export default connect(mapStateToProps)(SellerPost);

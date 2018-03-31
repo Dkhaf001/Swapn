@@ -39,6 +39,10 @@ class Chattest extends React.Component {
   }
   async componentWillMount() {
     try {
+      this.props.socket.emit('updateDatabase', {
+        to: this.props.active_user.username,
+        roomId: this.props.roomId,
+      });
       console.log('inside of chattest this is the props shou have socket and roomId', this.props);
       this.props.addCurrentRoomId(this.props.roomId);
       this.props.socket.emit('joinRoom', this.props.roomId);
@@ -60,9 +64,10 @@ class Chattest extends React.Component {
       console.log('err in chattest ', err);
     }
   }
+  //* ***************************** Div id is needed ******************************//
   render() {
     return (
-      <div className="container">
+      <div className="container" id={this.props.roomId}>
         <div className="row">
           <div className="col-4">
             <div className="card">
@@ -71,10 +76,10 @@ class Chattest extends React.Component {
                 <hr />
                 <div className="messages">
                   {this.state.messages.map((message, key) => (
-                      <div key={key}>
-                        {message.from}: {message.message}
-                      </div>
-                    ))}
+                    <div key={key}>
+                      {message.from}: {message.message}
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="card-footer">
