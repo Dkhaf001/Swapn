@@ -12,12 +12,10 @@ export const addOffersHelper = ({ post_id, buyer_username, room_id }) => `
   RETURNING id, buyer_username, post_id, room_id
   `;
 
-export const removeOffersHelper = ({ room_id }) => {
-  return `
+export const removeOffersHelper = ({ buyer_username, post_id }) => `
   DELETE FROM offers
-  WHERE room_id='${room_id}'
+ WHERE buyer_username='${buyer_username}' AND post_id=${post_id}
   `;
-}
 
 export const getSingleOfferHelper = ({ buyer_username, post_id }) => `
   SELECT * 

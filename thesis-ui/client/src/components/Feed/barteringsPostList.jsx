@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 const styles = {
   root: {
@@ -22,23 +24,39 @@ const styles = {
 class BarteringsPostList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      bartering: [],
+    };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     try {
       const username = localStorage.username;
-      console.log('the username is', localStorage.username);
+      // console.log('the username is', localStorage.username);
       const { data } = await axios.get(`http://localhost:3396/api/offers/${username}`);
-      console.log('list', data);
+      this.setState({
+        bartering: data,
+      });
       this.props.addBarteringList(data);
     } catch (err) {
       console.log('err fetching posts', err);
     }
   }
 
+  removeFromOffers = async (userId, postId) => {
+    try {
+      await axios.delete(`http://localhost:3396/api/offers/deleteOffer/${userId}/${postId}`);
+      const records = this.state.bartering.filter(data => data.post_id !== postId);
+      this.setState({ bartering: records });
+      this.props.addBarteringList(this.state.bartering);
+    } catch (err) {
+      console.log('err deleting a post from your watch list');
+    }
+  };
+
   switchToSinglePost = async (post) => {
     try {
-      this.props.addCurrentPost(post);
+      // this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);
     } catch (err) {
       console.log('barteringpostswitch', err);
@@ -59,7 +77,19 @@ class BarteringsPostList extends Component {
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={() => this.switchToSinglePost(post)}
+                onClick={() => {
+                  this.switchToSinglePost(post);
+                }}
+                actionIcon={
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      this.removeFromOffers(localStorage.id, post.id);
+                    }}
+                  >
+                    <Delete color="white" />
+                  </IconButton>
+                }
               >
                 <img src={post.main_photo} />
               </GridTile>
