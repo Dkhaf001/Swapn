@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chattest from '../Chat/Chattest.jsx';
 import randomstring from 'randomstring';
 import path from 'path';
-import PhotoSlide from '../Photo/photoslide.jsx';
+import ViewSlide from '../Photo/viewPhotoSlider.jsx';
 import { addImages } from '../../actions';
 import { bindActionCreators } from 'redux';
 
@@ -241,7 +241,7 @@ class BuyerPost extends Component {
           </a>'s posting
         </h1>
         <div>
-          <PhotoSlide />
+          <ViewSlide />
         </div>
         <div>
           <h1>

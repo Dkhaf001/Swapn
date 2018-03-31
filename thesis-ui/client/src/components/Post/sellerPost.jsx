@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Route } from 'react-router-dom';
 import path from 'path';
 import { bindActionCreators } from 'redux';
-import PhotoSlide from '../Photo/photoslide.jsx';
+import ViewSlide from '../Photo/viewPhotoSlider.jsx';
 import EditPost from './editPost.jsx';
 import Chattest from '../Chat/Chattest.jsx';
 import { addImages } from '../../actions';
@@ -218,7 +218,7 @@ class SellerPost extends Component {
       <div>
         <h1>Welcome to your post!</h1>
         <div>
-          <PhotoSlide />
+          <ViewSlide />
         </div>
         <div>
           <h1>
