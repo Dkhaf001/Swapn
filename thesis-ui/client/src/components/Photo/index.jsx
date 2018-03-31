@@ -42,7 +42,9 @@ class PhotoUpload extends React.Component {
       }
       const data = await axios.delete(`http://localhost:8593/api/removephoto/${hold[0].Key}`);
       console.log(data);
-    } catch (err) {}
+    } catch (err) {
+      console.log('Error romvingPhoto photo index');
+    }
 
     // axios delete request
     // get post_id from props passed down for addpost componenet

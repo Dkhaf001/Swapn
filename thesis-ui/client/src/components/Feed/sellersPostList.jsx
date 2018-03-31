@@ -57,6 +57,8 @@ class SellersPostList extends Component {
       const records = this.state.lists.filter(data => data.post_id !== postId);
       this.setState({ lists: records });
       this.props.addSellingList(this.state.lists);
+      await axios.delete(`http://localhost:8593/api/${postId}`);
+
       this.props.history.push('/profile/selling');
     } catch (err) {
       console.log('err deleting a post from your selling list');
