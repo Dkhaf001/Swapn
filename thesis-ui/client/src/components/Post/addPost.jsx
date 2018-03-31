@@ -70,7 +70,6 @@ class AddPost extends Component {
             location: latLng,
           }),
         });
-        // this.uploadImages();
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
@@ -83,6 +82,7 @@ class AddPost extends Component {
       } else {
         alert('Please fill out all text fields!');
       }
+      this.uploadImages();
       // clear local redux store
       this.props.addNewPostId(null);
       this.props.addImages(null);
@@ -93,8 +93,14 @@ class AddPost extends Component {
   };
   uploadImages = async () => {
     try {
-      console.log('mianphoto', this.state.main_photo);
-      // grab main image from main store
+      const postId = this.props.newPostId;
+      const imgs = this.props.images;
+      imgs.forEach(async (img) => {
+        const imgData = JSON.stringify(img);
+        await axios.post(`http://localhost:3396/api/photos/${postId}`, {
+          url: imgData,
+        });
+      });
     } catch (err) {
       console.log(err);
     }
@@ -105,11 +111,9 @@ class AddPost extends Component {
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
       await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
-      // S3
-      // =========================================
+
       await axios.delete(`http://localhost:8593/api/${postId}`);
-      //
-      // =======================================
+
       console.log('successfully deleted new post');
       this.props.history.push('/home');
     } catch (err) {
