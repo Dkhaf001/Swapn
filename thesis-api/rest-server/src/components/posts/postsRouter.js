@@ -5,20 +5,21 @@ import {
   fetchSinglePostsController,
   updatePostsController,
   deletePostsController,
-  addPostsController
+  addPostsController,
 } from './postsControllers';
+
 const router = express.Router();
-//get all
+// get all
 router.route('/').get(fetchAllPostsController);
-//get user specific (user or buyer)
+// get user specific (user or buyer)
 router.route('/:user_id').get(fetchUserPostsController);
-//get single post
+// get single post
 router.route('/fetchSinglePost/:post_id').get(fetchSinglePostsController);
-//update post
-router.route('/:user_id/:post_id').put(updatePostsController);
-//delete post
+// update post
+router.route('/update/:user_id/:post_id').put(updatePostsController);
+// delete post
 router.route('/:user_id/:post_id').delete(deletePostsController);
-//add a post
+// add a post
 router.route('/:user_id').post(addPostsController);
 
 export default router;

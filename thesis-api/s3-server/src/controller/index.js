@@ -38,3 +38,17 @@ export const removePhotoController = (req, res) => {
     res.status(200).send(data);
   });
 };
+
+export const addProfileController = (req, res) => {
+  const payload = { file: req.files.file, album: `user${req.params.user_id}` };
+  const data = addBucketObjectQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
+};
+
+export const removeProfileController = (req, res) => {
+  const payload = req.params;
+  const data = removeBucketAlbumQuery(payload, (data) => {
+    res.status(200).send(data);
+  });
+};

@@ -1,4 +1,4 @@
-import { fetchUserQuery, updateUserQuery } from './usersQueries';
+import { fetchUserQuery, updateUserQuery, updateProfilePicQuery } from './usersQueries';
 
 export const fetchUserController = async (req, res) => {
   const payload = req.params;
@@ -14,6 +14,16 @@ export const updateUserController = async (req, res) => {
   const payload = req.body;
   try {
     const data = await updateUserQuery(payload);
+    return res.status(200).send(data.rows);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateProfilePicController = async (req, res) => {
+  const payload = req.body;
+  try {
+    const data = await updateProfilePicQuery(payload);
     return res.status(200).send(data.rows);
   } catch (err) {
     console.log(err);
