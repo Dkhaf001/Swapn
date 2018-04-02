@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import BioPhotoUpload from '../Photo/bioPhoto.jsx';
-// this should be a popup that allows the user to update his profile details and profile pic
+
+const { REST_SERVER_URL } = process.env;
+const { S3_SERVER_URL } = process.env;
 class Edit extends Component {
   constructor() {
     super();
@@ -14,7 +16,7 @@ class Edit extends Component {
   async componentWillMount() {
     const userId = localStorage.id;
     try {
-      const data = await axios.get(`http://localhost:8593/api/${userId}`);
+      const data = await axios.get(`${S3_SERVER_URL}/api/${userId}`);
       console.log('bio', data);
 
       this.setState({
@@ -26,7 +28,7 @@ class Edit extends Component {
   // need two imput feild set gut request with axios when submit// needs photo upload
   handleSubmit = async () => {
     try {
-      await axios.put('http://localhost:3396/users/location', {
+      await axios.put(`${REST_SERVER_URL}/users/location`, {
         user_id: this.props.currentUser.id,
         location: this.state.location,
       });
@@ -41,7 +43,6 @@ class Edit extends Component {
       <div>
         <BioPhotoUpload />
         <label>
-          Location:{' '}
           <input
             name="location"
             onChange={e => this.setState({ [e.target.name]: e.target.value })}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+const { REST_SERVER_URL } = process.env;
 class Signup extends Component {
   constructor() {
     super();
@@ -14,7 +15,7 @@ class Signup extends Component {
   }
   async handleSubmit() {
     try {
-      const response = await axios.post('http://localhost:3396/api/auth/signup', this.state);
+      const response = await axios.post(`${REST_SERVER_URL}/api/auth/signup`, this.state);
       this.props.history.push('/login');
     } catch (err) {
       console.log('err signup user', err);

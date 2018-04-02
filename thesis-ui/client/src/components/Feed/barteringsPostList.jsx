@@ -8,6 +8,7 @@ import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 
+const { REST_SERVER_URL } = process.env;
 const styles = {
   root: {
     display: 'flex',
@@ -33,7 +34,7 @@ class BarteringsPostList extends Component {
     try {
       const username = localStorage.username;
       // console.log('the username is', localStorage.username);
-      const { data } = await axios.get(`http://localhost:3396/api/offers/${username}`);
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/offers/${username}`);
       this.setState({
         bartering: data,
       });
@@ -45,7 +46,7 @@ class BarteringsPostList extends Component {
 
   removeFromOffers = async (userId, postId) => {
     try {
-      await axios.delete(`http://localhost:3396/api/offers/deleteOffer/${userId}/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/offers/deleteOffer/${userId}/${postId}`);
       const records = this.state.bartering.filter(data => data.post_id !== postId);
       this.setState({ bartering: records });
       this.props.addBarteringList(this.state.bartering);

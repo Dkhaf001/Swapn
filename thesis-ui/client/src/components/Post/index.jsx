@@ -10,6 +10,7 @@ import path from 'path';
 import GoogleMap from '../Map/maptest.jsx';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
+const { REST_SERVER_URL } = process.env;
 const geolib = require('geolib');
 
 class Post extends Component {
@@ -23,7 +24,7 @@ class Post extends Component {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(`http://localhost:3396/api/posts/fetchSinglePost/${postId}`);
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/fetchSinglePost/${postId}`);
       console.log('successfully received post', data);
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });

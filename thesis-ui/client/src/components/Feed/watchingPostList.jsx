@@ -8,6 +8,7 @@ import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 
+const { REST_SERVER_URL } = process.env;
 const styles = {
   root: {
     display: 'flex',
@@ -30,7 +31,7 @@ class WatchingPostList extends Component {
   async componentDidMount() {
     try {
       const id = localStorage.id;
-      const { data } = await axios.get(`http://localhost:3396/api/watchers/${id}`);
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/watchers/${id}`);
       this.setState({
         watching: data,
       });
@@ -41,7 +42,7 @@ class WatchingPostList extends Component {
   }
   removeFromWatchList = async (userId, postId) => {
     try {
-      await axios.delete(`http://localhost:3396/api/watchers/${userId}/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/watchers/${userId}/${postId}`);
       const records = this.state.watching.filter(data => data.post_id !== postId);
       this.setState({ watching: records });
       this.props.addWatchingList(this.state.watching);

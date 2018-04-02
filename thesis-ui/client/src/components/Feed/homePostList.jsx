@@ -11,6 +11,7 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geolocation from '../Map/geolocation.jsx';
 import { getDistance } from 'geolib';
 
+const { REST_SERVER_URL } = process.env;
 const geolib = require('geolib');
 
 const styles = {
@@ -34,7 +35,7 @@ class HomePostList extends Component {
 
   async componentWillMount() {
     try {
-      const { data } = await axios.get('http://localhost:3396/api/posts');
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       data.sort((a, b) => b.id - a.id);
       const modifiedData = await this.getDistance(data);
       this.props.addCurrentList(modifiedData);
@@ -72,11 +73,11 @@ class HomePostList extends Component {
   handleChange = async (event, index, value) => {
     this.setState({ value });
     if (value === 1) {
-      const { data } = await axios.get('http://localhost:3396/api/posts');
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       data.sort((a, b) => b.id - a.id);
       this.props.addCurrentList(data);
     } else if (value === 2) {
-      const { data } = await axios.get('http://localhost:3396/api/posts');
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       // UNCOMMENT THIS CODE WHEN DANIEL FINISHES DISTANCE CALCULATION
       // data.sort((a, b) => a.distance - b.distance);
 

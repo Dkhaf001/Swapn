@@ -21,9 +21,8 @@ const envBuild = {
     'DEBUG=TRUE',
     'HOST=http://localhost',
     'PORT=4155',
-    'REST_SERVER_URL=http://localhost:4990',
-    'CODERUNNER_SERVICE_URL=http://localhost:4000',
-    'TOKEN_SECRET=codeslinger',
+    'REST_SERVER_URL=http://localhost:3396',
+    'TOKEN_SECRET=barterThesisApiSocketServer',
   ],
   's3-server': [
     'NODE_ENV=DEVELOPMENT',
@@ -36,14 +35,6 @@ const envBuild = {
     // 'AWS_SESSION_TOKEN=##########optional',
     'TOKEN_SECRET=barterThesisApiS3',
   ],
-  // 'services/coderunner-service': [
-  //   'NODE_ENV=DEVELOPMENT',
-  //   'DEBUG=TRUE',
-  //   'HOST=http://localhost',
-  //   'PORT=4000',
-  //   'REST_SERVER_URL=http://localhost:3396',
-  //   'SOCKET_SERVER_URL=http://localhost:4155'
-  // ]
 };
 
 module.exports = envBuild;

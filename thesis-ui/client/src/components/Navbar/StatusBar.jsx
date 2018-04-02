@@ -18,6 +18,8 @@ import {
 } from '../../actions';
 import axios from 'axios';
 
+const { REST_SERVER_URL } = process.env;
+const { SOCKET_SERVER_URL } = process.env;
 class StatusBar extends Component {
   state = {
     messages: [],
@@ -38,7 +40,7 @@ class StatusBar extends Component {
           logedin: user,
         });
         const username = this.props.active_user.username;
-        const socket = io.connect('http://localhost:4155');
+        const socket = io.connect(`${SOCKET_SERVER_URL}`);
 
         // =======THIS IS THE BUG=======
         this.props.addSocket(socket);
@@ -105,7 +107,7 @@ class StatusBar extends Component {
   }
   async verifyToken() {
     try {
-      const { data } = await axios.get('http://localhost:3396/api/auth/authenticate', {
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/auth/authenticate`, {
         params: {
           username: localStorage.getItem('username'),
           token: localStorage.getItem('token'),

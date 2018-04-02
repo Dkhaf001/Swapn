@@ -6,6 +6,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 
+const { REST_SERVER_URL } = process.env;
 class EditPost extends Component {
   constructor() {
     super();
@@ -37,7 +38,7 @@ class EditPost extends Component {
       console.log(this.props.current_post);
       const postId = this.props.current_post.id;
       const data = await axios.put(
-        `http://localhost:3396/api/posts/update/${userId}/${postId}`,
+        `${REST_SERVER_URL}/api/posts/update/${userId}/${postId}`,
         this.state,
       );
       console.log('successfully edited post!', this.state);

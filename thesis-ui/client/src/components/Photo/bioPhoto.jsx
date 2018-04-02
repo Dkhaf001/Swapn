@@ -6,6 +6,8 @@ import { addImages, addMainPhoto } from '../../actions';
 import PhotoSlide from './photoslide.jsx';
 import path from 'path';
 
+const { REST_SERVER_URL } = process.env;
+const { S3_SERVER_URL } = process.env;
 class BioPhotoUpload extends React.Component {
   constructor() {
     super();
@@ -18,7 +20,7 @@ class BioPhotoUpload extends React.Component {
   async componentWillMount() {
     try {
       const userId = localStorage.id;
-      const { data } = await axios.get(`http://localhost:3396/api/users/${userId}`);
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/users/${userId}`);
       if (data[0].photo_url !== '') {
         this.setState({ profilePic: data[0].photo_url });
       }
@@ -73,12 +75,9 @@ class BioPhotoUpload extends React.Component {
     formData.append('post_id', userId); // this is from state post id
     // console.log('formData', formData);
     // change to match the route i need for dp route
-    await axios.delete(`http://localhost:8593/api/${userId}`);
+    await axios.delete(`${S3_SERVER_URL}/api/${userId}`);
     // 1 changes to postID
-    const { data } = await axios.post(
-      `http://localhost:8593/api/addProfilePic/${userId}`,
-      formData,
-    );
+    const { data } = await axios.post(`${S3_SERVER_URL}/api/addProfilePic/${userId}`, formData);
 
     this.setState({
       profilePic: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
@@ -86,7 +85,7 @@ class BioPhotoUpload extends React.Component {
       posting: false,
     });
 
-    await axios.put('http://localhost:3396/api/users/profilepic', {
+    await axios.put(`${REST_SERVER_URL}/api/users/profilepic`, {
       user_id: localStorage.id,
       photo_url: this.state.profilePic,
     });
