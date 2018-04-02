@@ -1,10 +1,9 @@
 import http from 'http';
 import App from './config/express';
+import { bulkCategories, bulkPost, bulkPhotos } from './config/database/seedData';
 // when we complete our schema tables
 import './config/database/index';
 // import './config/database/setup';
-
-// import { bulkCategories, bulkPost, bulkPhotos } from './config/database/seedData';
 
 // bulkCategories();
 // bulkPost();

@@ -40,7 +40,7 @@ export const deletePostsHelper = ({ user_id, post_id }) => `
 export const updatePostsHelper = (
   { user_id, post_id },
   {
-    title, description, condition, location, demand, status, mainPhoto, tradingWith,
+    title, description, condition, location, demand, status, main_photo, tradingWith,
   },
 ) => `
    UPDATE posts 
@@ -51,7 +51,7 @@ export const updatePostsHelper = (
         demand='${demand}', 
         status='${status}',
         user_id=${user_id},
-        main_photo='${mainPhoto}',
+        main_photo='${main_photo}',
         tradingWith='${tradingWith}'
    WHERE id=${post_id}
    RETURNING *

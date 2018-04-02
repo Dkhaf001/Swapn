@@ -100,9 +100,8 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       });
     });
     client.on('deleteOffers', (data) => {
-      console.log('deleteOffers', data);
-      offers.deleteMany({ post_id: data }, (err, data) => {
-        console.log('deleteOffers  DELETED');
+      offers.deleteMany({ post_id: Number(data) }, (err, data) => {
+        console.log('deleteOffers  DELETED', err, data);
       });
     });
   });

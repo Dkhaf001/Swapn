@@ -25,71 +25,80 @@ class StatusBar extends Component {
     offers: '',
     Allmessages: [],
     arr: [],
+    acceptedOffers: [],
+    logedin: '',
   };
   async componentWillMount() {
     try {
       console.log('find a token tryingto connect to socket server');
-      await this.verifyToken();
-      const username = this.props.active_user.username;
-      const socket = io.connect('http://localhost:4155');
+      const user = await this.verifyToken();
+      if (user) {
+        console.log('someone login , trying to set state true');
+        this.setState({
+          logedin: user,
+        });
+        const username = this.props.active_user.username;
+        const socket = io.connect('http://localhost:4155');
 
-      // =======THIS IS THE BUG=======
-      this.props.addSocket(socket);
-      // =============================
-
-      socket.emit('new user', username);
-      socket.on('directMessage', (data) => {
-        console.log(
-          'receive a direct message current_roomId and data.roomId',
-          this.props.current_roomId,
-          data.roomId,
-        );
-        if (document.getElementById(data.roomId) && this.props.current_roomId === data.roomId) {
-          console.log('you are in the current room wont show unread meesage');
-          console.log('current_roomId', this.props.current_roomId);
-        } else {
-          let temp = false;
-          for (let i = 0; i < this.state.arr.length; i++) {
-            if (this.state.arr[i][0] === data.roomId) {
-              temp = true;
+        // =======THIS IS THE BUG=======
+        this.props.addSocket(socket);
+        // =============================
+        socket.emit('new user', username);
+        socket.on('directMessage', (data) => {
+          console.log(
+            'receive a direct message current_roomId and data.roomId',
+            this.props.current_roomId,
+            data.roomId,
+          );
+          if (document.getElementById(data.roomId) && this.props.current_roomId === data.roomId) {
+            console.log('you are in the current room wont show unread meesage');
+            console.log('current_roomId', this.props.current_roomId);
+          } else {
+            let temp = false;
+            for (let i = 0; i < this.state.arr.length; i++) {
+              if (this.state.arr[i][0] === data.roomId) {
+                temp = true;
+              }
+            }
+            if (!temp) {
+              console.log('u dont have this user unread in ur notification component going to do concat');
+              const array = this.state.arr.slice();
+              array.push([data.roomId, data]);
+              console.log('arr', array);
+              this.setState({
+                arr: array,
+              });
+            } else {
+              console.log('this user send you a  message u have not read  and he sned another one');
             }
           }
-          if (!temp) {
-            console.log('u dont have this user unread in ur notification component going to do concat');
-            const array = this.state.arr.slice();
-            array.push([data.roomId, data]);
-            console.log('arr', array);
-            this.setState({
-              arr: array,
-            });
-          } else {
-            console.log('this user send you a  message u have not read  and he sned another one');
+        });
+        socket.on('notifications', (result) => {
+          console.log('notifications', result);
+          const obj = {};
+          for (let i = 0; i < result.length; i++) {
+            obj[result[i].roomId] = result[i];
           }
-        }
-      });
-      socket.on('notifications', (result) => {
-        console.log('notifications', result);
-        const obj = {};
-        for (let i = 0; i < result.length; i++) {
-          obj[result[i].roomId] = result[i];
-        }
-        const arr = Object.entries(obj);
-        this.setState({
-          arr,
-          Allmessages: result,
+          const arr = Object.entries(obj);
+          this.setState({
+            arr,
+            Allmessages: result,
+          });
         });
-      });
-      socket.on('offerAccepted', (data) => {
-        console.log('your offer has been accepted! please contact the seller');
-        socket.emit('fetchAllAcceptedOffers', this.props.active_user.username);
-      });
-      socket.on('acceptedOffersdata', (data) => {
-        console.log('acceptedOffersdata', data);
-        this.props.addAcceptedOffers(data);
-        this.setState({
-          acceptedOffers: data.length,
+        socket.on('offerAccepted', (data) => {
+          console.log('your offer has been accepted! please contact the seller');
+          socket.emit('fetchAllAcceptedOffers', this.props.active_user.username);
         });
-      });
+        socket.on('acceptedOffersdata', (data) => {
+          console.log('acceptedOffersdata', data);
+          this.props.addAcceptedOffers(data);
+          this.setState({
+            acceptedOffers: data,
+          });
+        });
+      } else {
+        this.props.history.push('/login');
+      }
     } catch (err) {
       console.log('error on componentWillMount - StatusBar');
     }
@@ -104,12 +113,13 @@ class StatusBar extends Component {
       });
       if (data) {
         await this.props.addActiveUserToStore(data);
-      } else {
-        console.log('no data', data);
-        this.props.history.push('/login');
+        return data;
       }
+      console.log('no data', data);
+      return null;
     } catch (err) {
       console.log('err verifyToken', err);
+      return null;
     }
   }
   handleRequestClose = () => {
@@ -124,15 +134,20 @@ class StatusBar extends Component {
     });
     location.reload();
   }
+  gotoAcceptedOffer(offer) {
+    console.log('you are tryi9ng to see you accepted offer', this.props, offer);
+    this.props.history.push(`/post/${offer.post_id}`);
+    location.reload();
+  }
   render() {
     return (
       <div>
-        {this.props.active_user && (
+        {this.state.logedin && (
           <div>
-            {this.state.arr.length > 0 ? (
+            {this.state.arr.length + this.state.acceptedOffers.length > 0 ? (
               <div>
                 <Badge
-                  badgeContent={this.state.arr.length}
+                  badgeContent={this.state.arr.length + this.state.acceptedOffers.length}
                   secondary={true}
                   badgeStyle={{ top: 12, right: 12 }}
                 >
@@ -181,11 +196,23 @@ class StatusBar extends Component {
                             onClick={() => this.gotoMyPosts()}
                           />
                         ))} */}
+                        {this.state.acceptedOffers.map(accepted => (
+                          <MenuItem
+                            key={accepted.post_id}
+                            value="Solid"
+                            primaryText={`${accepted.seller} accepted your offer on ${
+                              accepted.title
+                            }`}
+                            onClick={() => this.gotoAcceptedOffer(accepted)}
+                          />
+                        ))}
                         {this.state.arr.map(message => (
                           <MenuItem
                             key={message[0]}
                             value="Solid"
-                            primaryText={`${JSON.stringify(message[1])}`}
+                            primaryText={`${message[1].from} MSG you on post ${
+                              message[1].postTitle
+                            }`}
                             onClick={() => this.gotoMyPosts(message[1])}
                           />
                         ))}
