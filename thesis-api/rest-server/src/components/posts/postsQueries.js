@@ -7,6 +7,8 @@ import {
   updatePostsHelper,
   deletePostsHelper,
   addPostsHelper,
+  increaseWCountHelper,
+  decreaseWCountHelper,
 } from './postsSQLHelpers';
 
 export const fetchAllPostsQuery = async (payload) => {
@@ -70,6 +72,28 @@ export const updatePostsQuery = async (user, payload) => {
     const data = await db.queryAsync(queryString);
     console.log('updatePostsQuery - successfully retrieved data');
     return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const increaseWCountQuery = async (payload) => {
+  try {
+    const queryString = increaseWCountHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('fetchSinglePostsQuery - successfully retrieved data');
+    return data.rows;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const decreaseWCountQuery = async (payload) => {
+  try {
+    const queryString = decreaseWCountHelper(payload);
+    const data = await db.queryAsync(queryString);
+    console.log('fetchSinglePostsQuery - successfully retrieved data');
+    return data.rows;
   } catch (err) {
     console.log(err);
   }

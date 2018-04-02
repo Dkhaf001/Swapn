@@ -4,10 +4,11 @@ import App from './config/express';
 import './config/database/index';
 // import './config/database/setup';
 
-// import { bulkCategories, bulkPost } from './config/database/seedData';
+// import { bulkCategories, bulkPost, bulkPhotos } from './config/database/seedData';
 
 // bulkCategories();
 // bulkPost();
+// bulkPhotos();
 
 const app = App.express;
 

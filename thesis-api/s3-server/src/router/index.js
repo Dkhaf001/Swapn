@@ -5,6 +5,8 @@ import {
   removeAlbumController,
   addPhotoController,
   removePhotoController,
+  addProfileController,
+  removeProfileController,
 } from '../controller';
 
 const router = express.Router();
@@ -24,5 +26,9 @@ router.post('/addphoto/:post_id', addPhotoController);
 // key shoul have album/photoid  1/Clumsy_Smurf.jpg
 // key is file name
 router.delete('/removephoto/:post_id/:key', removePhotoController);
+
+// profile pic
+router.post('/addProfilePic/:user_id', addProfileController);
+router.delete('/removeaddProfilePic/:user_id', removeProfileController);
 
 export default router;

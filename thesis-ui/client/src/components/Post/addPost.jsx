@@ -73,7 +73,7 @@ class AddPost extends Component {
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
-          `http://localhost:3396/api/posts/${userId}/${postId}`,
+          `http://localhost:3396/api/posts/update/${userId}/${postId}`,
           this.state.newPost,
         );
         tempPostId = data.rows[0].id;

@@ -56,3 +56,17 @@ export const updatePostsHelper = (
    WHERE id=${post_id}
    RETURNING *
   `;
+
+export const increaseWCountHelper = ({ post_id }) => `
+     UPDATE posts 
+     SET  watch_count = watch_count + 1
+     WHERE id=${post_id}
+     RETURNING *
+    `;
+
+export const decreaseWCountHelper = ({ post_id }) => `
+       UPDATE posts 
+       SET  watch_count = watch_count - 1
+       WHERE id=${post_id}
+       RETURNING *
+      `;

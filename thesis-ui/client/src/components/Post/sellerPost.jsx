@@ -132,7 +132,10 @@ class SellerPost extends Component {
           offerAccepted: true,
           accept,
         });
-        const data = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, accept);
+        const data = await axios.put(
+          `http://localhost:3396/api/posts/update/${userId}/${postId}`,
+          accept,
+        );
       } else {
         alert('please choose the person you want to trade with');
       }
@@ -157,7 +160,7 @@ class SellerPost extends Component {
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
       const { data } = await axios.put(
-        `http://localhost:3396/api/posts/${userId}/${postId}`,
+        `http://localhost:3396/api/posts/update/${userId}/${postId}`,
         cancel,
       );
       this.setState({
@@ -184,7 +187,10 @@ class SellerPost extends Component {
       };
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
-      const { data } = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
+      const { data } = await axios.put(
+        `http://localhost:3396/api/posts/update/${userId}/${postId}`,
+        sold,
+      );
       this.setState({
         offerAccepted: false,
         accept: sold,
