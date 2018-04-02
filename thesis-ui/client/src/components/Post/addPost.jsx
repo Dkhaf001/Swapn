@@ -31,7 +31,7 @@ class AddPost extends Component {
         location: '',
         demand: '',
         status: 'Accepting Offers',
-        mainPhoto: '',
+        main_photo: '',
       },
     };
     this.handleConditionChange = this.handleConditionChange.bind(this);
@@ -185,14 +185,14 @@ class AddPost extends Component {
       if (!this.props.main_photo) {
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
-            mainPhoto: this.props.images[0].original,
+            main_photo: this.props.images[0].original,
           }),
         });
         this.props.addMainPhoto(this.props.images[0]);
       } else {
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
-            mainPhoto: this.props.main_photo.original,
+            main_photo: this.props.main_photo.original,
           }),
         });
       }
