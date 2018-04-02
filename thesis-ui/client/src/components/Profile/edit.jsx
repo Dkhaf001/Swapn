@@ -13,7 +13,7 @@ class Edit extends Component {
       main_photo: '',
     };
   }
-  async componentWillMount() {
+  async componentDidMount() {
     const userId = localStorage.id;
     try {
       const data = await axios.get(`${S3_SERVER_URL}/api/${userId}`);

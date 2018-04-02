@@ -17,7 +17,7 @@ class BioPhotoUpload extends React.Component {
       profilePic: 'http://laoblogger.com/images/default-profile-picture-5.jpg',
     };
   }
-  async componentWillMount() {
+  async componentDidMount() {
     try {
       const userId = localStorage.id;
       const { data } = await axios.get(`${REST_SERVER_URL}/api/users/${userId}`);
