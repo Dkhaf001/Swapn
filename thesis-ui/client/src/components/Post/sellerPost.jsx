@@ -93,7 +93,6 @@ class SellerPost extends Component {
     try {
       const postId = this.props.current_post.id;
       const { data } = await axios.get(`${REST_SERVER_URL}/api/photos/${postId}`);
-      console.log('successfully received photos');
       const images = data.rows.map(values => JSON.parse(values.url));
       this.setState({
         photos: images,

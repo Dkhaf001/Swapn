@@ -25,18 +25,18 @@ class Post extends Component {
       const url = window.location.href;
       const postId = path.basename(url);
       const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/fetchSinglePost/${postId}`);
-      console.log('successfully received post', data);
+      // console.log('successfully received post', data);
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });
       localStorage.setItem('oldLat', localStorage.getItem('latitude'));
       localStorage.setItem('oldLng', localStorage.getItem('longitude'));
       const geo = geocodeByAddress(this.state.address)
         .then((results) => {
-          console.log('results is from', results[0].formatted_address);
+          // console.log('results is from', results[0].formatted_address);
 
           getLatLng(results[0])
             .then((latLng) => {
-              console.log('SuccessHome', latLng);
+              // console.log('SuccessHome', latLng);
               localStorage.setItem('latitude', latLng.lat);
               localStorage.setItem('longitude', latLng.lng);
             })

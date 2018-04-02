@@ -32,10 +32,8 @@ class StatusBar extends Component {
   };
   async componentWillMount() {
     try {
-      console.log('find a token tryingto connect to socket server');
       const user = await this.verifyToken();
       if (user) {
-        console.log('someone login , trying to set state true');
         this.setState({
           logedin: user,
         });
@@ -47,14 +45,7 @@ class StatusBar extends Component {
         // =============================
         socket.emit('new user', username);
         socket.on('directMessage', (data) => {
-          console.log(
-            'receive a direct message current_roomId and data.roomId',
-            this.props.current_roomId,
-            data.roomId,
-          );
           if (document.getElementById(data.roomId) && this.props.current_roomId === data.roomId) {
-            console.log('you are in the current room wont show unread meesage');
-            console.log('current_roomId', this.props.current_roomId);
           } else {
             let temp = false;
             for (let i = 0; i < this.state.arr.length; i++) {
@@ -63,7 +54,7 @@ class StatusBar extends Component {
               }
             }
             if (!temp) {
-              console.log('u dont have this user unread in ur notification component going to do concat');
+              // console.log('u dont have this user unread in ur notification component going to do concat');
               const array = this.state.arr.slice();
               array.push([data.roomId, data]);
               console.log('arr', array);
@@ -76,7 +67,6 @@ class StatusBar extends Component {
           }
         });
         socket.on('notifications', (result) => {
-          console.log('notifications', result);
           const obj = {};
           for (let i = 0; i < result.length; i++) {
             obj[result[i].roomId] = result[i];
@@ -88,11 +78,11 @@ class StatusBar extends Component {
           });
         });
         socket.on('offerAccepted', (data) => {
-          console.log('your offer has been accepted! please contact the seller');
+          // console.log('your offer has been accepted! please contact the seller');
           socket.emit('fetchAllAcceptedOffers', this.props.active_user.username);
         });
         socket.on('acceptedOffersdata', (data) => {
-          console.log('acceptedOffersdata', data);
+          // console.log('acceptedOffersdata', data);
           this.props.addAcceptedOffers(data);
           this.setState({
             acceptedOffers: data,
@@ -117,7 +107,7 @@ class StatusBar extends Component {
         await this.props.addActiveUserToStore(data);
         return data;
       }
-      console.log('no data', data);
+      // console.log('no data', data);
       return null;
     } catch (err) {
       console.log('err verifyToken', err);
@@ -137,7 +127,7 @@ class StatusBar extends Component {
     location.reload();
   }
   gotoAcceptedOffer(offer) {
-    console.log('you are tryi9ng to see you accepted offer', this.props, offer);
+    // console.log('you are tryi9ng to see you accepted offer', this.props, offer);
     this.props.history.push(`/post/${offer.post_id}`);
     location.reload();
   }
