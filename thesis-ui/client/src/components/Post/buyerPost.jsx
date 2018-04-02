@@ -305,43 +305,48 @@ class BuyerPost extends Component {
             onClick={() => this.toggleFollowList()}
           />
         )}
-        {this.state.currentlyWatching === true ? (
-          <RaisedButton
-            label="Unwatch"
-            secondary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.toggleWatchList()}
-          />
-        ) : (
-          <RaisedButton
-            label="Add to Watch List"
-            style={{ margin: 12 }}
-            onClick={() => this.toggleWatchList()}
-          />
-        )}
-        {this.state.bartering && (
-          <RaisedButton
-            label="Cancel Offer"
-            secondary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.cancelOffer()}
-          />
-        )}
-        {!this.state.bartering && (
-          <RaisedButton
-            label="MAKE OFFER"
-            backgroundColor="#a4c639"
-            style={{ margin: 12 }}
-            onClick={() => this.makeOffer()}
-          />
-        )}
-        {this.state.bartering && (
-          <Chattest
-            post={this.props.current_post}
-            roomId={this.state.room_id}
-            buyer_username={this.state.buyer_username}
-          />
-        )}
+        {this.state.currentlyWatching === true
+          ? this.props.current_post.status !== 'SWAPPED' && (
+              <RaisedButton
+                label="Unwatch"
+                secondary={true}
+                style={{ margin: 12 }}
+                onClick={() => this.toggleWatchList()}
+              />
+            )
+          : this.props.current_post.status !== 'SWAPPED' && (
+              <RaisedButton
+                label="Add to Watch List"
+                style={{ margin: 12 }}
+                onClick={() => this.toggleWatchList()}
+              />
+            )}
+        {this.state.bartering &&
+          this.props.current_post.status !== 'SWAPPED' && (
+            <RaisedButton
+              label="Cancel Offer"
+              secondary={true}
+              style={{ margin: 12 }}
+              onClick={() => this.cancelOffer()}
+            />
+          )}
+        {!this.state.bartering &&
+          this.props.current_post.status !== 'SWAPPED' && (
+            <RaisedButton
+              label="MAKE OFFER"
+              backgroundColor="#a4c639"
+              style={{ margin: 12 }}
+              onClick={() => this.makeOffer()}
+            />
+          )}
+        {this.state.bartering &&
+          this.props.current_post.status !== 'SWAPPED' && (
+            <Chattest
+              post={this.props.current_post}
+              roomId={this.state.room_id}
+              buyer_username={this.state.buyer_username}
+            />
+          )}
       </div>
     ) : (
       <div>Loading....</div>
