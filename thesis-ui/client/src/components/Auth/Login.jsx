@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addActiveUserToStore } from '../../actions';
 
-const { REST_SERVER_URL } = process.env;
+const REST_SERVER_URL = process.env.REST_SERVER_URL;
 
 class Login extends Component {
   constructor() {
