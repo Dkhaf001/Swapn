@@ -5,6 +5,8 @@ import {
   updatePostsQuery,
   deletePostsQuery,
   addPostsQuery,
+  increaseWCountQuery,
+  decreaseWCountQuery,
 } from './postsQueries';
 
 export const fetchAllPostsController = async (req, res) => {
@@ -64,6 +66,26 @@ export const addPostsController = async (req, res) => {
   const user = req.params;
   try {
     const data = await addPostsQuery(user, payload);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const increaseWCountController = async (req, res) => {
+  const payload = req.params;
+  try {
+    const data = await increaseWCountQuery(payload);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const decreaseWCountController = async (req, res) => {
+  const payload = req.params;
+  try {
+    const data = await decreaseWCountQuery(payload);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

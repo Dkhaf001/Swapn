@@ -6,6 +6,8 @@ import {
   updatePostsController,
   deletePostsController,
   addPostsController,
+  increaseWCountController,
+  decreaseWCountController,
 } from './postsControllers';
 
 const router = express.Router();
@@ -21,5 +23,8 @@ router.route('/update/:user_id/:post_id').put(updatePostsController);
 router.route('/:user_id/:post_id').delete(deletePostsController);
 // add a post
 router.route('/:user_id').post(addPostsController);
-
+// increase watch count
+router.route('/increasewatch/:post_id').put(increaseWCountController);
+// decrease watch count
+router.route('/decreasewatch/:post_id').put(decreaseWCountController);
 export default router;

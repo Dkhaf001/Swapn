@@ -145,12 +145,16 @@ class BuyerPost extends Component {
     if (localStorage.id) {
       if (this.state.currentlyWatching === true) {
         await axios.delete(`http://localhost:3396/api/watchers/${userId}/${postId}`);
+        if (this.props.current_post.watch_count > 0) {
+          axios.put(`http://localhost:3396/api/posts/decreasewatch/${postId}`);
+        }
         this.setState({
           currentlyWatching: false,
         });
         console.log('you are no longer watching this post');
       } else {
         await axios.post(`http://localhost:3396/api/watchers/${userId}/${postId}`);
+        axios.put(`http://localhost:3396/api/posts/increasewatch/${postId}`);
         this.setState({
           currentlyWatching: true,
         });
