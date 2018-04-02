@@ -120,7 +120,7 @@ export const createPhotoTable = async () => {
       (
       id SERIAL PRIMARY KEY,
       post_id INT REFERENCES posts(id),
-      url VARCHAR NOT NULL
+      url VARCHAR(510) NOT NULL
       )
       `);
     console.log('successfully created photos table');
