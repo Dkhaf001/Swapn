@@ -54,7 +54,7 @@ class SellerPost extends Component {
       this.setState({
         offerAccepted: true
       });
-    } else if (this.props.current_post.status === 'BARTERED') {
+    } else if (this.props.current_post.status === 'SWAPPED') {
       this.setState({
         offerAccepted: true,
         sold: true
@@ -202,7 +202,7 @@ class SellerPost extends Component {
         condition: this.props.current_post.condition,
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
-        status: 'BARTERED',
+        status: 'SWAPPED',
         tradingWith: '',
         main_photo: this.props.current_post.main_photo
       };
@@ -252,6 +252,22 @@ class SellerPost extends Component {
       this.props.history.push(`/profile/selling`);
     } catch (err) {
       console.log('error on switchToProfile - sellerPost');
+    }
+  };
+
+  deletePost = async () => {
+    try {
+      const userId = this.props.current_post.user_id;
+      const url = window.location.href;
+      const postId = path.basename(url);
+      await axios.delete(
+        `http://localhost:3396/api/photos/removeall/${postId}`
+      );
+      await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
+      console.log('successfully delete post!');
+      this.props.history.push('/home');
+    } catch (err) {
+      console.log('error deleting post');
     }
   };
 
@@ -323,6 +339,13 @@ class SellerPost extends Component {
             onClick={() => this.cancelOffer()}
           />
         )}
+        <RaisedButton
+          label="Delete"
+          secondary={true}
+          style={{ margin: 12 }}
+          onClick={() => this.deletePost()}
+        />
+        <br />
         <hr />
         {this.state.tradingWith && (
           <div>You are now in transaction with {this.state.tradingWith}</div>
