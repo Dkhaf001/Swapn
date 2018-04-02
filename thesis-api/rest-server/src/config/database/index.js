@@ -12,12 +12,6 @@ const config = {
     process.env.NODE_ENV === 'production' ? process.env.AWS_PASSWORD : process.env.LOCAL_PASSWORD,
   port: process.env.NODE_ENV === 'production' ? process.env.AWS_PORT : process.env.LOCAL_PORT,
 
-  // user: 'root',
-  // host: 'localhost',
-  // database: 'barter',
-  // password: '',
-  // port: 5432,
-
   // limiting number of connections to 20
   max: 20,
 };

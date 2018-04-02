@@ -1,18 +1,16 @@
-import {
-  sign,
-  verify,
-} from 'jsonwebtoken'
-
+import { sign, verify } from 'jsonwebtoken';
 
 export const generateToken = (id, username) => {
-
   const token = {};
 
-  token.accessToken = sign({
-    exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    username,
-    id,
-  }, process.env.TOKEN_SECRET);
+  token.accessToken = sign(
+    {
+      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      username,
+      id,
+    },
+    process.env.TOKEN_SECRET,
+  );
 
   return token;
 };
@@ -21,10 +19,10 @@ export const verifyUserWithJWT = (token) => {
   try {
     verify(token, process.env.TOKEN_SECRET);
     console.log('token verified');
-    return true
+    return true;
   } catch (e) {
     console.log('token not verified');
-    return false
+    return false;
   }
 };
 
