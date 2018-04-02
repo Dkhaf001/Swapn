@@ -69,6 +69,7 @@ class SellerPost extends Component {
       this.setState({
         offers: data.rows,
       });
+
       if (this.props.current_post.tradingwith) {
         for (let i = 0; i < data.rows.length; i++) {
           if (data.rows[i].buyer_username === this.props.current_post.tradingwith) {
@@ -108,6 +109,7 @@ class SellerPost extends Component {
 
   async acceptOffer() {
     try {
+      console.log('nimabi', this.props.current_post.main_photo);
       if (this.state.currentTalking) {
         this.setState({
           tradingWith: this.state.currentTalking,
