@@ -127,7 +127,7 @@ class BioPhotoUpload extends React.Component {
           this.setState({ posting: true });
         }}
       >
-        Add New Post
+        Edit
       </button>
     </div>
   );

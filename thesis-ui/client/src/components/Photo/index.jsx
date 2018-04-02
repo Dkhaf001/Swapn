@@ -143,7 +143,7 @@ class PhotoUpload extends React.Component {
           this.setState({ posting: true });
         }}
       >
-        Add New Post
+        Add Image
       </button>
     </div>
   );

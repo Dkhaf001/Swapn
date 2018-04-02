@@ -17,7 +17,7 @@ class Edit extends Component {
     const userId = localStorage.id;
     try {
       const data = await axios.get(`${S3_SERVER_URL}/api/${userId}`);
-      console.log('bio', data);
+      // console.log('bio', data);
 
       this.setState({
         location: this.props.active_user.location,
@@ -42,15 +42,14 @@ class Edit extends Component {
     return (
       <div>
         <BioPhotoUpload />
-        <label>
+        {/* <label>
           <input
             name="location"
             onChange={e => this.setState({ [e.target.name]: e.target.value })}
             type="text"
           />
-        </label>
-        <label>add photo component</label>
-        <button onClick={this.handleSubmit}>Submit</button>
+         </label>
+         <button onClick={this.handleSubmit}>Submit</button> */}
       </div>
     );
   }

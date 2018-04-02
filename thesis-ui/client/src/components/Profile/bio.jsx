@@ -84,19 +84,17 @@ class Bio extends Component {
         <Edit />
       </div>
       <h3>{this.state.user.username}</h3>
-      <p>Location:{this.state.user.location}</p>
       <p>User:{this.state.user.rep}</p>
-      <p>{this.state.user.rep_count}</p>
-      <p>#followers: {this.state.user.follower_count}</p>
+      {/* <p>{this.state.user.rep_count}</p>
+      <p>#followers: {this.state.user.follower_count}</p> */}
     </div>
   );
   buyerView = () => (
     <div>
       <img src={this.state.user.phot_url} />
       <h3>{this.state.user.username}</h3>
-      <p>Location:{this.state.user.location}</p>
-      <p>User:{this.state.user.rep}</p>
-      <p>{this.state.user.rep_count}</p>
+      {/* <p>User:{this.state.user.rep}</p>
+      <p>{this.state.user.rep_count}</p> */}
       {this.buttonCheck()}
     </div>
   );
