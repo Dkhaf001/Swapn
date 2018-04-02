@@ -11,20 +11,20 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class ListingPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listings: [],
+      listings: []
     };
   }
 
@@ -33,7 +33,9 @@ class ListingPostList extends Component {
     try {
       if (url.includes('othersprofile')) {
         const userId = path.basename(url);
-        const { data } = await axios.get(`http://localhost:3396/api/posts/${userId}`);
+        const { data } = await axios.get(
+          `http://localhost:3396/api/posts/${userId}`
+        );
         data.sort((a, b) => b.id - a.id);
         this.setState({ listings: data });
         this.props.addSellingList(data);
@@ -44,7 +46,7 @@ class ListingPostList extends Component {
       console.log('err fetching posts', err);
     }
   }
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -79,7 +81,7 @@ class ListingPostList extends Component {
 }
 function mapStateToProps(state) {
   return {
-    selling_list: state.selling_list,
+    selling_list: state.selling_list
   };
 }
 
@@ -87,9 +89,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentPost,
-      addSellingList,
+      addSellingList
     },
-    dispatch,
+    dispatch
   );
 }
 

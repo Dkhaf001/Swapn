@@ -17,13 +17,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
@@ -42,7 +42,7 @@ class HomePostList extends Component {
       console.log('Error on componentWillMount - homePostList');
     }
   }
-  getDistance = async (data) => {
+  getDistance = async data => {
     for (let i = 0; i < data.length; i++) {
       if (i === 8) break;
       const address = data[i].location;
@@ -51,16 +51,16 @@ class HomePostList extends Component {
       const distance = geolib.getDistance(
         {
           latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
-          longitude: parseFloat(localStorage.getItem('usersLng')) || -118,
+          longitude: parseFloat(localStorage.getItem('usersLng')) || -118
         },
-        latLng,
+        latLng
       );
       data[i].distance = Math.round(distance / 1609);
     }
     return data;
   };
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -115,7 +115,7 @@ class HomePostList extends Component {
             style={styles.gridList}
             style={{
               width: '80%',
-              margin: '10 auto',
+              margin: '10 auto'
               // border: '2px solid rgb(11, 22, 241)',
               // backgroundColor: '#83d8ff',
             }}
@@ -151,7 +151,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
@@ -159,9 +159,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 

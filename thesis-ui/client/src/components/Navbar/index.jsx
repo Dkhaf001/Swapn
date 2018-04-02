@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from './Search.jsx';
+import Categories from '../Category/Categories.jsx';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,6 +28,9 @@ class Navbar extends Component {
       <div className="middlebanner">
         Currently Signed in as : {localStorage.username}
         <Search />
+        <Link to="/categories" className="linkbutton">
+          Categories
+        </Link>
         <Link to="/post" className="linkbutton">
           Listing
         </Link>
@@ -43,7 +47,10 @@ class Navbar extends Component {
         </div>
       )}
       <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
+        <IconButton
+          className="svg_icons"
+          containerElement={<Link to="/home" />}
+        >
           <ActionHome />
         </IconButton>
         {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
@@ -57,6 +64,9 @@ class Navbar extends Component {
     <div className="rowbanner">
       <div className="middlebanner">
         <Search />
+        <Link to="/categories" className="linkbutton">
+          Categories
+        </Link>
         <Link to="/signup" className="linkbutton">
           SignUp
         </Link>
@@ -70,7 +80,10 @@ class Navbar extends Component {
         </div>
       )}
       <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
+        <IconButton
+          className="svg_icons"
+          containerElement={<Link to="/home" />}
+        >
           <ActionHome />
         </IconButton>
         {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
@@ -86,15 +99,15 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 
