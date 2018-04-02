@@ -69,11 +69,11 @@ class SellerPost extends Component {
       this.setState({
         offers: data.rows,
       });
-      if (this.props.current_post.tradingWith) {
+      if (this.props.current_post.tradingwith) {
         for (let i = 0; i < data.rows.length; i++) {
-          if (data.rows[i].buyer_username === this.props.current_post.tradingWith) {
+          if (data.rows[i].buyer_username === this.props.current_post.tradingwith) {
             this.setState({
-              tradingWith: true,
+              tradingWith: this.props.current_post.tradingwith,
             });
           }
         }
@@ -109,6 +109,9 @@ class SellerPost extends Component {
   async acceptOffer() {
     try {
       if (this.state.currentTalking) {
+        this.setState({
+          tradingWith: this.state.currentTalking,
+        });
         this.props.socket.emit('accept', {
           buyer: this.state.currentTalking,
           seller: this.props.current_post.username,
@@ -146,7 +149,9 @@ class SellerPost extends Component {
 
   async cancelOffer() {
     try {
-      this.props.socket.emit('deleteOffers', this.props.current_post.id);
+      const url = window.location.href;
+      const postId = path.basename(url);
+      this.props.socket.emit('deleteOffers', postId);
       const cancel = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
@@ -158,7 +163,6 @@ class SellerPost extends Component {
         main_photo: this.props.current_post.main_photo,
       };
       const userId = this.props.current_post.user_id;
-      const postId = this.props.current_post.id;
       const { data } = await axios.put(
         `http://localhost:3396/api/posts/update/${userId}/${postId}`,
         cancel,
@@ -170,12 +174,15 @@ class SellerPost extends Component {
       });
       console.log('Successfully cancelled an offer! Post status is now Accepting Offers', data);
     } catch (err) {
-      console.log('Error cancelling offer!');
+      console.log('Error cancelling offer!', err);
     }
   }
 
   async soldOffer() {
     try {
+      const url = window.location.href;
+      const postId = path.basename(url);
+      this.props.socket.emit('deleteOffers', postId);
       const sold = {
         title: this.props.current_post.title,
         description: this.props.current_post.description,
@@ -186,11 +193,8 @@ class SellerPost extends Component {
         main_photo: this.props.current_post.main_photo,
       };
       const userId = this.props.current_post.user_id;
-      const postId = this.props.current_post.id;
-      const { data } = await axios.put(
-        `http://localhost:3396/api/posts/update/${userId}/${postId}`,
-        sold,
-      );
+      console.log('right before put request');
+      const { data } = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
       this.setState({
         offerAccepted: false,
         accept: sold,
@@ -279,8 +283,9 @@ class SellerPost extends Component {
           />
         )}
         <hr />
-        <button onClick={() => this.showState()}>show state</button>
-        offers:
+        {this.state.tradingWith && (
+          <div>You are now in transaction with {this.state.tradingWith}</div>
+        )}
         {this.state.offers &&
           this.state.offers.map(offer => (
             <div key={offer.id}>
