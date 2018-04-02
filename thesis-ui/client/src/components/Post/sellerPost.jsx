@@ -192,11 +192,15 @@ class SellerPost extends Component {
         location: this.props.current_post.location,
         demand: this.props.current_post.demand,
         status: 'BARTERED',
+        tradingWith: '',
         main_photo: this.props.current_post.main_photo,
       };
       const userId = this.props.current_post.user_id;
-      console.log('right before put request');
-      const { data } = await axios.put(`http://localhost:3396/api/posts/${userId}/${postId}`, sold);
+      console.log('u are trying to update this post with', sold, postId, userId);
+      const { data } = await axios.put(
+        `http://localhost:3396/api/posts/update/${userId}/${postId}`,
+        sold,
+      );
       this.setState({
         offerAccepted: false,
         accept: sold,
