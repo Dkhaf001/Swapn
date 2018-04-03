@@ -128,7 +128,7 @@ class HomePostList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="homepost">
         <div>
           {' '}
           <DropDownMenu
@@ -142,31 +142,33 @@ class HomePostList extends Component {
           </DropDownMenu>
         </div>
 
-        <div className="container grid-lg">
+        <div className="container">
           <div className="columns">
             {this.props.current_list &&
               this.props.current_list.map(post => (
                 <div
-                  className="card col-4"
+                  className="card column col-3 m-2"
                   key={post.id}
                   onClick={() => this.switchToSinglePost(post)}
                 >
                   <div className="card-image centered">
                     <img src={post.main_photo} className="img-responsive" />
                   </div>
-                  <div className="card-header centered">
-                    <div className="card-title h5 centered">{post.title}</div>
-                    <div className="card-subtitle text-gray centered">
-                      {post.distance ? post.distance : null} miles away
+                  <div className="bottomhalf">
+                    <div className="card-header centered">
+                      <div className="card-title h5 centered">{post.title}</div>
+                      <div className="card-subtitle centered">
+                        {post.distance ? post.distance : null} miles away
+                      </div>
                     </div>
-                  </div>
-                  <div className="card-footer centered">
-                    <div className="popover popover-top">
-                      <button className="btn btn-primary">Details</button>
-                      <div className="popover-container">
-                        <div className="card">
-                          <div className="card-header">Poster: {post.username}</div>
-                          <div className="card-body">Description: {post.description}</div>
+                    <div className="card-footer centered">
+                      <div className="popover popover-top">
+                        <button className="btn btn-primary">Details</button>
+                        <div className="popover-container">
+                          <div className="card">
+                            <div className="card-header">Poster: {post.username}</div>
+                            <div className="card-body">Description: {post.description}</div>
+                          </div>
                         </div>
                       </div>
                     </div>
