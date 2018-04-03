@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { addCurrentList, addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
-import { GridList, GridTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+// import { GridList, GridTile } from 'material-ui/GridList';
+// import Subheader from 'material-ui/Subheader';
+// import DropDownMenu from 'material-ui/DropDownMenu';
+// import MenuItem from 'material-ui/MenuItem';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geolocation from '../Map/geolocation.jsx';
 import { getDistance } from 'geolib';
@@ -18,13 +18,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class HomePostList extends Component {
@@ -39,14 +39,14 @@ class HomePostList extends Component {
       data.sort((a, b) => b.id - a.id);
       // const modifiedData = await this.getDistance(data);
       this.props.addCurrentList(data);
-      let testData = this.props.current_list;
+      const testData = this.props.current_list;
       // console.log('reached here 1');
       this.runGetDistance(testData);
     } catch (err) {
       console.log('Error on componentWillMount - homePostList', err);
     }
   }
-  runGetDistance = data => {
+  runGetDistance = (data) => {
     // const data = this.props.current_list;
     let counter = 0;
     for (let i = 0; i < data.length && counter < 10; i++) {
@@ -59,7 +59,7 @@ class HomePostList extends Component {
     }
     setTimeout(() => this.runGetDistance(data), 30000);
   };
-  getDistance = async data => {
+  getDistance = async (data) => {
     // console.log('reached data', data);
     // for (let i = 0; i < data.length; i++) {
     // console.log('reached here 4');
@@ -68,16 +68,16 @@ class HomePostList extends Component {
     const results = await geocodeByAddress(address);
     const latLng = await getLatLng(results[0]);
     // console.log('reached here 5');
-    let lat1 = parseFloat(localStorage.getItem('usersLat')) || 33;
-    let lon1 = parseFloat(localStorage.getItem('usersLng')) || -118;
-    let lat2 = latLng.lat;
-    let lon2 = latLng.lng;
+    const lat1 = parseFloat(localStorage.getItem('usersLat')) || 33;
+    const lon1 = parseFloat(localStorage.getItem('usersLng')) || -118;
+    const lat2 = latLng.lat;
+    const lon2 = latLng.lng;
     // console.log('reached here 6');
-    var radlat1 = Math.PI * lat1 / 180;
-    var radlat2 = Math.PI * lat2 / 180;
-    var theta = lon1 - lon2;
-    var radtheta = Math.PI * theta / 180;
-    var dist =
+    const radlat1 = Math.PI * lat1 / 180;
+    const radlat2 = Math.PI * lat2 / 180;
+    const theta = lon1 - lon2;
+    const radtheta = Math.PI * theta / 180;
+    let dist =
       Math.sin(radlat1) * Math.sin(radlat2) +
       Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
     dist = Math.acos(dist);
@@ -91,11 +91,11 @@ class HomePostList extends Component {
     //   latLng
     // );
     data.distance = Math.round(dist * 0.8684);
-    console.log('the result is ', data);
+    // console.log('the result is ', data);
     // }
     return data;
   };
-  switchToSinglePost = async post => {
+  switchToSinglePost = async (post) => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -129,7 +129,7 @@ class HomePostList extends Component {
   render() {
     return (
       <div>
-        <div>
+        {/* <div>
           {' '}
           <DropDownMenu
             value={this.state.value}
@@ -140,43 +140,27 @@ class HomePostList extends Component {
             <MenuItem value={1} primaryText="Sort by Newest" />
             <MenuItem value={2} primaryText="Sort by Distance" />
           </DropDownMenu>
-        </div>
+        </div> */}
 
-        <div style={styles.root}>
-          <GridList
-            cellHeight={200}
-            cols={4}
-            padding={15}
-            style={styles.gridList}
-            style={{
-              width: '80%',
-              margin: '10 auto'
-              // border: '2px solid rgb(11, 22, 241)',
-              // backgroundColor: '#83d8ff',
-            }}
-          >
-            {this.props.current_list &&
-              this.props.current_list.map(post => (
-                <GridTile
-                  key={post.id}
-                  title={post.title}
-                  subtitle={
-                    <div>
-                      <span>
-                        <b>{post.username}</b>
-                      </span>
-                      <br />
-                      <span>
-                        <b>{post.distance ? post.distance : null} miles away</b>
-                      </span>
-                    </div>
-                  }
-                  onClick={() => this.switchToSinglePost(post)}
-                >
-                  <img src={post.main_photo} />
-                </GridTile>
-              ))}
-          </GridList>
+        <div className="card" style={{ width: 200 }}>
+          {this.props.current_list &&
+            this.props.current_list.map(post => (
+              <div key={post.id} onClick={() => this.switchToSinglePost(post)}>
+                <div className="card-image">
+                  <img src={post.main_photo} className="img-responsive" />
+                </div>
+                <div className="card-header">
+                  <div className="card-title h5">{post.title}</div>
+                  <div className="card-subtitle text-gray">
+                    {post.distance ? post.distance : null} miles away
+                  </div>
+                </div>
+                <div className="card-body">{post.description}</div>
+                <div className="card-footer">
+                  <button className="btn btn-primary">Do</button>
+                </div>
+              </div>
+            ))}
           <Geolocation />
         </div>
       </div>
@@ -186,7 +170,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
@@ -194,9 +178,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 
