@@ -25,20 +25,20 @@ const categories = [
   'Musical Instruments',
   'Pet Supplies',
   'Sports & Outdoors',
-  'Tickets'
+  'Tickets',
 ];
 
 const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 class Categories extends Component {
   constructor() {
@@ -46,29 +46,29 @@ class Categories extends Component {
     this.state = {
       open: false,
       currentCat: '',
-      list: []
+      list: [],
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    console.log('whats the history', this.props);
+  }
 
   handleToggle = () => this.setState({ open: !this.state.open });
 
   handleClose = () => this.setState({ open: false });
 
   handleClick = async (index, cat) => {
-    const { data } = await axios.get(
-      `http://localhost:3396/api/categories/${index}`
-    );
+    const { data } = await axios.get(`http://localhost:3396/api/categories/${index}`);
     console.log('clicked! this is the data: ', data.rows);
     this.props.addCategoryList(data.rows);
     this.setState({
       currentCat: cat,
-      list: data.rows
+      list: data.rows,
     });
   };
 
-  switchToSinglePost = async post => {
+  switchToSinglePost = async (post) => {
     try {
       this.props.history.push(`/post/${post.id}`);
     } catch (err) {
@@ -92,6 +92,7 @@ class Categories extends Component {
                 onClick={() => {
                   this.handleClose();
                   this.handleClick(i + 1, category);
+                  this.props.history.push(`/categories/${category}`);
                 }}
                 key={i}
               >
@@ -128,16 +129,16 @@ class Categories extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_category: state.current_category
+    current_category: state.current_category,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCategoryList
+      addCategoryList,
     },
-    dispatch
+    dispatch,
   );
 }
 
