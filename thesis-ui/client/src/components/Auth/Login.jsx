@@ -13,12 +13,15 @@ class Login extends Component {
     super();
     this.state = {
       username: '',
-      password: '',
+      password: ''
     };
   }
   async handleSubmit() {
     try {
-      const response = await axios.post(`${REST_SERVER_URL}/api/auth/login`, this.state);
+      const response = await axios.post(
+        `${REST_SERVER_URL}/api/auth/login`,
+        this.state
+      );
       // window.localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('id', response.data.id);
@@ -35,7 +38,44 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <TextField
+        <div className="form-group has-success">
+          <label className="form-label" htmlFor="login-name">
+            Name
+          </label>
+          <br />
+          <input
+            className="form-input"
+            type="text"
+            id="login-name"
+            placeholder="Enter Username"
+            onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          />
+          <p className="form-input-hint">The name is invalid.</p>
+        </div>
+        <div className="form-group has-success">
+          <label className="form-label" htmlFor="login-password">
+            Password
+          </label>
+          <br />
+          <input
+            className="form-input"
+            type="password"
+            id="login-password"
+            placeholder="Enter Password"
+            onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          />
+          <p className="form-input-hint">The password is invalid.</p>
+        </div>
+        <div>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.handleSubmit()}
+          >
+            Login
+          </button>
+        </div>
+
+        {/* <TextField
           hintText="Enter Username"
           floatingLabelText="Username"
           name="username"
@@ -56,7 +96,7 @@ class Login extends Component {
           style={{ margin: 12 }}
           onClick={() => this.handleSubmit()}
         />
-        <br />
+        <br /> */}
       </div>
     );
   }
@@ -65,9 +105,9 @@ class Login extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 function mapStateToProps(state) {
