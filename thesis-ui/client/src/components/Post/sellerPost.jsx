@@ -110,7 +110,6 @@ class SellerPost extends Component {
 
   async acceptOffer() {
     try {
-      console.log('nimabi', this.props.current_post.main_photo);
       if (this.state.currentTalking) {
         this.setState({
           tradingWith: this.state.currentTalking,
@@ -142,6 +141,11 @@ class SellerPost extends Component {
           `${REST_SERVER_URL}/api/posts/update/${userId}/${postId}`,
           accept,
         );
+        await axios.post(`${REST_SERVER_URL}/api/email`, {
+          seller: this.props.active_user.username,
+          to: this.state.currentTalking,
+          post: this.props.current_post.title,
+        });
       } else {
         alert('please choose the person you want to trade with');
       }
