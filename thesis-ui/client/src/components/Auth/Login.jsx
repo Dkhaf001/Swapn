@@ -37,64 +37,40 @@ class Login extends Component {
   }
   render() {
     return (
-      <div className="text-center">
-        <div className="form-group">
-          <label className="form-label" htmlFor="login-name">
-            Name
-          </label>
-          <br />
-          <input
-            className="form-input"
-            type="text"
-            id="login-name"
-            placeholder="Enter Username"
-            onChange={e => this.setState({ [e.target.name]: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label" htmlFor="login-password">
-            Password
-          </label>
-          <br />
-          <input
-            className="form-input"
-            type="password"
-            id="login-password"
-            placeholder="Enter Password"
-            onChange={e => this.setState({ [e.target.name]: e.target.value })}
-          />
-        </div>
+      <div className="form-group">
+        <label className="form-label text-center" htmlFor="login-name">
+          <strong>Username</strong>
+        </label>
+        <input
+          className="form-input centered"
+          type="text"
+          id="login-name"
+          name="username"
+          placeholder="Enter Username"
+          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '50%' }}
+        />
+        <label className="form-label text-center" htmlFor="login-password">
+          <strong>Password</strong>
+        </label>
+        <input
+          className="form-input centered"
+          type="password"
+          id="login-password"
+          name="password"
+          placeholder="Enter Password"
+          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '50%' }}
+        />
         <div>
+          <br />
           <button
-            className="btn btn-primary"
+            className="btn btn-success centered"
             onClick={() => this.handleSubmit()}
           >
-            Login
+            Sign In
           </button>
         </div>
-
-        {/* <TextField
-          hintText="Enter Username"
-          floatingLabelText="Username"
-          name="username"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
-        />
-        <br />
-        <TextField
-          hintText="Enter Password"
-          floatingLabelText="Password"
-          type="password"
-          name="password"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
-        />
-        <br />
-        <RaisedButton
-          label="Log In"
-          primary={true}
-          style={{ margin: 12 }}
-          onClick={() => this.handleSubmit()}
-        />
-        <br /> */}
       </div>
     );
   }
