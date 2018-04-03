@@ -18,6 +18,7 @@ import barteringListReducer from './bartering_listReducers';
 import watchingListReducer from './watching_listReducers';
 import sellingListReducer from './selling_listReducers';
 import mainPhotoReducer from './main_photoReducers';
+import currentSearchReducers from './current_searchReducers';
 
 import acceptedOffers from './accepted_offersReducers';
 
@@ -41,4 +42,5 @@ export default combineReducers({
   following_list: followingListReducer,
   main_photo: mainPhotoReducer,
   acceptedOffers,
+  current_search: currentSearchReducers,
 });
