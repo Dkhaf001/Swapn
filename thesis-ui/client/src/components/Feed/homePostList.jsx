@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 // import { GridList, GridTile } from 'material-ui/GridList';
 // import Subheader from 'material-ui/Subheader';
-// import DropDownMenu from 'material-ui/DropDownMenu';
-// import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geolocation from '../Map/geolocation.jsx';
 import { getDistance } from 'geolib';
@@ -129,7 +129,7 @@ class HomePostList extends Component {
   render() {
     return (
       <div>
-        {/* <div>
+        <div>
           {' '}
           <DropDownMenu
             value={this.state.value}
@@ -140,28 +140,41 @@ class HomePostList extends Component {
             <MenuItem value={1} primaryText="Sort by Newest" />
             <MenuItem value={2} primaryText="Sort by Distance" />
           </DropDownMenu>
-        </div> */}
+        </div>
 
-        <div className="card" style={{ width: 200 }}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
-              <div key={post.id} onClick={() => this.switchToSinglePost(post)}>
-                <div className="card-image">
-                  <img src={post.main_photo} className="img-responsive" />
-                </div>
-                <div className="card-header">
-                  <div className="card-title h5">{post.title}</div>
-                  <div className="card-subtitle text-gray">
-                    {post.distance ? post.distance : null} miles away
+        <div className="container grid-lg">
+          <div className="columns">
+            {this.props.current_list &&
+              this.props.current_list.map(post => (
+                <div
+                  className="card col-4"
+                  key={post.id}
+                  onClick={() => this.switchToSinglePost(post)}
+                >
+                  <div className="card-image centered">
+                    <img src={post.main_photo} className="img-responsive" />
+                  </div>
+                  <div className="card-header centered">
+                    <div className="card-title h5 centered">{post.title}</div>
+                    <div className="card-subtitle text-gray centered">
+                      {post.distance ? post.distance : null} miles away
+                    </div>
+                  </div>
+                  <div className="card-footer centered">
+                    <div className="popover popover-top">
+                      <button className="btn btn-primary">Details</button>
+                      <div className="popover-container">
+                        <div className="card">
+                          <div className="card-header">Poster: {post.username}</div>
+                          <div className="card-body">Description: {post.description}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="card-body">{post.description}</div>
-                <div className="card-footer">
-                  <button className="btn btn-primary">Do</button>
-                </div>
-              </div>
-            ))}
-          <Geolocation />
+              ))}
+            <Geolocation />
+          </div>
         </div>
       </div>
     );

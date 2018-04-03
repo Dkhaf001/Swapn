@@ -28,7 +28,7 @@ class Navbar extends Component {
   loggedInView = () => (
     <header className="navbar">
       <section className="navbar-section">
-        <a href="/home" className="navbar-brand mr-2">
+        <a href="/home" className="navbar-brand mr-2 text-light">
           Swap'n
         </a>
         <div className="btn btn-link">

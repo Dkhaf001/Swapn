@@ -1,14 +1,20 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url("http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg");
+  /* background-color: rgb(208, 204, 208); */
+  /* background-image: url('http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   font-family: sans-serif;
 }
-
+.navbar {
+  background-color: rgb(5, 102, 220);
+}
+.card {
+  flex-wrap: wrap;
+}
 .view {
   padding-top: 10%;
 }
@@ -28,27 +34,27 @@ body {
 
 .rightbanner {
   /* padding-top: 35px; */
-  float:right;
-  width:200px;
+  float: right;
+  width: 200px;
 }
 
 .linkpic {
-  background-image: url("http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg");
-  float:left;
-  width:100px;
+  background-image: url('http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg');
+  float: left;
+  width: 100px;
 }
 .leftbanner {
   /* padding-top: 35px; */
-  float:left;
-  width:100px;
+  float: left;
+  width: 100px;
 }
 
-.middlebanner{
+.middlebanner {
   display: inline-block;
-  margin:0 auto;
+  margin: 0 auto;
   padding-left: 30px;
   /* padding-top: 30px; */
-  width:500px;
+  width: 500px;
 }
 
 .row {
@@ -67,8 +73,8 @@ body {
   display: inline-block !important;
 }
 
-.svg_icons{
-  transform: scale(1.8);
+.svg_icons {
+  transform: scale(1.4);
 }
 
 .class-tracker-col {
