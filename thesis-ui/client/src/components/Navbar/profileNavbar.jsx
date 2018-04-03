@@ -39,11 +39,12 @@ class ProfileNavbar extends Component {
             <div>
               {this.props.acceptedOffers.map(acceptedOffers => (
                 <div key={acceptedOffers._id}>
-                  {acceptedOffers.seller} accepted your offers on his posts{' '}
+                  Your offer on post:{' '}
                   <Link to={`/post/${acceptedOffers.post_id}`}>
                     {acceptedOffers.title}
                   </Link>{' '}
-                  please contact him as soon as possible
+                  was accepted! Please contact {acceptedOffers.seller} as soon
+                  as possible
                 </div>
               ))}
             </div>
@@ -54,12 +55,12 @@ class ProfileNavbar extends Component {
         <div id="notifications">
           {this.state.entries ? (
             this.state.entries.map(arr => (
-              <div key={arr[0]}>
+              <div key={arr[0]} className="centered">
                 {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
               </div>
             ))
           ) : (
-            <div className="text-left">No Unread Messages</div>
+            <div className="text-center">No Unread Messages</div>
           )}
         </div>
         <div>

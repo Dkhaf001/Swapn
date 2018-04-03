@@ -83,8 +83,7 @@ class Bio extends Component {
     this.setState({ currentlyFollowing: false });
   };
   sellerView = () => (
-    <div>
-      <br />
+    <div className="float-left">
       <div>
         <Edit />
       </div>
@@ -95,7 +94,7 @@ class Bio extends Component {
     </div>
   );
   buyerView = () => (
-    <div>
+    <div className="float-left">
       {this.props.current_profile.photo_url ? (
         <img src={this.props.current_profile.photo_url} />
       ) : (

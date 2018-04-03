@@ -40,7 +40,7 @@ class Edit extends Component {
 
   render() {
     return (
-      <div className="centered">
+      <div>
         <BioPhotoUpload />
         {/* <label>
           <input
