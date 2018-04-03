@@ -11,6 +11,7 @@ import Chattest from '../Chat/Chattest.jsx';
 import { addImages } from '../../actions';
 
 const { REST_SERVER_URL } = process.env;
+const { S3_SERVER_URL } = process.env;
 class SellerPost extends Component {
   constructor(props) {
     super(props);
@@ -242,8 +243,9 @@ class SellerPost extends Component {
       const userId = this.props.current_post.user_id;
       const url = window.location.href;
       const postId = path.basename(url);
-      await axios.delete(`http://localhost:3396/api/photos/removeall/${postId}`);
-      await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/photos/removeall/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/posts/${userId}/${postId}`);
+      await axios.delete(`${S3_SERVER_URL}/api/${postId}`);
       console.log('successfully delete post!');
       this.props.history.push('/home');
     } catch (err) {

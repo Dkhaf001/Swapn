@@ -5,6 +5,7 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import { addSearchList } from '../../actions';
 import { bindActionCreators } from 'redux';
 
+const { REST_SERVER_URL } = process.env;
 const styles = {
   root: {
     display: 'flex',
@@ -29,7 +30,7 @@ class SearchList extends Component {
 
   componentWillMount = async () => {
     try {
-      const { data } = await axios.get('http://localhost:3396/api/posts');
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       const list = data.filter(result =>
         result.title.toLowerCase().includes(this.props.location.state) ||
           result.description.toLowerCase().includes(this.props.location.state));
