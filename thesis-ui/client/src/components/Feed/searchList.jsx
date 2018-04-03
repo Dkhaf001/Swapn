@@ -31,8 +31,8 @@ class SearchList extends Component {
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       const list = data.filter(result =>
-        result.title.includes(this.props.location.state) ||
-          result.description.includes(this.props.location.state));
+        result.title.toLowerCase().includes(this.props.location.state) ||
+          result.description.toLowerCase().includes(this.props.location.state));
       this.setState({
         list,
       });
