@@ -34,12 +34,14 @@ class Navbar extends Component {
       </section>
       <Search {...this.props} />
       <section className="navbar-section">
-        <a href="/profile" className="btn btn-link">
-          {localStorage.username}
-        </a>
         <div className="btn btn-link">
-          <Link to="/post">Listing</Link>
+          <Link to="/post">
+            <i className="icon icon-photo" /> Sell
+          </Link>
         </div>
+        <a href="/profile" className="btn btn-link">
+          <strong>{localStorage.username}</strong>
+        </a>
         <a href="/" className="btn btn-link" onClick={this.logout}>
           Logout
         </a>
