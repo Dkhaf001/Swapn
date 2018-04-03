@@ -19,6 +19,8 @@ import watchingListReducer from './watching_listReducers';
 import sellingListReducer from './selling_listReducers';
 import mainPhotoReducer from './main_photoReducers';
 import currentSearchReducers from './current_searchReducers';
+import currentCategoryReducers from './current_categoryReducers';
+import categoryNameReducers from './category_nameReducers';
 
 import acceptedOffers from './accepted_offersReducers';
 
@@ -43,4 +45,6 @@ export default combineReducers({
   main_photo: mainPhotoReducer,
   acceptedOffers,
   current_search: currentSearchReducers,
+  current_category: currentCategoryReducers,
+  category_name: categoryNameReducers
 });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { addCategoryList } from '../../actions';
+import { addCategoryList, addCategoryName } from '../../actions';
 import { bindActionCreators } from 'redux';
 import { Link, Route } from 'react-router-dom';
 import Drawer from 'material-ui/Drawer';
@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import CategoryPost from '../Category/CategoryPost.jsx';
 
 const categories = [
   'Antiques & Collectibles',
@@ -25,33 +26,27 @@ const categories = [
   'Musical Instruments',
   'Pet Supplies',
   'Sports & Outdoors',
-  'Tickets',
+  'Tickets'
 ];
 
 const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 class Categories extends Component {
   constructor() {
     super();
     this.state = {
-      open: false,
-      currentCat: '',
-      list: [],
+      open: false
     };
-  }
-
-  componentWillMount() {
-    console.log('whats the history', this.props);
   }
 
   handleToggle = () => this.setState({ open: !this.state.open });
@@ -59,21 +54,12 @@ class Categories extends Component {
   handleClose = () => this.setState({ open: false });
 
   handleClick = async (index, cat) => {
-    const { data } = await axios.get(`http://localhost:3396/api/categories/${index}`);
+    const { data } = await axios.get(
+      `http://localhost:3396/api/categories/${index}`
+    );
     console.log('clicked! this is the data: ', data.rows);
     this.props.addCategoryList(data.rows);
-    this.setState({
-      currentCat: cat,
-      list: data.rows,
-    });
-  };
-
-  switchToSinglePost = async (post) => {
-    try {
-      this.props.history.push(`/post/${post.id}`);
-    } catch (err) {
-      console.log('error with switchToSinglePost');
-    }
+    this.props.addCategoryName(cat);
   };
 
   render() {
@@ -101,27 +87,6 @@ class Categories extends Component {
             ))}
           </Drawer>
         </div>
-        <h1 style={{ textAlign: 'center' }}>{this.state.currentCat}</h1>
-        <div style={styles.root}>
-          <GridList cellHeight={200} style={styles.gridList}>
-            {this.state.list &&
-              this.state.list.map(post => (
-                <GridTile
-                  key={post.id}
-                  title={post.title}
-                  subtitle={
-                    <span>
-                      <b>{post.id}</b>
-                      <b>{post.username}</b>
-                    </span>
-                  }
-                  onClick={() => this.switchToSinglePost(post)}
-                >
-                  <img src={post.main_photo} />
-                </GridTile>
-              ))}
-          </GridList>
-        </div>
       </div>
     );
   }
@@ -129,7 +94,7 @@ class Categories extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_category: state.current_category,
+    current_category: state.current_category
   };
 }
 
@@ -137,8 +102,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCategoryList,
+      addCategoryName
     },
-    dispatch,
+    dispatch
   );
 }
 
