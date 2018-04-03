@@ -33,7 +33,7 @@ class Navbar extends Component {
         {/* <Link to="/categories" className="linkbutton">
           Categories
         </Link> */}
-        <Categories />
+        <Categories {...this.props} />
         <Link to="/post" className="linkbutton">
           Listing
         </Link>
@@ -50,7 +50,10 @@ class Navbar extends Component {
         </div>
       )}
       <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
+        <IconButton
+          className="svg_icons"
+          containerElement={<Link to="/home" />}
+        >
           <ActionHome />
         </IconButton>
         {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
@@ -67,7 +70,7 @@ class Navbar extends Component {
         {/* <Link to="/categories" className="linkbutton">
           Categories
         </Link> */}
-        <Categories />
+        <Categories {...this.props} />
         <Link to="/signup" className="linkbutton">
           SignUp
         </Link>
@@ -81,7 +84,10 @@ class Navbar extends Component {
         </div>
       )}
       <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
+        <IconButton
+          className="svg_icons"
+          containerElement={<Link to="/home" />}
+        >
           <ActionHome />
         </IconButton>
         {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
@@ -97,15 +103,15 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 

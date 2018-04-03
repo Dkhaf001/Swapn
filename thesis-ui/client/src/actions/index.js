@@ -1,102 +1,107 @@
 export const addDataToStore = data => ({
   type: 'WORD',
-  payload: data,
+  payload: data
 });
 
 export const addActiveUserToStore = user => ({
   type: 'ACTIVE_USER',
-  payload: user,
+  payload: user
 });
 
 export const addCurrentList = lists => ({
   type: 'CURRENT_LIST',
-  payload: lists,
+  payload: lists
 });
 
 export const addCurrentPost = post => ({
   type: 'CURRENT_POST',
-  payload: post,
+  payload: post
 });
 
 export const addCurrentProfile = profile => ({
   type: 'CURRENT_PROFILE',
-  payload: profile,
+  payload: profile
 });
 
 export const addCurrentFollowing = following => ({
   type: 'CURRENT_FOLLOWING',
-  payload: following,
+  payload: following
 });
 
 export const addCurrentWatching = watching => ({
   type: 'CURRENT_WATCHING',
-  payload: watching,
+  payload: watching
 });
 
 export const addSocket = socket => ({
   type: 'SOCKET',
-  payload: socket,
+  payload: socket
 });
 
 export const addCurrentRoomId = id => ({
   type: 'ROOMID',
-  payload: id,
+  payload: id
 });
 
 export const addMessages = messages => ({
   type: 'MESSAGES',
-  payload: messages,
+  payload: messages
 });
 
 export const getLocation = position => ({
   type: 'Position',
-  payload: position,
+  payload: position
 });
 
 export const addImages = position => ({
   type: 'IMAGES',
-  payload: position,
+  payload: position
 });
 
 export const addNewPostId = position => ({
   type: 'NEW_POST_ID',
-  payload: position,
+  payload: position
 });
 
 export const addSellingList = position => ({
   type: 'SELLING_LIST',
-  payload: position,
+  payload: position
 });
 
 export const addWatchingList = position => ({
   type: 'WATCHING_LIST',
-  payload: position,
+  payload: position
 });
 
 export const addBarteringList = position => ({
   type: 'BARTERING_LIST',
-  payload: position,
+  payload: position
 });
 
 export const addFollowingList = position => ({
   type: 'FOLLOWING_LIST',
-  payload: position,
+  payload: position
 });
 export const addAcceptedOffers = offers => ({
   type: 'ACCEPTED_OFFERS',
-  payload: offers,
+  payload: offers
 });
 export const addMainPhoto = offers => ({
   type: 'MAIN_PHOTO',
-  payload: offers,
+  payload: offers
 });
 
 export const addCategoryList = category => ({
   type: 'CURRENT_CATEGORY',
-  payload: category,
+  payload: category
 });
 
 export const addSearchList = search => ({
   type: 'CURRENT_SEARCH',
-  payload: search,
+  payload: search
+});
+
+export const addCategoryName = name => ({
+  type: 'CATEGORY_NAME',
+  payload: name
 });
