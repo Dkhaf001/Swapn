@@ -35,32 +35,66 @@ class HomePostList extends Component {
 
   async componentWillMount() {
     try {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
+      const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
-      const modifiedData = await this.getDistance(data);
-      this.props.addCurrentList(modifiedData);
+      // const modifiedData = await this.getDistance(data);
+      this.props.addCurrentList(data);
+      let testData = this.props.current_list;
+      // console.log('reached here 1');
+      this.runGetDistance(testData);
     } catch (err) {
-      console.log('Error on componentWillMount - homePostList');
+      console.log('Error on componentWillMount - homePostList', err);
     }
   }
-  getDistance = async data => {
-    for (let i = 0; i < data.length; i++) {
-      if (i === 8) break;
-      const address = data[i].location;
-      const results = await geocodeByAddress(address);
-      const latLng = await getLatLng(results[0]);
-      const distance = geolib.getDistance(
-        {
-          latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
-          longitude: parseFloat(localStorage.getItem('usersLng')) || -118
-        },
-        latLng
-      );
-      data[i].distance = Math.round(distance / 1609);
+  runGetDistance = data => {
+    // const data = this.props.current_list;
+    let counter = 0;
+    for (let i = 0; i < data.length && counter < 10; i++) {
+      if (!data[i].distance) {
+        // console.log('reached here 2', data[i]);
+        this.getDistance(data[i]);
+        // console.log('reached here 2.5');
+        counter++;
+      }
     }
+    setTimeout(() => this.runGetDistance(data), 30000);
+  };
+  getDistance = async data => {
+    // console.log('reached data', data);
+    // for (let i = 0; i < data.length; i++) {
+    // console.log('reached here 4');
+    // if (i === 8) break;
+    const address = data.location;
+    const results = await geocodeByAddress(address);
+    const latLng = await getLatLng(results[0]);
+    // console.log('reached here 5');
+    let lat1 = parseFloat(localStorage.getItem('usersLat')) || 33;
+    let lon1 = parseFloat(localStorage.getItem('usersLng')) || -118;
+    let lat2 = latLng.lat;
+    let lon2 = latLng.lng;
+    // console.log('reached here 6');
+    var radlat1 = Math.PI * lat1 / 180;
+    var radlat2 = Math.PI * lat2 / 180;
+    var theta = lon1 - lon2;
+    var radtheta = Math.PI * theta / 180;
+    var dist =
+      Math.sin(radlat1) * Math.sin(radlat2) +
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    dist = Math.acos(dist);
+    dist = dist * 180 / Math.PI;
+    dist = dist * 60 * 1.1515;
+    // const distance = geolib.getDistance(
+    //   {
+    //     latitude: parseFloat(localStorage.getItem('usersLat')) || 33,
+    //     longitude: parseFloat(localStorage.getItem('usersLng')) || -118
+    //   },
+    //   latLng
+    // );
+    data.distance = Math.round(dist * 0.8684);
+    console.log('the result is ', data);
+    // }
     return data;
   };
-
   switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);

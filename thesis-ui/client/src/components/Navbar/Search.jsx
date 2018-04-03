@@ -20,27 +20,19 @@ class Search extends Component {
   }
   render() {
     return (
-      <div>
-        <form className="navbar-form navbar-left" role="search">
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Search"
-              onChange={e => this.setState({ name: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Location"
-              onChange={e => this.setState({ location: e.target.value })}
-            />
-            <RaisedButton
-              label="Submit"
-              style={{ margin: 12 }}
-              onClick={() => this.handleSubmit()}
-            />
-          </div>
-        </form>
-      </div>
+      <section class="navbar-section">
+        <div class="input-group input-inline">
+          <input
+            class="form-input"
+            type="text"
+            placeholder="search"
+            onChange={e => this.setState({ name: e.target.value })}
+          />
+          <button class="btn btn-primary input-group-btn" onClick={() => this.handleSubmit()}>
+            Submit
+          </button>
+        </div>
+      </section>
     );
   }
 }

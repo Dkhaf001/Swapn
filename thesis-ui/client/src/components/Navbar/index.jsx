@@ -26,41 +26,68 @@ class Navbar extends Component {
     this.props.addCurrentPost('');
   };
   loggedInView = () => (
-    <div className="rowbanner">
-      <div className="middlebanner">
-        Currently Signed in as : {localStorage.username}
-        <Search {...this.props} />
-        {/* <Link to="/categories" className="linkbutton">
-          Categories
-        </Link> */}
-        <Categories {...this.props} />
-        <Link to="/post" className="linkbutton">
-          Listing
-        </Link>
-        <Link to="/profile" className="linkbutton">
-          Profile
-        </Link>
-        <Link to="/" onClick={this.logout} className="linkbutton">
-          Logout
-        </Link>
-      </div>
-      {localStorage.getItem('token') && (
-        <div className="rightbanner">
-          <Route path="/" component={StatusBar} />
+    <header class="navbar">
+      <section class="navbar-section">
+        <a href="/home" class="navbar-brand mr-2">
+          Swap'n
+        </a>
+        <div class="btn btn-link">
+          <Categories {...this.props} />
         </div>
-      )}
-      <div className="leftbanner">
-        <IconButton
-          className="svg_icons"
-          containerElement={<Link to="/home" />}
-        >
-          <ActionHome />
-        </IconButton>
-        {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
-          <MapIcon />
-        </IconButton> */}
-      </div>
-    </div>
+      </section>
+      <Search {...this.props} />
+      <section class="navbar-section">
+        <div class="btn btn-link">
+          <Link to="/post">Listing</Link>
+        </div>
+        <a href="/profile" class="btn btn-link">
+          {localStorage.username}
+        </a>
+        {localStorage.getItem('token') && (
+          <div className="rightbanner">
+            <Route path="/" component={StatusBar} />
+          </div>
+        )}
+        <a href="/" class="btn btn-link" onClick={this.logout}>
+          Logout
+        </a>
+      </section>
+    </header>
+    // <div className="rowbanner">
+    //   <div className="middlebanner">
+    //     Currently Signed in as : {localStorage.username}
+    //     <Search {...this.props} />
+    //     {/* <Link to="/categories" className="linkbutton">
+    //       Categories
+    //     </Link> */}
+    //     <Categories {...this.props} />
+    //     <Link to="/post" className="linkbutton">
+    //       Listing
+    //     </Link>
+    //     <Link to="/profile" className="linkbutton">
+    //       Profile
+    //     </Link>
+    //     <Link to="/" onClick={this.logout} className="linkbutton">
+    //       Logout
+    //     </Link>
+    //   </div>
+    //   {localStorage.getItem('token') && (
+    //     <div className="rightbanner">
+    //       <Route path="/" component={StatusBar} />
+    //     </div>
+    //   )}
+    //   <div className="leftbanner">
+    //     <IconButton
+    //       className="svg_icons"
+    //       containerElement={<Link to="/home" />}
+    //     >
+    //       <ActionHome />
+    //     </IconButton>
+    //     {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
+    //       <MapIcon />
+    //     </IconButton> */}
+    //   </div>
+    // </div>
   );
   // need to add logout functinoality and protection
   loggedOutView = () => (
@@ -84,10 +111,7 @@ class Navbar extends Component {
         </div>
       )}
       <div className="leftbanner">
-        <IconButton
-          className="svg_icons"
-          containerElement={<Link to="/home" />}
-        >
+        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
           <ActionHome />
         </IconButton>
         {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
@@ -103,15 +127,15 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user
+    active_user: state.active_user,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore
+      addActiveUserToStore,
     },
-    dispatch
+    dispatch,
   );
 }
 
