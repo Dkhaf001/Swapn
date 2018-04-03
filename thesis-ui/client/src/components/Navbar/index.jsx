@@ -26,99 +26,66 @@ class Navbar extends Component {
     this.props.addCurrentPost('');
   };
   loggedInView = () => (
-    <header class="navbar">
-      <section class="navbar-section">
-        <a href="/home" class="navbar-brand mr-2">
+    <header className="navbar">
+      <section className="navbar-section">
+        <a href="/home" className="navbar-brand mr-2">
           Swap'n
         </a>
-        <div class="btn btn-link">
+        <div className="btn btn-link">
           <Categories {...this.props} />
         </div>
       </section>
       <Search {...this.props} />
-      <section class="navbar-section">
-        <div class="btn btn-link">
-          <Link to="/post">Listing</Link>
-        </div>
-        <a href="/profile" class="btn btn-link">
+      <section className="navbar-section">
+        <a href="/profile" className="btn btn-link">
           {localStorage.username}
         </a>
+        <div className="btn btn-link">
+          <Link to="/post">Listing</Link>
+        </div>
+        <a href="/" className="btn btn-link" onClick={this.logout}>
+          Logout
+        </a>
         {localStorage.getItem('token') && (
-          <div className="rightbanner">
+          <div className="btn btn-link">
             <Route path="/" component={StatusBar} />
           </div>
         )}
-        <a href="/" class="btn btn-link" onClick={this.logout}>
-          Logout
-        </a>
       </section>
     </header>
-    // <div className="rowbanner">
-    //   <div className="middlebanner">
-    //     Currently Signed in as : {localStorage.username}
-    //     <Search {...this.props} />
-    //     {/* <Link to="/categories" className="linkbutton">
-    //       Categories
-    //     </Link> */}
-    //     <Categories {...this.props} />
-    //     <Link to="/post" className="linkbutton">
-    //       Listing
-    //     </Link>
-    //     <Link to="/profile" className="linkbutton">
-    //       Profile
-    //     </Link>
-    //     <Link to="/" onClick={this.logout} className="linkbutton">
-    //       Logout
-    //     </Link>
-    //   </div>
-    //   {localStorage.getItem('token') && (
-    //     <div className="rightbanner">
-    //       <Route path="/" component={StatusBar} />
-    //     </div>
-    //   )}
-    //   <div className="leftbanner">
-    //     <IconButton
-    //       className="svg_icons"
-    //       containerElement={<Link to="/home" />}
-    //     >
-    //       <ActionHome />
-    //     </IconButton>
-    //     {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
-    //       <MapIcon />
-    //     </IconButton> */}
-    //   </div>
-    // </div>
   );
   // need to add logout functinoality and protection
   loggedOutView = () => (
-    <div className="rowbanner">
-      <div className="middlebanner">
-        <Search {...this.props} />
-        {/* <Link to="/categories" className="linkbutton">
-          Categories
-        </Link> */}
-        <Categories {...this.props} />
-        <Link to="/signup" className="linkbutton">
-          SignUp
-        </Link>
-        <Link to="/login" className="linkbutton">
-          Login
-        </Link>
-      </div>
-      {localStorage.getItem('token') && (
-        <div className="rightbanner">
-          <Route path="/" component={StatusBar} />
+    <header className="navbar">
+      <section className="navbar-section">
+        <a href="/home" className="navbar-brand mr-2">
+          Swap'n
+        </a>
+        <div className="btn btn-link">
+          <Categories {...this.props} />
         </div>
-      )}
-      <div className="leftbanner">
-        <IconButton className="svg_icons" containerElement={<Link to="/home" />}>
-          <ActionHome />
-        </IconButton>
-        {/* <IconButton className="svg_icons" containerElement={<Link to="/maps" />}>
-          <MapIcon />
-        </IconButton> */}
-      </div>
-    </div>
+      </section>
+      <Search {...this.props} />
+      <section className="navbar-section">
+        <a href="/profile" className="btn btn-link">
+          {localStorage.username}
+        </a>
+        <div className="btn btn-link">
+          <Link to="/post">Listing</Link>
+        </div>
+        <a href="/signup" className="btn btn-link">
+          Signup
+        </a>
+        <a href="/login" className="btn btn-link">
+          Login
+        </a>
+        {localStorage.getItem('token') && (
+          <div className="btn btn-link">
+            <Route path="/" component={StatusBar} />
+          </div>
+        )}
+      </section>
+    </header>
   );
   render() {
     return localStorage.token ? this.loggedInView() : this.loggedOutView();

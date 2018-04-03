@@ -20,15 +20,15 @@ class Search extends Component {
   }
   render() {
     return (
-      <section class="navbar-section">
-        <div class="input-group input-inline">
+      <section className="navbar-section">
+        <div className="input-group input-inline">
           <input
-            class="form-input"
+            className="form-input"
             type="text"
             placeholder="search"
             onChange={e => this.setState({ name: e.target.value })}
           />
-          <button class="btn btn-primary input-group-btn" onClick={() => this.handleSubmit()}>
+          <button className="btn btn-primary" onClick={() => this.handleSubmit()}>
             Submit
           </button>
         </div>
