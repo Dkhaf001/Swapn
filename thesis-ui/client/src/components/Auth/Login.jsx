@@ -37,8 +37,8 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <div className="form-group has-success">
+      <div className="text-center">
+        <div className="form-group">
           <label className="form-label" htmlFor="login-name">
             Name
           </label>
@@ -50,9 +50,8 @@ class Login extends Component {
             placeholder="Enter Username"
             onChange={e => this.setState({ [e.target.name]: e.target.value })}
           />
-          <p className="form-input-hint">The name is invalid.</p>
         </div>
-        <div className="form-group has-success">
+        <div className="form-group">
           <label className="form-label" htmlFor="login-password">
             Password
           </label>
@@ -64,7 +63,6 @@ class Login extends Component {
             placeholder="Enter Password"
             onChange={e => this.setState({ [e.target.name]: e.target.value })}
           />
-          <p className="form-input-hint">The password is invalid.</p>
         </div>
         <div>
           <button
