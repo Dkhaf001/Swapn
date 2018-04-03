@@ -28,9 +28,6 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
       }
       chat.find({ to: username, read: 'false' }).toArray((err, result) => {
         client.emit('notifications', result);
-        // chat.updateOne({ to: username, read: 'false' }, { read: 'true' }, (err, result) => {
-        //   console.log('update mongodb no more notifica');
-        // });
       });
       offers.find({ buyer: username, status: 'progress' }).toArray((err, data) => {
         console.log('trying to find all accepted offers', data);
@@ -74,12 +71,11 @@ mongo.connect('mongodb://127.0.0.1/barterChat', (err, db) => {
     });
     client.on('message', (data) => {
       console.log('message event triggered', data);
-
+      data.read = 'false';
       if (users[data.to]) {
         console.log('find the user trying to send him a message');
         users[data.to].emit('directMessage', data);
       } else {
-        data.read = 'false';
       }
       chat.insert(data);
       console.log('socket try8ingto send message to every one in this room', data.roomId);
