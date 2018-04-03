@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Simpleform from '../Map/simpleForm.jsx';
 
+const { REST_SERVER_URL } = process.env;
+const { S3_SERVER_URL } = process.env;
 let tempPostId;
 class AddPost extends Component {
   constructor() {
@@ -29,7 +31,7 @@ class AddPost extends Component {
         location: '',
         demand: '',
         status: 'Accepting Offers',
-        mainPhoto: '',
+        main_photo: '',
       },
     };
     this.handleConditionChange = this.handleConditionChange.bind(this);
@@ -73,7 +75,7 @@ class AddPost extends Component {
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
-          `http://localhost:3396/api/posts/update/${userId}/${postId}`,
+          `${REST_SERVER_URL}/api/posts/update/${userId}/${postId}`,
           this.state.newPost,
         );
         tempPostId = data.rows[0].id;
@@ -97,7 +99,7 @@ class AddPost extends Component {
       const imgs = this.props.images;
       imgs.forEach(async (img) => {
         const imgData = JSON.stringify(img);
-        await axios.post(`http://localhost:3396/api/photos/${postId}`, {
+        await axios.post(`${REST_SERVER_URL}/api/photos/${postId}`, {
           url: imgData,
         });
       });
@@ -110,9 +112,9 @@ class AddPost extends Component {
     try {
       const userId = this.props.current_post.user_id;
       const postId = this.props.current_post.id;
-      await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/posts/${userId}/${postId}`);
 
-      await axios.delete(`http://localhost:8593/api/${postId}`);
+      await axios.delete(`${S3_SERVER_URL}/api/${postId}`);
 
       console.log('successfully deleted new post');
       this.props.history.push('/home');
@@ -155,7 +157,7 @@ class AddPost extends Component {
       ) {
         const userId = localStorage.id;
         const { data } = await axios.post(
-          `http://localhost:3396/api/posts/${userId}`,
+          `${REST_SERVER_URL}/api/posts/${userId}`,
           this.state.newPost,
         );
         this.setState({ stepIndex: 1 });
@@ -183,14 +185,14 @@ class AddPost extends Component {
       if (!this.props.main_photo) {
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
-            mainPhoto: this.props.images[0].original,
+            main_photo: this.props.images[0].original,
           }),
         });
         this.props.addMainPhoto(this.props.images[0]);
       } else {
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
-            mainPhoto: this.props.main_photo.original,
+            main_photo: this.props.main_photo.original,
           }),
         });
       }

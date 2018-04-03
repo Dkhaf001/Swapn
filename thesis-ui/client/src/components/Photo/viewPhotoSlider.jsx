@@ -55,8 +55,6 @@ class ViewSlide extends React.Component {
 
   _onSlide(index) {
     this._resetVideo();
-    console.debug('slid to index', index);
-    console.log('index', index);
     this.setState({ currentIndex: index });
   }
 

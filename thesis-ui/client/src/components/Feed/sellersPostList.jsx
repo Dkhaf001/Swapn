@@ -8,6 +8,8 @@ import IconButton from 'material-ui/IconButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 import axios from 'axios';
 
+const { REST_SERVER_URL } = process.env;
+const { S3_SERVER_URL } = process.env;
 const styles = {
   root: {
     display: 'flex',
@@ -32,7 +34,7 @@ class SellersPostList extends Component {
   async componentWillMount() {
     try {
       const id = localStorage.id;
-      const { data } = await axios.get(`http://localhost:3396/api/posts/${id}`);
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/${id}`);
       data.sort((a, b) => b.id - a.id);
       this.setState({ lists: data });
       this.props.addSellingList(data);
@@ -53,9 +55,9 @@ class SellersPostList extends Component {
   async removePost(userId, postId) {
     try {
       // delete photos from sql then delte post then s3
-      await axios.delete(`http://localhost:3396/api/photos/removeall/${postId}`);
-      await axios.delete(`http://localhost:3396/api/posts/${userId}/${postId}`);
-      await axios.delete(`http://localhost:8593/api/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/photos/removeall/${postId}`);
+      await axios.delete(`${REST_SERVER_URL}/api/posts/${userId}/${postId}`);
+      await axios.delete(`${S3_SERVER_URL}/api/${postId}`);
 
       console.log('successfully deleted post from selling list');
       const records = this.state.lists.filter(data => data.post_id !== postId);

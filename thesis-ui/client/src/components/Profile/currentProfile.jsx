@@ -6,23 +6,15 @@ import path from 'path';
 import { bindActionCreators } from 'redux';
 import { addCurrentList } from '../../actions';
 import ListingList from '../Feed/listingPostList.jsx';
-// Profile view will need feed view in here too.
-// two views one as a Buyer & Seller
-// Seller View
-// need a specail navigation bar to switch views from selling bartering watching following
-// need check here to make sure current logged in user match profile
-// Buyer View
-// buyer just render sellers current unsold listings
-// Profile will render profile --> bio will check if logged in matches current user
+
+const { REST_SERVER_URL } = process.env;
 class Profile extends Component {
   constructor(props) {
     super(props);
   }
   async componentWillMount() {
     const user_id = path.basename(window.location.href);
-    const { data } = await axios.get(
-      `http://localhost:3396/api/posts/${user_id}`
-    );
+    const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/${user_id}`);
     console.log('thisis data curret profie', data);
     this.props.addCurrentList(data);
   }
@@ -44,16 +36,16 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList
+      addCurrentList,
     },
-    dispatch
+    dispatch,
   );
 }
 

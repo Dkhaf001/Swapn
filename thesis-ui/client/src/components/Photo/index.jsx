@@ -6,6 +6,8 @@ import { addImages, addMainPhoto } from '../../actions';
 import PhotoSlide from './photoslide.jsx';
 import path from 'path';
 
+const { REST_SERVER_URL } = process.env;
+const { S3_SERVER_URL } = process.env;
 class PhotoUpload extends React.Component {
   constructor() {
     super();
@@ -40,7 +42,7 @@ class PhotoUpload extends React.Component {
         this.props.addImages(temp);
         this.setState({ images: temp });
       }
-      const data = await axios.delete(`http://localhost:8593/api/removephoto/${hold[0].Key}`);
+      const data = await axios.delete(`${REST_SERVER_URL}/api/removephoto/${hold[0].Key}`);
       console.log(data);
     } catch (err) {
       console.log('Error romvingPhoto photo index');
@@ -55,7 +57,7 @@ class PhotoUpload extends React.Component {
       const url = window.location.href;
       const postId = path.basename(url);
       this.setState({ posting: false });
-      const data = await axios.delete(`http://localhost:8593/api/${postId}`);
+      const data = await axios.delete(`${S3_SERVER_URL}/api/${postId}`);
       console.log(data);
       this.props.addImages(null);
     } catch (error) {
@@ -89,7 +91,7 @@ class PhotoUpload extends React.Component {
     // change to match the route i need for dp route
 
     // 1 changes to postID
-    const { data } = await axios.post(`http://localhost:8593/api/addphoto/${postId}`, formData);
+    const { data } = await axios.post(`${S3_SERVER_URL}/api/addphoto/${postId}`, formData);
     console.log('thisis data from upload', data.key);
 
     this.setState({
@@ -107,7 +109,7 @@ class PhotoUpload extends React.Component {
 
   fetchAlbum = async (postId) => {
     try {
-      const data = await axios.get(`http://localhost:8593/api/${postId}`);
+      const data = await axios.get(`${S3_SERVER_URL}/api/${postId}`);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -141,7 +143,7 @@ class PhotoUpload extends React.Component {
           this.setState({ posting: true });
         }}
       >
-        Add New Post
+        Add Image
       </button>
     </div>
   );
