@@ -64,22 +64,22 @@ class ProfileNavbar extends Component {
         </div>
         <div>
           <ul className="tab tab-block">
-            <li class="tab-item">
+            <li className="tab-item">
               <Link to="/profile/selling" className="linkbutton">
                 Selling
               </Link>
             </li>
-            <li class="tab-item">
+            <li className="tab-item">
               <Link to="/profile/bartering" className="linkbutton">
                 Bartering
               </Link>
             </li>
-            <li class="tab-item">
+            <li className="tab-item">
               <Link to="/profile/watchlist" className="linkbutton">
                 Watchlist
               </Link>
             </li>
-            <li class="tab-item">
+            <li className="tab-item">
               <Link to="/profile/following" className="linkbutton">
                 Following
               </Link>

@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
+import Categories from './Categories.jsx';
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      location: '',
+      location: ''
     };
   }
   handleSubmit() {
     console.log('you aretryingto search ', this.state.name, this.props);
     this.props.history.push({
       pathname: '/search',
-      state: this.state.name,
+      state: this.state.name
     });
     location.reload();
   }
@@ -22,13 +23,17 @@ class Search extends Component {
     return (
       <section className="navbar-section">
         <div className="input-group input-inline">
+          <Categories {...this.props} />
           <input
             className="form-input"
             type="text"
-            placeholder="search"
+            placeholder="🔎  Search"
             onChange={e => this.setState({ name: e.target.value })}
           />
-          <button className="btn btn-primary" onClick={() => this.handleSubmit()}>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.handleSubmit()}
+          >
             Submit
           </button>
         </div>
@@ -38,7 +43,7 @@ class Search extends Component {
 }
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 export default connect(mapStateToProps)(Search);
