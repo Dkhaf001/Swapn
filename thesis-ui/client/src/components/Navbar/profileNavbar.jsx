@@ -7,7 +7,7 @@ class ProfileNavbar extends Component {
   constructor() {
     super();
     this.state = {
-      entries: '',
+      entries: ''
     };
   }
   async componentWillMount() {
@@ -23,7 +23,7 @@ class ProfileNavbar extends Component {
         const entries = Object.entries(obj);
         // console.log('this is the entries', entries);
         this.setState({
-          entries,
+          entries
         });
       }
     } catch (err) {
@@ -34,14 +34,16 @@ class ProfileNavbar extends Component {
     return (
       <div>
         {/* <div>{this.props.user ? `Current User: ${this.props.user}` : ''}</div> */}
-        <div id="acceptedOffers">
+        <div id="acceptedOffers text-center">
           {this.props.acceptedOffers ? (
             <div>
               {this.props.acceptedOffers.map(acceptedOffers => (
                 <div key={acceptedOffers._id}>
                   {acceptedOffers.seller} accepted your offers on his posts{' '}
-                  <Link to={`/post/${acceptedOffers.post_id}`}>{acceptedOffers.title}</Link> please
-                  contact him as soon as possible
+                  <Link to={`/post/${acceptedOffers.post_id}`}>
+                    {acceptedOffers.title}
+                  </Link>{' '}
+                  please contact him as soon as possible
                 </div>
               ))}
             </div>
@@ -57,25 +59,32 @@ class ProfileNavbar extends Component {
               </div>
             ))
           ) : (
-            <div>No Unread Messages</div>
+            <div className="text-left">No Unread Messages</div>
           )}
         </div>
         <div>
-          <Link to="/profile/selling" className="linkbutton">
-            Selling
-          </Link>
-          <Link to="/profile/bartering" className="linkbutton">
-            Bartering
-          </Link>
-          <Link to="/profile/watchlist" className="linkbutton">
-            Watchlist
-          </Link>
-          <Link to="/profile/following" className="linkbutton">
-            Following
-          </Link>
-          {/* <Link to="/profile/acceptedOffers" className="linkbutton">
-            AcceptedOffers
-          </Link> */}
+          <ul className="tab tab-block">
+            <li class="tab-item">
+              <Link to="/profile/selling" className="linkbutton">
+                Selling
+              </Link>
+            </li>
+            <li class="tab-item">
+              <Link to="/profile/bartering" className="linkbutton">
+                Bartering
+              </Link>
+            </li>
+            <li class="tab-item">
+              <Link to="/profile/watchlist" className="linkbutton">
+                Watchlist
+              </Link>
+            </li>
+            <li class="tab-item">
+              <Link to="/profile/following" className="linkbutton">
+                Following
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     );
@@ -84,7 +93,7 @@ class ProfileNavbar extends Component {
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    acceptedOffers: state.acceptedOffers,
+    acceptedOffers: state.acceptedOffers
   };
 }
 export default connect(mapStateToProps)(ProfileNavbar);

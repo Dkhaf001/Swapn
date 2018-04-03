@@ -16,9 +16,6 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
-    console.log('shabi', this.props);
-  }
 
   logout = () => {
     localStorage.clear();
@@ -94,15 +91,15 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 
