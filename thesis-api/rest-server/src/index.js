@@ -16,19 +16,11 @@ import fs from 'fs';
 
 const app = App.express;
 // ---------------------AWS
-<<<<<<< HEAD
- const options = {
-   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.pem')),
-   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.crt')),
+const options = {
+   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.key'),'utf8'),
+   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/ssl-bandle.crt'),'utf8'),
  };
- const server = http.createServer(option, app);
-=======
-// const options = {
-//   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.key'),'utf8'),
-//   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.crt'),'utf8'),
-// };
-// const server = http.createServer(option,app);
->>>>>>> 91003aef2cb41889d021840ab4103212149f0af8
+ const server = http.createServer(options, app);
 //-----------------------------
 // const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
