@@ -18,12 +18,13 @@ body {
 .card {
   max-width: 22%;
   flex-wrap: wrap;
-  border: solid black;
+  float: left;
+  /* border: solid black; */
   /* height:100%; */
   border-collapse: collapse;
-  display: inline-grid;
+  display: inline-table;
 }
-/* grid, inline-grid */
+/* grid, inline-grid, inline-table */
 
 /* .img-responsive {
   min-width: 90%;
