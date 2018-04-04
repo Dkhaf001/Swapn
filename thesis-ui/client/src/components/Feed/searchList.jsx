@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
-import { addSearchList } from '../../actions';
+import { addSearchList, addCurrentPost } from '../../actions';
 import { bindActionCreators } from 'redux';
 
 const { REST_SERVER_URL } = process.env;
@@ -10,13 +10,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class SearchList extends Component {
@@ -24,18 +24,20 @@ class SearchList extends Component {
     super();
     this.state = {
       searching: '',
-      list: '',
+      list: ''
     };
   }
 
   componentWillMount = async () => {
     try {
       const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
-      const list = data.filter(result =>
-        result.title.toLowerCase().includes(this.props.location.state) ||
-          result.description.toLowerCase().includes(this.props.location.state));
+      const list = data.filter(
+        result =>
+          result.title.toLowerCase().includes(this.props.location.state) ||
+          result.description.toLowerCase().includes(this.props.location.state)
+      );
       this.setState({
-        list,
+        list
       });
       this.props.addSearchList(list);
     } catch (err) {
@@ -43,7 +45,7 @@ class SearchList extends Component {
     }
   };
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -65,7 +67,7 @@ class SearchList extends Component {
             style={styles.gridList}
             style={{
               width: '80%',
-              margin: '10 auto',
+              margin: '10 auto'
               // border: '2px solid rgb(11, 22, 241)',
               // backgroundColor: '#83d8ff',
             }}
@@ -100,7 +102,7 @@ class SearchList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_search: state.current_search,
+    current_search: state.current_search
   };
 }
 
@@ -108,8 +110,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addSearchList,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 

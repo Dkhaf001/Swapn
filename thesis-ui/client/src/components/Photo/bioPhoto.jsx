@@ -14,13 +14,15 @@ class BioPhotoUpload extends React.Component {
     this.state = {
       posting: false,
       file: null,
-      profilePic: 'http://laoblogger.com/images/default-profile-picture-5.jpg',
+      profilePic: 'http://laoblogger.com/images/default-profile-picture-5.jpg'
     };
   }
   async componentDidMount() {
     try {
       const userId = localStorage.id;
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/users/${userId}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/users/${userId}`
+      );
       if (data[0].photo_url !== '') {
         this.setState({ profilePic: data[0].photo_url });
       }
@@ -53,7 +55,7 @@ class BioPhotoUpload extends React.Component {
     }
   };
 
-  urlInput = async (event) => {
+  urlInput = async event => {
     await this.setState({ file: event.target.files[0] });
     console.log('this file', this.state.file);
   };
@@ -77,17 +79,20 @@ class BioPhotoUpload extends React.Component {
     // change to match the route i need for dp route
     await axios.delete(`${S3_SERVER_URL}/api/${userId}`);
     // 1 changes to postID
-    const { data } = await axios.post(`${S3_SERVER_URL}/api/addProfilePic/${userId}`, formData);
+    const { data } = await axios.post(
+      `${S3_SERVER_URL}/api/addProfilePic/${userId}`,
+      formData
+    );
 
     this.setState({
       profilePic: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
       file: null,
-      posting: false,
+      posting: false
     });
 
     await axios.put(`${REST_SERVER_URL}/api/users/profilepic`, {
       user_id: localStorage.id,
-      photo_url: this.state.profilePic,
+      photo_url: this.state.profilePic
     });
 
     // 'https://{s3-us-west-1}.amazonaws.com/{barterbruh}/{1/1de93ec.jpg}'
@@ -104,7 +109,10 @@ class BioPhotoUpload extends React.Component {
 
   renderForm = () => (
     <div>
-      <img style={{ width: '128px', height: '128px' }} src={this.state.profilePic} />
+      <img
+        style={{ width: '128px', height: '128px' }}
+        src={this.state.profilePic}
+      />
       <form>
         <label>
           Upload:
@@ -112,7 +120,9 @@ class BioPhotoUpload extends React.Component {
           {/* need to clear file after upload look up */}
         </label>
       </form>
-      {this.state.file ? <button onClick={this.handleUpload}>Upload</button> : null}
+      {this.state.file ? (
+        <button onClick={this.handleUpload}>Upload</button>
+      ) : null}
       {/* <button onClick={this.fetchAlbum}>Fetch</button> */}
       {/* <button onClick={this.removePhoto}>DeletePhoto</button>
       <button onClick={this.handleSubmit}>Submit</button> */}
@@ -121,18 +131,26 @@ class BioPhotoUpload extends React.Component {
   );
   renderNormal = () => (
     <div>
-      <img style={{ width: '128px', height: '128px' }} src={this.state.profilePic} />
+      <img
+        style={{ width: '128px', height: '128px' }}
+        src={this.state.profilePic}
+        className="circle"
+      />
+      <br />
       <button
+        className="btn btn-link"
         onClick={() => {
           this.setState({ posting: true });
         }}
       >
-        Edit
+        <i className="icon icon-edit" /> Edit
       </button>
     </div>
   );
   render() {
-    return <div>{this.state.posting ? this.renderForm() : this.renderNormal()}</div>;
+    return (
+      <div>{this.state.posting ? this.renderForm() : this.renderNormal()}</div>
+    );
   }
 }
 
@@ -141,7 +159,7 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     images: state.images,
     npId: state.newPostId,
-    main_photo: state.main_photo,
+    main_photo: state.main_photo
   };
 }
 
@@ -149,9 +167,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addImages,
-      addMainPhoto,
+      addMainPhoto
     },
-    dispatch,
+    dispatch
   );
 }
 

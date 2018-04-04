@@ -11,7 +11,7 @@ class Bio extends Component {
   constructor() {
     super();
     this.state = {
-      currentlyFollowing: false,
+      currentlyFollowing: false
     };
   }
   async componentWillMount() {
@@ -23,7 +23,9 @@ class Bio extends Component {
       userId = this.props.active_user.id;
     }
     try {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/users/${userId}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/users/${userId}`
+      );
       this.props.addCurrentProfile(data[0]);
       if (url.includes('othersprofile')) {
         this.getFollowing();
@@ -37,17 +39,19 @@ class Bio extends Component {
     const userId = this.props.active_user.id;
     const followerId = this.state.user.id;
     try {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/followings/single/${userId}/${followerId}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/followings/single/${userId}/${followerId}`
+      );
       console.log('successfully received following list');
       // console.log('thisis data~~~~', data);
       if (data.rowCount > 0) {
         this.setState({
-          currentlyFollowing: true,
+          currentlyFollowing: true
         });
         // console.log('follow', this.state.currentlyFollowing);
       } else {
         this.setState({
-          currentlyFollowing: false,
+          currentlyFollowing: false
         });
         // console.log('unfollow', this.state.currentlyFollowing);
       }
@@ -65,17 +69,21 @@ class Bio extends Component {
   followButton = async () => {
     const userId = this.props.active_user.id;
     const followerId = this.state.user.id;
-    await axios.post(`${REST_SERVER_URL}/api/followings/${userId}/${followerId}`);
+    await axios.post(
+      `${REST_SERVER_URL}/api/followings/${userId}/${followerId}`
+    );
     this.setState({ currentlyFollowing: true });
   };
   unfollowButton = async () => {
     const userId = this.props.active_user.id;
     const followerId = this.state.user.id;
-    await axios.delete(`${REST_SERVER_URL}/api/followings/${userId}/${followerId}`);
+    await axios.delete(
+      `${REST_SERVER_URL}/api/followings/${userId}/${followerId}`
+    );
     this.setState({ currentlyFollowing: false });
   };
   sellerView = () => (
-    <div>
+    <div className="float-left">
       <div>
         <Edit />
       </div>
@@ -86,7 +94,7 @@ class Bio extends Component {
     </div>
   );
   buyerView = () => (
-    <div>
+    <div className="float-left">
       {this.props.current_profile.photo_url ? (
         <img src={this.props.current_profile.photo_url} />
       ) : (
@@ -111,15 +119,15 @@ class Bio extends Component {
 function mapStateToProps(state) {
   return {
     current_profile: state.current_profile,
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentProfile,
+      addCurrentProfile
     },
-    dispatch,
+    dispatch
   );
 }
 
