@@ -151,7 +151,9 @@ class HomePostList extends Component {
                   <div className="card-image centered">
                     <img src={post.main_photo} className="img-responsive" />
                     <div className="overlay">
-                      <div className="overlaytext">Description: {post.description}</div>
+                      <div className="overlaytext">
+                        Description <br /> {post.description}
+                      </div>
                       <div />
                       <figure class="avatar avatar-lg float-left">
                         <img src={post.photo_url} alt="..." />
@@ -165,17 +167,6 @@ class HomePostList extends Component {
                         {post.distance ? post.distance : null} miles away
                       </div>
                     </div>
-                    {/* <div className="card-footer centered"> */}
-                    {/* <div className="popover popover-top"> */}
-                    {/* <button className="btn btn-primary">Details</button> */}
-                    {/* <div className="popover-container"> */}
-                    {/* <div className="card"> */}
-                    {/* <div className="card-header">Poster: {post.username}</div> */}
-                    {/* <div className="card-body">Description: {post.description}</div> */}
-                    {/* </div> */}
-                    {/* </div> */}
-                    {/* </div> */}
-                    {/* </div> */}
                   </div>
                 </div>
               ))}
