@@ -37,7 +37,7 @@ class Signup extends Component {
           name="email"
           placeholder="Enter Email"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
-          style={{ width: '50%' }}
+          style={{ width: '30%' }}
         />
         <label className="form-label text-center" htmlFor="signup-name">
           <strong>Username</strong>
@@ -49,7 +49,7 @@ class Signup extends Component {
           name="username"
           placeholder="Enter Username"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
-          style={{ width: '50%' }}
+          style={{ width: '30%' }}
         />
         <label className="form-label text-center" htmlFor="signup-password">
           <strong>Password</strong>
@@ -61,7 +61,7 @@ class Signup extends Component {
           name="password"
           placeholder="Enter Password"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
-          style={{ width: '50%' }}
+          style={{ width: '30%' }}
         />
         <div>
           <br />

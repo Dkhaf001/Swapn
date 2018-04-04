@@ -57,7 +57,6 @@ class Categories extends Component {
         >
           Categories
         </div>
-        {/* <FlatButton label="Categories" onClick={this.handleToggle} /> */}
         <Drawer
           docked={true}
           width={250}

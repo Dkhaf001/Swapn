@@ -159,7 +159,7 @@ class StatusBar extends Component {
                   <IconButton tooltip="Notifications">
                     <NotificationsIcon
                       className="svg_icons"
-                      style={{ color: 'white' }}
+                      color="white"
                       onClick={event => {
                         this.setState({
                           open: true,
@@ -229,17 +229,15 @@ class StatusBar extends Component {
               </div>
             ) : (
               <div>
-                <div>
-                  <IconButton tooltip="Notifications">
-                    <NotificationsIcon
-                      className="svg_icons"
-                      style={{ color: 'white' }}
-                      onClick={() =>
-                        console.log('you clicked the notication button!')
-                      }
-                    />
-                  </IconButton>
-                </div>
+                <IconButton tooltip="Notifications">
+                  <NotificationsIcon
+                    className="svg_icons"
+                    color="white"
+                    onClick={() =>
+                      console.log('you clicked the notication button!')
+                    }
+                  />
+                </IconButton>
               </div>
             )}
           </div>

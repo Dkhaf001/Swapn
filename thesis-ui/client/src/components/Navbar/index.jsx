@@ -57,9 +57,7 @@ class Navbar extends Component {
           Logout
         </a>
         {localStorage.getItem('token') && (
-          <div className="btn btn-link">
-            <Route path="/" component={StatusBar} />
-          </div>
+          <Route path="/" component={StatusBar} />
         )}
       </section>
     </header>
@@ -92,15 +90,13 @@ class Navbar extends Component {
           <strong style={{ color: 'white' }}>{localStorage.username}</strong>
         </a>
         <a href="/signup" className="btn btn-link" style={{ color: 'white' }}>
-          Signup
+          Sign Up
         </a>
         <a href="/login" className="btn btn-link" style={{ color: 'white' }}>
           Login
         </a>
         {localStorage.getItem('token') && (
-          <div className="btn btn-link">
-            <Route path="/" component={StatusBar} />
-          </div>
+          <Route path="/" component={StatusBar} />
         )}
       </section>
     </header>
