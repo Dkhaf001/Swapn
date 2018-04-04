@@ -1,8 +1,5 @@
 import React from 'react';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
-} from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import TextField from 'material-ui/TextField';
 
 class SimpleForm extends React.Component {
@@ -12,7 +9,7 @@ class SimpleForm extends React.Component {
     this.onChange = address => this.setState({ address });
   }
 
-  handleFormSubmit = event => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
 
     geocodeByAddress(this.state.address)
@@ -24,18 +21,18 @@ class SimpleForm extends React.Component {
   render() {
     const inputProps = {
       value: this.state.address,
-      onChange: this.onChange
+      onChange: this.onChange,
     };
 
     return (
       <form onSubmit={this.handleFormSubmit}>
         <PlacesAutocomplete
           inputProps={inputProps}
-          onChange={e => {
+          onChange={(e) => {
             this.setState({
               newPost: Object.assign({}, this.state.newPost, {
-                [e.target.name]: e.target.value
-              })
+                [e.target.name]: e.target.value,
+              }),
             });
           }}
         />
