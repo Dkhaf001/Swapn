@@ -134,6 +134,7 @@ class BioPhotoUpload extends React.Component {
       <img
         style={{ width: '128px', height: '128px' }}
         src={this.state.profilePic}
+        className="circle"
       />
       <br />
       <button
