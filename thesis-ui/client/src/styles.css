@@ -124,6 +124,7 @@ body {
 .chatBox {
   width: 500px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 input[type='text'] {
   width: 100%;
@@ -136,10 +137,3 @@ input[type='text'] {
   outline: none;
 }
 
-input[type='text']:focus {
-  border: 3px solid #555;
-=======
-  background: blue;
-  border: 3px solid red;
->>>>>>> tring to work with psycho eddi
-}

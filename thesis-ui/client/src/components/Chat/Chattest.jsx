@@ -33,6 +33,8 @@ class Chattest extends React.Component {
         message: this.state.message,
         postTitle: this.props.current_post.title,
         buyer_username: this.props.buyer_username || 'not a buyer',
+        img: this.props.active_user.photo_url,
+        date: new Date().toUTCString(),
       });
       this.setState({ message: '' });
     };
@@ -68,10 +70,32 @@ class Chattest extends React.Component {
   render() {
     return (
       <div className="chatBox" id={this.props.roomId}>
-        <div className="messages">
+        <div className="chat">
           {this.state.messages.map((message, key) => (
-            <div key={key}>
-              {message.from}: {message.message}
+            <div
+              key={key}
+              className={
+                message.from === this.props.active_user.username ? 'container darker' : 'container'
+              }
+            >
+              <img
+                src={
+                  message.from === this.props.active_user.username
+                    ? this.props.active_user.photo_url
+                    : message.img
+                }
+                alt="Avatar"
+                style={{ width: '100%' }}
+                className={message.from === this.props.active_user.username ? 'right' : ''}
+              />
+              <p>{message.message}</p>
+              <span
+                className={
+                  message.from === this.props.active_user.username ? 'time-left' : 'time-right'
+                }
+              >
+                {message.date}
+              </span>
             </div>
           ))}
         </div>
