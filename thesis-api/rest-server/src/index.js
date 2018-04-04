@@ -3,6 +3,7 @@ import App from './config/express';
 import { bulkCategories, bulkPost, bulkPhotos } from './config/database/seedData';
 import './config/database/index';
 import path from 'path';
+import fs from 'fs';
 // Drop and Add Tables Uncomment to activate
 // import './config/database/setup';
 
