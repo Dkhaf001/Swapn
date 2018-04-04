@@ -15,13 +15,13 @@ import path from 'path';
 
 const app = App.express;
 // ---------------------AWS
-// const options = {
-//   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.pem')),
-//   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.crt')),
-// };
-// const server = http.createServer(option,app);
+ const options = {
+   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.pem')),
+   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.crt')),
+ };
+ const server = http.createServer(option, app);
 //-----------------------------
-const server = http.createServer(app);
+// const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, (err) => {
