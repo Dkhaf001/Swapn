@@ -26,16 +26,17 @@ class Search extends Component {
           <Categories {...this.props} />
           <input
             className="form-input"
+            style={{ width: '100%' }}
             type="text"
             placeholder="🔎  Search"
             onChange={e => this.setState({ name: e.target.value })}
           />
-          <button
-            className="btn btn-primary"
+          <RaisedButton
+            label="Submit"
+            primary={true}
+            style={{ margin: '12' }}
             onClick={() => this.handleSubmit()}
-          >
-            Submit
-          </button>
+          />
         </div>
       </section>
     );

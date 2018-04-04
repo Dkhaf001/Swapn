@@ -37,11 +37,9 @@ class HomePostList extends Component {
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
-      console.log('data after filter!!', data);
       // const modifiedData = await this.getDistance(data);
       this.props.addCurrentList(data);
       const testData = this.props.current_list;
-      // console.log('reached here 1');
       this.runGetDistance(testData);
     } catch (err) {
       console.log('Error on componentWillMount - homePostList', err);
@@ -52,9 +50,7 @@ class HomePostList extends Component {
     let counter = 0;
     for (let i = 0; i < data.length && counter < 10; i++) {
       if (!data[i].distance) {
-        // console.log('reached here 2', data[i]);
         this.getDistance(data[i]);
-        // console.log('reached here 2.5');
         counter++;
       }
     }
