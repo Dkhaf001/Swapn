@@ -15,7 +15,6 @@ body {
 .navbar {
   background-color: rgb(5, 102, 220);
 }
-
 .card {
   display: inline-block;
   margin: 0 0 1em;
@@ -33,19 +32,7 @@ body {
   column-count: 4;
   column-gap: 1em;
 }
-.container {
-  float: right;
-  padding-top: 5%;
-  padding-right: 13.5%;
-  /* padding-left: 20%; */
-  width: 80%;
-}
-.bio {
-  padding-left: 4%;
-  padding-top: 7%;
-  float: left;
-  width: 10%;
-}
+
 .card-image {
   /* min-height: 150px; */
   max-height: 100%;
