@@ -67,40 +67,28 @@ class Chattest extends React.Component {
   //* ***************************** Div id is needed ******************************//
   render() {
     return (
-      <div className="container" id={this.props.roomId}>
-        <div className="row">
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <div className="card-title">Barter Chatt</div>
-                <hr />
-                <div className="messages">
-                  {this.state.messages.map((message, key) => (
-                    <div key={key}>
-                      {message.from}: {message.message}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="card-footer">
-                {/* <input type="text" placeholder="Username" value={this.state.username}
-                                 onChange={ev => this.setState({username: ev.target.value})} className="form-control"/> */}
-                <br />
-                <input
-                  type="text"
-                  placeholder="Message"
-                  className="form-control"
-                  value={this.state.message}
-                  onChange={ev => this.setState({ message: ev.target.value })}
-                />
-                <br />
-                <button onClick={e => this.sendMessage(e)} className="btn btn-primary form-control">
-                  Send
-                </button>
-              </div>
+      <div className="chatBox" id={this.props.roomId}>
+        <div className="messages">
+          {this.state.messages.map((message, key) => (
+            <div key={key}>
+              {message.from}: {message.message}
             </div>
-          </div>
+          ))}
         </div>
+        {/* <input type="text" placeholder="Username" value={this.state.username}
+                                 onChange={ev => this.setState({username: ev.target.value})} className="form-control"/> */}
+        <br />
+        <input
+          type="text"
+          placeholder="Message"
+          className="form-control"
+          value={this.state.message}
+          onChange={ev => this.setState({ message: ev.target.value })}
+        />
+        <br />
+        <button onClick={e => this.sendMessage(e)} className="btn btn-primary form-control">
+          Send
+        </button>
       </div>
     );
   }

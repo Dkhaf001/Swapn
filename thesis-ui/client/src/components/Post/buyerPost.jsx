@@ -336,14 +336,16 @@ class BuyerPost extends Component {
               onClick={() => this.makeOffer()}
             />
           )}
-        {this.state.bartering &&
-          this.props.current_post.status !== 'SWAPPED' && (
-            <Chattest
-              post={this.props.current_post}
-              roomId={this.state.room_id}
-              buyer_username={this.state.buyer_username}
-            />
-          )}
+        <div className="chatBox" style={{ backgroundColor: 'pink', width: '200px' }}>
+          {this.state.bartering &&
+            this.props.current_post.status !== 'SWAPPED' && (
+              <Chattest
+                post={this.props.current_post}
+                roomId={this.state.room_id}
+                buyer_username={this.state.buyer_username}
+              />
+            )}
+        </div>
       </div>
     ) : (
       <div class="loading loading-lg" />
