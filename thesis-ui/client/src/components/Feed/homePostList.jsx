@@ -151,7 +151,11 @@ class HomePostList extends Component {
                   <div className="card-image centered">
                     <img src={post.main_photo} className="img-responsive" />
                     <div className="overlay">
-                      <div>Hello World</div>
+                      <div className="overlaytext">Description: {post.description}</div>
+                      <div />
+                      <figure class="avatar avatar-lg float-left">
+                        <img src={post.photo_url} alt="..." />
+                      </figure>
                     </div>
                   </div>
                   <div className="bottomhalf">

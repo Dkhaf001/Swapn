@@ -39,23 +39,32 @@ body {
   max-width: 100%;
   position: relative;
 }
-
+.avatar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
 .bottomhalf {
   min-width: 100%;
   background-color: rgb(208, 204, 208);
   text-align: center;
 }
 .overlay {
+  padding-top: 40%;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #008cba;
+  background-color: rgba(3, 37, 108, 0.8);
   overflow: hidden;
   width: 100%;
   height: 100%;
   -webkit-transform: scale(0);
   transition: 0.3s ease;
+  text-align: center;
+}
+.overlaytext {
+  color: white;
 }
 .card-image:hover .overlay {
   transform: scale(1);
