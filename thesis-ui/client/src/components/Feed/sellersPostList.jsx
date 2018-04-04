@@ -76,13 +76,16 @@ class SellersPostList extends Component {
 
   render() {
     return (
-      <div style={styles.root}>
-        <GridList cellHeight={200} style={styles.gridList}>
+      <div className="container" style={styles.root}>
+        {/* <GridList cellHeight={200} style={styles.gridList}> */}
+        <div className="columns">
           {this.props.selling_list &&
             this.props.selling_list.map(post => (
               <GridTile
+                className="column col-3"
                 key={post.id}
                 title={post.title}
+                style={{ width: 200, height: 300 }}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
@@ -104,7 +107,8 @@ class SellersPostList extends Component {
                 <img src={post.main_photo} />
               </GridTile>
             ))}
-        </GridList>
+          {/* </GridList> */}
+        </div>
       </div>
     );
   }
