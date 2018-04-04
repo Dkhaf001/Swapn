@@ -39,11 +39,7 @@ body {
   max-width: 100%;
   position: relative;
 }
-.avatar {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}
+
 .bottomhalf {
   min-width: 100%;
   background-color: rgb(208, 204, 208);

@@ -10,6 +10,8 @@ import MenuItem from 'material-ui/MenuItem';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geolocation from '../Map/geolocation.jsx';
 import { getDistance } from 'geolib';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
 
 const { REST_SERVER_URL } = process.env;
 const geolib = require('geolib');
@@ -142,18 +144,34 @@ class HomePostList extends Component {
         <div className="containerr">
           <div className="columnss">
             {this.props.current_list &&
-              this.props.current_list.filter(post => post.status !== 'SWAPPED').map(post => (
-                <div className="card" key={post.id} onClick={() => this.switchToSinglePost(post)}>
-                  <div className="card-image centered">
-                    <img src={post.main_photo} className="img-responsive" />
-                    <div className="overlay">
-                      <div className="overlaytext">
-                        Description <br /> {post.description}
+              this.props.current_list
+                .filter(post => post.status !== 'SWAPPED')
+                .map(post => (
+                  <div
+                    className="card"
+                    key={post.id}
+                    onClick={() => this.switchToSinglePost(post)}
+                  >
+                    <div className="card-image centered">
+                      <img src={post.main_photo} className="img-responsive" />
+                      <div className="overlay">
+                        <div className="overlaytext">
+                          <strong>Description: </strong>
+                          <br />
+                          {post.description}
+                        </div>
+                        <Chip
+                          style={{
+                            margin: 'auto',
+                            width: 'auto',
+                            bottom: '0',
+                            position: 'absolute'
+                          }}
+                        >
+                          <Avatar src={post.photo_url} />
+                          {post.username}
+                        </Chip>
                       </div>
-                      <div />
-                      <figure class="avatar avatar-lg float-left">
-                        <img src={post.photo_url} alt="..." />
-                      </figure>
                     </div>
                     <div className="bottomhalf">
                       <div className="card-header centered">
@@ -163,21 +181,7 @@ class HomePostList extends Component {
                         <div className="card-subtitle centered">
                           {post.distance ? post.distance : null} miles away
                         </div>
-                        <figure className="avatar avatar-lg">
-                          <img src={post.photo_url} />
-                        </figure>
                       </div>
-                      {/* <div className="card-footer centered"> */}
-                      {/* <div className="popover popover-top"> */}
-                      {/* <button className="btn btn-primary">Details</button> */}
-                      {/* <div className="popover-container"> */}
-                      {/* <div className="card"> */}
-                      {/* <div className="card-header">Poster: {post.username}</div> */}
-                      {/* <div className="card-body">Description: {post.description}</div> */}
-                      {/* </div> */}
-                      {/* </div> */}
-                      {/* </div> */}
-                      {/* </div> */}
                     </div>
                   </div>
                 ))}
@@ -206,3 +210,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePostList);
+
+{
+  /* <div>
+<figure className="avatar avatar-lg float-left">
+  <img src={post.photo_url} />
+</figure>
+<div style={{ color: 'white' }}>{post.username}</div>
+</div> */
+}

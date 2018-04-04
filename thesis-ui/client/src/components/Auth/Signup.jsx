@@ -33,7 +33,7 @@ class Signup extends Component {
         <input
           className="form-input centered"
           type="text"
-          id="signup-name"
+          id="signup-email"
           name="email"
           placeholder="Enter Email"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}

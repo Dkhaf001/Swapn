@@ -14,7 +14,7 @@ class BioPhotoUpload extends React.Component {
     this.state = {
       posting: false,
       file: null,
-      profilePic: 'http://laoblogger.com/images/default-profile-picture-5.jpg'
+      profilePic: ''
     };
   }
   async componentDidMount() {
