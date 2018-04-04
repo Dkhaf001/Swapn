@@ -1,8 +1,12 @@
 export const fetchAllPostsHelper = () => `
-  SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username, categorys.type FROM posts
+  SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username, categorys.type, users.photo_url FROM posts
   INNER JOIN users on (posts.user_id=users.id) 
   INNER JOIN categorys on (posts.category=categorys.id)
   `;
+
+// SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username, categorys.type FROM posts
+// INNER JOIN users on (posts.user_id=users.id)
+// INNER JOIN categorys on (posts.category=categorys.id)
 
 export const fetchUserPostsHelper = ({ user_id }) => `
   SELECT * 
@@ -23,9 +27,7 @@ export const fetchSinglePostsHelper = ({ post_id }) =>
 
 export const addPostsHelper = (
   { user_id },
-  {
-    title, description, condition, location, category, demand, status,
-  },
+  { title, description, condition, location, category, demand, status }
 ) => `
    INSERT INTO posts (title, description, condition, location, category, demand, user_id, status, main_photo)
    VALUES ('${title}', '${description}', '${condition}', '${location}', ${category}, '${demand}', ${user_id}, '${status}', '')
@@ -40,8 +42,15 @@ export const deletePostsHelper = ({ user_id, post_id }) => `
 export const updatePostsHelper = (
   { user_id, post_id },
   {
-    title, description, condition, location, demand, status, main_photo, tradingWith,
-  },
+    title,
+    description,
+    condition,
+    location,
+    demand,
+    status,
+    main_photo,
+    tradingWith
+  }
 ) => `
    UPDATE posts 
    SET  title='${title}', 

@@ -10,6 +10,8 @@ import MenuItem from 'material-ui/MenuItem';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geolocation from '../Map/geolocation.jsx';
 import { getDistance } from 'geolib';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
 
 const { REST_SERVER_URL } = process.env;
 const geolib = require('geolib');
@@ -18,13 +20,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
@@ -35,32 +37,28 @@ class HomePostList extends Component {
 
   async componentWillMount() {
     try {
-      const { data } = await axios.get('http://localhost:3396/api/posts');
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       data.sort((a, b) => b.id - a.id);
-      console.log('data after filter!!', data);
       // const modifiedData = await this.getDistance(data);
       this.props.addCurrentList(data);
       const testData = this.props.current_list;
-      // console.log('reached here 1');
       this.runGetDistance(testData);
     } catch (err) {
       console.log('Error on componentWillMount - homePostList', err);
     }
   }
-  runGetDistance = (data) => {
+  runGetDistance = data => {
     // const data = this.props.current_list;
     let counter = 0;
     for (let i = 0; i < data.length && counter < 10; i++) {
       if (!data[i].distance) {
-        // console.log('reached here 2', data[i]);
         this.getDistance(data[i]);
-        // console.log('reached here 2.5');
         counter++;
       }
     }
     setTimeout(() => this.runGetDistance(data), 30000);
   };
-  getDistance = async (data) => {
+  getDistance = async data => {
     // console.log('reached data', data);
     // for (let i = 0; i < data.length; i++) {
     // console.log('reached here 4');
@@ -96,7 +94,7 @@ class HomePostList extends Component {
     // }
     return data;
   };
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -146,30 +144,47 @@ class HomePostList extends Component {
         <div className="containerr">
           <div className="columnss">
             {this.props.current_list &&
-              this.props.current_list.filter(post => post.status !== 'SWAPPED').map(post => (
-                <div className="card" key={post.id} onClick={() => this.switchToSinglePost(post)}>
-                  <div className="card-image centered">
-                    <img src={post.main_photo} className="img-responsive" />
-                    <div className="overlay">
-                      <div className="overlaytext">
-                        Description <br /> {post.description}
+              this.props.current_list
+                .filter(post => post.status !== 'SWAPPED')
+                .map(post => (
+                  <div
+                    className="card"
+                    key={post.id}
+                    onClick={() => this.switchToSinglePost(post)}
+                  >
+                    <div className="card-image centered">
+                      <img src={post.main_photo} className="img-responsive" />
+                      <div className="overlay">
+                        <div className="overlaytext">
+                          <strong>Description: </strong>
+                          <br />
+                          {post.description}
+                          <Chip
+                            style={{
+                              margin: 'auto',
+                              width: 'auto',
+                              bottom: '0',
+                              position: 'absolute'
+                            }}
+                          >
+                            <Avatar src={post.photo_url} />
+                            {post.username}
+                          </Chip>
+                        </div>
                       </div>
-                      <div />
-                      <figure class="avatar avatar-lg float-left">
-                        <img src={post.photo_url} alt="..." />
-                      </figure>
+                    </div>
+                    <div className="bottomhalf">
+                      <div className="card-header centered">
+                        <div className="card-title h5 centered">
+                          {post.title}
+                        </div>
+                        <div className="card-subtitle centered">
+                          {post.distance ? post.distance : null} miles away
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="bottomhalf">
-                    <div className="card-header centered">
-                      <div className="card-title h5 centered">{post.title}</div>
-                      <div className="card-subtitle centered">
-                        {post.distance ? post.distance : null} miles away
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
             <Geolocation />
           </div>
         </div>
@@ -180,7 +195,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
@@ -188,10 +203,19 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePostList);
+
+{
+  /* <div>
+<figure className="avatar avatar-lg float-left">
+  <img src={post.photo_url} />
+</figure>
+<div style={{ color: 'white' }}>{post.username}</div>
+</div> */
+}
