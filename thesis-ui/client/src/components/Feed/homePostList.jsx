@@ -162,9 +162,13 @@ class HomePostList extends Component {
                           <Chip
                             style={{
                               margin: 'auto',
-                              width: 'auto',
+                              width: '100%',
                               bottom: '0',
                               position: 'absolute'
+                            }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              this.switchToSinglePost(post);
                             }}
                           >
                             <Avatar src={post.photo_url} />
