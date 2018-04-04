@@ -4,10 +4,6 @@ export const fetchAllPostsHelper = () => `
   INNER JOIN categorys on (posts.category=categorys.id)
   `;
 
-// SELECT posts.id, posts.title, posts.description, posts.condition, posts.location, posts.demand, posts.user_id, posts.status, posts.main_photo, posts.created_at, users.username, categorys.type FROM posts
-// INNER JOIN users on (posts.user_id=users.id)
-// INNER JOIN categorys on (posts.category=categorys.id)
-
 export const fetchUserPostsHelper = ({ user_id }) => `
   SELECT * 
   FROM categorys 

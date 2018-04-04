@@ -30,6 +30,10 @@ class CategoryPost extends Component {
     };
   }
 
+  componentWillMount() {
+    console.log('this is props', this.props);
+  }
+
   // const url = window.location.href;
   // const postId = path.basename(url);
 
