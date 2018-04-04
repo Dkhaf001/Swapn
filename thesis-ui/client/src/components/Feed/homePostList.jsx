@@ -37,7 +37,7 @@ class HomePostList extends Component {
 
   async componentWillMount() {
     try {
-      const { data } = await axios.get('http://localhost:3396/api/posts');
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       data.sort((a, b) => b.id - a.id);
       // const modifiedData = await this.getDistance(data);
       this.props.addCurrentList(data);
