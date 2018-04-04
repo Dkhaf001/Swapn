@@ -17,8 +17,8 @@ import fs from 'fs';
 const app = App.express;
 // ---------------------AWS
 // const options = {
-//   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.pem')),
-//   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.crt')),
+//   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.key'),'utf8'),
+//   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.crt'),'utf8'),
 // };
 // const server = http.createServer(option,app);
 //-----------------------------
