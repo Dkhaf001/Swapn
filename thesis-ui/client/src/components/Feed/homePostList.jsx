@@ -159,18 +159,18 @@ class HomePostList extends Component {
                           <strong>Description: </strong>
                           <br />
                           {post.description}
+                          <Chip
+                            style={{
+                              margin: 'auto',
+                              width: 'auto',
+                              bottom: '0',
+                              position: 'absolute'
+                            }}
+                          >
+                            <Avatar src={post.photo_url} />
+                            {post.username}
+                          </Chip>
                         </div>
-                        <Chip
-                          style={{
-                            margin: 'auto',
-                            width: 'auto',
-                            bottom: '0',
-                            position: 'absolute'
-                          }}
-                        >
-                          <Avatar src={post.photo_url} />
-                          {post.username}
-                        </Chip>
                       </div>
                     </div>
                     <div className="bottomhalf">
