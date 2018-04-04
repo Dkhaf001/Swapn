@@ -27,26 +27,26 @@ const categories = [
   'Musical Instruments',
   'Pet Supplies',
   'Sports & Outdoors',
-  'Tickets',
+  'Tickets'
 ];
 
 const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 class Categories extends Component {
   constructor() {
     super();
     this.state = {
-      open: false,
+      open: false
     };
   }
 
@@ -55,7 +55,9 @@ class Categories extends Component {
   handleClose = () => this.setState({ open: false });
 
   handleClick = async (index, cat) => {
-    const { data } = await axios.get(`${REST_SERVER_URL}/api/categories/${index}`);
+    const { data } = await axios.get(
+      `${REST_SERVER_URL}/api/categories/${index}`
+    );
     console.log('clicked! this is the data: ', data.rows);
     this.props.addCategoryList(data.rows);
     this.props.addCategoryName(cat);
@@ -67,7 +69,7 @@ class Categories extends Component {
         <div style={{ textAlign: 'center' }}>
           <FlatButton label="Categories" onClick={this.handleToggle} />
           <Drawer
-            docked={true}
+            docked={false}
             width={250}
             open={this.state.open}
             onRequestChange={open => this.setState({ open })}
@@ -93,7 +95,7 @@ class Categories extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_category: state.current_category,
+    current_category: state.current_category
   };
 }
 
@@ -101,9 +103,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCategoryList,
-      addCategoryName,
+      addCategoryName
     },
-    dispatch,
+    dispatch
   );
 }
 

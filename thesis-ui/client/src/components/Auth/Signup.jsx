@@ -10,12 +10,15 @@ class Signup extends Component {
     this.state = {
       username: '',
       password: '',
-      email: '',
+      email: ''
     };
   }
   async handleSubmit() {
     try {
-      const response = await axios.post(`${REST_SERVER_URL}/api/auth/signup`, this.state);
+      const response = await axios.post(
+        `${REST_SERVER_URL}/api/auth/signup`,
+        this.state
+      );
       this.props.history.push('/login');
     } catch (err) {
       console.log('err signup user', err);
@@ -23,37 +26,52 @@ class Signup extends Component {
   }
   render() {
     return (
-      <div>
-        <TextField
-          type="email"
-          hintText="Enter Email"
-          floatingLabelText="Email"
+      <div className="form-group">
+        <label className="form-label text-center" htmlFor="signup-email">
+          <strong>Email</strong>
+        </label>
+        <input
+          className="form-input centered"
+          type="text"
+          id="signup-name"
           name="email"
+          placeholder="Enter Email"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '30%' }}
         />
-        <br />
-        <TextField
-          hintText="Enter Username"
-          floatingLabelText="Username"
+        <label className="form-label text-center" htmlFor="signup-name">
+          <strong>Username</strong>
+        </label>
+        <input
+          className="form-input centered"
+          type="text"
+          id="signup-name"
           name="username"
+          placeholder="Enter Username"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '30%' }}
         />
-        <br />
-        <TextField
-          hintText="Enter Password"
-          floatingLabelText="Password"
+        <label className="form-label text-center" htmlFor="signup-password">
+          <strong>Password</strong>
+        </label>
+        <input
+          className="form-input centered"
           type="password"
+          id="signup-password"
           name="password"
+          placeholder="Enter Password"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '30%' }}
         />
-        <br />
-        <RaisedButton
-          label="Sign Up"
-          primary={true}
-          style={{ margin: 12 }}
-          onClick={() => this.handleSubmit()}
-        />
-        <br />
+        <div>
+          <br />
+          <button
+            className="btn btn-success centered"
+            onClick={() => this.handleSubmit()}
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
     );
   }

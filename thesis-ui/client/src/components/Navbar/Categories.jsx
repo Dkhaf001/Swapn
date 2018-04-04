@@ -23,13 +23,13 @@ const options = [
   'Musical Instruments',
   'Pet Supplies',
   'Sports & Outdoors',
-  'Tickets',
+  'Tickets'
 ];
 class Categories extends Component {
   constructor() {
     super();
     this.state = {
-      open: false,
+      open: false
     };
   }
 
@@ -39,8 +39,10 @@ class Categories extends Component {
 
   handleClose = () => this.setState({ open: false });
 
-  handleClick = async (index) => {
-    const { data } = await axios.get(`${REST_SERVER_URL}/api/categories/${index}`);
+  handleClick = async index => {
+    const { data } = await axios.get(
+      `${REST_SERVER_URL}/api/categories/${index}`
+    );
     console.log('clicked! this is the data: ', data.rows);
     this.props.addCurrentList(data.rows);
   };
@@ -48,7 +50,13 @@ class Categories extends Component {
   render() {
     return (
       <div>
-        <FlatButton label="Categories" onClick={this.handleToggle} />
+        <div
+          className="btn btn-link"
+          onClick={this.handleToggle}
+          style={{ color: 'white' }}
+        >
+          Categories
+        </div>
         <Drawer
           docked={true}
           width={250}
@@ -74,16 +82,16 @@ class Categories extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
+      addCurrentList
     },
-    dispatch,
+    dispatch
   );
 }
 

@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import axios from 'axios';
 // import { GridList, GridTile } from 'material-ui/GridList';
 // import Subheader from 'material-ui/Subheader';
-// import DropDownMenu from 'material-ui/DropDownMenu';
-// import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geolocation from '../Map/geolocation.jsx';
 import { getDistance } from 'geolib';
@@ -18,13 +18,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
@@ -37,6 +37,7 @@ class HomePostList extends Component {
     try {
       const { data } = await axios.get('http://localhost:3396/api/posts');
       data.sort((a, b) => b.id - a.id);
+      console.log('data after filter!!', data);
       // const modifiedData = await this.getDistance(data);
       this.props.addCurrentList(data);
       const testData = this.props.current_list;
@@ -46,7 +47,7 @@ class HomePostList extends Component {
       console.log('Error on componentWillMount - homePostList', err);
     }
   }
-  runGetDistance = (data) => {
+  runGetDistance = data => {
     // const data = this.props.current_list;
     let counter = 0;
     for (let i = 0; i < data.length && counter < 10; i++) {
@@ -59,7 +60,7 @@ class HomePostList extends Component {
     }
     setTimeout(() => this.runGetDistance(data), 30000);
   };
-  getDistance = async (data) => {
+  getDistance = async data => {
     // console.log('reached data', data);
     // for (let i = 0; i < data.length; i++) {
     // console.log('reached here 4');
@@ -95,7 +96,7 @@ class HomePostList extends Component {
     // }
     return data;
   };
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -128,8 +129,8 @@ class HomePostList extends Component {
 
   render() {
     return (
-      <div>
-        {/* <div>
+      <div className="homepost">
+        <div>
           {' '}
           <DropDownMenu
             value={this.state.value}
@@ -140,28 +141,51 @@ class HomePostList extends Component {
             <MenuItem value={1} primaryText="Sort by Newest" />
             <MenuItem value={2} primaryText="Sort by Distance" />
           </DropDownMenu>
-        </div> */}
+        </div>
 
-        <div className="card" style={{ width: 200 }}>
-          {this.props.current_list &&
-            this.props.current_list.map(post => (
-              <div key={post.id} onClick={() => this.switchToSinglePost(post)}>
-                <div className="card-image">
-                  <img src={post.main_photo} className="img-responsive" />
-                </div>
-                <div className="card-header">
-                  <div className="card-title h5">{post.title}</div>
-                  <div className="card-subtitle text-gray">
-                    {post.distance ? post.distance : null} miles away
+        <div className="container">
+          <div className="columns">
+            {this.props.current_list &&
+              this.props.current_list
+                .filter(post => post.status !== 'SWAPPED')
+                .map(post => (
+                  <div
+                    className="card column col-3 m-2"
+                    key={post.id}
+                    onClick={() => this.switchToSinglePost(post)}
+                  >
+                    <div className="card-image centered">
+                      <img src={post.main_photo} className="img-responsive" />
+                    </div>
+                    <div className="bottomhalf">
+                      <div className="card-header centered">
+                        <div className="card-title h5 centered">
+                          {post.title}
+                        </div>
+                        <div className="card-subtitle centered">
+                          {post.distance ? post.distance : null} miles away
+                        </div>
+                      </div>
+                      <div className="card-footer centered">
+                        <div className="popover popover-top">
+                          <button className="btn btn-primary">Details</button>
+                          <div className="popover-container">
+                            <div className="card">
+                              <div className="card-header">
+                                Poster: {post.username}
+                              </div>
+                              <div className="card-body">
+                                Description: {post.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="card-body">{post.description}</div>
-                <div className="card-footer">
-                  <button className="btn btn-primary">Do</button>
-                </div>
-              </div>
-            ))}
-          <Geolocation />
+                ))}
+            <Geolocation />
+          </div>
         </div>
       </div>
     );
@@ -170,7 +194,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
@@ -178,9 +202,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 

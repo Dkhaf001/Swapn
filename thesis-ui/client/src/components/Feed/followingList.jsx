@@ -14,15 +14,17 @@ class Following extends Component {
   constructor() {
     super();
     this.state = {
-      followings: '',
+      followings: ''
     };
   }
   async componentWillMount() {
     try {
       const user_id = localStorage.id;
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/followings/${user_id}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/followings/${user_id}`
+      );
       this.setState({
-        followings: data,
+        followings: data
       });
       this.props.addFollowingList(data);
     } catch (err) {
@@ -33,10 +35,14 @@ class Following extends Component {
   async handleUnfollowButtonClick(followingId) {
     try {
       const user_id = localStorage.id;
-      await axios.delete(`${REST_SERVER_URL}/api/followings/${user_id}/${followingId}`);
-      const records = this.state.followings.filter(data => data.id !== followingId);
+      await axios.delete(
+        `${REST_SERVER_URL}/api/followings/${user_id}/${followingId}`
+      );
+      const records = this.state.followings.filter(
+        data => data.id !== followingId
+      );
       this.setState({
-        followings: records,
+        followings: records
       });
       this.props.addFollowingList(this.state.followings);
     } catch (err) {
@@ -44,7 +50,7 @@ class Following extends Component {
     }
   }
 
-  switchToProfile = async (userId) => {
+  switchToProfile = async userId => {
     try {
       this.props.history.push(`/othersprofile/${userId}`);
     } catch (err) {
@@ -54,29 +60,30 @@ class Following extends Component {
 
   render() {
     return (
-      <div>
+      <div className="centered" style={{ width: '25%' }}>
         {this.props.following_list &&
           this.props.following_list.map((following, i) => (
-            <List>
-              <ListItem
-                key={i}
-                disabled={true}
-                leftAvatar={
-                  <Avatar
-                    src={following.photo_url}
-                    onClick={() => this.switchToProfile(following.id)}
-                  />
-                }
-              >
-                <span onClick={() => this.switchToProfile(following.id)}>{following.username}</span>
-                <RaisedButton
-                  label="Unfollow"
-                  secondary={true}
-                  style={{ margin: 10 }}
-                  onClick={() => this.handleUnfollowButtonClick(following.id)}
+            <div className="tile" style={{ verticalAlign: 'middle' }}>
+              <div className="tile-icon">
+                <Avatar
+                  src={following.photo_url}
+                  onClick={() => this.switchToProfile(following.id)}
                 />
-              </ListItem>
-            </List>
+              </div>
+              <div className="tile-content d-inline">
+                <strong onClick={() => this.switchToProfile(following.id)}>
+                  {following.username}
+                </strong>
+              </div>
+              <div className="tile-action">
+                <button
+                  className="btn btn-error"
+                  onClick={() => this.handleUnfollowButtonClick(following.id)}
+                >
+                  <i className="icon icon-delete" />
+                </button>
+              </div>
+            </div>
           ))}
       </div>
     );
@@ -85,16 +92,16 @@ class Following extends Component {
 
 function mapStateToProps(state) {
   return {
-    following_list: state.following_list,
+    following_list: state.following_list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addFollowingList,
+      addFollowingList
     },
-    dispatch,
+    dispatch
   );
 }
 

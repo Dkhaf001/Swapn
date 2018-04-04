@@ -1,87 +1,49 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url("http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg");
+  /* background-color: rgb(208, 204, 208); */
+  /* background-image: url('http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   font-family: sans-serif;
 }
-
+.homepost {
+  padding-left: 15%;
+}
+.navbar {
+  background-color: rgb(5, 102, 220);
+}
+.card {
+  min-width: 22%;
+  max-width: 22%;
+  min-height: 20%;
+  max-height: 20%;
+  flex-wrap: wrap;
+  border: solid black;
+}
+/* .img-responsive {
+  min-width: 90%;
+  min-height: 190px;
+} */
+.card-image {
+  min-height: 200px;
+  max-height: 200px;
+  max-width: 100%;
+}
+/* .card-footer {
+  min-width: 100%;
+} */
+.bottomhalf {
+  min-width: 100%;
+  background-color: rgb(208, 204, 208);
+  text-align: center;
+}
 .view {
   padding-top: 10%;
 }
-.maps {
-  padding-top: 10%;
-  padding-left: 20%;
-}
-.rowbanner {
-  border: solid rgb(11, 22, 241);
-  background-color: #83d8ff transparent;
-  width: 100%;
-  text-align: center;
-  height: 10%;
-  position: fixed;
-  /* opacity: .5 */
-}
 
-.rightbanner {
-  /* padding-top: 35px; */
-  float:right;
-  width:200px;
-}
-
-.linkpic {
-  background-image: url("http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg");
-  float:left;
-  width:100px;
-}
-.leftbanner {
-  /* padding-top: 35px; */
-  float:left;
-  width:100px;
-}
-
-.middlebanner{
-  display: inline-block;
-  margin:0 auto;
-  padding-left: 30px;
-  /* padding-top: 30px; */
-  width:500px;
-}
-
-.row {
-  padding: 2%;
-}
-
-.linkbutton {
-  height: 35px;
-  width: 110px;
-  /* margin-left: 10px !important; */
-  /* background-color: blue !important; */
-  color: rgb(0, 0, 0) !important;
-  /* padding: 14px 25px !important; */
-  text-align: center !important;
-  text-decoration: none !important;
-  display: inline-block !important;
-}
-
-.svg_icons{
-  transform: scale(1.8);
-}
-
-.class-tracker-col {
-  height: 80vh;
-  border: black solid 2px;
-}
-
-.selected-class-col {
-  height: 40vh;
-  border: black solid 2px;
-}
-
-.classlist {
-  /* padding-left: 2%; */
-  padding-top: 2%;
+.svg_icons {
+  transform: scale(1.4);
 }

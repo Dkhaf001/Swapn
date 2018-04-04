@@ -8,6 +8,7 @@ import photosRouter from '../components/photos/photosRouter';
 import postsRouter from '../components/posts/postsRouter';
 import usersRouter from '../components/users/usersRouter';
 import watchersRouter from '../components/watchers/watchersRouter';
+import { sendEmail } from '../components/email/emailController';
 
 const router = express.Router();
 
@@ -19,5 +20,5 @@ router.use('/photos', photosRouter);
 router.use('/posts', postsRouter);
 router.use('/users', usersRouter);
 router.use('/watchers', watchersRouter);
-
+router.use('/email', sendEmail);
 export default router;

@@ -15,6 +15,7 @@ const envBuild = {
     'AWS_PORT=',
     'SALT_ROUNDS=10',
     'TOKEN_SECRET=barterThesisApi',
+    'EMAIL_KEY=',
   ],
   'socket-server': [
     'NODE_ENV=DEVELOPMENT',

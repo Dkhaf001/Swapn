@@ -5,17 +5,17 @@ export const generateToken = (id, username) => {
 
   token.accessToken = sign(
     {
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      exp: Math.floor(Date.now() / 1000) + 60 * 120,
       username,
-      id,
+      id
     },
-    process.env.TOKEN_SECRET,
+    process.env.TOKEN_SECRET
   );
 
   return token;
 };
 
-export const verifyUserWithJWT = (token) => {
+export const verifyUserWithJWT = token => {
   try {
     verify(token, process.env.TOKEN_SECRET);
     console.log('token verified');

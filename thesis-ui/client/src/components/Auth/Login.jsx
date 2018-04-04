@@ -13,12 +13,15 @@ class Login extends Component {
     super();
     this.state = {
       username: '',
-      password: '',
+      password: ''
     };
   }
   async handleSubmit() {
     try {
-      const response = await axios.post(`${REST_SERVER_URL}/api/auth/login`, this.state);
+      const response = await axios.post(
+        `${REST_SERVER_URL}/api/auth/login`,
+        this.state
+      );
       // window.localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('id', response.data.id);
@@ -34,29 +37,40 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <TextField
-          hintText="Enter Username"
-          floatingLabelText="Username"
+      <div className="form-group">
+        <label className="form-label text-center" htmlFor="login-name">
+          <strong>Username</strong>
+        </label>
+        <input
+          className="form-input centered"
+          type="text"
+          id="login-name"
           name="username"
+          placeholder="Enter Username"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '30%' }}
         />
-        <br />
-        <TextField
-          hintText="Enter Password"
-          floatingLabelText="Password"
+        <label className="form-label text-center" htmlFor="login-password">
+          <strong>Password</strong>
+        </label>
+        <input
+          className="form-input centered"
           type="password"
+          id="login-password"
           name="password"
+          placeholder="Enter Password"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          style={{ width: '30%' }}
         />
-        <br />
-        <RaisedButton
-          label="Log In"
-          primary={true}
-          style={{ margin: 12 }}
-          onClick={() => this.handleSubmit()}
-        />
-        <br />
+        <div>
+          <br />
+          <button
+            className="btn btn-success centered"
+            onClick={() => this.handleSubmit()}
+          >
+            Sign In
+          </button>
+        </div>
       </div>
     );
   }
@@ -65,9 +79,9 @@ class Login extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 function mapStateToProps(state) {
