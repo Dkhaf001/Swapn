@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
-import Categories from './Categories.jsx';
+import Categories from '../Category/Categories.jsx';
 
 class Search extends Component {
   constructor(props) {

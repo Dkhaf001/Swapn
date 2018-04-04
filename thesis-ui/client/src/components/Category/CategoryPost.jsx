@@ -8,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
 
 const styles = {
   root: {
@@ -30,6 +32,10 @@ class CategoryPost extends Component {
     };
   }
 
+  componentWillMount() {
+    console.log('this is props', this.props);
+  }
+
   // const url = window.location.href;
   // const postId = path.basename(url);
 
@@ -46,23 +52,56 @@ class CategoryPost extends Component {
       <div>
         <h1 style={{ textAlign: 'center' }}>{this.props.category_name}</h1>
         <div style={styles.root}>
-          <GridList cellHeight={200} style={styles.gridList}>
+          <GridList cellHeight={400} style={styles.gridList}>
             {this.props.current_category &&
-              this.props.current_category.map(post => (
-                <GridTile
-                  key={post.id}
-                  title={post.title}
-                  subtitle={
-                    <span>
-                      <b>{post.id}</b>
-                      <b>{post.username}</b>
-                    </span>
-                  }
-                  onClick={() => this.switchToSinglePost(post)}
-                >
-                  <img src={post.main_photo} />
-                </GridTile>
-              ))}
+              this.props.current_category
+                .filter(post => post.status !== 'SWAPPED')
+                .map(post => (
+                  <div
+                    className="card"
+                    key={post.id}
+                    onClick={() => this.switchToSinglePost(post)}
+                  >
+                    <div className="card-image centered">
+                      <img src={post.main_photo} className="img-responsive" />
+                      <div className="overlay">
+                        <div className="overlaytext">
+                          <strong>Description: </strong>
+                          <br />
+                          {post.description}
+                          <Chip
+                            style={{
+                              margin: 'auto',
+                              width: '100%',
+                              bottom: '0',
+                              position: 'absolute',
+                              backgroundColor: 'rgb(5, 102, 220)'
+                            }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              this.switchToSinglePost(post);
+                            }}
+                          >
+                            <Avatar src={post.photo_url} />
+                            <div style={{ color: 'white', fontWeight: 'bold' }}>
+                              {post.username}
+                            </div>
+                          </Chip>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bottomhalf">
+                      <div className="card-header centered">
+                        <div className="card-title h5 centered">
+                          {post.title}
+                        </div>
+                        <div className="card-subtitle centered">
+                          {post.distance ? post.distance : null} miles away
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
           </GridList>
         </div>
       </div>

@@ -20,13 +20,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class HomePostList extends Component {
@@ -47,7 +47,7 @@ class HomePostList extends Component {
       console.log('Error on componentWillMount - homePostList', err);
     }
   }
-  runGetDistance = (data) => {
+  runGetDistance = data => {
     // const data = this.props.current_list;
     let counter = 0;
     for (let i = 0; i < data.length && counter < 10; i++) {
@@ -58,7 +58,7 @@ class HomePostList extends Component {
     }
     setTimeout(() => this.runGetDistance(data), 30000);
   };
-  getDistance = async (data) => {
+  getDistance = async data => {
     // console.log('reached data', data);
     // for (let i = 0; i < data.length; i++) {
     // console.log('reached here 4');
@@ -94,7 +94,7 @@ class HomePostList extends Component {
     // }
     return data;
   };
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -144,43 +144,54 @@ class HomePostList extends Component {
         <div className="containerr">
           <div className="columnss">
             {this.props.current_list &&
-              this.props.current_list.filter(post => post.status !== 'SWAPPED').map(post => (
-                <div className="card" key={post.id} onClick={() => this.switchToSinglePost(post)}>
-                  <div className="card-image centered">
-                    <img src={post.main_photo} className="img-responsive" />
-                    <div className="overlay">
-                      <div className="overlaytext">
-                        <strong>Description: </strong>
-                        <br />
-                        {post.description}
-                        <Chip
-                          style={{
-                            margin: 'auto',
-                            width: '100%',
-                            bottom: '0',
-                            position: 'absolute',
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            this.switchToSinglePost(post);
-                          }}
-                        >
-                          <Avatar src={post.photo_url} />
-                          {post.username}
-                        </Chip>
+              this.props.current_list
+                .filter(post => post.status !== 'SWAPPED')
+                .map(post => (
+                  <div
+                    className="card"
+                    key={post.id}
+                    onClick={() => this.switchToSinglePost(post)}
+                  >
+                    <div className="card-image centered">
+                      <img src={post.main_photo} className="img-responsive" />
+                      <div className="overlay">
+                        <div className="overlaytext">
+                          <strong>Description: </strong>
+                          <br />
+                          {post.description}
+                          <Chip
+                            style={{
+                              margin: 'auto',
+                              width: '100%',
+                              bottom: '0',
+                              position: 'absolute',
+                              backgroundColor: 'rgb(5, 102, 220)'
+                            }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              this.switchToSinglePost(post);
+                            }}
+                          >
+                            <Avatar src={post.photo_url} />
+                            <div style={{ color: 'white', fontWeight: 'bold' }}>
+                              {post.username}
+                            </div>
+                          </Chip>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bottomhalf">
+                      <div className="card-header centered">
+                        <div className="card-title h5 centered">
+                          {post.title}
+                        </div>
+                        <div className="card-subtitle centered">
+                          {post.distance ? post.distance : null} miles away
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="bottomhalf">
-                    <div className="card-header centered">
-                      <div className="card-title h5 centered">{post.title}</div>
-                      <div className="card-subtitle centered">
-                        {post.distance ? post.distance : null} miles away
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
             <Geolocation />
           </div>
         </div>
@@ -191,7 +202,7 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
@@ -199,9 +210,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 
