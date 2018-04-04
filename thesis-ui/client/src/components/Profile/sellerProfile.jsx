@@ -14,9 +14,9 @@ class SellerProfile extends Component {
     return (
       <div>
         <div>
-          <Bio />
+          <ProfileNavbar />
           <div>
-            <ProfileNavbar />
+            <Bio />
             <Switch>
               {profileRoutes.map((prop, key) => (
                 <Route path={prop.path} component={prop.component} key={key} />
