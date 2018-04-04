@@ -112,6 +112,7 @@ class BioPhotoUpload extends React.Component {
       <img
         style={{ width: '128px', height: '128px' }}
         src={this.state.profilePic}
+        className="circle"
       />
       <form>
         <label>
@@ -121,12 +122,16 @@ class BioPhotoUpload extends React.Component {
         </label>
       </form>
       {this.state.file ? (
-        <button onClick={this.handleUpload}>Upload</button>
+        <button className="btn btn-primary" onClick={this.handleUpload}>
+          Upload
+        </button>
       ) : null}
       {/* <button onClick={this.fetchAlbum}>Fetch</button> */}
       {/* <button onClick={this.removePhoto}>DeletePhoto</button>
       <button onClick={this.handleSubmit}>Submit</button> */}
-      <button onClick={this.cancelPost}>Cancel</button>
+      <button className="btn btn-error" onClick={this.cancelPost}>
+        Cancel
+      </button>
     </div>
   );
   renderNormal = () => (
