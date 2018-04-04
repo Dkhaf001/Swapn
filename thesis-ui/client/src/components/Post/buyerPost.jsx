@@ -336,7 +336,7 @@ class BuyerPost extends Component {
               onClick={() => this.makeOffer()}
             />
           )}
-        <div className="chatBox" style={{ backgroundColor: 'pink', width: '200px' }}>
+        <div>
           {this.state.bartering &&
             this.props.current_post.status !== 'SWAPPED' && (
               <Chattest
