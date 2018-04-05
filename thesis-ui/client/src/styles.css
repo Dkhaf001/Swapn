@@ -1,12 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  /* background-color: rgb(208, 204, 208); */
-  /* background-image: url('http://images.all-free-download.com/images/graphiclarge/aqua_gradient_background_6816244.jpg');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; */
   font-family: sans-serif;
 }
 .homepost {
@@ -31,6 +25,18 @@ body {
 .containerr {
   column-count: 4;
   column-gap: 1em;
+}
+.container {
+  float: right;
+  padding-top: 5%;
+  /* padding-left: 20%; */
+  width: 80%;
+}
+.bio {
+  padding-top: 5%;
+  float: left;
+  width: 12%;
+  padding-left: 5%;
 }
 
 .card-image {
