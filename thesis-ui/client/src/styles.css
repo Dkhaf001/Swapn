@@ -182,3 +182,17 @@ body {
   top: 72%;
   left: 32.5%;
 }
+
+.swapped {
+  position: 'relative';
+}
+
+.swapped::before {
+  content: url('http://txt-dynamic.cdn.1001fonts.net/txt/dHRmLjEwNi5mMTA5MGUuVTFkQlVDZEUuMAAA/blue-sky-blue-grass.regular.png');
+  transform: rotate(20deg);
+  position: absolute;
+  z-index: 2;
+  top: 20%;
+  left: 4%;
+  background-color: rgba(0, 0, 0, 0.9);
+}

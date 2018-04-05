@@ -48,10 +48,6 @@ class BarteringsPostList extends Component {
 
   removeFromOffers = async (username, postId) => {
     try {
-      console.log(
-        'pls!!!!',
-        `${REST_SERVER_URL}/api/offers/deleteOffer/${username}/${postId}`
-      );
       await axios.delete(
         `${REST_SERVER_URL}/api/offers/deleteOffer/${username}/${postId}`
       );
@@ -84,6 +80,7 @@ class BarteringsPostList extends Component {
                 key={post.id}
                 title={post.title}
                 style={{ width: 200, height: 300, margin: 10 }}
+                className={post.status === 'SWAPPED' ? 'swapped' : ''}
                 subtitle={
                   <span>
                     <b>{post.username}</b>

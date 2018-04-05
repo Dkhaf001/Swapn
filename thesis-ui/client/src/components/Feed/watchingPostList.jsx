@@ -71,6 +71,7 @@ class WatchingPostList extends Component {
                 key={post.id}
                 title={post.title}
                 style={{ width: 200, height: 300, margin: 10 }}
+                className={post.status === 'SWAPPED' ? 'swapped' : ''}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
