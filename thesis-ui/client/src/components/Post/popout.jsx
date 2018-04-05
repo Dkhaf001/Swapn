@@ -11,7 +11,7 @@ class Popout extends React.Component {
     super(props);
     this.state = {
       offer: '',
-      open: false,
+      open: false
     };
   }
 
@@ -26,14 +26,13 @@ class Popout extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
     if (this.state.offer) {
-      console.log('in the popout', this.state.offer);
       const offer = this.state.offer;
       this.props.makeOffer(offer);
     }
   };
   handleInput(e) {
     this.setState({
-      offer: e.target.value,
+      offer: e.target.value
     });
   }
   render() {
@@ -44,13 +43,18 @@ class Popout extends React.Component {
         primary={true}
         disabled={this.state.offer.length <= 0}
         onClick={this.handleClose}
-      />,
+      />
     ];
 
     return (
       <div>
         <RaisedButton label="Make Offer" onClick={this.handleOpen} />
-        <Dialog title="Insert Offer" actions={actions} modal={true} open={this.state.open}>
+        <Dialog
+          title="Insert Offer"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
           <input onChange={e => this.handleInput(e)} />
         </Dialog>
       </div>
@@ -59,7 +63,7 @@ class Popout extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 

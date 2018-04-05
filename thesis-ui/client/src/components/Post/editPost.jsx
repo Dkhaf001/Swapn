@@ -17,7 +17,7 @@ class EditPost extends Component {
       location: '',
       demand: '',
       status: 'Accepting Offers',
-      main_photo: '',
+      main_photo: ''
     };
   }
 
@@ -28,18 +28,17 @@ class EditPost extends Component {
       condition: this.props.current_post.condition,
       location: this.props.current_post.location,
       demand: this.props.current_post.demand,
-      main_photo: this.props.current_post.main_photo,
+      main_photo: this.props.current_post.main_photo
     });
   }
 
   async submitEditPost() {
     try {
       const userId = this.props.current_post.user_id;
-      console.log(this.props.current_post);
       const postId = this.props.current_post.id;
       const data = await axios.put(
         `${REST_SERVER_URL}/api/posts/update/${userId}/${postId}`,
-        this.state,
+        this.state
       );
       console.log('successfully edited post!', this.state);
       this.props.history.push('/home');
@@ -87,11 +86,23 @@ class EditPost extends Component {
           autoWidth={true}
         >
           <MenuItem value="New (never used)" primaryText="New (never used)" />
-          <MenuItem value="Reconditioned/Certified" primaryText="Reconditioned/Certified" />
-          <MenuItem value="Open Box (never used)" primaryText="Open Box (never used)" />
-          <MenuItem value="Used (normal wear)" primaryText="Used (normal wear)" />
+          <MenuItem
+            value="Reconditioned/Certified"
+            primaryText="Reconditioned/Certified"
+          />
+          <MenuItem
+            value="Open Box (never used)"
+            primaryText="Open Box (never used)"
+          />
+          <MenuItem
+            value="Used (normal wear)"
+            primaryText="Used (normal wear)"
+          />
           <MenuItem value="For Parts" primaryText="For Parts" />
-          <MenuItem value="Other (see description)" primaryText="Other (see description)" />
+          <MenuItem
+            value="Other (see description)"
+            primaryText="Other (see description)"
+          />
         </DropDownMenu>
         <br />
         <TextField
@@ -136,7 +147,7 @@ class EditPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post,
+    current_post: state.current_post
   };
 }
 

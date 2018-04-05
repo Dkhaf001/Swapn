@@ -24,7 +24,7 @@ class PhotoSlide extends React.Component {
       thumbnailPosition: 'bottom',
       showVideo: {},
       currentIndex: 0,
-      images: this.props.images_list,
+      images: this.props.images_list
       // || [
       //   {
       //     original: 'http://lorempixel.com/1000/600/nature/1/',
@@ -98,7 +98,6 @@ class PhotoSlide extends React.Component {
   }
   //-----------------------------
   removeCurrentPhoto = () => {
-    console.log('currentindex', this.state.currentIndex);
     // remove photo passed down from photo index
     this.props.removePhoto(this.state.currentIndex);
   };
@@ -113,7 +112,7 @@ class PhotoSlide extends React.Component {
       'clicked on image',
       event.target,
       'at index',
-      this._imageGallery.getCurrentIndex(),
+      this._imageGallery.getCurrentIndex()
     );
   }
 
@@ -124,7 +123,6 @@ class PhotoSlide extends React.Component {
   _onSlide(index) {
     this._resetVideo();
     console.debug('slid to index', index);
-    console.log('index', index);
     this.setState({ currentIndex: index });
   }
 
@@ -181,7 +179,7 @@ class PhotoSlide extends React.Component {
   _toggleShowVideo(url) {
     this.state.showVideo[url] = !this.state.showVideo[url];
     this.setState({
-      showVideo: this.state.showVideo,
+      showVideo: this.state.showVideo
     });
 
     if (this.state.showVideo[url]) {
@@ -200,15 +198,27 @@ class PhotoSlide extends React.Component {
       <div className="image-gallery-image">
         {this.state.showVideo[item.embedUrl] ? (
           <div className="video-wrapper">
-            <a className="close-video" onClick={this._toggleShowVideo.bind(this, item.embedUrl)} />
-            <iframe width="560" height="315" src={item.embedUrl} frameBorder="0" allowFullScreen />
+            <a
+              className="close-video"
+              onClick={this._toggleShowVideo.bind(this, item.embedUrl)}
+            />
+            <iframe
+              width="560"
+              height="315"
+              src={item.embedUrl}
+              frameBorder="0"
+              allowFullScreen
+            />
           </div>
         ) : (
           <a onClick={this._toggleShowVideo.bind(this, item.embedUrl)}>
             <div className="play-button" />
             <img src={item.original} />
             {item.description && (
-              <span className="image-gallery-description" style={{ right: '0', left: 'initial' }}>
+              <span
+                className="image-gallery-description"
+                style={{ right: '0', left: 'initial' }}
+              >
                 {item.description}
               </span>
             )}
@@ -224,7 +234,9 @@ class PhotoSlide extends React.Component {
         {this.props.images_list && this.props.images_list.length >= 1 ? (
           <div>
             <button onClick={this.makeMainPhoto}>Make Main Photo</button>
-            <button onClick={this.removeCurrentPhoto}>Delete Current Image</button>
+            <button onClick={this.removeCurrentPhoto}>
+              Delete Current Image
+            </button>
           </div>
         ) : null}
 
@@ -243,9 +255,12 @@ class PhotoSlide extends React.Component {
               infinite={this.state.infinite}
               showBullets={this.state.showBullets}
               showFullscreenButton={
-                this.state.showFullscreenButton && this.state.showGalleryFullscreenButton
+                this.state.showFullscreenButton &&
+                this.state.showGalleryFullscreenButton
               }
-              showPlayButton={this.state.showPlayButton && this.state.showGalleryPlayButton}
+              showPlayButton={
+                this.state.showPlayButton && this.state.showGalleryPlayButton
+              }
               showThumbnails={this.state.showThumbnails}
               showIndex={this.state.showIndex}
               showNav={this.state.showNav}
@@ -266,7 +281,7 @@ class PhotoSlide extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    images_list: state.images,
+    images_list: state.images
   };
 }
 

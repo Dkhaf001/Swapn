@@ -10,18 +10,16 @@ class Edit extends Component {
     super();
     this.state = {
       location: '',
-      main_photo: '',
+      main_photo: ''
     };
   }
   async componentDidMount() {
     const userId = localStorage.id;
     try {
       const data = await axios.get(`${S3_SERVER_URL}/s3/api/${userId}`);
-      // console.log('bio', data);
-
       this.setState({
         location: this.props.active_user.location,
-        main_photo: this.props.active_user.photo_url,
+        main_photo: this.props.active_user.photo_url
       });
     } catch (err) {}
   }
@@ -30,7 +28,7 @@ class Edit extends Component {
     try {
       await axios.put(`${REST_SERVER_URL}/users/location`, {
         user_id: this.props.currentUser.id,
-        location: this.state.location,
+        location: this.state.location
       });
       console.log('Succes Updated User Profile');
     } catch (err) {
@@ -57,7 +55,7 @@ class Edit extends Component {
 
 function mapStateToProps(state) {
   return {
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 

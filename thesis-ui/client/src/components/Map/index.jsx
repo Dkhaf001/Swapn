@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const style = {
   width: '100%',
-  height: '100%',
+  height: '100%'
 };
 export class MapContainer extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export class MapContainer extends Component {
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {},
+      selectedPlace: {}
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
@@ -22,9 +22,8 @@ export class MapContainer extends Component {
     this.mapClicked = this.mapClicked.bind(this);
   }
   changePosition(position) {
-    console.log('got it', position);
     this.setState({
-      positiongeo: position,
+      positiongeo: position
     });
   }
 
@@ -44,7 +43,7 @@ export class MapContainer extends Component {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true,
+      showingInfoWindow: true
     });
   }
 
@@ -58,7 +57,7 @@ export class MapContainer extends Component {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null,
+        activeMarker: null
       });
     }
   }
@@ -66,7 +65,7 @@ export class MapContainer extends Component {
     console.log('mapclicked', clickEvent);
   };
 
-  getProps = (e) => {
+  getProps = e => {
     e.preventDefault();
     console.log('click', this.state.positiongeo);
   };
@@ -91,7 +90,7 @@ export class MapContainer extends Component {
           style={{ width: '60vw', height: '100vh', position: 'relative' }}
           initialCenter={{
             lat: 33.976,
-            lng: -118.39,
+            lng: -118.39
           }}
           zoom={15}
           onClick={this.onMapClicked}
@@ -107,13 +106,14 @@ export class MapContainer extends Component {
             <Marker
               onClick={this.onMarkerClick}
               icon={{
-                url: 'http://www.clker.com/cliparts/B/B/1/E/y/r/marker-pin-google.svg',
-                scaledSize: new google.maps.Size(36, 36),
+                url:
+                  'http://www.clker.com/cliparts/B/B/1/E/y/r/marker-pin-google.svg',
+                scaledSize: new google.maps.Size(36, 36)
               }}
               name={'Your Position'}
               position={{
                 lat: this.state.positiongeo.coords.latitude,
-                lng: this.state.positiongeo.coords.longitude,
+                lng: this.state.positiongeo.coords.longitude
               }}
             />
           ) : null}
@@ -124,7 +124,10 @@ export class MapContainer extends Component {
           />
           <Marker />
           <Marker onClick={this.onMarkerClick} name={'Hack Reactor Nation'} />
-          <InfoWindow marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
+          <InfoWindow
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}
+          >
             <div>
               <small>{this.state.selectedPlace.name}</small>
             </div>
@@ -137,11 +140,11 @@ export class MapContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    positiongeo: state.positiongeo,
+    positiongeo: state.positiongeo
   };
 }
 // export connect(mapStateToProps)(MapContainer)
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBZMS-V-GnSmcKvt_HKD4nRoajBRMm05CE',
+  apiKey: 'AIzaSyBZMS-V-GnSmcKvt_HKD4nRoajBRMm05CE'
 })(MapContainer);
