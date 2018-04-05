@@ -16,13 +16,13 @@ import fs from 'fs';
 
 const app = App.express;
 // ---------------------AWS
-const options = {
-   key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.key'),'utf8'),
-   cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/ssl-bandle.crt'),'utf8'),
- };
- const server = http.createServer(options, app);
+//const options = {
+ // key: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/swapn.key'),'utf8'),
+ // cert: fs.readFileSync(path.resolve(__dirname, '../../../../../../etc/nginx/sites-available/ssl-bandle.crt'),'utf8'),
+// };
+// const server = http.createServer(options, app);
 //-----------------------------
-// const server = http.createServer(app);
+ const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, (err) => {
