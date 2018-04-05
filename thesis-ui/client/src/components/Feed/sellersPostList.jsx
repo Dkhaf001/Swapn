@@ -14,13 +14,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class SellersPostList extends Component {
@@ -28,7 +28,7 @@ class SellersPostList extends Component {
     super(props);
     this.state = {
       lists: [],
-      messages: [],
+      messages: []
     };
   }
   async componentWillMount() {
@@ -43,7 +43,7 @@ class SellersPostList extends Component {
     }
   }
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -77,7 +77,6 @@ class SellersPostList extends Component {
   render() {
     return (
       <div className="container" style={styles.root}>
-        {/* <GridList cellHeight={200} style={styles.gridList}> */}
         <div className="columns">
           {this.props.selling_list &&
             this.props.selling_list.map(post => (
@@ -85,17 +84,19 @@ class SellersPostList extends Component {
                 className="column col-3"
                 key={post.id}
                 title={post.title}
-                style={{ width: 200, height: 300 }}
+                style={{ width: 200, height: 300, margin: 10 }}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
-                    <p>{post.id}</p>
+                    {post.watch_count > 0 ? (
+                      <p>{post.watch_count} users watching</p>
+                    ) : null}
                   </span>
                 }
                 onClick={() => this.switchToSinglePost(post)}
                 actionIcon={
                   <IconButton
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation();
                       this.removePost(localStorage.id, post.id);
                     }}
@@ -107,7 +108,6 @@ class SellersPostList extends Component {
                 <img src={post.main_photo} />
               </GridTile>
             ))}
-          {/* </GridList> */}
         </div>
       </div>
     );
@@ -117,7 +117,7 @@ class SellersPostList extends Component {
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    selling_list: state.selling_list,
+    selling_list: state.selling_list
   };
 }
 
@@ -125,9 +125,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addSellingList,
-      addCurrentPost,
+      addCurrentPost
     },
-    dispatch,
+    dispatch
   );
 }
 

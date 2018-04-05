@@ -13,19 +13,19 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 class WatchingPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      watching: [],
+      watching: []
     };
   }
   async componentDidMount() {
@@ -33,7 +33,7 @@ class WatchingPostList extends Component {
       const id = localStorage.id;
       const { data } = await axios.get(`${REST_SERVER_URL}/api/watchers/${id}`);
       this.setState({
-        watching: data,
+        watching: data
       });
       this.props.addWatchingList(data);
     } catch (err) {
@@ -43,7 +43,9 @@ class WatchingPostList extends Component {
   removeFromWatchList = async (userId, postId) => {
     try {
       await axios.delete(`${REST_SERVER_URL}/api/watchers/${userId}/${postId}`);
-      const records = this.state.watching.filter(data => data.post_id !== postId);
+      const records = this.state.watching.filter(
+        data => data.post_id !== postId
+      );
       this.setState({ watching: records });
       this.props.addWatchingList(this.state.watching);
     } catch (err) {
@@ -51,7 +53,7 @@ class WatchingPostList extends Component {
     }
   };
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);
@@ -61,24 +63,23 @@ class WatchingPostList extends Component {
   };
   render() {
     return (
-      <div style={styles.root}>
-        <GridList cellHeight={200} style={styles.gridList}>
+      <div className="container" style={styles.root}>
+        <div className="columns">
           {this.props.watching_list &&
             this.props.watching_list.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
+                style={{ width: 200, height: 300, margin: 10 }}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={() => {
-                  this.switchToSinglePost(post);
-                }}
+                onClick={() => this.switchToSinglePost(post)}
                 actionIcon={
                   <IconButton
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation();
                       this.removeFromWatchList(localStorage.id, post.post_id);
                     }}
@@ -90,23 +91,23 @@ class WatchingPostList extends Component {
                 <img src={post.main_photo} />
               </GridTile>
             ))}
-        </GridList>
+        </div>
       </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    watching_list: state.watching_list,
+    watching_list: state.watching_list
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentPost,
-      addWatchingList,
+      addWatchingList
     },
-    dispatch,
+    dispatch
   );
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WatchingPostList);

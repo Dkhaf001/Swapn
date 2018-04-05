@@ -13,20 +13,20 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class BarteringsPostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bartering: [],
+      bartering: []
     };
   }
 
@@ -34,9 +34,11 @@ class BarteringsPostList extends Component {
     try {
       const username = localStorage.username;
       // console.log('the username is', localStorage.username);
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/offers/${username}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/offers/${username}`
+      );
       this.setState({
-        bartering: data,
+        bartering: data
       });
       this.props.addBarteringList(data);
     } catch (err) {
@@ -46,16 +48,20 @@ class BarteringsPostList extends Component {
 
   removeFromOffers = async (userId, postId) => {
     try {
-      await axios.delete(`${REST_SERVER_URL}/api/offers/deleteOffer/${userId}/${postId}`);
-      const records = this.state.bartering.filter(data => data.post_id !== postId);
+      await axios.delete(
+        `${REST_SERVER_URL}/api/offers/deleteOffer/${userId}/${postId}`
+      );
+      const records = this.state.bartering.filter(
+        data => data.post_id !== postId
+      );
       this.setState({ bartering: records });
-      this.props.addBarteringList(this.state.bartering);
+      this.props.addBarteringList(records);
     } catch (err) {
       console.log('err deleting a post from your watch list');
     }
   };
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       // await this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.post_id}`);
@@ -66,26 +72,25 @@ class BarteringsPostList extends Component {
 
   render() {
     return (
-      <div style={styles.root}>
-        <GridList cellHeight={200} style={styles.gridList}>
+      <div className="container" style={styles.root}>
+        <div className="columns">
           {this.props.bartering_list &&
             this.props.bartering_list.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
+                style={{ width: 200, height: 300, margin: 10 }}
                 subtitle={
                   <span>
                     <b>{post.username}</b>
                   </span>
                 }
-                onClick={() => {
-                  this.switchToSinglePost(post);
-                }}
+                onClick={() => this.switchToSinglePost(post)}
                 actionIcon={
                   <IconButton
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation();
-                      this.removeFromOffers(localStorage.id, post.id);
+                      this.removeFromOffers(localStorage.id, post.post_id);
                     }}
                   >
                     <Delete color="white" />
@@ -95,14 +100,14 @@ class BarteringsPostList extends Component {
                 <img src={post.main_photo} />
               </GridTile>
             ))}
-        </GridList>
+        </div>
       </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    bartering_list: state.bartering_list,
+    bartering_list: state.bartering_list
   };
 }
 
@@ -110,9 +115,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentPost,
-      addBarteringList,
+      addBarteringList
     },
-    dispatch,
+    dispatch
   );
 }
 
