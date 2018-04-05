@@ -252,17 +252,7 @@ class BuyerPost extends Component {
   render() {
     return this.props.current_post ? (
       <div>
-<<<<<<< HEAD
-        Welcome to the Buyer Post Page!!!!!!!!!
-        <h1>
-          <a onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
-            {this.props.current_post.username}
-          </a>'s posting
-        </h1>
-        <div>
-=======
         <div className="postcard">
->>>>>>> buyer seller style
           <ViewSlide />
         </div>
         <div className="panel">

@@ -344,13 +344,15 @@ class SellerPost extends Component {
                   Delete
                 </button>
               </div>
-              {this.state.currentRoom === offer.room_id && (
-                <Chattest
-                  roomId={this.state.currentRoom}
-                  buyer={offer.buyer_username}
-                  {...this.props}
-                />
-              )}
+              <div>
+                {this.state.currentRoom === offer.room_id && (
+                  <Chattest
+                    roomId={this.state.currentRoom}
+                    buyer={offer.buyer_username}
+                    {...this.props}
+                  />
+                )}
+              </div>
             </div>
           ))}
       </div>
