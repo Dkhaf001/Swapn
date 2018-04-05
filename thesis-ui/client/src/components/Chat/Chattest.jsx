@@ -99,7 +99,7 @@ class Chattest extends React.Component {
   //* ***************************** Div id is needed ******************************//
   render() {
     return (
-      <div className="modal" id="modal-id">
+      <div className="modal-active" id="modal-id">
         <a href="#close" class="modal-overlay" aria-label="Close" />
         <div class="modal-container">
           <div class="modal-header">

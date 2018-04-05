@@ -356,22 +356,24 @@ class SellerPost extends Component {
               </div>
             </div>
           ))} */}
-        {this.state.offers &&
-          this.state.offers.map(offer => (
-            <div key={offer.id}>
-              <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
-                <a>{offer.username}</a>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    this.denyActiveOffer(offer.username, this.props.current_post.id, offer.id);
-                  }}
-                >
-                  Delete
-                </button>
+        <div className="chatrooms">
+          {this.state.offers &&
+            this.state.offers.map(offer => (
+              <div key={offer.id}>
+                <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
+                  <a>{offer.username}</a>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      this.denyActiveOffer(offer.username, this.props.current_post.id, offer.id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
         <div>
           {this.state.currentRoom && <Chattest roomId={this.state.currentRoom} {...this.props} />}
         </div>
