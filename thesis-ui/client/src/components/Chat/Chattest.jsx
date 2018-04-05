@@ -14,29 +14,25 @@ class Chattest extends React.Component {
       username: '',
       message: '',
       messages: [],
-      roomId: ''
+      roomId: '',
+      modal: false,
     };
 
-    this.sendMessage = e => {
+    this.sendMessage = (e) => {
       e.preventDefault();
-      if (
-        typeof e.type !== 'string' ||
-        (e.type == 'keyup' && e.keyCode != 13)
-      ) {
+      if (typeof e.type !== 'string' || (e.type == 'keyup' && e.keyCode != 13)) {
         return;
       }
       this.props.socket.emit('message', {
         from: this.props.active_user.username,
-        to: this.props.buyer
-          ? this.props.buyer
-          : this.props.current_post.username,
+        to: this.props.buyer ? this.props.buyer : this.props.current_post.username,
         postId: this.props.current_post.id,
         roomId: this.props.roomId,
         message: e.target.value,
         postTitle: this.props.current_post.title,
         buyer_username: this.props.buyer_username || 'not a buyer',
         img: this.props.active_user.photo_url,
-        date: new Date().toUTCString()
+        date: new Date().toUTCString(),
       });
       this.setState({ message: '' });
       e.target.value = '';
@@ -46,18 +42,18 @@ class Chattest extends React.Component {
     try {
       this.props.socket.emit('updateDatabase', {
         to: this.props.active_user.username,
-        roomId: this.props.roomId
+        roomId: this.props.roomId,
       });
       this.props.addCurrentRoomId(this.props.roomId);
       this.props.socket.emit('joinRoom', this.props.roomId);
-      this.props.socket.on('room:message', data => {
+      this.props.socket.on('room:message', (data) => {
         this.setState({
-          messages: this.state.messages.concat(data)
+          messages: this.state.messages.concat(data),
         });
       });
-      this.props.socket.on('history', data => {
+      this.props.socket.on('history', (data) => {
         this.setState({
-          messages: data
+          messages: data,
         });
       });
       // const room_id = this.props.roomId
@@ -67,7 +63,8 @@ class Chattest extends React.Component {
     }
   }
   changeClass = () => {
-    const element = document.getElementById('modal');
+    const element = document.getElementById('modal-id');
+    console.log('trying to add class to element', element);
     element.classList.add('modal-active');
   };
   // async componentWillReceiveProps() {
@@ -101,69 +98,66 @@ class Chattest extends React.Component {
   //* ***************************** Div id is needed ******************************//
   render() {
     return (
-      <div className="modal-active" id="modal-id">
-        <a href="#close" class="modal-overlay" aria-label="Close" />
-        <div class="modal-container">
-          <div class="modal-header">
-            <a
-              href="#close"
-              class="btn btn-clear float-right"
-              aria-label="Close"
-            />
-            <div class="modal-title h5">Chat</div>
-          </div>
-          <div class="modal-body">
-            <div class="content">
-              <div className="chatBox" id={this.props.roomId}>
-                <div className="chat">
-                  {this.state.messages.map((message, key) => (
-                    <div
-                      key={key}
-                      className={
-                        message.from === this.props.active_user.username
-                          ? 'chatcontainer darker'
-                          : 'chatcontainer'
-                      }
-                    >
-                      <img
-                        src={
-                          message.from === this.props.active_user.username
-                            ? this.props.active_user.photo_url
-                            : message.img
-                        }
-                        alt="Avatar"
-                        style={{ width: '100%' }}
+      <div>
+        <button onClick={() => this.setState(state => ({ modal: !state.modal }))}>Open Chat</button>
+        <div className={this.state.modal ? 'modal-active' : 'modal'} id="modal-id">
+          <a href="#close" class="modal-overlay" aria-label="Close" />
+          <div class="modal-container">
+            <div class="modal-header">
+              <a href="#close" class="btn btn-clear float-right" aria-label="Close" />
+              <div class="modal-title h5">Chat</div>
+            </div>
+            <div class="modal-body">
+              <div class="content">
+                <div className="chatBox" id={this.props.roomId}>
+                  <div className="chat">
+                    {this.state.messages.map((message, key) => (
+                      <div
+                        key={key}
                         className={
                           message.from === this.props.active_user.username
-                            ? 'right'
-                            : ''
-                        }
-                      />
-                      <p>{message.message}</p>
-                      <span
-                        className={
-                          message.from === this.props.active_user.username
-                            ? 'time-left'
-                            : 'time-right'
+                            ? 'chatcontainer darker'
+                            : 'chatcontainer'
                         }
                       >
-                        {message.date}
-                      </span>
-                    </div>
-                  ))}
+                        <img
+                          src={
+                            message.from === this.props.active_user.username
+                              ? this.props.active_user.photo_url
+                              : message.img
+                          }
+                          alt="Avatar"
+                          style={{ width: '100%' }}
+                          className={
+                            message.from === this.props.active_user.username ? 'right' : ''
+                          }
+                        />
+                        <p>{message.message}</p>
+                        <span
+                          className={
+                            message.from === this.props.active_user.username
+                              ? 'time-left'
+                              : 'time-right'
+                          }
+                        >
+                          {message.date}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Message"
+                    id="fname"
+                    name="fname"
+                    className="form-control"
+                    onKeyUp={ev => this.sendMessage(ev)}
+                  />
                 </div>
-                <input
-                  type="text"
-                  placeholder="Message"
-                  id="fname"
-                  name="fname"
-                  className="form-control"
-                  onKeyUp={ev => this.sendMessage(ev)}
-                />
               </div>
             </div>
+            {/* <div class="modal-footer">...</div> */}
           </div>
-          {/* <div class="modal-footer">...</div> */}
         </div>
       </div>
     );
@@ -172,9 +166,9 @@ class Chattest extends React.Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentRoomId
+      addCurrentRoomId,
     },
-    dispatch
+    dispatch,
   );
 }
 function mapStateToProps(state) {
@@ -183,7 +177,7 @@ function mapStateToProps(state) {
     active_user: state.active_user,
     //   current_post: current_post,
     dataFromReduxStorage: state.dataReducers,
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 

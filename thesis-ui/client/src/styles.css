@@ -171,7 +171,9 @@ body {
   /* max-width: 300px; */
   border-radius: 3px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+  /* background-color: black !important; */
 }
+
 .postbuttons {
   position: fixed;
   top: 82%;
