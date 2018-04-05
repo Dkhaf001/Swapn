@@ -251,7 +251,7 @@ class BuyerPost extends Component {
 
   render() {
     return this.props.current_post ? (
-      <div>
+      <div className="buyerpost">
         <div className="postcardcontainer">
           <div className="postcard">
             <ViewSlide />

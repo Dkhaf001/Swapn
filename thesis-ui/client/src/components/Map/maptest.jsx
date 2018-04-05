@@ -212,7 +212,7 @@ const MapWithASearchBox = compose(
         }}
       />
     </SearchBox> */}
-    {localStorage.getItem('longitude') ? (
+    {/* {localStorage.getItem('longitude') ? (
       <Marker
         // onClick={this.onMarkerClick}
         icon={{
@@ -226,7 +226,7 @@ const MapWithASearchBox = compose(
           lng: parseFloat(localStorage.getItem('longitude')),
         }}
       />
-    ) : null}
+    ) : null} */}
     {props.markers.map((marker, index) => <Marker key={index} position={marker.position} />)}
   </GoogleMap>
 ));

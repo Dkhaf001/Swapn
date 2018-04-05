@@ -64,6 +64,10 @@ class Chattest extends React.Component {
       console.log('err in chattest ', err);
     }
   }
+  changeClass = () => {
+    const element = document.getElementById('modal');
+    element.classList.add('modal-active');
+  };
   // async componentWillReceiveProps() {
   //   console.log('chat receivinggggg', this.props.roomId);
   //   try {
@@ -95,46 +99,62 @@ class Chattest extends React.Component {
   //* ***************************** Div id is needed ******************************//
   render() {
     return (
-      <div className="chatBox" id={this.props.roomId}>
-        <div className="chat">
-          {this.state.messages.map((message, key) => (
-            <div
-              key={key}
-              className={
-                message.from === this.props.active_user.username
-                  ? 'chatcontainer darker'
-                  : 'chatcontainer'
-              }
-            >
-              <img
-                src={
-                  message.from === this.props.active_user.username
-                    ? this.props.active_user.photo_url
-                    : message.img
-                }
-                alt="Avatar"
-                style={{ width: '100%' }}
-                className={message.from === this.props.active_user.username ? 'right' : ''}
-              />
-              <p>{message.message}</p>
-              <span
-                className={
-                  message.from === this.props.active_user.username ? 'time-left' : 'time-right'
-                }
-              >
-                {message.date}
-              </span>
+      <div className="modal-active" id="modal-id">
+        <a href="#close" class="modal-overlay" aria-label="Close" />
+        <div class="modal-container">
+          <div class="modal-header">
+            <a href="#close" class="btn btn-clear float-right" aria-label="Close" />
+            <div class="modal-title h5">Chat</div>
+          </div>
+          <div class="modal-body">
+            <div class="content">
+              <div className="chatBox" id={this.props.roomId}>
+                <div className="chat">
+                  {this.state.messages.map((message, key) => (
+                    <div
+                      key={key}
+                      className={
+                        message.from === this.props.active_user.username
+                          ? 'chatcontainer darker'
+                          : 'chatcontainer'
+                      }
+                    >
+                      <img
+                        src={
+                          message.from === this.props.active_user.username
+                            ? this.props.active_user.photo_url
+                            : message.img
+                        }
+                        alt="Avatar"
+                        style={{ width: '100%' }}
+                        className={message.from === this.props.active_user.username ? 'right' : ''}
+                      />
+                      <p>{message.message}</p>
+                      <span
+                        className={
+                          message.from === this.props.active_user.username
+                            ? 'time-left'
+                            : 'time-right'
+                        }
+                      >
+                        {message.date}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  placeholder="Message"
+                  id="fname"
+                  name="fname"
+                  className="form-control"
+                  onKeyUp={ev => this.sendMessage(ev)}
+                />
+              </div>
             </div>
-          ))}
+          </div>
+          {/* <div class="modal-footer">...</div> */}
         </div>
-        <input
-          type="text"
-          placeholder="Message"
-          id="fname"
-          name="fname"
-          className="form-control"
-          onKeyUp={ev => this.sendMessage(ev)}
-        />
       </div>
     );
   }
