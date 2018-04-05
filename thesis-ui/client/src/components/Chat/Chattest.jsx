@@ -37,7 +37,7 @@ class Chattest extends React.Component {
       e.target.value = '';
     };
   }
-  async componentWillMount() {
+  async componentDidMount() {
     try {
       this.props.socket.emit('updateDatabase', {
         to: this.props.active_user.username,
