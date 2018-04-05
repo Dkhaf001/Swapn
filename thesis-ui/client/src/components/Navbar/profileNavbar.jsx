@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 class ProfileNavbar extends Component {
   constructor() {
     super();
-    this.state = {
-      entries: ''
-    };
+    this.state = {};
   }
   async componentWillMount() {
     try {
@@ -20,11 +18,6 @@ class ProfileNavbar extends Component {
             obj[messages[i].roomId] = messages[i];
           }
         }
-        const entries = Object.entries(obj);
-        // console.log('this is the entries', entries);
-        this.setState({
-          entries
-        });
       }
     } catch (err) {
       console.log('err profile navbar', err);
@@ -50,17 +43,6 @@ class ProfileNavbar extends Component {
             </div>
           ) : (
             <div>No offer has been accepted</div>
-          )}
-        </div>
-        <div id="notifications">
-          {this.state.entries ? (
-            this.state.entries.map(arr => (
-              <div key={arr[0]} className="centered">
-                {arr[1].from} says {arr[1].message} on post {arr[1].postTitle}
-              </div>
-            ))
-          ) : (
-            <div className="text-center">No Unread Messages</div>
           )}
         </div>
         <div>
