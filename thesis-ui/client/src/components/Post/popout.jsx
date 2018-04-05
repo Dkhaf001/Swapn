@@ -2,23 +2,25 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { connect } from 'react-redux';
 /**
  * A modal dialog can only be closed by selecting one of the actions.
  */
-export default class Popout extends React.Component {
+class Popout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       offer: '',
+      open: false,
     };
   }
-  state = {
-    open: false,
-  };
 
   handleOpen = () => {
-    this.setState({ open: true });
+    if (this.props.active_user) {
+      this.setState({ open: true });
+    } else {
+      this.props.history.push('/login');
+    }
   };
 
   handleClose = () => {
@@ -55,3 +57,10 @@ export default class Popout extends React.Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    active_user: state.active_user,
+  };
+}
+
+export default connect(mapStateToProps)(Popout);

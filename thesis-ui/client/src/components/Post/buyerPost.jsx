@@ -200,6 +200,8 @@ class BuyerPost extends Component {
         message: offer,
         postTitle: this.props.current_post.title,
         buyer_username: this.props.active_user.username,
+        img: this.props.active_user.photo_url,
+        date: new Date().toUTCString(),
       };
       this.props.socket.emit('message', message);
       this.setState({
@@ -315,7 +317,9 @@ class BuyerPost extends Component {
             />
           )}
         {!this.state.bartering &&
-          this.props.current_post.status !== 'SWAPPED' && <Popout makeOffer={this.makeOffer} />}
+          this.props.current_post.status !== 'SWAPPED' && (
+            <Popout makeOffer={this.makeOffer} {...this.props} />
+          )}
         <div>
           {this.state.bartering &&
             this.props.current_post.status !== 'SWAPPED' && (
