@@ -101,7 +101,9 @@ class Chattest extends React.Component {
             <div
               key={key}
               className={
-                message.from === this.props.active_user.username ? 'container darker' : 'container'
+                message.from === this.props.active_user.username
+                  ? 'chatcontainer darker'
+                  : 'chatcontainer'
               }
             >
               <img
