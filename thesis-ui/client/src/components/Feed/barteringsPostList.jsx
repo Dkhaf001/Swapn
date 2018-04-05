@@ -46,10 +46,14 @@ class BarteringsPostList extends Component {
     }
   }
 
-  removeFromOffers = async (userId, postId) => {
+  removeFromOffers = async (username, postId) => {
     try {
+      console.log(
+        'pls!!!!',
+        `${REST_SERVER_URL}/api/offers/deleteOffer/${username}/${postId}`
+      );
       await axios.delete(
-        `${REST_SERVER_URL}/api/offers/deleteOffer/${userId}/${postId}`
+        `${REST_SERVER_URL}/api/offers/deleteOffer/${username}/${postId}`
       );
       const records = this.state.bartering.filter(
         data => data.post_id !== postId
@@ -90,7 +94,10 @@ class BarteringsPostList extends Component {
                   <IconButton
                     onClick={e => {
                       e.stopPropagation();
-                      this.removeFromOffers(localStorage.id, post.post_id);
+                      this.removeFromOffers(
+                        localStorage.username,
+                        post.post_id
+                      );
                     }}
                   >
                     <Delete color="white" />
