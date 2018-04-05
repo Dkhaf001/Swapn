@@ -217,8 +217,9 @@ class SellerPost extends Component {
     }
   }
   handleUserClick = (offer) => {
+    console.log('result', this.state.currentRoom, 'room_id', offer.room_id);
     this.setState({
-      currentRoom: offer.room_id,
+      currentRoom: this.state.currentRoom === offer.room_id ? '' : offer.room_id,
       currentTalking: offer.buyer_username,
     });
   };
