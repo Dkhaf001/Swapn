@@ -58,6 +58,7 @@ class Categories extends Component {
     const { data } = await axios.get(
       `${REST_SERVER_URL}/api/categories/${index}`
     );
+    console.log('!!!!! elbert fix', data);
     this.props.addCategoryList(data.rows);
     this.props.addCategoryName(cat);
   };
