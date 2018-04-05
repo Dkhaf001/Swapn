@@ -128,3 +128,24 @@ body {
   float: left;
   color: #999;
 }
+.postcard {
+  position: absolute;
+  max-width: 80%;
+  max-height: 40%;
+  top: 21%;
+  left: 40%;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+}
+.postmap {
+  position: absolute;
+  top: 21%;
+  left: 68%;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+}
+.panel {
+  border: none !important;
+  padding-left: 2%;
+  max-width: 35%;
+}

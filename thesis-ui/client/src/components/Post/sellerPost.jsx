@@ -229,7 +229,7 @@ class SellerPost extends Component {
       await axios.delete(`${REST_SERVER_URL}/api/offers/deleteOffer/${userName}/${offerId}`);
       const records = this.state.offers.filter(dat => dat.id !== offer);
       this.setState({ offers: records });
-      console.log('Delted Offer from seller');
+      console.log('Deleted Offer from seller');
     } catch (err) {
       console.log('err deleting a post from your selling active offer list');
     }
@@ -262,10 +262,10 @@ class SellerPost extends Component {
     return this.props.current_post ? (
       <div>
         <h1>Welcome to your post!</h1>
-        <div>
+        <div className="postcard">
           <ViewSlide />
         </div>
-        <div>
+        <div className="panel">
           <h1>
             <strong>{this.props.current_post && this.props.current_post.title}</strong>
           </h1>
@@ -327,7 +327,6 @@ class SellerPost extends Component {
           onClick={() => this.deletePost()}
         />
         <br />
-        <hr />
         {this.state.tradingWith && (
           <div>You are now in transaction with {this.state.tradingWith}</div>
         )}

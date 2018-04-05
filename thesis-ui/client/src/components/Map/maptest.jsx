@@ -185,9 +185,9 @@ const MapWithASearchBox = compose(
     onBoundsChanged={props.onBoundsChanged}
   >
     <Geolocation />
-    <button onClick={props.onClick} type="submit">
+    {/* <button onClick={props.onClick} type="submit">
       Get {props.count}
-    </button>
+    </button> */}
     {/* <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}
