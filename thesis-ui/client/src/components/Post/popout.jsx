@@ -42,7 +42,7 @@ class Popout extends React.Component {
       <FlatButton
         label="Submit"
         primary={true}
-        disabled={this.state.offer.length <= 5}
+        disabled={this.state.offer.length <= 0}
         onClick={this.handleClose}
       />,
     ];
