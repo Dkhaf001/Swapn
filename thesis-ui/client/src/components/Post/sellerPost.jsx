@@ -31,6 +31,7 @@ class SellerPost extends Component {
       offers: [],
       currentRoom: '',
       tradingWith: false,
+      count: 0,
     };
     this.acceptOffer = this.acceptOffer.bind(this);
   }
@@ -217,10 +218,10 @@ class SellerPost extends Component {
     }
   }
   handleUserClick = (offer) => {
-    console.log('result', this.state.currentRoom, 'room_id', offer.room_id);
+    console.log('result', this.state, 'room_id', offer.room_id);
     this.setState({
-      currentRoom: this.state.currentRoom === offer.room_id ? '' : offer.room_id,
-      currentTalking: offer.buyer_username,
+      currentRoom: this.state.currentRoom === offer.room_id ? null : offer.room_id,
+      // currentTalking: offer.buyer_username,
     });
   };
 
@@ -330,7 +331,7 @@ class SellerPost extends Component {
         {this.state.tradingWith && (
           <div>You are now in transaction with {this.state.tradingWith}</div>
         )}
-        {this.state.offers &&
+        {/* {this.state.offers &&
           this.state.offers.map(offer => (
             <div key={offer.id}>
               <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
@@ -354,7 +355,26 @@ class SellerPost extends Component {
                 )}
               </div>
             </div>
+          ))} */}
+        {this.state.offers &&
+          this.state.offers.map(offer => (
+            <div key={offer.id}>
+              <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
+                <a>{offer.username}</a>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.denyActiveOffer(offer.username, this.props.current_post.id, offer.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           ))}
+        <div>
+          {this.state.currentRoom && <Chattest roomId={this.state.currentRoom} {...this.props} />}
+        </div>
       </div>
     ) : (
       <div class="loading loading-lg" />

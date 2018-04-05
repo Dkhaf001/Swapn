@@ -13,15 +13,13 @@ class Login extends Component {
     super();
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      err: '',
     };
   }
   async handleSubmit() {
     try {
-      const response = await axios.post(
-        `${REST_SERVER_URL}/api/auth/login`,
-        this.state
-      );
+      const response = await axios.post(`${REST_SERVER_URL}/api/auth/login`, this.state);
       // window.localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('id', response.data.id);
@@ -33,11 +31,19 @@ class Login extends Component {
       this.props.history.push('/home');
     } catch (err) {
       console.log('err loging', err);
+      this.setState({
+        err: true,
+      });
     }
   }
   render() {
     return (
       <div className="form-group">
+        {this.state.err && (
+          <div className="toast toast-error centered" style={{ textAlign: 'center', width: '50%' }}>
+            Something went wrong. Please try again!
+          </div>
+        )}
         <label className="form-label text-center" htmlFor="login-name">
           <strong>Username</strong>
         </label>
@@ -64,10 +70,7 @@ class Login extends Component {
         />
         <div>
           <br />
-          <button
-            className="btn btn-success centered"
-            onClick={() => this.handleSubmit()}
-          >
+          <button className="btn btn-success centered" onClick={() => this.handleSubmit()}>
             Sign In
           </button>
         </div>
@@ -79,9 +82,9 @@ class Login extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore
+      addActiveUserToStore,
     },
-    dispatch
+    dispatch,
   );
 }
 function mapStateToProps(state) {
