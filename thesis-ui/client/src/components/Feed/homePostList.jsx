@@ -103,6 +103,20 @@ class HomePostList extends Component {
     }
   };
 
+  switchToProfile = async userId => {
+    try {
+      if (this.props.active_user) {
+        userId === this.props.active_user.id
+          ? this.props.history.push(`/profile/selling`)
+          : this.props.history.push(`/othersprofile/${userId}`);
+      } else {
+        this.props.history.push('/login');
+      }
+    } catch (err) {
+      console.log('error on switchToProfile - homePostList', err);
+    }
+  };
+
   handleChange = async (event, index, value) => {
     this.setState({ value });
     if (value === 1) {
@@ -169,7 +183,7 @@ class HomePostList extends Component {
                             }}
                             onClick={e => {
                               e.stopPropagation();
-                              this.switchToSinglePost(post);
+                              this.switchToProfile(post.user_id);
                             }}
                           >
                             <Avatar src={post.photo_url} />
@@ -202,7 +216,8 @@ class HomePostList extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list
+    current_list: state.current_list,
+    active_user: state.active_user
   };
 }
 
