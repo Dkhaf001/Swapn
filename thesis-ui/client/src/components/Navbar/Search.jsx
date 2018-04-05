@@ -12,7 +12,6 @@ class Search extends Component {
     };
   }
   handleSubmit() {
-    console.log('you aretryingto search ', this.state.name, this.props);
     this.props.history.push({
       pathname: '/search',
       state: this.state.name

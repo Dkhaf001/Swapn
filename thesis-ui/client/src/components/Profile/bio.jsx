@@ -54,10 +54,6 @@ class Bio extends Component {
         });
         // console.log('unfollow', this.state.currentlyFollowing);
       }
-      console.log(
-        'this is the current state: currentlyFollowing: ',
-        this.state.currentlyFollowing
-      );
     } catch (err) {
       console.log('error getting followers!');
     }

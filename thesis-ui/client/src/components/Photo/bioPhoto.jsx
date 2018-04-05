@@ -14,13 +14,15 @@ class BioPhotoUpload extends React.Component {
     this.state = {
       posting: false,
       file: null,
-      profilePic: '',
+      profilePic: ''
     };
   }
   async componentDidMount() {
     try {
       const userId = localStorage.id;
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/users/${userId}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/users/${userId}`
+      );
       if (data[0].photo_url !== '') {
         this.setState({ profilePic: data[0].photo_url });
       }
@@ -53,9 +55,8 @@ class BioPhotoUpload extends React.Component {
     }
   };
 
-  urlInput = async (event) => {
+  urlInput = async event => {
     await this.setState({ file: event.target.files[0] });
-    console.log('this file', this.state.file);
   };
 
   // handleSubmit = () => {
@@ -77,17 +78,20 @@ class BioPhotoUpload extends React.Component {
     // change to match the route i need for dp route
     await axios.delete(`${S3_SERVER_URL}/s3/api/${userId}`);
     // 1 changes to postID
-    const { data } = await axios.post(`${S3_SERVER_URL}/s3/api/addProfilePic/${userId}`, formData);
+    const { data } = await axios.post(
+      `${S3_SERVER_URL}/s3/api/addProfilePic/${userId}`,
+      formData
+    );
 
     this.setState({
       profilePic: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
       file: null,
-      posting: false,
+      posting: false
     });
 
     await axios.put(`${REST_SERVER_URL}/api/users/profilepic`, {
       user_id: localStorage.id,
-      photo_url: this.state.profilePic,
+      photo_url: this.state.profilePic
     });
 
     // 'https://{s3-us-west-1}.amazonaws.com/{barterbruh}/{1/1de93ec.jpg}'
@@ -148,7 +152,9 @@ class BioPhotoUpload extends React.Component {
     </div>
   );
   render() {
-    return <div>{this.state.posting ? this.renderForm() : this.renderNormal()}</div>;
+    return (
+      <div>{this.state.posting ? this.renderForm() : this.renderNormal()}</div>
+    );
   }
 }
 
@@ -157,7 +163,7 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     images: state.images,
     npId: state.newPostId,
-    main_photo: state.main_photo,
+    main_photo: state.main_photo
   };
 }
 
@@ -165,9 +171,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addImages,
-      addMainPhoto,
+      addMainPhoto
     },
-    dispatch,
+    dispatch
   );
 }
 

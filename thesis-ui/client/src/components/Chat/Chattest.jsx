@@ -14,24 +14,29 @@ class Chattest extends React.Component {
       username: '',
       message: '',
       messages: [],
-      roomId: '',
+      roomId: ''
     };
 
-    this.sendMessage = (e) => {
+    this.sendMessage = e => {
       e.preventDefault();
-      if (typeof e.type !== 'string' || (e.type == 'keyup' && e.keyCode != 13)) {
+      if (
+        typeof e.type !== 'string' ||
+        (e.type == 'keyup' && e.keyCode != 13)
+      ) {
         return;
       }
       this.props.socket.emit('message', {
         from: this.props.active_user.username,
-        to: this.props.buyer ? this.props.buyer : this.props.current_post.username,
+        to: this.props.buyer
+          ? this.props.buyer
+          : this.props.current_post.username,
         postId: this.props.current_post.id,
         roomId: this.props.roomId,
         message: e.target.value,
         postTitle: this.props.current_post.title,
         buyer_username: this.props.buyer_username || 'not a buyer',
         img: this.props.active_user.photo_url,
-        date: new Date().toUTCString(),
+        date: new Date().toUTCString()
       });
       this.setState({ message: '' });
       e.target.value = '';
@@ -41,21 +46,18 @@ class Chattest extends React.Component {
     try {
       this.props.socket.emit('updateDatabase', {
         to: this.props.active_user.username,
-        roomId: this.props.roomId,
+        roomId: this.props.roomId
       });
-      console.log('inside of chattest this is the props shou have socket and roomId', this.props);
       this.props.addCurrentRoomId(this.props.roomId);
       this.props.socket.emit('joinRoom', this.props.roomId);
-      this.props.socket.on('room:message', (data) => {
-        console.log('room:message event', data);
+      this.props.socket.on('room:message', data => {
         this.setState({
-          messages: this.state.messages.concat(data),
+          messages: this.state.messages.concat(data)
         });
       });
-      this.props.socket.on('history', (data) => {
-        console.log('history', data);
+      this.props.socket.on('history', data => {
         this.setState({
-          messages: data,
+          messages: data
         });
       });
       // const room_id = this.props.roomId
@@ -103,7 +105,11 @@ class Chattest extends React.Component {
         <a href="#close" class="modal-overlay" aria-label="Close" />
         <div class="modal-container">
           <div class="modal-header">
-            <a href="#close" class="btn btn-clear float-right" aria-label="Close" />
+            <a
+              href="#close"
+              class="btn btn-clear float-right"
+              aria-label="Close"
+            />
             <div class="modal-title h5">Chat</div>
           </div>
           <div class="modal-body">
@@ -127,7 +133,11 @@ class Chattest extends React.Component {
                         }
                         alt="Avatar"
                         style={{ width: '100%' }}
-                        className={message.from === this.props.active_user.username ? 'right' : ''}
+                        className={
+                          message.from === this.props.active_user.username
+                            ? 'right'
+                            : ''
+                        }
                       />
                       <p>{message.message}</p>
                       <span
@@ -162,9 +172,9 @@ class Chattest extends React.Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentRoomId,
+      addCurrentRoomId
     },
-    dispatch,
+    dispatch
   );
 }
 function mapStateToProps(state) {
@@ -173,7 +183,7 @@ function mapStateToProps(state) {
     active_user: state.active_user,
     //   current_post: current_post,
     dataFromReduxStorage: state.dataReducers,
-    current_post: state.current_post,
+    current_post: state.current_post
   };
 }
 

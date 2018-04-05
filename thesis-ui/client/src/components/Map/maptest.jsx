@@ -1,30 +1,38 @@
 import React, { Component } from 'react';
 
 const {
-  withScriptjs, withGoogleMap, GoogleMap, Marker,
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker
 } = require('react-google-maps');
 
 const _ = require('lodash');
 const {
-  compose, withProps, lifecycle, withStateHandlers,
+  compose,
+  withProps,
+  lifecycle,
+  withStateHandlers
 } = require('recompose');
 
 import Geolocation from './geolocation.jsx';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-const { SearchBox } = require('react-google-maps/lib/components/places/SearchBox');
+const {
+  SearchBox
+} = require('react-google-maps/lib/components/places/SearchBox');
 
 const MapWithASearchBox = compose(
   withStateHandlers(
     () => ({
-      count: 0,
+      count: 0
     }),
     {
-      onClick: (position) => {
+      onClick: position => {
         this.setState({
-          positiongeo: position,
+          positiongeo: position
         });
-      },
+      }
 
       // changePosition(position){
       //   console.log('got it', position)
@@ -32,36 +40,34 @@ const MapWithASearchBox = compose(
       //     positiongeo: position
       //   })
       // }
-    },
+    }
   ),
   withProps({
     googleMapURL:
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyBl4meuMNIFaMJDzAdWR_aCpOzafVTS1ug&v=3.exp&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: '175px', width: '300px' }} />,
     containerElement: <div style={{ height: '175px', width: '300px' }} />,
-    mapElement: <div style={{ height: '175px', width: '300px' }} />,
+    mapElement: <div style={{ height: '175px', width: '300px' }} />
   }),
   lifecycle({
     componentWillMount() {
-      console.log('mount');
       const lat = parseFloat(localStorage.getItem('latitude'));
       const long = parseFloat(localStorage.getItem('longitude'));
-      // console.log('lat is', lat, 'type of...', typeof lat)
       const refs = {};
 
       this.setState({
         bounds: null,
         center: parseFloat(localStorage.getItem('latitude'))
           ? {
-            lat: parseFloat(localStorage.getItem('latitude')),
-            lng: parseFloat(localStorage.getItem('longitude')),
-          }
+              lat: parseFloat(localStorage.getItem('latitude')),
+              lng: parseFloat(localStorage.getItem('longitude'))
+            }
           : {
-            lat: 33.9,
-            lng: -118.39,
-          },
+              lat: 33.9,
+              lng: -118.39
+            },
         markers: [],
-        onMapMounted: (ref) => {
+        onMapMounted: ref => {
           refs.map = ref;
         },
         onMarkerRightClick: () => {
@@ -75,18 +81,22 @@ const MapWithASearchBox = compose(
         //     center: refs.map.getCenter(),
         //   })
         // },
-        onSearchBoxMounted: (ref) => {
+        onSearchBoxMounted: ref => {
           refs.searchBox = ref;
         },
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
           const bounds = new google.maps.LatLngBounds();
 
-          places.forEach((place) => {
+          places.forEach(place => {
             geocodeByAddress(place.formatted_address)
               .then(results => getLatLng(results[0]))
               .then(({ lat, lng }) =>
-                console.log('Successfully got latitude and longitude', { lat, lng }));
+                console.log('Successfully got latitude and longitude', {
+                  lat,
+                  lng
+                })
+              );
 
             if (place.geometry.viewport) {
               bounds.union(place.geometry.viewport);
@@ -95,38 +105,40 @@ const MapWithASearchBox = compose(
             }
           });
           const nextMarkers = places.map(place => ({
-            position: place.geometry.location,
+            position: place.geometry.location
           }));
-          const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+          const nextCenter = _.get(
+            nextMarkers,
+            '0.position',
+            this.state.center
+          );
 
           this.setState({
             center: nextCenter,
-            markers: nextMarkers,
+            markers: nextMarkers
           });
           // refs.map.fitBounds(bounds);
-        },
+        }
       });
     },
     componentDidMount() {
-      console.log('update');
       const lat = parseFloat(localStorage.getItem('latitude'));
       const long = parseFloat(localStorage.getItem('longitude'));
-      // console.log('lat is', lat, 'type of...', typeof lat)
       const refs = {};
 
       this.setState({
         bounds: null,
         center: parseFloat(localStorage.getItem('latitude'))
           ? {
-            lat: parseFloat(localStorage.getItem('latitude')),
-            lng: parseFloat(localStorage.getItem('longitude')),
-          }
+              lat: parseFloat(localStorage.getItem('latitude')),
+              lng: parseFloat(localStorage.getItem('longitude'))
+            }
           : {
-            lat: 33.9,
-            lng: -118.39,
-          },
+              lat: 33.9,
+              lng: -118.39
+            },
         markers: [],
-        onMapMounted: (ref) => {
+        onMapMounted: ref => {
           refs.map = ref;
         },
         onMarkerRightClick: () => {
@@ -140,20 +152,22 @@ const MapWithASearchBox = compose(
         //     center: refs.map.getCenter(),
         //   })
         // },
-        onSearchBoxMounted: (ref) => {
+        onSearchBoxMounted: ref => {
           refs.searchBox = ref;
         },
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
           const bounds = new google.maps.LatLngBounds();
 
-          places.forEach((place) => {
-            console.log('what is this', place.formatted_address);
-            console.log('what is that', place);
+          places.forEach(place => {
             geocodeByAddress(place.formatted_address)
               .then(results => getLatLng(results[0]))
               .then(({ lat, lng }) =>
-                console.log('Successfully got latitude and longitude', { lat, lng }));
+                console.log('Successfully got latitude and longitude', {
+                  lat,
+                  lng
+                })
+              );
 
             if (place.geometry.viewport) {
               bounds.union(place.geometry.viewport);
@@ -162,21 +176,25 @@ const MapWithASearchBox = compose(
             }
           });
           const nextMarkers = places.map(place => ({
-            position: place.geometry.location,
+            position: place.geometry.location
           }));
-          const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+          const nextCenter = _.get(
+            nextMarkers,
+            '0.position',
+            this.state.center
+          );
 
           this.setState({
             center: nextCenter,
-            markers: nextMarkers,
+            markers: nextMarkers
           });
           // refs.map.fitBounds(bounds);
-        },
+        }
       });
-    },
+    }
   }),
   withScriptjs,
-  withGoogleMap,
+  withGoogleMap
 )(props => (
   <GoogleMap
     ref={props.onMapMounted}
@@ -227,7 +245,9 @@ const MapWithASearchBox = compose(
         }}
       />
     ) : null} */}
-    {props.markers.map((marker, index) => <Marker key={index} position={marker.position} />)}
+    {props.markers.map((marker, index) => (
+      <Marker key={index} position={marker.position} />
+    ))}
   </GoogleMap>
 ));
 

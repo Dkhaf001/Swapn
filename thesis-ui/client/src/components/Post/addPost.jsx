@@ -67,11 +67,8 @@ class AddPost extends Component {
         this.state.newPost.location !== '' &&
         this.state.newPost.demand !== ''
       ) {
-        console.log('entering submit post logic', this.state.newPost.location);
         const results = await geocodeByAddress(this.state.newPost.location);
-        console.log('results is from', results[0].formatted_address);
         const latLng = await getLatLng(results[0]);
-        console.log('Success Post', latLng);
         this.setState({
           newPost: Object.assign({}, this.state.newPost, {
             location: latLng
@@ -170,7 +167,6 @@ class AddPost extends Component {
         );
         this.setState({ stepIndex: 1 });
         this.props.addCurrentPost(data.rows[0]);
-        console.log('this is id from addpost', data.rows[0].id);
         tempPostId = data.rows[0].id;
 
         // set
