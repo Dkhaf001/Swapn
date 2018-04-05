@@ -26,16 +26,16 @@ class Navbar extends Component {
     <header className="navbar sticky" style={{ height: '150px' }}>
       <section className="navbar-section">
         <a href="/home" className="navbar-brand mr-2 text-light">
-          <h2>
+          <h1>
             <strong
               style={{
-                paddingLeft: '20px',
+                paddingLeft: '30px',
                 fontFamily: 'Megrim, cursive'
               }}
             >
               Swap'n
             </strong>
-          </h2>
+          </h1>
         </a>
       </section>
       <Search {...this.props} />
@@ -67,16 +67,16 @@ class Navbar extends Component {
     <header className="navbar sticky" style={{ height: '150px' }}>
       <section className="navbar-section">
         <a href="/home" className="navbar-brand mr-2 text-light">
-          <h2>
+          <h1>
             <strong
               style={{
-                paddingLeft: '20px',
+                paddingLeft: '30px',
                 fontFamily: 'Megrim, cursive'
               }}
             >
               Swap'n
             </strong>
-          </h2>
+          </h1>
         </a>
       </section>
       <Search {...this.props} />
