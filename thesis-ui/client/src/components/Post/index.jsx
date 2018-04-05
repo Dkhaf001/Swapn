@@ -69,7 +69,7 @@ class Post extends Component {
             <div>
               <SellerPost {...this.props} />
               <div className="postmap">
-                <GoogleMap />;
+                <GoogleMap />
               </div>
             </div>
           );
