@@ -72,9 +72,15 @@ body {
   transform: scale(1);
 }
 .view {
-  padding-top: 2.5%;
+  padding-top: 5%;
 }
 
 .svg_icons {
   transform: scale(1.4);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
