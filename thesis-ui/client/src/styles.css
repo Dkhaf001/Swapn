@@ -72,7 +72,7 @@ body {
   transform: scale(1);
 }
 .view {
-  padding-top: 5%;
+  padding-top: 3%;
 }
 
 .svg_icons {
@@ -130,22 +130,47 @@ body {
 }
 .postcard {
   position: absolute;
-  max-width: 80%;
-  max-height: 40%;
-  top: 21%;
-  left: 40%;
+  /* max-width: 80%;
+  max-height: 40%; */
+  left: 3%;
+  /* top: 21%;
   border-radius: 3px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9); */
+}
+.postcardcontainer {
+  /* position: relative; */
+  left: 2%;
+  min-width: 60%;
+  max-width: 60%;
+  min-height: 40%;
+  max-height: 40%;
 }
 .postmap {
   position: absolute;
-  top: 21%;
-  left: 68%;
+  top: 23%;
+  left: 67.5%;
   border-radius: 3px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
 }
 .panel {
   border: none !important;
-  padding-left: 2%;
-  max-width: 35%;
+  position: absolute;
+  top: 21%;
+  left: 30%;
+  width: 35%;
+  max-height: 40%;
+}
+.chatbox {
+  position: absolute;
+  top: 61%;
+  left: 30%;
+  overflow: scroll;
+  max-height: 300px;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+}
+.postbuttons {
+  position: absolute;
+  top: 62%;
+  left: 32.5%;
 }

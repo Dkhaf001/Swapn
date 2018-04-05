@@ -37,9 +37,9 @@ const MapWithASearchBox = compose(
   withProps({
     googleMapURL:
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyBl4meuMNIFaMJDzAdWR_aCpOzafVTS1ug&v=3.exp&libraries=geometry,drawing,places',
-    loadingElement: <div style={{ height: '300px', width: '400px' }} />,
-    containerElement: <div style={{ height: '300px', width: '400px' }} />,
-    mapElement: <div style={{ height: '300px', width: '400px' }} />,
+    loadingElement: <div style={{ height: '175px', width: '300px' }} />,
+    containerElement: <div style={{ height: '175px', width: '300px' }} />,
+    mapElement: <div style={{ height: '175px', width: '300px' }} />,
   }),
   lifecycle({
     componentWillMount() {

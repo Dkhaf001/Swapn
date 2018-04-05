@@ -261,7 +261,6 @@ class SellerPost extends Component {
   render() {
     return this.props.current_post ? (
       <div>
-        <h1>Welcome to your post!</h1>
         <div className="postcard">
           <ViewSlide />
         </div>
@@ -281,51 +280,52 @@ class SellerPost extends Component {
           </h4>
           <h4>Status: {this.props.current_post && this.state.accept.status}</h4>
         </div>
-        {this.state.sold === false ? (
+        <div className="postbuttons">
+          {this.state.sold === false ? (
+            <RaisedButton
+              label="Edit Post"
+              primary={true}
+              style={{ margin: 12 }}
+              onClick={() => this.editPost()}
+            />
+          ) : null}
+          {this.state.sold === false && this.state.offerAccepted === true ? (
+            <RaisedButton
+              label="Complete Transaction"
+              secondary={true}
+              style={{ margin: 12 }}
+              onClick={() => this.soldOffer()}
+            />
+          ) : null}
+          {this.state.offerAccepted === false ? (
+            <RaisedButton
+              label="Accept Offer"
+              primary={true}
+              style={{ margin: 12 }}
+              onClick={() => this.acceptOffer()}
+            />
+          ) : this.state.sold === false ? (
+            <RaisedButton
+              label="Cancel Offer"
+              secondary={true}
+              style={{ margin: 12 }}
+              onClick={() => this.cancelOffer()}
+            />
+          ) : (
+            <RaisedButton
+              label="Relist"
+              secondary={true}
+              style={{ margin: 12 }}
+              onClick={() => this.cancelOffer()}
+            />
+          )}
           <RaisedButton
-            label="Edit Post"
-            primary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.editPost()}
-          />
-        ) : null}
-        {this.state.sold === false && this.state.offerAccepted === true ? (
-          <RaisedButton
-            label="Complete Transaction"
+            label="Delete"
             secondary={true}
             style={{ margin: 12 }}
-            onClick={() => this.soldOffer()}
+            onClick={() => this.deletePost()}
           />
-        ) : null}
-        <br />
-        {this.state.offerAccepted === false ? (
-          <RaisedButton
-            label="Accept Offer"
-            primary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.acceptOffer()}
-          />
-        ) : this.state.sold === false ? (
-          <RaisedButton
-            label="Cancel Offer"
-            secondary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.cancelOffer()}
-          />
-        ) : (
-          <RaisedButton
-            label="Relist"
-            secondary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.cancelOffer()}
-          />
-        )}
-        <RaisedButton
-          label="Delete"
-          secondary={true}
-          style={{ margin: 12 }}
-          onClick={() => this.deletePost()}
-        />
+        </div>
         <br />
         {this.state.tradingWith && (
           <div>You are now in transaction with {this.state.tradingWith}</div>
