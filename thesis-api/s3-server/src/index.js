@@ -19,7 +19,7 @@ app.use(cors({
   methods: ['GET, POST, PUT, DELETE', 'OPTIONS'],
 }));
 
-app.use('/api', router);
+app.use('/s3', router);
 
 const server = http.createServer(app);
 const PORT = process.env.PORT || 2859;
