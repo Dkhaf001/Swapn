@@ -99,7 +99,12 @@ class Chattest extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.setState(state => ({ modal: !state.modal }))}>Open Chat</button>
+        <button
+          className="chatbutton"
+          onClick={() => this.setState(state => ({ modal: !state.modal }))}
+        >
+          Open Chat
+        </button>
         <div className={this.state.modal ? 'modal-active' : 'modal'} id="modal-id">
           <a href="#close" class="modal-overlay" aria-label="Close" />
           <div class="modal-container">
