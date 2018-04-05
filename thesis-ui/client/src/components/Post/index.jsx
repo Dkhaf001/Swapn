@@ -17,36 +17,34 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: ''
+      address: '',
     };
   }
   async componentWillMount() {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(
-        `${REST_SERVER_URL}/api/posts/fetchSinglePost/${postId}`
-      );
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/fetchSinglePost/${postId}`);
       // console.log('successfully received post', data);
       this.props.addCurrentPost(data[0]);
       this.setState({ address: data[0].location });
       localStorage.setItem('oldLat', localStorage.getItem('latitude'));
       localStorage.setItem('oldLng', localStorage.getItem('longitude'));
       const geo = geocodeByAddress(this.state.address)
-        .then(results => {
+        .then((results) => {
           // console.log('results is from', results[0].formatted_address);
 
           getLatLng(results[0])
-            .then(latLng => {
+            .then((latLng) => {
               // console.log('SuccessHome', latLng);
               localStorage.setItem('latitude', latLng.lat);
               localStorage.setItem('longitude', latLng.lng);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log('Error', error);
             });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error', error);
         });
     } catch (error) {
@@ -70,7 +68,9 @@ class Post extends Component {
           return (
             <div>
               <SellerPost {...this.props} />
-              <GoogleMap />;
+              <div className="postmap">
+                <GoogleMap />;
+              </div>
             </div>
           );
         }
@@ -78,7 +78,9 @@ class Post extends Component {
       return (
         <div>
           <BuyerPost {...this.props} />
-          <GoogleMap />
+          <div className="postmap">
+            <GoogleMap />
+          </div>
         </div>
       );
     }
@@ -88,15 +90,15 @@ class Post extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_post: state.current_post
+    current_post: state.current_post,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 
