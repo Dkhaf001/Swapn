@@ -22,7 +22,7 @@ class BuyerPost extends Component {
       isLoggedIn: false,
       bartering: false,
       room_id: '',
-      buyer_username: ''
+      buyer_username: '',
     };
     this.makeOffer = this.makeOffer.bind(this);
   }
@@ -38,7 +38,7 @@ class BuyerPost extends Component {
       this.getFollowing();
       this.getWatching();
       this.setState({
-        isLoggedIn: true
+        isLoggedIn: true,
       });
     }
   }
@@ -47,17 +47,21 @@ class BuyerPost extends Component {
       const url = window.location.href;
       const postId = path.basename(url);
       const buyerUsername = this.props.active_user.username; // localStorage.getItem('username');;
-      const { data } = await axios.get(
-        `${REST_SERVER_URL}/api/offers/getSingleOffer/${buyerUsername}/${postId}`
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/offers/getSingleOffer/${buyerUsername}/${postId}`);
+      console.log(
+        'trying to get all offers using this buyername, and postId',
+        buyerUsername,
+        postId,
+        data,
       );
       if (data.rowCount > 0) {
         this.setState({
           room_id: data.rows[0] ? data.rows[0].room_id : null,
-          bartering: true
+          bartering: true,
         });
       } else {
         this.setState({
-          bartering: false
+          bartering: false,
         });
       }
     } catch (err) {
@@ -68,9 +72,7 @@ class BuyerPost extends Component {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
-      const { data } = await axios.get(
-        `${REST_SERVER_URL}/api/posts/fetchSinglePost/${postId}`
-      );
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/fetchSinglePost/${postId}`);
       // console.log('successfully received post', data);
       // console.log('what is this??', data[0]);
       this.props.addCurrentPost(data[0]);
@@ -85,13 +87,11 @@ class BuyerPost extends Component {
   getPhotos = async () => {
     try {
       const postId = this.props.current_post.id;
-      const { data } = await axios.get(
-        `${REST_SERVER_URL}/api/photos/${postId}`
-      );
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/photos/${postId}`);
       console.log('successfully received photos');
       const images = data.rows.map(values => JSON.parse(values.url));
       this.setState({
-        photos: images
+        photos: images,
       });
       this.props.addImages(images);
     } catch (err) {
@@ -103,18 +103,16 @@ class BuyerPost extends Component {
     try {
       const userId = this.props.current_post.user_id;
       const followerId = localStorage.id;
-      const { data } = await axios.get(
-        `${REST_SERVER_URL}/api/followings/single/${followerId}/${userId}`
-      );
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/followings/single/${followerId}/${userId}`);
       console.log('successfully received following list', data);
 
       if (data.rowCount > 0) {
         this.setState({
-          currentlyFollowing: true
+          currentlyFollowing: true,
         });
       } else {
         this.setState({
-          currentlyFollowing: false
+          currentlyFollowing: false,
         });
       }
     } catch (err) {
@@ -126,17 +124,15 @@ class BuyerPost extends Component {
     try {
       const userId = localStorage.id;
       const postId = this.props.current_post.id;
-      const { data } = await axios.get(
-        `${REST_SERVER_URL}/api/watchers/${userId}/${postId}`
-      );
+      const { data } = await axios.get(`${REST_SERVER_URL}/api/watchers/${userId}/${postId}`);
       console.log('successfully received watch list', data);
       if (data.rowCount > 0) {
         this.setState({
-          currentlyWatching: true
+          currentlyWatching: true,
         });
       } else {
         this.setState({
-          currentlyWatching: false
+          currentlyWatching: false,
         });
       }
     } catch (err) {
@@ -149,21 +145,19 @@ class BuyerPost extends Component {
     const postId = this.props.current_post.id;
     if (localStorage.id) {
       if (this.state.currentlyWatching === true) {
-        await axios.delete(
-          `${REST_SERVER_URL}/api/watchers/${userId}/${postId}`
-        );
+        await axios.delete(`${REST_SERVER_URL}/api/watchers/${userId}/${postId}`);
         if (this.props.current_post.watch_count > 0) {
           axios.put(`${REST_SERVER_URL}/api/posts/decreasewatch/${postId}`);
         }
         this.setState({
-          currentlyWatching: false
+          currentlyWatching: false,
         });
         console.log('you are no longer watching this post');
       } else {
         await axios.post(`${REST_SERVER_URL}/api/watchers/${userId}/${postId}`);
         axios.put(`${REST_SERVER_URL}/api/posts/increasewatch/${postId}`);
         this.setState({
-          currentlyWatching: true
+          currentlyWatching: true,
         });
         console.log('you are now watching this post');
       }
@@ -177,19 +171,15 @@ class BuyerPost extends Component {
     const followerId = localStorage.id;
     if (localStorage.id) {
       if (this.state.currentlyFollowing === true) {
-        await axios.delete(
-          `${REST_SERVER_URL}/api/followings/${followerId}/${userId}`
-        );
+        await axios.delete(`${REST_SERVER_URL}/api/followings/${followerId}/${userId}`);
         this.setState({
-          currentlyFollowing: false
+          currentlyFollowing: false,
         });
         console.log('you are no longer following this user!');
       } else {
-        await axios.post(
-          `${REST_SERVER_URL}/api/followings/${followerId}/${userId}`
-        );
+        await axios.post(`${REST_SERVER_URL}/api/followings/${followerId}/${userId}`);
         this.setState({
-          currentlyFollowing: true
+          currentlyFollowing: true,
         });
         console.log('you now following this user');
       }
@@ -198,7 +188,7 @@ class BuyerPost extends Component {
     }
   };
 
-  makeOffer = async offer => {
+  makeOffer = async (offer) => {
     try {
       console.log('you are making this offer', offer);
       const roomId = randomstring.generate();
@@ -211,21 +201,21 @@ class BuyerPost extends Component {
         postTitle: this.props.current_post.title,
         buyer_username: this.props.active_user.username,
         img: this.props.active_user.photo_url,
-        date: new Date().toUTCString()
+        date: new Date().toUTCString(),
       };
       this.props.socket.emit('message', message);
       this.setState({
         room_id: roomId,
-        buyer_username: this.props.active_user.username
+        buyer_username: this.props.active_user.username,
       });
       if (this.props.active_user) {
         this.setState({
-          bartering: true
+          bartering: true,
         });
         const { data } = await axios.post(`${REST_SERVER_URL}/api/offers/`, {
           post_id: this.props.current_post.id,
           buyer_username: this.props.active_user.username,
-          room_id: roomId
+          room_id: roomId,
         });
         console.log('just add offer to offer table', data);
       } else {
@@ -236,7 +226,7 @@ class BuyerPost extends Component {
     }
   };
 
-  switchToProfile = async userId => {
+  switchToProfile = async (userId) => {
     try {
       this.props.history.push(`/othersprofile/${userId}`);
     } catch (err) {
@@ -249,11 +239,9 @@ class BuyerPost extends Component {
     try {
       const userName = localStorage.username;
       const postId = this.props.current_post.id;
-      await axios.delete(
-        `${REST_SERVER_URL}/api/offers/deleteOffer/${userName}/${postId}`
-      );
+      await axios.delete(`${REST_SERVER_URL}/api/offers/deleteOffer/${userName}/${postId}`);
       this.setState({
-        bartering: false
+        bartering: false,
       });
       this.props.socket.emit('deleteOffers', this.props.current_post.id);
     } catch (err) {
@@ -272,11 +260,7 @@ class BuyerPost extends Component {
         <div className="panel">
           <div className="panel-body">
             <h1>
-              <a
-                onClick={() =>
-                  this.switchToProfile(this.props.current_post.user_id)
-                }
-              >
+              <a onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
                 {this.props.current_post.username}
               </a>'s posting
             </h1>
@@ -287,11 +271,7 @@ class BuyerPost extends Component {
             <h3>{this.props.current_post.condition}</h3>
             <h3>{this.props.current_post.location}</h3>
             <h4>
-              <strong
-                onClick={() =>
-                  this.switchToProfile(this.props.current_post.user_id)
-                }
-              >
+              <strong onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
                 {this.props.current_post.username}
               </strong>{' '}
               trading for: {this.props.current_post.demand}
@@ -367,15 +347,15 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     active_user: state.active_user,
     socket: state.socket,
-    images: state.images
+    images: state.images,
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addImages
+      addImages,
     },
-    dispatch
+    dispatch,
   );
 }
 
