@@ -15,7 +15,6 @@ class Profile extends Component {
   async componentWillMount() {
     const user_id = path.basename(window.location.href);
     const { data } = await axios.get(`${REST_SERVER_URL}/api/posts/${user_id}`);
-    console.log('thisis data curret profie', data);
     this.props.addCurrentList(data);
   }
 
@@ -36,16 +35,16 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    current_list: state.current_list,
+    current_list: state.current_list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentList,
+      addCurrentList
     },
-    dispatch,
+    dispatch
   );
 }
 

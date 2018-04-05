@@ -23,7 +23,7 @@ class Navbar extends Component {
     this.props.addCurrentPost('');
   };
   loggedInView = () => (
-    <header className="navbar" style={{ height: '150px' }}>
+    <header className="navbar sticky" style={{ height: '150px' }}>
       <section className="navbar-section">
         <a href="/home" className="navbar-brand mr-2 text-light">
           <h2>
@@ -64,7 +64,7 @@ class Navbar extends Component {
   );
   // need to add logout functinoality and protection
   loggedOutView = () => (
-    <header className="navbar" style={{ height: '150px' }}>
+    <header className="navbar sticky" style={{ height: '150px' }}>
       <section className="navbar-section">
         <a href="/home" className="navbar-brand mr-2 text-light">
           <h2>

@@ -208,7 +208,7 @@ class StatusBar extends Component {
                             value="Solid"
                             primaryText={`${
                               accepted.seller
-                            } accepted your offer on ${accepted.title}`}
+                            } accepted your offer on ${accepted.title}!`}
                             onClick={() => this.gotoAcceptedOffer(accepted)}
                           />
                         ))}
@@ -216,9 +216,9 @@ class StatusBar extends Component {
                           <MenuItem
                             key={message[0]}
                             value="Solid"
-                            primaryText={`${message[1].from} MSG you on post ${
-                              message[1].postTitle
-                            }`}
+                            primaryText={`${
+                              message[1].from
+                            } sent you a message for ${message[1].postTitle}`}
                             onClick={() => this.gotoMyPosts(message[1])}
                           />
                         ))}

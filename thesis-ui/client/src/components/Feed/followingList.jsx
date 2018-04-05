@@ -71,13 +71,15 @@ class Following extends Component {
                 />
               </div>
               <div className="tile-content d-inline">
-                <strong onClick={() => this.switchToProfile(following.id)}>
-                  {following.username}
-                </strong>
+                <h3>
+                  <strong onClick={() => this.switchToProfile(following.id)}>
+                    {following.username}
+                  </strong>
+                </h3>
               </div>
               <div className="tile-action">
                 <button
-                  className="btn btn-error"
+                  className="btn btn-error btn-lg"
                   onClick={() => this.handleUnfollowButtonClick(following.id)}
                 >
                   <i className="icon icon-delete" />

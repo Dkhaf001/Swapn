@@ -5,13 +5,14 @@ import Edit from './edit.jsx';
 import path from 'path';
 import { bindActionCreators } from 'redux';
 import { addCurrentProfile } from '../../actions';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const { REST_SERVER_URL } = process.env;
 class Bio extends Component {
   constructor() {
     super();
     this.state = {
-      currentlyFollowing: false,
+      currentlyFollowing: false
     };
   }
   async componentWillMount() {
@@ -23,7 +24,9 @@ class Bio extends Component {
       userId = this.props.active_user.id;
     }
     try {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/users/${userId}`);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/users/${userId}`
+      );
       this.props.addCurrentProfile(data[0]);
       if (url.includes('othersprofile')) {
         this.getFollowing();
@@ -35,45 +38,66 @@ class Bio extends Component {
 
   getFollowing = async () => {
     const userId = this.props.active_user.id;
-    const followerId = this.state.user.id;
+    const followerId = this.props.current_profile.id;
     try {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/followings/single/${userId}/${followerId}`);
-      console.log('successfully received following list');
-      // console.log('thisis data~~~~', data);
+      const { data } = await axios.get(
+        `${REST_SERVER_URL}/api/followings/single/${userId}/${followerId}`
+      );
       if (data.rowCount > 0) {
         this.setState({
-          currentlyFollowing: true,
+          currentlyFollowing: true
         });
         // console.log('follow', this.state.currentlyFollowing);
       } else {
         this.setState({
-          currentlyFollowing: false,
+          currentlyFollowing: false
         });
         // console.log('unfollow', this.state.currentlyFollowing);
       }
+      console.log(
+        'this is the current state: currentlyFollowing: ',
+        this.state.currentlyFollowing
+      );
     } catch (err) {
       console.log('error getting followers!');
     }
   };
 
-  buttonCheck = () => {
-    if (this.state.currentlyFollowing) {
-      return <button onClick={this.unfollowButton}>Unfollow</button>;
-    }
-    return <button onClick={this.followButton}>Follow</button>;
-  };
+  buttonCheck = () =>
+    this.state.currentlyFollowing ? (
+      <RaisedButton
+        label="Unfollow"
+        secondary={true}
+        style={{ margin: 12 }}
+        onClick={this.unfollowButton}
+      />
+    ) : (
+      <RaisedButton
+        label="Follow"
+        primary={true}
+        style={{ margin: 12 }}
+        onClick={this.followButton}
+      />
+    );
+
   followButton = async () => {
     const userId = this.props.active_user.id;
-    const followerId = this.state.user.id;
-    await axios.post(`${REST_SERVER_URL}/api/followings/${userId}/${followerId}`);
+    const followerId = this.props.current_profile.id;
+    await axios.post(
+      `${REST_SERVER_URL}/api/followings/${userId}/${followerId}`
+    );
     this.setState({ currentlyFollowing: true });
   };
+
   unfollowButton = async () => {
     const userId = this.props.active_user.id;
-    const followerId = this.state.user.id;
-    await axios.delete(`${REST_SERVER_URL}/api/followings/${userId}/${followerId}`);
+    const followerId = this.props.current_profile.id;
+    await axios.delete(
+      `${REST_SERVER_URL}/api/followings/${userId}/${followerId}`
+    );
     this.setState({ currentlyFollowing: false });
   };
+
   sellerView = () => (
     <div className="bio">
       <div>
@@ -85,41 +109,43 @@ class Bio extends Component {
       <p>#followers: {this.state.user.follower_count}</p> */}
     </div>
   );
+
   buyerView = () => (
     <div className="bio">
       {this.props.current_profile.photo_url ? (
-        <img src={this.props.current_profile.photo_url} />
+        <img
+          src={this.props.current_profile.photo_url}
+          style={{ width: '128px', height: '128px' }}
+          className="circle"
+        />
       ) : (
         <img src="http://laoblogger.com/images/default-profile-picture-5.jpg" />
       )}
-
       <h3>{this.props.current_profile.username}</h3>
-      {/* <p>User:{this.state.user.rep}</p>
-      <p>{this.state.user.rep_count}</p> */}
       {this.buttonCheck()}
     </div>
   );
   render() {
     const url = window.location.href;
     if (!url.includes('othersprofile')) {
-      // this.current_profile.id;
       return this.sellerView();
+    } else {
+      return this.buyerView();
     }
-    return this.buyerView();
   }
 }
 function mapStateToProps(state) {
   return {
     current_profile: state.current_profile,
-    active_user: state.active_user,
+    active_user: state.active_user
   };
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addCurrentProfile,
+      addCurrentProfile
     },
-    dispatch,
+    dispatch
   );
 }
 
