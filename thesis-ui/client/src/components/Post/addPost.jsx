@@ -122,7 +122,7 @@ class AddPost extends Component {
       const postId = this.props.current_post.id;
       await axios.delete(`${REST_SERVER_URL}/api/posts/${userId}/${postId}`);
 
-      await axios.delete(`${S3_SERVER_URL}/api/${postId}`);
+      await axios.delete(`${S3_SERVER_URL}/s3/api/${postId}`);
 
       console.log('successfully deleted new post');
       this.props.history.push('/home');

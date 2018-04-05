@@ -57,7 +57,7 @@ class PhotoUpload extends React.Component {
       const url = window.location.href;
       const postId = path.basename(url);
       this.setState({ posting: false });
-      const data = await axios.delete(`${S3_SERVER_URL}/api/${postId}`);
+      const data = await axios.delete(`${S3_SERVER_URL}/s3/api/${postId}`);
       console.log(data);
       this.props.addImages(null);
     } catch (error) {
@@ -91,7 +91,7 @@ class PhotoUpload extends React.Component {
     // change to match the route i need for dp route
 
     // 1 changes to postID
-    const { data } = await axios.post(`${S3_SERVER_URL}/api/addphoto/${postId}`, formData);
+    const { data } = await axios.post(`${S3_SERVER_URL}/s3/api/addphoto/${postId}`, formData);
     console.log('thisis data from upload', data.key);
 
     this.setState({
@@ -109,7 +109,7 @@ class PhotoUpload extends React.Component {
 
   fetchAlbum = async (postId) => {
     try {
-      const data = await axios.get(`${S3_SERVER_URL}/api/${postId}`);
+      const data = await axios.get(`${S3_SERVER_URL}/s3/api/${postId}`);
       console.log(data);
     } catch (error) {
       console.log(error);
