@@ -57,13 +57,14 @@ class ListingPostList extends Component {
   };
   render() {
     return (
-      <div style={styles.root}>
-        <GridList cellHeight={200} style={styles.gridList}>
+      <div className="container" style={styles.root}>
+        <div className="columns">
           {this.state.listings &&
             this.state.listings.map(post => (
               <GridTile
                 key={post.id}
                 title={post.title}
+                style={{ width: 200, height: 300, margin: 10 }}
                 className={post.status === 'SWAPPED' ? 'swapped' : ''}
                 subtitle={
                   <span>
@@ -76,7 +77,7 @@ class ListingPostList extends Component {
                 <img src={post.main_photo} />
               </GridTile>
             ))}
-        </GridList>
+        </div>
       </div>
     );
   }
@@ -98,3 +99,27 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListingPostList);
+
+{
+  /* <div style={styles.root}>
+<GridList cellHeight={200} style={styles.gridList}>
+  {this.state.listings &&
+    this.state.listings.map(post => (
+      <GridTile
+        key={post.id}
+        title={post.title}
+        className={post.status === 'SWAPPED' ? 'swapped' : ''}
+        subtitle={
+          <span>
+            <b>{post.id}</b>
+            <b>{post.username}</b>
+          </span>
+        }
+        onClick={() => this.switchToSinglePost(post)}
+      >
+        <img src={post.main_photo} />
+      </GridTile>
+    ))}
+</GridList>
+</div> */
+}
