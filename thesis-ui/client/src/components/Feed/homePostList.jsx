@@ -32,7 +32,7 @@ const styles = {
 class HomePostList extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: 1 };
+    this.state = {};
   }
 
   async componentWillMount() {
@@ -117,44 +117,9 @@ class HomePostList extends Component {
     }
   };
 
-  handleChange = async (event, index, value) => {
-    this.setState({ value });
-    if (value === 1) {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
-      data.sort((a, b) => b.id - a.id);
-      this.props.addCurrentList(data);
-    } else if (value === 2) {
-      const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
-      // UNCOMMENT THIS CODE WHEN DANIEL FINISHES DISTANCE CALCULATION
-      // data.sort((a, b) => a.distance - b.distance);
-
-      // this is sorting by alphabetical order (placeholder until distance is setup)
-      data.sort((a, b) => {
-        if (a.title < b.title) {
-          return -1;
-        }
-        return 1;
-      });
-      this.props.addCurrentList(data);
-    }
-  };
-
   render() {
     return (
       <div className="homepost">
-        <div>
-          {' '}
-          <DropDownMenu
-            value={this.state.value}
-            onChange={this.handleChange}
-            openImmediately={false}
-            style={{ float: 'right' }}
-          >
-            <MenuItem value={1} primaryText="Sort by Newest" />
-            <MenuItem value={2} primaryText="Sort by Distance" />
-          </DropDownMenu>
-        </div>
-
         <div className="containerr">
           <div className="columnss">
             {this.props.current_list &&
@@ -179,7 +144,7 @@ class HomePostList extends Component {
                               width: '100%',
                               bottom: '0',
                               position: 'absolute',
-                              backgroundColor: 'rgb(5, 102, 220)'
+                              backgroundColor: 'rgb(208, 204, 208)'
                             }}
                             onClick={e => {
                               e.stopPropagation();
@@ -187,7 +152,9 @@ class HomePostList extends Component {
                             }}
                           >
                             <Avatar src={post.photo_url} />
-                            <div style={{ color: 'white', fontWeight: 'bold' }}>
+                            <div
+                              style={{ color: '#3a606e', fontWeight: 'bold' }}
+                            >
                               {post.username}
                             </div>
                           </Chip>

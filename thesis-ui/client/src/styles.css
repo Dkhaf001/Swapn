@@ -2,14 +2,21 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-image: url('http://supernovathemes.com/wp-content/themes/supernovathemes/images/bg/b25.png');
+  background-repeat: repeat;
 }
+/* hold */
+/* background-image: url('http://supernovathemes.com/wp-content/themes/supernovathemes/images/bg/b25.png'); */
+
+/* daniels blue background */
 /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnIo336o_ujMMPdfX95_15U2yEYuVrMZ3y-XMntjQ2AkZytms3'); */
 
 .homepost {
   padding-left: 15%;
 }
 .navbar {
-  background-color: rgb(5, 102, 220);
+  /* background-color: rgb(5, 102, 220); */
+  background-color: rgb(3, 37, 108);
 }
 .card {
   display: inline-block;
@@ -50,8 +57,11 @@ body {
 
 .bottomhalf {
   min-width: 100%;
-  background-color: rgb(208, 204, 208);
+  background-color: rgb(58, 96, 110);
+  color: white;
   text-align: center;
+  /* background-image: url('http://supernovathemes.com/wp-content/themes/supernovathemes/images/bg/b51.png');
+  background-repeat: repeat; */
 }
 .overlay {
   padding-top: 10%;

@@ -32,8 +32,9 @@ class Search extends Component {
           />
           <RaisedButton
             label="Submit"
-            primary={true}
+            // primary={true}
             style={{ margin: '12' }}
+            backgroundColor={'rgb(208, 204, 208)'}
             onClick={() => this.handleSubmit()}
           />
         </div>
