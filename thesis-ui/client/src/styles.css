@@ -13,6 +13,7 @@ body {
 
 .homepost {
   padding-left: 15%;
+  padding-right: 15%;
 }
 .navbar {
   /* background-color: rgb(5, 102, 220); */
@@ -99,7 +100,7 @@ body {
 
 .chatcontainer {
   border: 2px solid #dedede;
-  background-color: #f1f1f1;
+  background-color: #477ff8;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
@@ -114,7 +115,7 @@ body {
 
 .darker {
   border-color: #ccc;
-  background-color: #ddd;
+  background-color: rgb(55, 23, 181);
 }
 
 .chatcontainer::after {
@@ -213,4 +214,7 @@ body {
   top: 20%;
   left: 4%;
   background-color: rgba(0, 0, 0, 0.9);
+}
+.modal-container {
+  background-color: rgba(3, 37, 108, 0.8);
 }

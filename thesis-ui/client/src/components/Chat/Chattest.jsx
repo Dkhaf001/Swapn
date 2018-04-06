@@ -56,6 +56,9 @@ class Chattest extends React.Component {
           messages: data,
         });
       });
+      this.setState({
+        modal: this.props.modal,
+      });
       // const room_id = this.props.roomId
       // const { data } = await axios.get(`http://localhost:3396/api/messages/${room_id}`)
     } catch (err) {
@@ -106,10 +109,13 @@ class Chattest extends React.Component {
           Open Chat
         </button>
         <div className={this.state.modal ? 'modal-active' : 'modal'} id="modal-id">
-          <a href="#close" class="modal-overlay" aria-label="Close" />
+          <a href="#close" className="modal-overlay" aria-label="Close" />
           <div className="modal-container">
             <div className="modal-header">
-              <a href="#close" class="btn btn-clear float-right" aria-label="Close" />
+              <a
+                className="btn btn-clear float-right"
+                onClick={() => this.setState(state => ({ modal: !state.modal }))}
+              />
               <div className="modal-title h5">Chat</div>
             </div>
             <div className="modal-body">

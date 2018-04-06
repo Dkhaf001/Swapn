@@ -23,8 +23,10 @@ class BuyerPost extends Component {
       bartering: false,
       room_id: '',
       buyer_username: '',
+      modal: false,
     };
     this.makeOffer = this.makeOffer.bind(this);
+    this.toggleChat = this.toggleChat.bind(this);
   }
 
   async componentWillMount() {
@@ -248,7 +250,12 @@ class BuyerPost extends Component {
       console.log('err deleteing offer');
     }
   }
-
+  toggleChat = () => {
+    console.log('togglechat function');
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
   render() {
     return this.props.current_post ? (
       <div className="buyerpost">
@@ -322,13 +329,14 @@ class BuyerPost extends Component {
             )}
           {!this.state.bartering &&
             this.props.current_post.status !== 'SWAPPED' && (
-              <Popout makeOffer={this.makeOffer} {...this.props} />
+              <Popout makeOffer={this.makeOffer} {...this.props} toggleChat={this.toggleChat} />
             )}
         </div>
         <div className="chatbox">
           {this.state.bartering &&
             this.props.current_post.status !== 'SWAPPED' && (
               <Chattest
+                modal={this.state.modal}
                 post={this.props.current_post}
                 roomId={this.state.room_id}
                 buyer_username={this.state.buyer_username}
