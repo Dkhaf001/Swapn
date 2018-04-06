@@ -21,13 +21,13 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class HomePostList extends Component {
@@ -72,7 +72,7 @@ class HomePostList extends Component {
       console.log('err runget distance', err);
     }
   };
-  getDistance = async data => {
+  getDistance = async (data) => {
     // console.log('reached data', data);
     // for (let i = 0; i < data.length; i++) {
     // console.log('reached here 4');
@@ -104,11 +104,12 @@ class HomePostList extends Component {
     //   latLng
     // );
     data.distance = Math.round(dist * 0.8684);
-    // console.log('the result is ', data);
+
+    console.log('the result is ', data);
     // }
     return data;
   };
-  switchToSinglePost = async post => {
+  switchToSinglePost = async (post) => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -117,7 +118,7 @@ class HomePostList extends Component {
     }
   };
 
-  switchToProfile = async userId => {
+  switchToProfile = async (userId) => {
     try {
       if (this.props.active_user) {
         userId === this.props.active_user.id
@@ -193,7 +194,8 @@ class HomePostList extends Component {
                       </div>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
             <Geolocation />
           </div>
         </div>
@@ -205,7 +207,7 @@ class HomePostList extends Component {
 function mapStateToProps(state) {
   return {
     current_list: state.current_list,
-    active_user: state.active_user
+    active_user: state.active_user,
   };
 }
 
@@ -213,9 +215,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 

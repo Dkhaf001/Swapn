@@ -263,7 +263,7 @@ class BuyerPost extends Component {
           <ViewSlide />
         </div>
 
-        <div style={{ maxWidth: '40%', maxHeight: 'auto' }}>
+        <div style={{ maxWidth: '35%', maxHeight: 'auto' }}>
           <h1>
             <a onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
               {this.props.current_post.username}
@@ -331,7 +331,7 @@ class BuyerPost extends Component {
           </div>
         </div>
 
-        <div>
+        <div className="chatboxx">
           {this.state.bartering &&
             this.props.current_post.status !== 'SWAPPED' && (
               <Chattest

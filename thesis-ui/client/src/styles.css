@@ -100,22 +100,16 @@ body {
 
 .chatcontainer {
   border: 2px solid #dedede;
-  background-color: #477ff8;
+  background-color: rgb(251, 252, 255);
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
   width: 500px;
 }
-.chatbutton {
-  position: fixed;
-  top: 55%;
-  left: 67.5%;
-  /* awdda */
-}
 
 .darker {
   border-color: #ccc;
-  background-color: rgb(55, 23, 181);
+  background-color: rgb(251, 252, 255);
 }
 
 .chatcontainer::after {
@@ -167,28 +161,13 @@ body {
 .postmap {
   position: absolute;
   top: 23%;
-  left: 67.5%;
+  left: 73.5%;
   border-radius: 3px;
+  margin-top: 4%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
 }
-.panel {
-  border: none !important;
-  position: absolute;
-  top: 21%;
-  left: 30%;
-  width: 35%;
-  max-height: 40%;
-}
-.chatbox {
-  position: absolute;
-  top: 61%;
-  left: 50%;
-  overflow: scroll;
-  max-height: 300px;
-  /* max-width: 300px; */
-  border-radius: 3px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
-  /* background-color: black !important; */
+#chatarray {
+  background-image: blue;
 }
 
 .postbuttons {
@@ -196,12 +175,11 @@ body {
   top: 82%;
   left: 32.5%;
 }
-.chatrooms {
-  position: fixed;
-  top: 72%;
-  left: 32.5%;
+.panel-header {
+  color: black;
+  background-color: rgb(208, 204, 208);
+  text-align: center;
 }
-
 .swapped {
   position: 'relative';
 }
@@ -216,10 +194,43 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
 }
 .modal-container {
-  background-color: rgba(3, 37, 108, 0.8);
+  background-color: rgb(208, 204, 208);
 }
 
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+}
+.chatboxx {
+  /* margin-left: 40%; */
+  /* margin-top: -8%; */
+  overflow: visible;
+}
+.chatrooms {
+  width: 40%;
+  top: 52%;
+  left: 32.5%;
+}
+.chatbox {
+  position: absolute;
+  top: 31%;
+  left: 50%;
+  overflow: scroll;
+  max-height: 300px;
+  /* max-width: 300px; */
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgb(208, 204, 208);
+  /* background-color: black !important; */
+}
+.chatbutton {
+  /* position: relative; */
+  /* top: 55%;
+  left: 67.5%; */
+  /* awdda */
+}
+.chatthing {
+  position: relative;
+}
+.chatstyle {
+  background-color: rgb(208, 204, 208);
 }
