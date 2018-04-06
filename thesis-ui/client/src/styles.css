@@ -203,8 +203,8 @@ body {
   flex-wrap: wrap;
 }
 .chatboxx {
-  position: fixed;
-  margin-left: 40%;
+  position: relative;
+  margin-left: 10%;
   margin-top: 25%;
   overflow: visible;
 }
@@ -216,7 +216,7 @@ body {
   left: 32.5%; */
 }
 .chatbox {
-  position: absolute;
+  position: relative;
   top: 31%;
   left: 50%;
   overflow: scroll;
