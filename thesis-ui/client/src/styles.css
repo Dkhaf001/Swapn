@@ -203,14 +203,14 @@ body {
 }
 .chatboxx {
   position: fixed;
-  margin-left: -30%;
+  margin-left: 40%;
   margin-top: 25%;
   overflow: visible;
 }
 .chatrooms {
   width: 30%;
-  margin-top: 20%;
-  margin-left: -27%;
+  margin-top: -17%;
+  margin-left: 40%;
   /* top: 52%;
   left: 32.5%; */
 }
