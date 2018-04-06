@@ -56,6 +56,9 @@ class Chattest extends React.Component {
           messages: data,
         });
       });
+      this.setState({
+        modal: this.props.modal,
+      });
       // const room_id = this.props.roomId
       // const { data } = await axios.get(`http://localhost:3396/api/messages/${room_id}`)
     } catch (err) {
