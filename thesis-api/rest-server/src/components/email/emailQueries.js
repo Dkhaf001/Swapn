@@ -1,10 +1,10 @@
-import { getUserEmailHelper } from './emailSQLhepler';
+import { getUserEmailHelper } from './emailSQLhelper';
 import db from '../../config/database';
 
-export const getUserEmail = async (username) => {
+export const getUserEmail = async username => {
   try {
-    const queryString = getUserEmailHelper(username);
-    const data = await db.queryAsync(queryString);
+    const queryString = getUserEmailHelper();
+    const data = await db.queryAsync(queryString, [username]);
     return data.rows[0];
   } catch (err) {
     console.log('err getUserEmail', err);
