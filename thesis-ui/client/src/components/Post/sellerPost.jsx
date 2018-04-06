@@ -346,6 +346,7 @@ class SellerPost extends Component {
                   <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
                     <a>{offer.username}</a>
                     <button
+                      className="deletebutton text-light"
                       onClick={(e) => {
                         e.stopPropagation();
                         this.denyActiveOffer(offer.username, this.props.current_post.id, offer.id);
