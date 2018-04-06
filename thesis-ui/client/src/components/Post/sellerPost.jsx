@@ -32,6 +32,7 @@ class SellerPost extends Component {
       currentRoom: '',
       tradingWith: false,
       count: 0,
+      currentTalking: '',
     };
     this.acceptOffer = this.acceptOffer.bind(this);
   }
@@ -219,7 +220,7 @@ class SellerPost extends Component {
   handleUserClick = (offer) => {
     this.setState({
       currentRoom: this.state.currentRoom === offer.room_id ? null : offer.room_id,
-      // currentTalking: offer.buyer_username,
+      currentTalking: offer.buyer_username,
     });
   };
 
