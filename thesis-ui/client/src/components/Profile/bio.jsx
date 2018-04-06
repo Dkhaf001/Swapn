@@ -95,7 +95,7 @@ class Bio extends Component {
   };
 
   sellerView = () => (
-    <div className="bio">
+    <div className="bio" style={{ padding: '50px 0 0 50px' }}>
       <div>
         <Edit />
       </div>
@@ -107,7 +107,7 @@ class Bio extends Component {
   );
 
   buyerView = () => (
-    <div className="bio">
+    <div className="bio" style={{ padding: '50px 0 0 30px' }}>
       {this.props.current_profile.photo_url ? (
         <img
           src={this.props.current_profile.photo_url}
