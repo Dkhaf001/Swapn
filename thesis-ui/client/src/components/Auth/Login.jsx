@@ -14,12 +14,15 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      err: '',
+      err: ''
     };
   }
   async handleSubmit() {
     try {
-      const response = await axios.post(`${REST_SERVER_URL}/api/auth/login`, this.state);
+      const response = await axios.post(
+        `${REST_SERVER_URL}/api/auth/login`,
+        this.state
+      );
       // window.localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('id', response.data.id);
@@ -32,15 +35,26 @@ class Login extends Component {
     } catch (err) {
       console.log('err loging', err);
       this.setState({
-        err: true,
+        err: true
       });
     }
   }
+
+  enterLogin = e => {
+    e.preventDefault();
+    if (e.keyCode === 13) {
+      this.handleSubmit();
+    }
+  };
+
   render() {
     return (
       <div className="form-group">
         {this.state.err && (
-          <div className="toast toast-error centered" style={{ textAlign: 'center', width: '50%' }}>
+          <div
+            className="toast toast-error centered"
+            style={{ textAlign: 'center', width: '50%' }}
+          >
             Something went wrong. Please try again!
           </div>
         )}
@@ -67,10 +81,14 @@ class Login extends Component {
           placeholder="Enter Password"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
           style={{ width: '30%' }}
+          onKeyUp={e => this.enterLogin(e)}
         />
         <div>
           <br />
-          <button className="btn btn-success centered" onClick={() => this.handleSubmit()}>
+          <button
+            className="btn btn-success centered"
+            onClick={() => this.handleSubmit()}
+          >
             Sign In
           </button>
         </div>
@@ -82,9 +100,9 @@ class Login extends Component {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addActiveUserToStore,
+      addActiveUserToStore
     },
-    dispatch,
+    dispatch
   );
 }
 function mapStateToProps(state) {

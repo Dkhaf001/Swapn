@@ -18,6 +18,7 @@ body {
 .navbar {
   /* background-color: rgb(5, 102, 220); */
   background-color: rgb(3, 37, 108);
+  z-index: 2 !important;
 }
 .card {
   display: inline-block;
@@ -188,7 +189,7 @@ body {
   content: url('http://txt-dynamic.cdn.1001fonts.net/txt/dHRmLjEwNi5mMTA5MGUuVTFkQlVDZEUuMAAA/blue-sky-blue-grass.regular.png');
   transform: rotate(20deg);
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   top: 20%;
   left: 4%;
   background-color: rgba(0, 0, 0, 0.9);
