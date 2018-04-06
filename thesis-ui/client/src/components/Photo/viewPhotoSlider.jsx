@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ImageGallery from 'react-image-gallery';
 import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
+import './slider.css';
 
 class ViewSlide extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class ViewSlide extends React.Component {
       thumbnailPosition: 'bottom',
       showVideo: {},
       currentIndex: 0,
-      images: this.props.images_list
+      images: this.props.images_list,
     };
   }
   componentWillMount() {}
@@ -45,7 +46,7 @@ class ViewSlide extends React.Component {
       'clicked on image',
       event.target,
       'at index',
-      this._imageGallery.getCurrentIndex()
+      this._imageGallery.getCurrentIndex(),
     );
   }
 
@@ -97,7 +98,7 @@ class ViewSlide extends React.Component {
   _toggleShowVideo(url) {
     this.state.showVideo[url] = !this.state.showVideo[url];
     this.setState({
-      showVideo: this.state.showVideo
+      showVideo: this.state.showVideo,
     });
 
     if (this.state.showVideo[url]) {
@@ -116,27 +117,15 @@ class ViewSlide extends React.Component {
       <div className="image-gallery-image">
         {this.state.showVideo[item.embedUrl] ? (
           <div className="video-wrapper">
-            <a
-              className="close-video"
-              onClick={this._toggleShowVideo.bind(this, item.embedUrl)}
-            />
-            <iframe
-              width="560"
-              height="315"
-              src={item.embedUrl}
-              frameBorder="0"
-              allowFullScreen
-            />
+            <a className="close-video" onClick={this._toggleShowVideo.bind(this, item.embedUrl)} />
+            <iframe width="560" height="315" src={item.embedUrl} frameBorder="0" allowFullScreen />
           </div>
         ) : (
           <a onClick={this._toggleShowVideo.bind(this, item.embedUrl)}>
             <div className="play-button" />
             <img src={item.original} />
             {item.description && (
-              <span
-                className="image-gallery-description"
-                style={{ right: '0', left: 'initial' }}
-              >
+              <span className="image-gallery-description" style={{ right: '0', left: 'initial' }}>
                 {item.description}
               </span>
             )}
@@ -164,12 +153,9 @@ class ViewSlide extends React.Component {
               infinite={this.state.infinite}
               showBullets={this.state.showBullets}
               showFullscreenButton={
-                this.state.showFullscreenButton &&
-                this.state.showGalleryFullscreenButton
+                this.state.showFullscreenButton && this.state.showGalleryFullscreenButton
               }
-              showPlayButton={
-                this.state.showPlayButton && this.state.showGalleryPlayButton
-              }
+              showPlayButton={this.state.showPlayButton && this.state.showGalleryPlayButton}
               showThumbnails={this.state.showThumbnails}
               showIndex={this.state.showIndex}
               showNav={this.state.showNav}
@@ -190,7 +176,7 @@ class ViewSlide extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    images_list: state.images
+    images_list: state.images,
   };
 }
 

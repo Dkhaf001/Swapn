@@ -218,3 +218,8 @@ body {
 .modal-container {
   background-color: rgba(3, 37, 108, 0.8);
 }
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}

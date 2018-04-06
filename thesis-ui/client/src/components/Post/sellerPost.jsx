@@ -260,11 +260,12 @@ class SellerPost extends Component {
 
   render() {
     return this.props.current_post ? (
-      <div>
-        <div className="postcard">
+      <div className="flex-container">
+        <div>
           <ViewSlide />
         </div>
-        <div className="panel">
+
+        <div style={{ maxWidth: '40%', maxHeight: 'auto' }}>
           <h1>
             <strong>{this.props.current_post && this.props.current_post.title}</strong>
           </h1>
@@ -279,58 +280,61 @@ class SellerPost extends Component {
             {this.props.current_post && this.props.current_post.demand}
           </h4>
           <h4>Status: {this.props.current_post && this.state.accept.status}</h4>
-        </div>
-        <div className="postbuttons">
-          {this.state.sold === false ? (
+
+          <div>
+            {this.state.sold === false ? (
+              <RaisedButton
+                label="Edit Post"
+                primary={true}
+                style={{ margin: 12 }}
+                onClick={() => this.editPost()}
+              />
+            ) : null}
+            {this.state.sold === false && this.state.offerAccepted === true ? (
+              <RaisedButton
+                label="Complete Transaction"
+                secondary={true}
+                style={{ margin: 12 }}
+                onClick={() => this.soldOffer()}
+              />
+            ) : null}
+            {this.state.offerAccepted === false ? (
+              <RaisedButton
+                label="Accept Offer"
+                primary={true}
+                style={{ margin: 12 }}
+                onClick={() => this.acceptOffer()}
+              />
+            ) : this.state.sold === false ? (
+              <RaisedButton
+                label="Cancel Offer"
+                secondary={true}
+                style={{ margin: 12 }}
+                onClick={() => this.cancelOffer()}
+              />
+            ) : (
+              <RaisedButton
+                label="Relist"
+                secondary={true}
+                style={{ margin: 12 }}
+                onClick={() => this.cancelOffer()}
+              />
+            )}
             <RaisedButton
-              label="Edit Post"
-              primary={true}
-              style={{ margin: 12 }}
-              onClick={() => this.editPost()}
-            />
-          ) : null}
-          {this.state.sold === false && this.state.offerAccepted === true ? (
-            <RaisedButton
-              label="Complete Transaction"
+              label="Delete"
               secondary={true}
               style={{ margin: 12 }}
-              onClick={() => this.soldOffer()}
+              onClick={() => this.deletePost()}
             />
-          ) : null}
-          {this.state.offerAccepted === false ? (
-            <RaisedButton
-              label="Accept Offer"
-              primary={true}
-              style={{ margin: 12 }}
-              onClick={() => this.acceptOffer()}
-            />
-          ) : this.state.sold === false ? (
-            <RaisedButton
-              label="Cancel Offer"
-              secondary={true}
-              style={{ margin: 12 }}
-              onClick={() => this.cancelOffer()}
-            />
-          ) : (
-            <RaisedButton
-              label="Relist"
-              secondary={true}
-              style={{ margin: 12 }}
-              onClick={() => this.cancelOffer()}
-            />
+          </div>
+          <br />
+          {this.state.tradingWith && (
+            <div>You are now in transaction with {this.state.tradingWith}</div>
           )}
-          <RaisedButton
-            label="Delete"
-            secondary={true}
-            style={{ margin: 12 }}
-            onClick={() => this.deletePost()}
-          />
         </div>
-        <br />
-        {this.state.tradingWith && (
-          <div>You are now in transaction with {this.state.tradingWith}</div>
-        )}
-        {/* {this.state.offers &&
+
+        <div className="chatrooms">
+          {/* {this.state.offers &&
           this.state.offers.map(offer => (
             <div key={offer.id}>
               <div
@@ -362,7 +366,6 @@ class SellerPost extends Component {
               </div>
             </div>
           ))} */}
-        <div className="chatrooms">
           {this.state.offers &&
             this.state.offers.map(offer => (
               <div key={offer.id}>
@@ -379,13 +382,14 @@ class SellerPost extends Component {
                 </div>
               </div>
             ))}
-        </div>
-        <div>
-          {this.state.currentRoom && (
-            <div className="chatbox">
-              <Chattest roomId={this.state.currentRoom} {...this.props} />
-            </div>
-          )}
+
+          <div>
+            {this.state.currentRoom && (
+              <div className="chatbox">
+                <Chattest roomId={this.state.currentRoom} {...this.props} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     ) : (
