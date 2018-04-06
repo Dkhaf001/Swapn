@@ -75,7 +75,7 @@ class CategoryPost extends Component {
                               width: '100%',
                               bottom: '0',
                               position: 'absolute',
-                              backgroundColor: 'rgb(5, 102, 220)'
+                              backgroundColor: 'rgb(208, 204, 208)'
                             }}
                             onClick={e => {
                               e.stopPropagation();
@@ -83,7 +83,9 @@ class CategoryPost extends Component {
                             }}
                           >
                             <Avatar src={post.photo_url} />
-                            <div style={{ color: 'white', fontWeight: 'bold' }}>
+                            <div
+                              style={{ color: '#3a606e', fontWeight: 'bold' }}
+                            >
                               {post.username}
                             </div>
                           </Chip>
