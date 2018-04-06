@@ -57,7 +57,9 @@ class SearchList extends Component {
   render() {
     return (
       <div>
-        <h1>Search results for: {this.props.location.state}</h1>
+        <h2 style={{ textAlign: 'center' }}>
+          Search results for: {this.props.location.state}
+        </h2>
 
         <div style={styles.root}>
           <GridList

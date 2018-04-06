@@ -20,14 +20,11 @@ class Profile extends Component {
 
   render() {
     return (
-      <div>
+      <div className="flex-container">
         <div>
           <Bio />
         </div>
-        <div>
-          <ListingList {...this.props} />
-          <div />
-        </div>
+        <ListingList {...this.props} />
       </div>
     );
   }

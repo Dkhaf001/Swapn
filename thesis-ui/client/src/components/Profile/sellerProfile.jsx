@@ -12,18 +12,26 @@ class SellerProfile extends Component {
   }
   render() {
     return (
-      <div>
-        <div>
-          <div>
-            <Bio />
-            <ProfileNavbar />
-            <Switch>
-              {profileRoutes.map((prop, key) => (
-                <Route path={prop.path} component={prop.component} key={key} />
-              ))}
-              <Redirect from="/profile" to="/profile/selling" />
-            </Switch>
-          </div>
+      <div className="flex-container">
+        <div
+          style={{
+            float: 'left',
+            width: '15%',
+            height: '20%',
+            align: 'center',
+            overflow: 'hidden'
+          }}
+        >
+          <Bio />
+        </div>
+        <div style={{ float: 'right', width: '80%' }}>
+          <ProfileNavbar />
+          <Switch>
+            {profileRoutes.map((prop, key) => (
+              <Route path={prop.path} component={prop.component} key={key} />
+            ))}
+            <Redirect from="/profile" to="/profile/selling" />
+          </Switch>
         </div>
       </div>
     );
