@@ -352,11 +352,11 @@ class SellerPost extends Component {
                         // width: '100%',
                         bottom: '0',
                         // position: 'absolute',
-                        backgroundColor: 'rgb(208, 204, 208)',
+                        backgroundColor: 'rgb(5, 178, 220)',
                       }}
                     >
                       <Avatar src={offer.photo_url} />
-                      <div style={{ color: 'black', fontWeight: 'bold' }}>
+                      <div style={{ color: 'white', fontWeight: 'bold' }}>
                         {offer.username}
                         <button
                           className="deletebutton text-light"
@@ -369,7 +369,7 @@ class SellerPost extends Component {
                             );
                           }}
                         >
-                          REJECT
+                          Delete
                         </button>
                       </div>
                     </Chip>
