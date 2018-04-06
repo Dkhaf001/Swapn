@@ -271,7 +271,7 @@ class PhotoSlide extends React.Component {
               additionalClass="app-image-gallery"
             />
           ) : (
-            <div>noPhotos</div>
+            <div>Add a photo</div>
           )}
         </section>
       </div>

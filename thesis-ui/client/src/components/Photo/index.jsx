@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { addImages, addMainPhoto } from '../../actions';
 import PhotoSlide from './photoslide.jsx';
 import path from 'path';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const { REST_SERVER_URL } = process.env;
 const { S3_SERVER_URL } = process.env;
@@ -15,11 +16,11 @@ class PhotoUpload extends React.Component {
       posting: false,
       file: null,
       images: [],
-      mainPhoto: [],
+      mainPhoto: []
     };
   }
 
-  mainPhoto = (input) => {
+  mainPhoto = input => {
     const temp = this.state.images;
     let copy;
     if (temp.length > 1) {
@@ -32,7 +33,7 @@ class PhotoUpload extends React.Component {
     this.props.addMainPhoto(copy[0]);
   };
 
-  removingPhoto = async (input) => {
+  removingPhoto = async input => {
     try {
       const temp = this.state.images;
       const hold = temp.splice(input, 1);
@@ -42,7 +43,9 @@ class PhotoUpload extends React.Component {
         this.props.addImages(temp);
         this.setState({ images: temp });
       }
-      const data = await axios.delete(`${REST_SERVER_URL}/api/removephoto/${hold[0].Key}`);
+      const data = await axios.delete(
+        `${REST_SERVER_URL}/api/removephoto/${hold[0].Key}`
+      );
       console.log(data);
     } catch (err) {
       console.log('Error romvingPhoto photo index');
@@ -52,7 +55,7 @@ class PhotoUpload extends React.Component {
     // get post_id from props passed down for addpost componenet
     // get key passed from
   };
-  cancelPost = async (postId) => {
+  cancelPost = async postId => {
     try {
       const url = window.location.href;
       const postId = path.basename(url);
@@ -65,7 +68,7 @@ class PhotoUpload extends React.Component {
     }
   };
 
-  urlInput = async (event) => {
+  urlInput = async event => {
     await this.setState({ file: event.target.files[0] });
     console.log('this file', this.state.file);
   };
@@ -73,7 +76,7 @@ class PhotoUpload extends React.Component {
   handleSubmit = () => {
     this.setState({
       posting: false,
-      file: null,
+      file: null
     });
   };
   handleUpload = async () => {
@@ -91,23 +94,26 @@ class PhotoUpload extends React.Component {
     // change to match the route i need for dp route
 
     // 1 changes to postID
-    const { data } = await axios.post(`${S3_SERVER_URL}/s3/api/addphoto/${postId}`, formData);
+    const { data } = await axios.post(
+      `${S3_SERVER_URL}/s3/api/addphoto/${postId}`,
+      formData
+    );
     console.log('thisis data from upload', data.key);
 
     this.setState({
-      file: null,
+      file: null
     });
     this.state.images.push({
       original: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
       thumbnail: `https://s3-us-west-1.amazonaws.com/barterbruh/${data.key}`,
-      Key: data.key,
+      Key: data.key
     });
     console.log(this.state.images);
     this.props.addImages(this.state.images);
     // 'https://{s3-us-west-1}.amazonaws.com/{barterbruh}/{1/1de93ec.jpg}'
   };
 
-  fetchAlbum = async (postId) => {
+  fetchAlbum = async postId => {
     try {
       const data = await axios.get(`${S3_SERVER_URL}/s3/api/${postId}`);
       console.log(data);
@@ -129,7 +135,9 @@ class PhotoUpload extends React.Component {
           {/* need to clear file after upload look up */}
         </label>
       </form>
-      {this.state.file ? <button onClick={this.handleUpload}>Upload</button> : null}
+      {this.state.file ? (
+        <button onClick={this.handleUpload}>Upload</button>
+      ) : null}
       {/* <button onClick={this.fetchAlbum}>Fetch</button>
       <button onClick={this.removePhoto}>DeletePhoto</button> */}
       {/* <button onClick={this.handleSubmit}>Submit</button> */}
@@ -150,7 +158,10 @@ class PhotoUpload extends React.Component {
   render() {
     return (
       <div>
-        <PhotoSlide mainPhoto={this.mainPhoto} removePhoto={this.removingPhoto} />
+        <PhotoSlide
+          mainPhoto={this.mainPhoto}
+          removePhoto={this.removingPhoto}
+        />
         {this.state.posting ? this.renderForm() : this.renderNormal()}
       </div>
     );
@@ -162,7 +173,7 @@ function mapStateToProps(state) {
     current_post: state.current_post,
     images: state.images,
     npId: state.newPostId,
-    main_photo: state.main_photo,
+    main_photo: state.main_photo
   };
 }
 
@@ -170,9 +181,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addImages,
-      addMainPhoto,
+      addMainPhoto
     },
-    dispatch,
+    dispatch
   );
 }
 
