@@ -8,10 +8,10 @@ import {
   deletePostsHelper,
   addPostsHelper,
   increaseWCountHelper,
-  decreaseWCountHelper,
+  decreaseWCountHelper
 } from './postsSQLHelpers';
 
-export const fetchAllPostsQuery = async (payload) => {
+export const fetchAllPostsQuery = async payload => {
   try {
     const queryString = fetchAllPostsHelper(payload);
     const data = await db.queryAsync(queryString);
@@ -22,10 +22,10 @@ export const fetchAllPostsQuery = async (payload) => {
   }
 };
 
-export const fetchUserPostsQuery = async (payload) => {
+export const fetchUserPostsQuery = async payload => {
   try {
-    const queryString = fetchUserPostsHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = fetchUserPostsHelper();
+    const data = await db.queryAsync(queryString, [payload.user_id]);
     console.log('fetchUserPostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
@@ -33,10 +33,10 @@ export const fetchUserPostsQuery = async (payload) => {
   }
 };
 
-export const fetchSinglePostsQuery = async (payload) => {
+export const fetchSinglePostsQuery = async payload => {
   try {
-    const queryString = fetchSinglePostsHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = fetchSinglePostsHelper();
+    const data = await db.queryAsync(queryString, [payload.post_id]);
     console.log('fetchSinglePostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
@@ -46,8 +46,17 @@ export const fetchSinglePostsQuery = async (payload) => {
 
 export const addPostsQuery = async (user, payload) => {
   try {
-    const queryString = addPostsHelper(user, payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = addPostsHelper();
+    const data = await db.queryAsync(queryString, [
+      user.user_id,
+      payload.title,
+      payload.description,
+      payload.condition,
+      payload.location,
+      payload.category,
+      payload.demand,
+      payload.status
+    ]);
     console.log('addPostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
@@ -55,10 +64,13 @@ export const addPostsQuery = async (user, payload) => {
   }
 };
 
-export const deletePostsQuery = async (payload) => {
+export const deletePostsQuery = async payload => {
   try {
-    const queryString = deletePostsHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = deletePostsHelper();
+    const data = await db.queryAsync(queryString, [
+      payload.user_id,
+      payload.post_id
+    ]);
     console.log('deletePostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
@@ -68,8 +80,19 @@ export const deletePostsQuery = async (payload) => {
 
 export const updatePostsQuery = async (user, payload) => {
   try {
-    const queryString = updatePostsHelper(user, payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = updatePostsHelper();
+    const data = await db.queryAsync(queryString, [
+      user.user_id,
+      user.post_id,
+      payload.title,
+      payload.description,
+      payload.condition,
+      payload.location,
+      payload.demand,
+      payload.status,
+      payload.main_photo,
+      payload.tradingWith
+    ]);
     console.log('updatePostsQuery - successfully retrieved data');
     return data;
   } catch (err) {
@@ -77,10 +100,10 @@ export const updatePostsQuery = async (user, payload) => {
   }
 };
 
-export const increaseWCountQuery = async (payload) => {
+export const increaseWCountQuery = async payload => {
   try {
-    const queryString = increaseWCountHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = increaseWCountHelper();
+    const data = await db.queryAsync(queryString, [payload.post_id]);
     console.log('fetchSinglePostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
@@ -88,10 +111,10 @@ export const increaseWCountQuery = async (payload) => {
   }
 };
 
-export const decreaseWCountQuery = async (payload) => {
+export const decreaseWCountQuery = async payload => {
   try {
-    const queryString = decreaseWCountHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = decreaseWCountHelper();
+    const data = await db.queryAsync(queryString, [payload.post_id]);
     console.log('fetchSinglePostsQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {

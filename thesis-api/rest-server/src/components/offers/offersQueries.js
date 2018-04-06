@@ -4,13 +4,13 @@ import {
   addOffersHelper,
   removeOffersHelper,
   getSingleOfferHelper,
-  fetchPostOffersHelper,
+  fetchPostOffersHelper
 } from './offersSQLHelpers';
 
-export const fetchAllOffersQuery = async (payload) => {
+export const fetchAllOffersQuery = async payload => {
   try {
-    const queryString = fetchAllOffersHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = fetchAllOffersHelper();
+    const data = await db.queryAsync(queryString, [payload.username]);
     console.log('fetchAllOffersQuery - successfully retrieved data');
     return data.rows;
   } catch (err) {
@@ -18,10 +18,14 @@ export const fetchAllOffersQuery = async (payload) => {
   }
 };
 
-export const addOffersQuery = async (payload) => {
+export const addOffersQuery = async payload => {
   try {
-    const queryString = addOffersHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = addOffersHelper();
+    const data = await db.queryAsync(queryString, [
+      payload.post_id,
+      payload.buyer_username,
+      payload.room_id
+    ]);
     console.log('addOffersQuery - successfully retrieved data');
     return data;
   } catch (err) {
@@ -29,10 +33,13 @@ export const addOffersQuery = async (payload) => {
   }
 };
 
-export const removeOffersQuery = async (payload) => {
+export const removeOffersQuery = async payload => {
   try {
-    const queryString = removeOffersHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = removeOffersHelper();
+    const data = await db.queryAsync(queryString, [
+      payload.buyer_username,
+      payload.post_id
+    ]);
     console.log('removeOffersQuery - successfully retrieved data');
     return data;
   } catch (err) {
@@ -40,20 +47,23 @@ export const removeOffersQuery = async (payload) => {
   }
 };
 
-export const getSingleOfferQuery = async (payload) => {
+export const getSingleOfferQuery = async payload => {
   try {
-    const queryString = getSingleOfferHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = getSingleOfferHelper();
+    const data = await db.queryAsync(queryString, [
+      payload.buyer_username,
+      payload.post_id
+    ]);
     return data;
   } catch (err) {
     console.log('err getting single offer Query', err);
   }
 };
 
-export const fetchPostOffersQuery = async (payload) => {
+export const fetchPostOffersQuery = async payload => {
   try {
-    const queryString = fetchPostOffersHelper(payload);
-    const data = await db.queryAsync(queryString);
+    const queryString = fetchPostOffersHelper();
+    const data = await db.queryAsync(queryString, [payload.post_id]);
     return data;
   } catch (err) {
     console.log('err fetching post offer query', err);
