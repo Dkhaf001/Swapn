@@ -67,13 +67,13 @@ class AddPost extends Component {
         this.state.newPost.location !== '' &&
         this.state.newPost.demand !== ''
       ) {
-        // const results = await geocodeByAddress(this.state.newPost.location);
-        // const latLng = await getLatLng(results[0]);
-        // this.setState({
-        //   newPost: Object.assign({}, this.state.newPost, {
-        //     location: latLng
-        //   })
-        // });
+        const results = await geocodeByAddress(this.state.newPost.location);
+        const latLng = await getLatLng(results[0]);
+        this.setState({
+          newPost: Object.assign({}, this.state.newPost, {
+            location: latLng
+          })
+        });
         const userId = localStorage.id;
         const postId = this.props.current_post.id;
         const { data } = await axios.put(
