@@ -99,16 +99,21 @@ class Chattest extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.setState(state => ({ modal: !state.modal }))}>Open Chat</button>
+        <button
+          className="chatbutton"
+          onClick={() => this.setState(state => ({ modal: !state.modal }))}
+        >
+          Open Chat
+        </button>
         <div className={this.state.modal ? 'modal-active' : 'modal'} id="modal-id">
           <a href="#close" class="modal-overlay" aria-label="Close" />
-          <div class="modal-container">
-            <div class="modal-header">
+          <div className="modal-container">
+            <div className="modal-header">
               <a href="#close" class="btn btn-clear float-right" aria-label="Close" />
-              <div class="modal-title h5">Chat</div>
+              <div className="modal-title h5">Chat</div>
             </div>
-            <div class="modal-body">
-              <div class="content">
+            <div className="modal-body">
+              <div className="content">
                 <div className="chatBox" id={this.props.roomId}>
                   <div className="chat">
                     {this.state.messages.map((message, key) => (

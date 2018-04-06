@@ -95,6 +95,11 @@ body {
   margin: 10px 0;
   width: 500px;
 }
+.chatbutton {
+  position: fixed;
+  top: 80%;
+  left: 67.5%;
+}
 
 .darker {
   border-color: #ccc;
