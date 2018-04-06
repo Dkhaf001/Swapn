@@ -258,80 +258,95 @@ class BuyerPost extends Component {
   };
   render() {
     return this.props.current_post ? (
-      <div className="buyerpost">
-        <div className="postcardcontainer">
-          <div className="postcard">
-            <ViewSlide />
+
+      <div>
+      <div class="column col-4 col-mx-auto">
+        <div className="buyerpost">
+          <div className="postcardcontainer">
+            <div className="postcard">
+              <ViewSlide />
+            </div>
           </div>
         </div>
-        <div className="panel">
-          <div className="panel-body">
-            <h1>
-              <a onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
-                {this.props.current_post.username}
-              </a>'s posting
-            </h1>
-            <h1>
-              <strong>{this.props.current_post.title}</strong>
-            </h1>
-            <h3>{this.props.current_post.description}</h3>
-            <h3>{this.props.current_post.condition}</h3>
-            <h3>{this.props.current_post.location}</h3>
-            <h4>
-              <strong onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
-                {this.props.current_post.username}
-              </strong>{' '}
-              trading for: {this.props.current_post.demand}
-            </h4>
-            <h4>Status: {this.props.current_post.status}</h4>
-          </div>
+
+        <div class="column col-4 col-mx-auto">
+          `{' '}
+          <div className="panel">
+            <div className="panel-body">
+              <h1>
+                <a onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
+                  {this.props.current_post.username}
+                </a>'s posting
+              </h1>
+              <h1>
+                <strong>{this.props.current_post.title}</strong>
+              </h1>
+              <h3>{this.props.current_post.description}</h3>
+              <h3>{this.props.current_post.condition}</h3>
+              <h3>{this.props.current_post.location}</h3>
+              <h4>
+                <strong onClick={() => this.switchToProfile(this.props.current_post.user_id)}>
+                  {this.props.current_post.username}
+                </strong>{' '}
+                trading for: {this.props.current_post.demand}
+              </h4>
+              <h4>Status: {this.props.current_post.status}</h4>
+            </div>
+            <div className="panel-footer">
+              <div className="postbuttons">
+                {this.state.currentlyFollowing === true ? (
+                  <RaisedButton
+                    label="Unfollow"
+                    secondary={true}
+                    style={{ margin: 12 }}
+                    onClick={() => this.toggleFollowList()}
+                  />
+                ) : (
+                  <RaisedButton
+                    label="Follow"
+                    primary={true}
+                    style={{ margin: 12 }}
+                    onClick={() => this.toggleFollowList()}
+                  />
+                )}
+                {this.state.currentlyWatching === true
+                  ? this.props.current_post.status !== 'SWAPPED' && (
+                      <RaisedButton
+                        label="Unwatch"
+                        secondary={true}
+                        style={{ margin: 12 }}
+                        onClick={() => this.toggleWatchList()}
+                      />
+                    )
+                  : this.props.current_post.status !== 'SWAPPED' && (
+                      <RaisedButton
+                        label="Add to Watch List"
+                        style={{ margin: 12 }}
+                        onClick={() => this.toggleWatchList()}
+                      />
+                    )}
+                {this.state.bartering &&
+                  this.props.current_post.status !== 'SWAPPED' && (
+                    <RaisedButton
+                      label="Cancel Offer"
+                      secondary={true}
+                      style={{ margin: 12 }}
+                      onClick={() => this.cancelOffer()}
+                    />
+                  )}
+                {!this.state.bartering &&
+                  this.props.current_post.status !== 'SWAPPED' && (
+                    <Popout
+                      makeOffer={this.makeOffer}
+                      {...this.props}
+                      toggleChat={this.toggleChat}
+                    />
+                  )}
+              </div>
+            </div>
+          </div>`
         </div>
-        <div className="postbuttons">
-          {this.state.currentlyFollowing === true ? (
-            <RaisedButton
-              label="Unfollow"
-              secondary={true}
-              style={{ margin: 12 }}
-              onClick={() => this.toggleFollowList()}
-            />
-          ) : (
-            <RaisedButton
-              label="Follow"
-              primary={true}
-              style={{ margin: 12 }}
-              onClick={() => this.toggleFollowList()}
-            />
-          )}
-          {this.state.currentlyWatching === true
-            ? this.props.current_post.status !== 'SWAPPED' && (
-                <RaisedButton
-                  label="Unwatch"
-                  secondary={true}
-                  style={{ margin: 12 }}
-                  onClick={() => this.toggleWatchList()}
-                />
-              )
-            : this.props.current_post.status !== 'SWAPPED' && (
-                <RaisedButton
-                  label="Add to Watch List"
-                  style={{ margin: 12 }}
-                  onClick={() => this.toggleWatchList()}
-                />
-              )}
-          {this.state.bartering &&
-            this.props.current_post.status !== 'SWAPPED' && (
-              <RaisedButton
-                label="Cancel Offer"
-                secondary={true}
-                style={{ margin: 12 }}
-                onClick={() => this.cancelOffer()}
-              />
-            )}
-          {!this.state.bartering &&
-            this.props.current_post.status !== 'SWAPPED' && (
-              <Popout makeOffer={this.makeOffer} {...this.props} toggleChat={this.toggleChat} />
-            )}
-        </div>
+
         <div className="chatbox">
           {this.state.bartering &&
             this.props.current_post.status !== 'SWAPPED' && (
@@ -343,6 +358,8 @@ class BuyerPost extends Component {
               />
             )}
         </div>
+      </div>
+
       </div>
     ) : (
       <div class="loading loading-lg" />
