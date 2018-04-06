@@ -20,19 +20,21 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class HomePostList extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      list: [],
+    };
   }
 
   async componentWillMount() {
@@ -40,6 +42,9 @@ class HomePostList extends Component {
       const { data } = await axios.get(`${REST_SERVER_URL}/api/posts`);
       data.sort((a, b) => b.id - a.id);
       // const modifiedData = await this.getDistance(data);
+      this.setState({
+        list: data,
+      });
       this.props.addCurrentList(data);
       const testData = this.props.current_list;
       this.runGetDistance(testData);
@@ -47,18 +52,26 @@ class HomePostList extends Component {
       console.log('Error on componentWillMount - homePostList', err);
     }
   }
-  runGetDistance = data => {
+  runGetDistance = async (data) => {
     // const data = this.props.current_list;
-    let counter = 0;
-    for (let i = 0; i < data.length && counter < 10; i++) {
-      if (!data[i].distance) {
-        this.getDistance(data[i]);
-        counter++;
+    try {
+      let counter = 0;
+      for (let i = 0; i < data.length && counter < 10; i++) {
+        if (!data[i].distance) {
+          data[i] = await this.getDistance(data[i]);
+          counter++;
+        }
       }
+      this.setState({
+        list: data,
+      });
+      console.log('after the iteration', data);
+      setTimeout(() => this.runGetDistance(data), 30000);
+    } catch (err) {
+      console.log('err runget distance', err);
     }
-    setTimeout(() => this.runGetDistance(data), 30000);
   };
-  getDistance = async data => {
+  getDistance = async (data) => {
     // console.log('reached data', data);
     // for (let i = 0; i < data.length; i++) {
     // console.log('reached here 4');
@@ -94,7 +107,7 @@ class HomePostList extends Component {
     // }
     return data;
   };
-  switchToSinglePost = async post => {
+  switchToSinglePost = async (post) => {
     try {
       this.props.addCurrentPost(post);
       this.props.history.push(`/post/${post.id}`);
@@ -103,7 +116,7 @@ class HomePostList extends Component {
     }
   };
 
-  switchToProfile = async userId => {
+  switchToProfile = async (userId) => {
     try {
       if (this.props.active_user) {
         userId === this.props.active_user.id
@@ -122,57 +135,51 @@ class HomePostList extends Component {
       <div className="homepost">
         <div className="containerr">
           <div className="columnss">
-            {this.props.current_list &&
-              this.props.current_list
-                .filter(post => post.status !== 'SWAPPED')
-                .map(post => (
-                  <div
-                    className="card"
-                    key={post.id}
-                    onClick={() => this.switchToSinglePost(post)}
-                  >
-                    <div className="card-image centered">
-                      <img src={post.main_photo} className="img-responsive" />
-                      <div className="overlay">
-                        <div className="overlaytext">
-                          <strong>Description: </strong>
-                          <br />
-                          {post.description}
-                          <Chip
-                            style={{
-                              margin: 'auto',
-                              width: '100%',
-                              bottom: '0',
-                              position: 'absolute',
-                              backgroundColor: 'rgb(208, 204, 208)'
-                            }}
-                            onClick={e => {
-                              e.stopPropagation();
-                              this.switchToProfile(post.user_id);
-                            }}
-                          >
-                            <Avatar src={post.photo_url} />
-                            <div
-                              style={{ color: '#3a606e', fontWeight: 'bold' }}
-                            >
-                              {post.username}
-                            </div>
-                          </Chip>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bottomhalf">
-                      <div className="card-header centered">
-                        <div className="card-title h5 centered">
-                          {post.title}
-                        </div>
-                        <div className="card-subtitle centered">
-                          {post.distance ? post.distance : null} miles away
-                        </div>
+            {this.state.list &&
+              this.state.list.filter(post => post.status !== 'SWAPPED').map(post => (
+                <div className="card" key={post.id} onClick={() => this.switchToSinglePost(post)}>
+                  <div className="card-image centered">
+                    <img src={post.main_photo} className="img-responsive" />
+                    <div className="overlay">
+                      <div className="overlaytext">
+                        <strong>Description: </strong>
+                        <br />
+                        {post.description}
+                        <Chip
+                          style={{
+                            margin: 'auto',
+                            width: '100%',
+                            bottom: '0',
+                            position: 'absolute',
+                            backgroundColor: 'rgb(208, 204, 208)',
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            this.switchToProfile(post.user_id);
+                          }}
+                        >
+                          <Avatar src={post.photo_url} />
+                          <div style={{ color: '#3a606e', fontWeight: 'bold' }}>
+                            {post.username}
+                          </div>
+                        </Chip>
                       </div>
                     </div>
                   </div>
-                ))}
+                  <div className="bottomhalf">
+                    <div className="card-header centered">
+                      <div className="card-title h5 centered">{post.title}</div>
+                      <div className="card-subtitle centered">
+                        {post.distance ? (
+                          `${post.distance} miles away`
+                        ) : (
+                          <div class="loading loading-lg" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             <Geolocation />
           </div>
         </div>
@@ -184,7 +191,7 @@ class HomePostList extends Component {
 function mapStateToProps(state) {
   return {
     current_list: state.current_list,
-    active_user: state.active_user
+    active_user: state.active_user,
   };
 }
 
@@ -192,9 +199,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       addCurrentList,
-      addCurrentPost
+      addCurrentPost,
     },
-    dispatch
+    dispatch,
   );
 }
 
