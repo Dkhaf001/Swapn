@@ -15,7 +15,7 @@ class Chattest extends React.Component {
       message: '',
       messages: [],
       roomId: '',
-      modal: false,
+      modal: true,
     };
 
     this.sendMessage = (e) => {
@@ -56,9 +56,9 @@ class Chattest extends React.Component {
           messages: data,
         });
       });
-      this.setState({
-        modal: this.props.modal,
-      });
+      // this.setState({
+      //   modal: this.props.modal,
+      // });
       // const room_id = this.props.roomId
       // const { data } = await axios.get(`http://localhost:3396/api/messages/${room_id}`)
     } catch (err) {
@@ -70,44 +70,39 @@ class Chattest extends React.Component {
     console.log('trying to add class to element', element);
     element.classList.add('modal-active');
   };
-  // async componentWillReceiveProps() {
-  //   console.log('chat receivinggggg', this.props.roomId);
-  //   try {
-  //     this.props.socket.emit('updateDatabase', {
-  //       to: this.props.active_user.username,
-  //       roomId: this.props.roomId,
-  //     });
-  //     console.log('inside of chattest this is the props shou have socket and roomId', this.props);
-  //     this.props.addCurrentRoomId(this.props.currentRoom);
-  //     this.props.socket.emit('joinRoom', this.props.currentRoom);
-  //     this.props.socket.on('room:message', (data) => {
-  //       console.log('room:message event', data);
-  //       this.setState({
-  //         messages: this.state.messages.concat(data),
-  //       });
-  //     });
-  //     this.props.socket.on('history', (data) => {
-  //       console.log('history', data);
-  //       this.setState({
-  //         messages: data,
-  //       });
-  //     });
-  //     // const room_id = this.props.roomId
-  //     // const { data } = await axios.get(`http://localhost:3396/api/messages/${room_id}`)
-  //   } catch (err) {
-  //     console.log('err in chattest ', err);
-  //   }
-  // }
+  async componentWillReceiveProps(nextProps) {
+    console.log('componentwillreceiveprops', nextProps);
+    //   console.log('chat receivinggggg', this.props.roomId);
+    //   try {
+    //     this.props.socket.emit('updateDatabase', {
+    //       to: this.props.active_user.username,
+    //       roomId: this.props.roomId,
+    //     });
+    //     console.log('inside of chattest this is the props shou have socket and roomId', this.props);
+    //     this.props.addCurrentRoomId(this.props.currentRoom);
+    //     this.props.socket.emit('joinRoom', this.props.currentRoom);
+    //     this.props.socket.on('room:message', (data) => {
+    //       console.log('room:message event', data);
+    //       this.setState({
+    //         messages: this.state.messages.concat(data),
+    //       });
+    //     });
+    //     this.props.socket.on('history', (data) => {
+    //       console.log('history', data);
+    //       this.setState({
+    //         messages: data,
+    //       });
+    //     });
+    //     // const room_id = this.props.roomId
+    //     // const { data } = await axios.get(`http://localhost:3396/api/messages/${room_id}`)
+    //   } catch (err) {
+    //     console.log('err in chattest ', err);
+    //   }
+  }
   //* ***************************** Div id is needed ******************************//
   render() {
     return (
-      <div>
-        <button
-          className="chatbutton"
-          onClick={() => this.setState(state => ({ modal: !state.modal }))}
-        >
-          Open Chat
-        </button>
+      <div className="chatthing">
         <div className={this.state.modal ? 'modal-active' : 'modal'} id="modal-id">
           <a href="#close" className="modal-overlay" aria-label="Close" />
           <div className="modal-container">
