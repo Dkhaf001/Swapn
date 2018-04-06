@@ -18,6 +18,14 @@ class Search extends Component {
     });
     location.reload();
   }
+
+  enterSearch = e => {
+    e.preventDefault();
+    if (e.keyCode === 13) {
+      this.handleSubmit();
+    }
+  };
+
   render() {
     return (
       <section className="navbar-section">
@@ -27,8 +35,9 @@ class Search extends Component {
             className="form-input"
             style={{ width: '100%' }}
             type="text"
-            placeholder="🔎  Search"
+            placeholder="Search"
             onChange={e => this.setState({ name: e.target.value })}
+            onKeyUp={e => this.enterSearch(e)}
           />
           <RaisedButton
             label="Submit"

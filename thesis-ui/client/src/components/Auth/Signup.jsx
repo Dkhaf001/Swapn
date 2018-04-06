@@ -10,25 +10,39 @@ class Signup extends Component {
     this.state = {
       username: '',
       password: '',
-      email: '',
+      email: ''
     };
   }
   async handleSubmit() {
     try {
-      const response = await axios.post(`${REST_SERVER_URL}/api/auth/signup`, this.state);
+      const response = await axios.post(
+        `${REST_SERVER_URL}/api/auth/signup`,
+        this.state
+      );
       this.props.history.push('/login');
     } catch (err) {
       console.log('err signup user', err);
       this.setState({
-        err: true,
+        err: true
       });
     }
   }
+
+  enterSignup = e => {
+    e.preventDefault();
+    if (e.keyCode === 13) {
+      this.handleSubmit();
+    }
+  };
+
   render() {
     return (
       <div className="form-group">
         {this.state.err && (
-          <div className="toast toast-error centered" style={{ textAlign: 'center', width: '50%' }}>
+          <div
+            className="toast toast-error centered"
+            style={{ textAlign: 'center', width: '50%' }}
+          >
             Something went wrong. Please try again!
           </div>
         )}
@@ -67,10 +81,14 @@ class Signup extends Component {
           placeholder="Enter Password"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
           style={{ width: '30%' }}
+          onKeyUp={e => this.enterSignup(e)}
         />
         <div>
           <br />
-          <button className="btn btn-success centered" onClick={() => this.handleSubmit()}>
+          <button
+            className="btn btn-success centered"
+            onClick={() => this.handleSubmit()}
+          >
             Sign Up
           </button>
         </div>
