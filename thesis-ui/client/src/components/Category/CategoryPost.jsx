@@ -15,20 +15,20 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   gridList: {
     width: 500,
     height: 450,
-    overflowY: 'auto',
-  },
+    overflowY: 'auto'
+  }
 };
 
 class CategoryPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: this.props.current_category,
+      category: this.props.current_category
     };
   }
 
@@ -39,7 +39,7 @@ class CategoryPost extends Component {
   // const url = window.location.href;
   // const postId = path.basename(url);
 
-  switchToSinglePost = async (post) => {
+  switchToSinglePost = async post => {
     try {
       this.props.history.push(`/post/${post.id}`);
     } catch (err) {
@@ -50,49 +50,60 @@ class CategoryPost extends Component {
   render() {
     return (
       <div className="homepost">
+        <h2 style={{ textAlign: 'center' }}>{this.props.category_name}</h2>
         <div className="containerr">
           <div className="columnss">
             {this.props.current_category &&
-              this.props.current_category.filter(post => post.status !== 'SWAPPED').map(post => (
-                <div className="card" key={post.id} onClick={() => this.switchToSinglePost(post)}>
-                  <div className="card-image centered">
-                    <img src={post.main_photo} className="img-responsive" />
-                    <div className="overlay">
-                      <div className="overlaytext">
-                        <strong>Description: </strong>
-                        <br />
-                        {post.description}
-                        <Chip
-                          style={{
-                            margin: 'auto',
-                            width: '100%',
-                            bottom: '0',
-                            position: 'absolute',
-                            backgroundColor: 'rgb(208, 204, 208)',
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            this.switchToSinglePost(post);
-                          }}
-                        >
-                          <Avatar src={post.photo_url} />
-                          <div style={{ color: '#3a606e', fontWeight: 'bold' }}>
-                            {post.username}
-                          </div>
-                        </Chip>
+              this.props.current_category
+                .filter(post => post.status !== 'SWAPPED')
+                .map(post => (
+                  <div
+                    className="card"
+                    key={post.id}
+                    onClick={() => this.switchToSinglePost(post)}
+                  >
+                    <div className="card-image centered">
+                      <img src={post.main_photo} className="img-responsive" />
+                      <div className="overlay">
+                        <div className="overlaytext">
+                          <strong>Description: </strong>
+                          <br />
+                          {post.description}
+                          <Chip
+                            style={{
+                              margin: 'auto',
+                              width: '100%',
+                              bottom: '0',
+                              position: 'absolute',
+                              backgroundColor: 'rgb(208, 204, 208)'
+                            }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              this.switchToSinglePost(post);
+                            }}
+                          >
+                            <Avatar src={post.photo_url} />
+                            <div
+                              style={{ color: '#3a606e', fontWeight: 'bold' }}
+                            >
+                              {post.username}
+                            </div>
+                          </Chip>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bottomhalf">
+                      <div className="card-header centered">
+                        <div className="card-title h5 centered">
+                          {post.title}
+                        </div>
+                        <div className="card-subtitle centered">
+                          {post.distance ? post.distance : null} miles away
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="bottomhalf">
-                    <div className="card-header centered">
-                      <div className="card-title h5 centered">{post.title}</div>
-                      <div className="card-subtitle centered">
-                        {post.distance ? post.distance : null} miles away
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
           </div>
         </div>
       </div>
@@ -103,7 +114,7 @@ class CategoryPost extends Component {
 function mapStateToProps(state) {
   return {
     current_category: state.current_category,
-    category_name: state.category_name,
+    category_name: state.category_name
   };
 }
 
