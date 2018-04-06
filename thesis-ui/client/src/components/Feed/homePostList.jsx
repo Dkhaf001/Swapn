@@ -67,7 +67,7 @@ class HomePostList extends Component {
         list: data,
       });
       console.log('after the iteration', data);
-      setTimeout(() => this.runGetDistance(data), 2500);
+      setTimeout(() => this.runGetDistance(data), 10000);
     } catch (err) {
       console.log('err runget distance', err);
     }
