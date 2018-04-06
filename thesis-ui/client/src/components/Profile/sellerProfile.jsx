@@ -15,6 +15,7 @@ class SellerProfile extends Component {
       <div>
         <div>
           <div>
+            <ProfileNavbar />
             <Bio />
             <ProfileNavbar />
             <Switch>
