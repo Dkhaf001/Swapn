@@ -58,7 +58,7 @@ class SearchList extends Component {
     return (
       <div>
         <h2 style={{ textAlign: 'center' }}>
-          Search results for : {this.props.location.state}
+          Search results for: {this.props.location.state}
         </h2>
 
         <div style={styles.root}>
