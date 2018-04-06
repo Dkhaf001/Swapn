@@ -9,6 +9,8 @@ import ViewSlide from '../Photo/viewPhotoSlider.jsx';
 import EditPost from './editPost.jsx';
 import Chattest from '../Chat/Chattest.jsx';
 import { addImages } from '../../actions';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 
 const { REST_SERVER_URL } = process.env;
 const { S3_SERVER_URL } = process.env;
@@ -336,7 +338,7 @@ class SellerPost extends Component {
         </div>
 
         <div className="chatrooms">
-          <div className="panel">
+          <div className="panel float-left">
             <div class="panel-header">
               <div class="panel-title">Offers</div>
             </div>
@@ -344,16 +346,33 @@ class SellerPost extends Component {
               this.state.offers.map(offer => (
                 <div key={offer.id}>
                   <div id={offer.room_id} onClick={() => this.handleUserClick(offer)}>
-                    <a>{offer.username}</a>
-                    <button
-                      className="deletebutton text-light"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        this.denyActiveOffer(offer.username, this.props.current_post.id, offer.id);
+                    <Chip
+                      style={{
+                        // margin: 'auto',
+                        // width: '100%',
+                        bottom: '0',
+                        // position: 'absolute',
+                        backgroundColor: 'rgb(5, 178, 220)',
                       }}
                     >
-                      Delete
-                    </button>
+                      <Avatar src={offer.photo_url} />
+                      <div style={{ color: 'white', fontWeight: 'bold' }}>
+                        {offer.username}
+                        <button
+                          className="deletebutton text-light"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            this.denyActiveOffer(
+                              offer.username,
+                              this.props.current_post.id,
+                              offer.id,
+                            );
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </Chip>
                   </div>
                 </div>
               ))}
