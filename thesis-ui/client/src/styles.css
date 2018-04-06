@@ -203,9 +203,9 @@ body {
   flex-wrap: wrap;
 }
 .chatboxx {
-  position: relative;
-  margin-left: 10%;
-  margin-top: 25%;
+  position: absolute;
+  margin-left: 40%;
+  margin-top: 35%;
   overflow: visible;
 }
 .chatrooms {
