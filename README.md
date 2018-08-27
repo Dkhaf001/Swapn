@@ -1,11 +1,10 @@
 # Project Name
 
-> Swap'n
+> Swap'n - Inspired by craigslist, Swap’n is a user friendly application for bartering, developed with modern web technology. Swap’n is for anyone who wants to swap their unused items for something else. Users will be able to communicate with other users, make offers and deals through our app.
 
 ## Team
 
-* **Product Owner**: Elbert Chao
-* **Development Team Members**: Daniel Khafi, Eddie Roh, Shayne Song
+* **Development Team Members**: Daniel Khafi, Eddie Roh, Shayne Song, Elbert Chao
 
 ## Table of Contents
 
